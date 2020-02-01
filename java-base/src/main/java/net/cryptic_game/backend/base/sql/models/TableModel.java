@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.base.database.models;
+package net.cryptic_game.backend.base.sql.models;
 
 import net.cryptic_game.backend.base.interfaces.JsonSerializable;
 

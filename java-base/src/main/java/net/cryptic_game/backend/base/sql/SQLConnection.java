@@ -1,6 +1,6 @@
-package net.cryptic_game.backend.base.database;
+package net.cryptic_game.backend.base.sql;
 
-import net.cryptic_game.backend.base.database.models.TableModel;
+import net.cryptic_game.backend.base.sql.models.TableModel;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,8 +11,6 @@ import org.hibernate.service.ServiceRegistry;
 
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 public class SQLConnection {
@@ -20,23 +18,21 @@ public class SQLConnection {
     private final Configuration configuration;
     private SessionFactory factory;
 
-    SQLConnection() {
+    public SQLConnection() {
         this.configuration = new Configuration();
     }
 
-    public void init(final ClassLoader classLoader, final SQLServer sqlServer, final boolean debug) {
-        this.configuration.addProperties(this.generateSettings(classLoader, sqlServer, debug));
+    public void init(final SQLServer sqlServer, final boolean debug) {
+        this.configuration.addProperties(this.generateSettings(sqlServer, debug));
 
         final ServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .applySettings(this.configuration.getProperties())
                 .build();
 
-        Thread.currentThread().setContextClassLoader(classLoader);
-
         this.factory = this.configuration.buildSessionFactory(registry);
     }
 
-    private Properties generateSettings(final ClassLoader classLoader, final SQLServer sqlServer, final boolean debug) {
+    private Properties generateSettings(final SQLServer sqlServer, final boolean debug) {
         final Properties settings = new Properties();
         settings.put(Environment.DRIVER, sqlServer.getSqlServerType().getDriver());
         settings.put(Environment.URL, "jdbc:" + sqlServer.getSqlServerType().getUrlPrefix() + "://" + sqlServer.getHost() + ":" + sqlServer.getPort() + "/" + sqlServer.getDatabase() + "?autoReconnect=true&useUnicode=true&characterEncoding=utf-8");
@@ -59,24 +55,17 @@ public class SQLConnection {
         settings.put(Environment.C3P0_ACQUIRE_INCREMENT, 5);
         settings.put(Environment.C3P0_TIMEOUT, 1800);
 
-
         if (debug) settings.put(Environment.SHOW_SQL, true);
-
-        final List<ClassLoader> classLoaders = new ArrayList<>();
-        classLoaders.add(classLoader);
-
-        settings.put(Environment.CLASSLOADERS, classLoaders);
-        settings.put(Environment.TC_CLASSLOADER, classLoader);
 
         return settings;
     }
 
-    void addEntity(final Class<? extends TableModel> entity) throws SQLException {
+    public void addEntity(final Class<? extends TableModel> entity) throws SQLException {
         if (this.factory == null) this.configuration.addAnnotatedClass(entity);
         else throw new SQLException("It's to late to register any more entities.");
     }
 
-    Session openSession() throws HibernateException {
+    public Session openSession() throws HibernateException {
         return this.factory.openSession();
     }
 

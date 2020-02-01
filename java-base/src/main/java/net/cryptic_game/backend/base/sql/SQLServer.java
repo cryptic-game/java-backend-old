@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.base.database;
+package net.cryptic_game.backend.base.sql;
 
 public class SQLServer {
 

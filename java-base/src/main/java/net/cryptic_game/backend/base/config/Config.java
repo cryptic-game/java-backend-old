@@ -1,46 +1,49 @@
 package net.cryptic_game.backend.base.config;
 
-import net.cryptic_game.backend.base.interfaces.DefaultConfig;
-
-import java.util.Map;
+import java.util.HashMap;
 
 public class Config {
 
-    private static Map<String, String> env = System.getenv();
-    private static Map<String, String> defaults;
+    private final HashMap<String, Object> values;
 
-    public Config(DefaultConfig defaultConfig) {
-        defaults = defaultConfig.getDefaults();
+    public Config(final DefaultConfig defaultConfig) {
+        this.values = new HashMap<>();
+        defaultConfig.iniConfig(this);
+        this.loadEnvironmentVariables();
     }
 
-    public static String get(String key) {
-        if (env.containsKey(key)) {
-            return env.get(key);
-        } else if (defaults.containsKey(key)) {
-            return defaults.get(key);
-        }
-        return null;
+    private void loadEnvironmentVariables() {
+        this.values.forEach((key, value) -> {
+            final String env = System.getenv(key);
+            if (env != null) this.values.replace(key, env);
+        });
     }
 
-    public static int getInteger(String key) {
-        //noinspection ConstantConditions
-        return Integer.parseInt(get(key));
+    public void set(final DefaultConfig key, final String value) {
+        this.values.put(key.toString().strip().toLowerCase(), value);
     }
 
-    public static boolean getBoolean(String key) {
-        return Boolean.parseBoolean(get(key));
+    public void set(final DefaultConfig key, final int value) {
+        this.values.put(key.toString().strip().toLowerCase(), value);
     }
 
-    public static String get(DefaultConfig d) {
-        return get(d.toString());
+    public void set(final DefaultConfig key, final boolean value) {
+        this.values.put(key.toString().strip().toLowerCase(), value);
     }
 
-    public static int getInteger(DefaultConfig d) {
-        return getInteger(d.toString());
+    public Object get(final DefaultConfig key) {
+        return this.values.get(key.toString().strip().toLowerCase());
     }
 
-    public static boolean getBoolean(DefaultConfig d) {
-        return getBoolean(d.toString());
+    public String getAsString(final DefaultConfig key) {
+        return String.valueOf(this.get(key));
     }
 
+    public int getAsInt(final DefaultConfig key) {
+        return Integer.parseInt(this.getAsString(key));
+    }
+
+    public boolean getAsBoolean(final DefaultConfig key) {
+        return Boolean.parseBoolean(this.getAsString(key));
+    }
 }
