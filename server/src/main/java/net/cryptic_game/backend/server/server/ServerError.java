@@ -7,22 +7,22 @@ import static net.cryptic_game.backend.base.utils.JsonBuilder.error;
 
 public enum ServerError implements Error {
 
-    PERMISSION_DENIED("permissions denied"),
-    UNSUPPORTED_FORMAT("unsupported format"),
-    INVALID_AUTHORIZATION("invalid authorization"),
-    MISSING_ACTION("missing action"),
-    UNKNOWN_ACTION("unknown action"),
-    USERNAME_ALREADY_EXISTS("username already exists"),
-    INVALID_EMAIL("invalid email"),
-    INVALID_PASSWORD("invalid password"),
-    INVALID_TOKEN("invalid token"),
-    MISSING_PARAMETERS("missing parameters"),
-    UNEXPECTED_ERROR("unexpected error"),
-    UNKNOWN_MICROSERVICE("unknown microservice"),
-    NOT_FOUND("not found"),
-    UNKNOWN_SETTING("unknown setting"),
-    UNSUPPORTED_PARAMETER_SIZE("unsupported parameter size"),
-    JSON_SYNTAX_ERROR("json syntax error");
+    PERMISSION_DENIED("permissions_denied"),
+    UNSUPPORTED_FORMAT("unsupported_format"),
+    INVALID_AUTHORIZATION("invalid_authorization"),
+    MISSING_ACTION("missing_action"),
+    UNKNOWN_ACTION("unknown_action"),
+    USERNAME_ALREADY_EXISTS("username_already_exists"),
+    INVALID_EMAIL("invalid_email"),
+    INVALID_PASSWORD("invalid_password"),
+    INVALID_TOKEN("invalid_token"),
+    MISSING_PARAMETERS("missing_parameters"),
+    UNEXPECTED_ERROR("unexpected_error"),
+    UNKNOWN_MICROSERVICE("unknown_microservice"),
+    NOT_FOUND("not_found"),
+    UNKNOWN_SETTING("unknown_setting"),
+    UNSUPPORTED_PARAMETER_SIZE("unsupported_parameter_size"),
+    JSON_SYNTAX_ERROR("json_syntax_error");
 
     private String message;
     private JsonObject response;
