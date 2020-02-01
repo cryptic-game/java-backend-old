@@ -1,0 +1,14 @@
+plugins {
+    id 'java'
+}
+
+group 'net.cryptic-game'
+version '0.3.0'
+
+subprojects {
+    sourceCompatibility = targetCompatibility = 1.11
+
+    repositories {
+        mavenCentral()
+    }
+}
