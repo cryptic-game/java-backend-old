@@ -16,12 +16,12 @@ public enum ServerConfig implements DefaultConfig {
     HTTP_HOST,
     HTTP_PORT,
 
-    DATABASE_SERVER_HOSTNAME,
-    DATABASE_SERVER_PORT,
-    DATABASE_SERVER_TYPE,
-    DATABASE_SERVER_USERNAME,
-    DATABASE_SERVER_PASSWORD,
-    DATABASE_SERVER_DATABASE,
+    SQL_SERVER_HOSTNAME,
+    SQL_SERVER_PORT,
+    SQL_SERVER_TYPE,
+    SQL_SERVER_USERNAME,
+    SQL_SERVER_PASSWORD,
+    SQL_SERVER_DATABASE,
 
     STORAGE_LOCATION,
     PRODUCTIVE,
@@ -38,12 +38,12 @@ public enum ServerConfig implements DefaultConfig {
         config.set(ServerConfig.HTTP_HOST, "0.0.0.0");
         config.set(ServerConfig.HTTP_PORT, 8080);
 
-        config.set(ServerConfig.DATABASE_SERVER_HOSTNAME, "0.0.0.0");
-        config.set(ServerConfig.DATABASE_SERVER_PORT, "3306");
-        config.set(ServerConfig.DATABASE_SERVER_TYPE, SQLServerType.MYSQL_8_0.getName());
-        config.set(ServerConfig.DATABASE_SERVER_USERNAME, "cryptic");
-        config.set(ServerConfig.DATABASE_SERVER_PASSWORD, "cryptic");
-        config.set(ServerConfig.DATABASE_SERVER_DATABASE, "cryptic");
+        config.set(ServerConfig.SQL_SERVER_HOSTNAME, "0.0.0.0");
+        config.set(ServerConfig.SQL_SERVER_PORT, "3306");
+        config.set(ServerConfig.SQL_SERVER_TYPE, SQLServerType.MYSQL_8_0.getName());
+        config.set(ServerConfig.SQL_SERVER_USERNAME, "cryptic");
+        config.set(ServerConfig.SQL_SERVER_PASSWORD, "cryptic");
+        config.set(ServerConfig.SQL_SERVER_DATABASE, "cryptic");
 
         config.set(ServerConfig.STORAGE_LOCATION, "/data");
         config.set(ServerConfig.PRODUCTIVE, true);
