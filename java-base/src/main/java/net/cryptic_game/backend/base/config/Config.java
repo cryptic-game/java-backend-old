@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class Config {
 
-    private final HashMap<String, Object> values;
+    private final HashMap<DefaultConfig, Object> values;
 
     public Config(final DefaultConfig defaultConfig) {
         this.values = new HashMap<>();
@@ -14,25 +14,25 @@ public class Config {
 
     private void loadEnvironmentVariables() {
         this.values.forEach((key, value) -> {
-            final String env = System.getenv(key);
+            final String env = System.getenv(key.toString());
             if (env != null) this.values.replace(key, env);
         });
     }
 
     public void set(final DefaultConfig key, final String value) {
-        this.values.put(key.toString().strip().toLowerCase(), value);
+        this.values.put(key, value);
     }
 
     public void set(final DefaultConfig key, final int value) {
-        this.values.put(key.toString().strip().toLowerCase(), value);
+        this.values.put(key, value);
     }
 
     public void set(final DefaultConfig key, final boolean value) {
-        this.values.put(key.toString().strip().toLowerCase(), value);
+        this.values.put(key, value);
     }
 
     public Object get(final DefaultConfig key) {
-        return this.values.get(key.toString().strip().toLowerCase());
+        return this.values.get(key);
     }
 
     public String getAsString(final DefaultConfig key) {
