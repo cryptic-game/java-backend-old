@@ -8,6 +8,7 @@ public class Config {
 
     public Config(final DefaultConfig defaultConfig) {
         this.values = new HashMap<>();
+        BaseConfig.CONFIG.iniConfig(this);
         defaultConfig.iniConfig(this);
         this.loadEnvironmentVariables();
     }
