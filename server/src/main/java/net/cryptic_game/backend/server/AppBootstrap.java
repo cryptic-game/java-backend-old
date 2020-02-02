@@ -4,12 +4,8 @@ public class AppBootstrap {
 
     private static App instance;
 
-    protected void setInstance(final App app) {
-        instance = app;
-    }
-
     public static void main(String[] args) {
-        new AppBootstrap();
+        instance = new App();
     }
 
     public static App getInstance() {
