@@ -16,7 +16,7 @@ public abstract class AppBootstrap {
     protected abstract void init();
 
     protected void setUpSQL(final boolean debug, final SQLServer server) {
-
+        this.sqlConnection.init(server, debug);
     }
 
     public SQLConnection getSqlConnection() {

@@ -16,7 +16,7 @@ public class User extends TableModelAutoId {
     private String mail;
 
     @Column(name = "password", updatable = true, nullable = false)
-    private String password;
+    private String passwordHash;
 
     @Column(name = "created", updatable = false, nullable = false)
     private LocalDateTime created;
@@ -47,31 +47,31 @@ public class User extends TableModelAutoId {
         return mail;
     }
 
-    public void setMail(String mail) {
+    public void setMail(final String mail) {
         this.mail = mail;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPasswordHash() {
+        return this.passwordHash;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPasswordHash(final String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     public LocalDateTime getCreated() {
-        return created;
+        return this.created;
     }
 
-    public void setCreated(LocalDateTime created) {
+    public void setCreated(final LocalDateTime created) {
         this.created = created;
     }
 
     public LocalDateTime getLast() {
-        return last;
+        return this.last;
     }
 
-    public void setLast(LocalDateTime last) {
+    public void setLast(final LocalDateTime last) {
         this.last = last;
     }
 }
