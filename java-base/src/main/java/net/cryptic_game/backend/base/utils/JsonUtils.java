@@ -1,10 +1,14 @@
 package net.cryptic_game.backend.base.utils;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.cryptic_game.backend.base.interfaces.JsonSerializable;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
+import java.util.function.Function;
 
 public class JsonUtils {
 
@@ -130,5 +134,15 @@ public class JsonUtils {
         } else {
             return null;
         }
+    }
+
+    public static <T extends JsonSerializable> JsonArray toArray(final List<T> items) {
+        return toArray(items, JsonSerializable::serialize);
+    }
+
+    public static <T> JsonArray toArray(final List<T> items, final Function<T, JsonElement> function) {
+        final JsonArray array = new JsonArray();
+        items.forEach(item -> array.add(function.apply(item)));
+        return array;
     }
 }

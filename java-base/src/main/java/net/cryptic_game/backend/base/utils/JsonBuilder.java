@@ -159,23 +159,25 @@ public class JsonBuilder {
      * Convenience method to add a new property associated with a {@link List} value.
      * List can have {@link String}, {@link Number}, {@link Boolean} or {@link Character} values
      *
-     * @param key   name of the property.
-     * @param value {@link List} value of associated with the property.
+     * @param key    name of the property.
+     * @param values {@link List} value of associated with the property.
      * @return the current object of {@link JsonBuilder}.
      */
-    public <T> JsonBuilder add(final String key, final List<T> value) throws InvalidTargetObjectTypeException {
+    public <T> JsonBuilder add(final String key, final List<T> values) throws InvalidTargetObjectTypeException {
 
         JsonArray array = new JsonArray();
 
-        for (T values : value) {
-            if (values instanceof String) {
-                array.add((String) values);
-            } else if (values instanceof Number) {
+        for (T value : values) {
+            if (value instanceof String) {
+                array.add((String) value);
+            } else if (value instanceof Number) {
                 array.add((Number) values);
-            } else if (values instanceof Boolean) {
-                array.add((Boolean) values);
-            } else if (values instanceof Character) {
-                array.add((Character) values);
+            } else if (value instanceof Boolean) {
+                array.add((Boolean) value);
+            } else if (value instanceof Character) {
+                array.add((Character) value);
+            } else if (value instanceof JsonElement) {
+                array.add((JsonElement) value);
             } else {
                 throw new InvalidTargetObjectTypeException();
             }

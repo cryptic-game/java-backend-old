@@ -16,7 +16,6 @@ public abstract class NettyHandler<T> extends SimpleChannelInboundHandler<T> {
 
     @Override
     public void exceptionCaught(final ChannelHandlerContext ctx, final Throwable cause) {
-        ctx.close();
         log.error("Failed to progress channel. \"" + ctx.channel() + "\"", cause);
     }
 }

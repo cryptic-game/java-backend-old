@@ -4,7 +4,9 @@ import com.google.gson.JsonObject;
 import io.netty.channel.Channel;
 import io.netty.handler.codec.http.*;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
-import net.cryptic_game.backend.base.interfaces.Error;
+import net.cryptic_game.backend.base.interfaces.ResponseType;
+
+import java.util.UUID;
 
 import static io.netty.buffer.Unpooled.copiedBuffer;
 
@@ -14,32 +16,57 @@ public class SocketUtils {
         channel.writeAndFlush(data.toString());
     }
 
-    public static void sendRaw(Channel channel, Error error) {
-        sendRaw(channel, error.getResponse());
+    public static void sendRaw(Channel channel, ResponseType responseType, UUID tag, JsonObject data) {
+        sendRaw(channel, JsonBuilder.anJSON()
+                .add("status", responseType.serialize())
+                .add("tag", tag.toString())
+                .add("data", data)
+                .build());
+    }
+
+    public static void sendRawError(Channel channel, ResponseType responseType, String errorMessage) {
+        JsonObject status = responseType.serialize();
+        status.addProperty("message", errorMessage);
+        sendRaw(channel, JsonBuilder.anJSON()
+                .add("status", status)
+                .build());
+    }
+
+    public static void sendRawError(Channel channel, ResponseType responseType, String errorMessage, UUID tag) {
+        JsonObject status = responseType.serialize();
+        status.addProperty("message", errorMessage);
+        sendRaw(channel, JsonBuilder.anJSON()
+                .add("status", status)
+                .add("tag", tag.toString())
+                .build());
     }
 
     public static void sendWebsocket(Channel channel, JsonObject data) {
         channel.writeAndFlush(new TextWebSocketFrame(data.toString()));
     }
 
-    public static void sendWebsocket(Channel channel, Error error) {
-        sendWebsocket(channel, error.getResponse());
+    public static void sendWebsocket(Channel channel, ResponseType responseType, UUID tag, JsonObject data) {
+        sendWebsocket(channel, JsonBuilder.anJSON()
+                .add("status", responseType.serialize())
+                .add("tag", tag.toString())
+                .add("data", data)
+                .build());
     }
 
-    public static void sendHTTP(Channel channel, JsonObject data) {
-        final String responseMessage = data.toString();
-
-        FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK,
-                copiedBuffer(responseMessage.getBytes()));
-
-        response.headers().set(HttpHeaderNames.SERVER, "cryptic-server");
-        response.headers().set(HttpHeaderNames.CONTENT_TYPE, "application/json");
-        response.headers().set(HttpHeaderNames.CONTENT_LENGTH, responseMessage.length());
-
-        channel.writeAndFlush(response);
+    public static void sendWebsocketError(Channel channel, ResponseType responseType, String errorMessage) {
+        JsonObject status = responseType.serialize();
+        status.addProperty("message", errorMessage);
+        sendWebsocket(channel, JsonBuilder.anJSON()
+                .add("status", status)
+                .build());
     }
 
-    public static void sendHTTP(Channel channel, Error error) {
-        sendHTTP(channel, error.getResponse());
+    public static void sendWebsocketError(Channel channel, ResponseType responseType, String errorMessage, UUID tag) {
+        JsonObject status = responseType.serialize();
+        status.addProperty("message", errorMessage);
+        sendWebsocket(channel, JsonBuilder.anJSON()
+                .add("status", status)
+                .add("tag", tag.toString())
+                .build());
     }
 }
