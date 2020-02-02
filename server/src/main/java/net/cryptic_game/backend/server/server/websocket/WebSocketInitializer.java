@@ -13,11 +13,6 @@ import java.util.Map;
 public class WebSocketInitializer implements ServerCodecInitializer {
 
     private static final String WEBSOCKET_PATH = "/";
-    private final Map<String, WebSocketAction> actions;
-
-    public WebSocketInitializer(Map<String, WebSocketAction> actions) {
-        this.actions = actions;
-    }
 
     @Override
     public void configure(ChannelPipeline pipeline) {
@@ -27,6 +22,6 @@ public class WebSocketInitializer implements ServerCodecInitializer {
         pipeline.addLast(new WebSocketJsonDecoder());
         pipeline.addLast(new WebSocketJsonEncoder());
         if (!App.getInstance().getConfig().getAsBoolean(BaseConfig.PRODUCTIVE)) pipeline.addLast(new WebSocketLogger());
-        pipeline.addLast(new WebSocketHandler(this.actions));
+        pipeline.addLast(new WebSocketHandler());
     }
 }

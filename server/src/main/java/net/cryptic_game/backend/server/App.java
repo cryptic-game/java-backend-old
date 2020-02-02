@@ -1,10 +1,14 @@
 package net.cryptic_game.backend.server;
 
 import net.cryptic_game.backend.base.AppBootstrap;
+import net.cryptic_game.backend.base.api.ApiHandler;
+import net.cryptic_game.backend.server.api.ServerApiEndpointExecutor;
 import net.cryptic_game.backend.server.config.ServerConfig;
 import net.cryptic_game.backend.server.server.NettyServerHandler;
 import net.cryptic_game.backend.server.server.http.HttpCodec;
 import net.cryptic_game.backend.server.server.websocket.WebSocketCodec;
+import net.cryptic_game.backend.server.server.websocket.endpoints.InfoEndpoints;
+import net.cryptic_game.backend.server.server.websocket.endpoints.UserEndpoints;
 
 public class App extends AppBootstrap {
 
@@ -34,5 +38,12 @@ public class App extends AppBootstrap {
     @Override
     protected void start() {
         this.serverHandler.start();
+    }
+
+    @Override
+    protected void initApi() {
+        this.apiHandler = new ApiHandler(ServerApiEndpointExecutor.class);
+        apiHandler.registerApiCollection(new UserEndpoints());
+        apiHandler.registerApiCollection(new InfoEndpoints());
     }
 }

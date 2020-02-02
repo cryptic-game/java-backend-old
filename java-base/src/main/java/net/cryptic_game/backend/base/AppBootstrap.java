@@ -1,5 +1,6 @@
 package net.cryptic_game.backend.base;
 
+import net.cryptic_game.backend.base.api.ApiHandler;
 import net.cryptic_game.backend.base.config.BaseConfig;
 import net.cryptic_game.backend.base.config.Config;
 import net.cryptic_game.backend.base.config.DefaultConfig;
@@ -23,6 +24,7 @@ public abstract class AppBootstrap {
     private static AppBootstrap instance;
 
     protected final Config config;
+    protected ApiHandler apiHandler;
     protected final SQLConnection sqlConnection;
 
     public AppBootstrap(final DefaultConfig config) {
@@ -30,6 +32,7 @@ public abstract class AppBootstrap {
         this.config = new Config(config);
         this.setLoglevel(Level.valueOf(this.config.getAsString(BaseConfig.LOG_LEVEL)));
 
+        this.initApi();
         this.sqlConnection = new SQLConnection();
 
         try {
@@ -49,6 +52,7 @@ public abstract class AppBootstrap {
 
     protected abstract void init();
     protected abstract void start();
+    protected abstract void initApi();
 
     protected void setUpSQL() {
         this.sqlConnection.init(new SQLServer(
@@ -70,6 +74,10 @@ public abstract class AppBootstrap {
 
     public Config getConfig() {
         return this.config;
+    }
+
+    public ApiHandler getApiHandler() {
+        return apiHandler;
     }
 
     public SQLConnection getSqlConnection() {

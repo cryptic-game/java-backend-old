@@ -2,11 +2,14 @@ package net.cryptic_game.backend.server.server.websocket;
 
 import com.google.gson.JsonObject;
 import io.netty.channel.ChannelHandlerContext;
-import net.cryptic_game.backend.base.data.client.ClientWrapper;
+import net.cryptic_game.backend.base.api.ApiExecutor;
+import net.cryptic_game.backend.server.api.ServerApiExecutionData;
+import net.cryptic_game.backend.server.api.ServerApiExecutor;
+import net.cryptic_game.backend.server.client.ClientWrapper;
+import net.cryptic_game.backend.server.App;
 import net.cryptic_game.backend.server.server.NettyHandler;
 import net.cryptic_game.backend.server.server.ServerResponseType;
 
-import java.util.Map;
 import java.util.UUID;
 
 import static net.cryptic_game.backend.base.utils.JsonUtils.*;
@@ -14,39 +17,34 @@ import static net.cryptic_game.backend.server.server.websocket.WebSocketUtils.bu
 
 public class WebSocketHandler extends NettyHandler<JsonObject> {
 
-    private final Map<String, WebSocketAction> actions;
+    private final ApiExecutor executor;
 
-    public WebSocketHandler(Map<String, WebSocketAction> actions) {
-        this.actions = actions;
+    public WebSocketHandler() {
+        this.executor = new ServerApiExecutor(App.getInstance().getApiHandler());
     }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, JsonObject json) throws Exception {
-        String actionName = getString(json, "action");
+        String action = getString(json, "action");
         UUID tag = getUUID(json, "tag");
         JsonObject data = getJsonObject(json, "data");
 
-        if (actionName == null) {
+        if (action == null) {
             ctx.write(build(ServerResponseType.BAD_REQUEST, "MISSING_ACTION"));
             return;
         }
-
-        actionName = actionName.toLowerCase().strip();
 
         if (tag == null) {
             ctx.write(build(ServerResponseType.BAD_REQUEST, "MISSING_TAG"));
             return;
         }
 
-        if (!this.actions.containsKey(actionName)) {
-            ctx.write(build(ServerResponseType.NOT_FOUND, "UNKNOWN_ACTION"));
-            return;
-        }
+        if (data == null) data = new JsonObject();
 
-        JsonObject response = this.actions.get(actionName).handleRequest(ClientWrapper.getClient(ctx), data);
+        JsonObject response = this.executor.execute(new ServerApiExecutionData(action, ClientWrapper.getClient(ctx), data));
         response.addProperty("tag", tag.toString());
-        ctx.write(response);
 
+        ctx.write(response);
     }
 
     @Override

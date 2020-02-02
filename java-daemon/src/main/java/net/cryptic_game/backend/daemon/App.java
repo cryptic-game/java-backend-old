@@ -23,4 +23,9 @@ new App();
     protected void start() {
 
     }
+
+    @Override
+    protected void initApi() {
+
+    }
 }

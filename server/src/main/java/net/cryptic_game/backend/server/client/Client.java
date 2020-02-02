@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.base.data.client;
+package net.cryptic_game.backend.server.client;
 
 import io.netty.channel.ChannelHandlerContext;
 import net.cryptic_game.backend.base.data.session.Session;
