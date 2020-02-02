@@ -5,6 +5,9 @@ import net.cryptic_game.backend.base.sql.SQLConnection;
 import net.cryptic_game.backend.base.sql.SQLServer;
 import net.cryptic_game.backend.base.sql.SQLServerType;
 import net.cryptic_game.backend.server.config.ServerConfig;
+import net.cryptic_game.backend.server.server.NettyServerHandler;
+import net.cryptic_game.backend.server.server.http.HttpCodec;
+import net.cryptic_game.backend.server.server.websocket.WebSocketCodec;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LoggerContext;
@@ -14,6 +17,7 @@ public class App extends AppBootstrap {
 
     private final Config config;
     private final SQLConnection sqlConnection;
+    private NettyServerHandler serverHandler;
 
     public App() {
         this.config = new Config(ServerConfig.CONFIG);
@@ -22,6 +26,13 @@ public class App extends AppBootstrap {
 
         this.sqlConnection = new SQLConnection();
         this.initSQL();
+
+        serverHandler = new NettyServerHandler();
+        serverHandler.addServer("websocket", config.getAsString(ServerConfig.WEBSOCKET_HOST),
+                config.getAsInt(ServerConfig.WEBSOCKET_PORT), new WebSocketCodec());
+        serverHandler.addServer("http", config.getAsString(ServerConfig.HTTP_HOST),
+                config.getAsInt(ServerConfig.HTTP_PORT), new HttpCodec());
+        serverHandler.start();
     }
 
     private void initSQL() {

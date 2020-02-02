@@ -4,7 +4,6 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
-import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketServerCompressionHandler;
 import net.cryptic_game.backend.server.server.ServerCodecInitializer;
 
 import java.util.Map;
@@ -22,7 +21,6 @@ public class WebSocketInitializer implements ServerCodecInitializer {
     public void configure(ChannelPipeline pipeline) {
         pipeline.addLast("codec", new HttpServerCodec());
         pipeline.addLast("aggregator", new HttpObjectAggregator(65536));
-        pipeline.addLast(new WebSocketServerCompressionHandler());
         pipeline.addLast(new WebSocketServerProtocolHandler(WebSocketInitializer.WEBSOCKET_PATH));
         pipeline.addLast(new WebSocketJsonDecoder());
         pipeline.addLast(new WebSocketJsonEncoder());
