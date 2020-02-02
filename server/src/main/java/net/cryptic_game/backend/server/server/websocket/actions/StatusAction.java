@@ -3,6 +3,7 @@ package net.cryptic_game.backend.server.server.websocket.actions;
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.data.client.Client;
 import net.cryptic_game.backend.base.data.client.ClientWrapper;
+import net.cryptic_game.backend.base.utils.JsonBuilder;
 import net.cryptic_game.backend.server.server.ServerResponseType;
 import net.cryptic_game.backend.server.server.websocket.WebSocketAction;
 
@@ -18,8 +19,8 @@ public class StatusAction extends WebSocketAction {
     @Override
     public JsonObject handleRequest(Client client, JsonObject data) throws Exception {
         if (client.getUser() == null) return build(ServerResponseType.OK, simple("online", ClientWrapper.getOnlineCount()));
-        JsonObject response = client.getUser().serialize();
-        response.addProperty("online", ClientWrapper.getOnlineCount());
-        return build(ServerResponseType.OK, response);
+        return build(ServerResponseType.OK, JsonBuilder.anJSON()
+                .add("user", client.getUser().serialize())
+                .add("online", ClientWrapper.getOnlineCount()).build());
     }
 }

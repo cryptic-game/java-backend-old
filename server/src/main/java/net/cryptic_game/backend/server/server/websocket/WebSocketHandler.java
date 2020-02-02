@@ -3,7 +3,6 @@ package net.cryptic_game.backend.server.server.websocket;
 import com.google.gson.JsonObject;
 import io.netty.channel.ChannelHandlerContext;
 import net.cryptic_game.backend.base.data.client.ClientWrapper;
-import net.cryptic_game.backend.base.data.user.User;
 import net.cryptic_game.backend.server.server.NettyHandler;
 import net.cryptic_game.backend.server.server.ServerResponseType;
 
