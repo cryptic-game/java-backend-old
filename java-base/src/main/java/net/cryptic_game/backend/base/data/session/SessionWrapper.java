@@ -1,6 +1,8 @@
 package net.cryptic_game.backend.base.data.session;
 
 import net.cryptic_game.backend.base.AppBootstrap;
+import net.cryptic_game.backend.base.config.BaseConfig;
+import net.cryptic_game.backend.base.config.Config;
 import net.cryptic_game.backend.base.data.user.User;
 import net.cryptic_game.backend.base.sql.SQLConnection;
 
@@ -11,18 +13,20 @@ import java.time.temporal.ChronoUnit;
 public class SessionWrapper {
 
     private static final SQLConnection sqlConnection;
-    private static final Duration TIMEOUT = Duration.of(2, ChronoUnit.DAYS);
+    private static final Duration EXPIRE;
 
     static {
         final AppBootstrap app = AppBootstrap.getInstance();
+        final Config config = app.getConfig();
         sqlConnection = app.getSqlConnection();
+        EXPIRE = Duration.of(config.getAsInt(BaseConfig.SESSION_EXPIRE), ChronoUnit.DAYS);
     }
 
     public static Session openSession(final User user, final String deviceName) {
         final Session session = new Session();
         session.setUser(user);
         session.setDeviceName(deviceName);
-        session.setExpire(LocalDateTime.now().plus(TIMEOUT));
+        session.setExpire(LocalDateTime.now().plus(EXPIRE));
 
         final org.hibernate.Session sqlSession = sqlConnection.openSession();
         sqlSession.beginTransaction();

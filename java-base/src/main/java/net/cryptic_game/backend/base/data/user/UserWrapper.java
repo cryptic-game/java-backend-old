@@ -6,6 +6,7 @@ import net.cryptic_game.backend.base.utils.SQLUtils;
 import net.cryptic_game.backend.base.utils.SecurityUtils;
 import org.hibernate.Session;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,6 +17,25 @@ public class UserWrapper {
     static {
         final AppBootstrap app = AppBootstrap.getInstance();
         sqlConnection = app.getSqlConnection();
+    }
+
+    public static User register(final String name, final String mail, final String password) {
+        final LocalDateTime now = LocalDateTime.now();
+
+        final User user = new User();
+        user.setName(name);
+        user.setMail(mail);
+        user.setCreated(now);
+        user.setLast(now);
+
+        setPassword(user, password);
+
+        final Session session = sqlConnection.openSession();
+        session.beginTransaction();
+        session.save(user);
+        session.getTransaction().commit();
+        session.close();
+        return user;
     }
 
     public static User getById(final UUID id) {
