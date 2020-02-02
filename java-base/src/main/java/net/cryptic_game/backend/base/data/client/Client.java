@@ -23,6 +23,7 @@ public class Client {
     }
 
     public User getUser() {
+        if (session == null) return null;
         return this.session.getUser();
     }
 

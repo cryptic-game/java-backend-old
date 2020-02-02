@@ -26,17 +26,18 @@ public abstract class AppBootstrap {
     protected final SQLConnection sqlConnection;
 
     public AppBootstrap(final DefaultConfig config) {
+        AppBootstrap.instance = this;
         this.config = new Config(config);
         this.setLoglevel(Level.valueOf(this.config.getAsString(BaseConfig.LOG_LEVEL)));
 
         this.sqlConnection = new SQLConnection();
 
-        this.setUpSQL();
         try {
             this.initSQLTableModels();
         } catch (SQLException e) {
             log.error("Can't register all table models.", e);
         }
+        this.setUpSQL();
         this.init();
         this.start();
     }

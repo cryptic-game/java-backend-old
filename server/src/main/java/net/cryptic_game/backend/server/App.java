@@ -8,12 +8,10 @@ import net.cryptic_game.backend.server.server.websocket.WebSocketCodec;
 
 public class App extends AppBootstrap {
 
-    private final NettyServerHandler serverHandler;
+    private NettyServerHandler serverHandler;
 
     public App() {
         super(ServerConfig.CONFIG);
-
-        this.serverHandler = new NettyServerHandler();
     }
 
     public static void main(String[] args) {
@@ -22,6 +20,7 @@ public class App extends AppBootstrap {
 
     @Override
     protected void init() {
+        this.serverHandler = new NettyServerHandler();
         this.serverHandler.addServer("websocket",
                 this.config.getAsString(ServerConfig.WEBSOCKET_HOST),
                 this.config.getAsInt(ServerConfig.WEBSOCKET_PORT),

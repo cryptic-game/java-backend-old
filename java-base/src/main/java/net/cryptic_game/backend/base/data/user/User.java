@@ -4,9 +4,13 @@ import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
+@Entity
+@Table(name = "user")
 public class User extends TableModelAutoId {
 
     @Column(name = "name", updatable = true, nullable = false)

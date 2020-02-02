@@ -1,6 +1,7 @@
 package net.cryptic_game.backend.base.sql.models;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -15,6 +16,7 @@ public abstract class TableModelAutoId extends TableModel {
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "id", updatable = false, nullable = false)
+    @Type(type = "uuid-char")
     private UUID id;
 
     public UUID getId() {

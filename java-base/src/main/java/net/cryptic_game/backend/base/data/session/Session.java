@@ -3,16 +3,18 @@ package net.cryptic_game.backend.base.data.session;
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.data.user.User;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
+import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "session")
 public class Session extends TableModelAutoId {
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, updatable = false)
+    @Type(type = "uuid-char")
     private User user;
 
     @Column(name = "device_name", nullable = false, updatable = false)

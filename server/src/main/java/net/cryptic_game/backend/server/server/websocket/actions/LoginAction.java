@@ -23,7 +23,7 @@ public class LoginAction extends WebSocketAction {
 
         String name = getString(data, "name");
         String password = getString(data, "password");
-        String deviceName = getString(data, "deviceName");
+        String deviceName = getString(data, "device_name");
 
         if (name == null) return build(ServerResponseType.BAD_REQUEST, "MISSING_NAME");
         if (password == null) return build(ServerResponseType.BAD_REQUEST, "MISSING_PASSWORD");

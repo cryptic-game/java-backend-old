@@ -29,7 +29,7 @@ import java.sql.Driver;
  */
 public enum SQLServerType {
 
-    MARIADB_53_0("mariadb_05_3", "mariadb", org.mariadb.jdbc.Driver.class, MariaDB53Dialect.class),
+    MARIADB_05_3("mariadb_05_3", "mariadb", org.mariadb.jdbc.Driver.class, MariaDB53Dialect.class),
     MARIADB_10_0("mariadb_10_0", "mariadb", org.mariadb.jdbc.Driver.class, MariaDB10Dialect.class),
     MARIADB_10_2("mariadb_10_2", "mariadb", org.mariadb.jdbc.Driver.class, MariaDB102Dialect.class),
     MARIADB_10_3("mariadb_10_3", "mariadb", org.mariadb.jdbc.Driver.class, MariaDB103Dialect.class),
