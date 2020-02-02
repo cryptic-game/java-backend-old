@@ -149,3 +149,4 @@ gradle-app.setting
 **/build/
 
 # End of https://www.gitignore.io/api/linux,gradle,windows,intellij+all
+!.idea/

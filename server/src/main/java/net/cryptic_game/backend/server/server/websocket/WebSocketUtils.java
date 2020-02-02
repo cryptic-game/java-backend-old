@@ -28,6 +28,10 @@ public class WebSocketUtils {
         return build(responseType, null, tag, data);
     }
 
+    public static JsonObject build(ServerResponseType responseType, JsonObject data) {
+        return build(responseType, null, null, data);
+    }
+
     public static JsonObject build(ServerResponseType responseType, String errorMessage, UUID tag, JsonObject data) {
         JsonObject status = responseType.serialize();
 

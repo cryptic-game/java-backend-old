@@ -2,6 +2,7 @@ package net.cryptic_game.backend.server.server.websocket;
 
 import com.google.gson.JsonObject;
 import io.netty.channel.ChannelHandlerContext;
+import net.cryptic_game.backend.base.data.client.ClientWrapper;
 import net.cryptic_game.backend.base.data.user.User;
 import net.cryptic_game.backend.server.server.NettyHandler;
 import net.cryptic_game.backend.server.server.ServerResponseType;
@@ -43,9 +44,19 @@ public class WebSocketHandler extends NettyHandler<JsonObject> {
             return;
         }
 
-        User user = new User();
+        JsonObject response = this.actions.get(actionName).handleRequest(ClientWrapper.getClient(ctx), data);
+        response.addProperty("tag", tag.toString());
+        ctx.write(response);
 
-        ctx.write(this.actions.get(actionName).handleRequest(user, tag, data));
+    }
 
+    @Override
+    public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+        ClientWrapper.addClient(ctx);
+    }
+
+    @Override
+    public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+        ClientWrapper.removeClient(ClientWrapper.getClient(ctx));
     }
 }

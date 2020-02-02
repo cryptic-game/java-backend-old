@@ -1,9 +1,7 @@
 package net.cryptic_game.backend.server.server.websocket;
 
 import com.google.gson.JsonObject;
-import net.cryptic_game.backend.base.data.user.User;
-
-import java.util.UUID;
+import net.cryptic_game.backend.base.data.client.Client;
 
 public abstract class WebSocketAction {
 
@@ -13,7 +11,7 @@ public abstract class WebSocketAction {
         this.name = name;
     }
 
-    public abstract JsonObject handleRequest(User user, UUID tag, JsonObject data) throws Exception;
+    public abstract JsonObject handleRequest(Client client, JsonObject data) throws Exception;
 
     public String getName() {
         return this.name;
