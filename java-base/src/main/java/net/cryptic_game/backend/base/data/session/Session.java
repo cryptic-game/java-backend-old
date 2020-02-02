@@ -23,10 +23,10 @@ public class Session extends TableModelAutoId {
     @Column(name = "expire", nullable = false, updatable = false)
     private LocalDateTime expire;
 
-    @Column(name = "valid", nullable = false, updatable = false)
+    @Column(name = "valid", nullable = false, updatable = true)
     private boolean valid;
 
-    @Column(name = "last_active", nullable = false, updatable = false)
+    @Column(name = "last_active", nullable = false, updatable = true)
     private LocalDateTime lastActive;
 
     @Override

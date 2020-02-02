@@ -66,6 +66,7 @@ public class UserWrapper {
         final Session session = sqlConnection.openSession();
         session.beginTransaction();
         user.setLast(LocalDateTime.now());
+        session.update(user);
         session.getTransaction().commit();
         session.close();
     }

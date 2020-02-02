@@ -9,6 +9,7 @@ import net.cryptic_game.backend.base.sql.SQLConnection;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.UUID;
 
 public class SessionWrapper {
 
@@ -27,6 +28,8 @@ public class SessionWrapper {
         session.setUser(user);
         session.setDeviceName(deviceName);
         session.setExpire(LocalDateTime.now().plus(EXPIRE));
+        session.setLastActive(LocalDateTime.now());
+        session.setValid(true);
 
         final org.hibernate.Session sqlSession = sqlConnection.openSession();
         sqlSession.beginTransaction();
@@ -38,14 +41,23 @@ public class SessionWrapper {
     }
 
     public static boolean isValid(final Session session) {
-        final boolean valid = session.isValid() && LocalDateTime.now().isBefore(session.getExpire());
-        if (valid) {
-            final org.hibernate.Session sqlSession = sqlConnection.openSession();
-            sqlSession.beginTransaction();
-            session.setLastActive(LocalDateTime.now());
-            sqlSession.getTransaction().commit();
-            sqlSession.close();
-        }
-        return valid;
+        return session.isValid() && LocalDateTime.now().isBefore(session.getExpire());
+    }
+
+    public static Session getSessionById(UUID id) {
+        final org.hibernate.Session sqlSession = sqlConnection.openSession();
+        Session session = sqlSession.find(Session.class, id);
+        sqlSession.close();
+
+        return session;
+    }
+
+    public static void setLastToCurrentTime(Session session) {
+        final org.hibernate.Session sqlSession = sqlConnection.openSession();
+        sqlSession.beginTransaction();
+        session.setLastActive(LocalDateTime.now());
+        sqlSession.update(session);
+        sqlSession.getTransaction().commit();
+        sqlSession.close();
     }
 }

@@ -30,6 +30,7 @@ public class Client {
 
     public void setSession(final Session session) {
         this.session = session;
+        SessionWrapper.setLastToCurrentTime(session);
         UserWrapper.setLastToCurrentTime(session.getUser());
     }
 
