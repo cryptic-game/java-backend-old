@@ -25,6 +25,7 @@ public class WebSocketInitializer implements ServerCodecInitializer {
         pipeline.addLast(new WebSocketServerCompressionHandler());
         pipeline.addLast(new WebSocketServerProtocolHandler(WebSocketInitializer.WEBSOCKET_PATH));
         pipeline.addLast(new WebSocketJsonDecoder());
+        pipeline.addLast(new WebSocketJsonEncoder());
         pipeline.addLast(new WebSocketHandler(this.actions));
     }
 }
