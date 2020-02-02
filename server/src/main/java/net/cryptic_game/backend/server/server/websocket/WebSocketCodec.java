@@ -2,9 +2,7 @@ package net.cryptic_game.backend.server.server.websocket;
 
 import net.cryptic_game.backend.server.server.ServerCodec;
 import net.cryptic_game.backend.server.server.ServerCodecInitializer;
-import net.cryptic_game.backend.server.server.websocket.actions.LoginAction;
-import net.cryptic_game.backend.server.server.websocket.actions.RegisterAction;
-import net.cryptic_game.backend.server.server.websocket.actions.SessionAction;
+import net.cryptic_game.backend.server.server.websocket.actions.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +19,8 @@ public class WebSocketCodec implements ServerCodec {
         this.addAction(new LoginAction());
         this.addAction(new RegisterAction());
         this.addAction(new SessionAction());
+        this.addAction(new PasswordAction());
+        this.addAction(new StatusAction());
     }
 
     private void addAction(WebSocketAction action) {

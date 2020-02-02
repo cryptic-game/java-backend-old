@@ -1,6 +1,7 @@
 package net.cryptic_game.backend.server.server;
 
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.stream.MalformedJsonException;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.slf4j.Logger;
@@ -19,12 +20,12 @@ public abstract class NettyHandler<T> extends SimpleChannelInboundHandler<T> {
 
     @Override
     public void exceptionCaught(final ChannelHandlerContext ctx, final Throwable cause) {
-        log.error("Failed to progress channel. \"" + ctx.channel() + "\"", cause);
-
-        if (cause instanceof JsonSyntaxException) {
+        if (cause.getCause() instanceof JsonSyntaxException) {
             ctx.write(build(ServerResponseType.BAD_REQUEST, "JSON_SYNTAX_ERROR"));
-        } else {
-            ctx.write(build(ServerResponseType.INTERNAL_SERVER_ERROR));
+            return;
         }
+
+        log.error("Failed to progress channel. \"" + ctx.channel() + "\"", cause);
+        ctx.write(build(ServerResponseType.INTERNAL_SERVER_ERROR));
     }
 }

@@ -20,6 +20,7 @@ public class LoginAction extends WebSocketAction {
     @Override
     public JsonObject handleRequest(Client client, JsonObject data) throws Exception {
         if (client.getUser() != null) return build(ServerResponseType.FORBIDDEN, "ALREADY_LOGGED_IN");
+        if (data == null) return build(ServerResponseType.BAD_REQUEST, "MISSING_DATA");
 
         String name = getString(data, "name");
         String password = getString(data, "password");

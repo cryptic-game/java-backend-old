@@ -31,4 +31,8 @@ public class ClientWrapper {
         }
         return clients;
     }
+
+    public static int getOnlineCount() {
+        return clients.size();
+    }
 }
