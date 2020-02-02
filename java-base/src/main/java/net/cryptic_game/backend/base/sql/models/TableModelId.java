@@ -3,19 +3,20 @@ package net.cryptic_game.backend.base.sql.models;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import java.util.UUID;
 
 @MappedSuperclass
 public abstract class TableModelId extends TableModel {
 
     @Id
     @Column(name = "id", updatable = false, nullable = false)
-    private Long id;
+    private UUID id;
 
-    public Long getId() {
+    public UUID getId() {
         return this.id;
     }
 
-    public void setId(final Long id) {
+    public void setId(final UUID id) {
         this.id = id;
     }
 }
