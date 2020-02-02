@@ -2,12 +2,12 @@ package net.cryptic_game.backend.base.utils;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
-public class Security {
+public class SecurityUtils {
 
     private static final BCrypt.Hasher hasher = BCrypt.withDefaults();
     private static final BCrypt.Verifyer verifyer = BCrypt.verifyer();
 
-    public static String has(final String content) {
+    public static String hash(final String content) {
         return hasher.hashToString(12, content.toCharArray());
     }
 
