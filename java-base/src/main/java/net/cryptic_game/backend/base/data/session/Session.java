@@ -26,6 +26,9 @@ public class Session extends TableModelAutoId {
     @Column(name = "valid", nullable = false, updatable = false)
     private boolean valid;
 
+    @Column(name = "last_active", nullable = false, updatable = false)
+    private LocalDateTime lastActive;
+
     @Override
     public JsonObject serialize() {
         return null;
@@ -61,5 +64,13 @@ public class Session extends TableModelAutoId {
 
     public void setValid(final boolean valid) {
         this.valid = valid;
+    }
+
+    public LocalDateTime getLastActive() {
+        return this.lastActive;
+    }
+
+    public void setLastActive(final LocalDateTime lastActive) {
+        this.lastActive = lastActive;
     }
 }

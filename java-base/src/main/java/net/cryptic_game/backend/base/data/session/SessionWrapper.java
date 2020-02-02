@@ -37,7 +37,15 @@ public class SessionWrapper {
         return session;
     }
 
-    public static boolean isValide(final Session session) {
-        return session.isValid() && LocalDateTime.now().isBefore(session.getExpire());
+    public static boolean isValid(final Session session) {
+        final boolean valid = session.isValid() && LocalDateTime.now().isBefore(session.getExpire());
+        if (valid) {
+            final org.hibernate.Session sqlSession = sqlConnection.openSession();
+            sqlSession.beginTransaction();
+            session.setLastActive(LocalDateTime.now());
+            sqlSession.getTransaction().commit();
+            sqlSession.close();
+        }
+        return valid;
     }
 }

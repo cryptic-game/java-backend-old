@@ -4,6 +4,7 @@ import io.netty.channel.ChannelHandlerContext;
 import net.cryptic_game.backend.base.data.session.Session;
 import net.cryptic_game.backend.base.data.session.SessionWrapper;
 import net.cryptic_game.backend.base.data.user.User;
+import net.cryptic_game.backend.base.data.user.UserWrapper;
 
 public class Client {
 
@@ -29,9 +30,11 @@ public class Client {
 
     public void setSession(final Session session) {
         this.session = session;
+        UserWrapper.setLastToCurrentTime(session.getUser());
     }
 
     public void setSession(final User user, final String deviceName) {
         this.session = SessionWrapper.openSession(user, deviceName);
+        UserWrapper.setLastToCurrentTime(session.getUser());
     }
 }

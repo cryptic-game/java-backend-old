@@ -61,4 +61,12 @@ public class UserWrapper {
     public static boolean verifyPassword(final User user, final String input) {
         return SecurityUtils.verify(input, user.getPasswordHash());
     }
+
+    public static void setLastToCurrentTime(final User user) {
+        final Session session = sqlConnection.openSession();
+        session.beginTransaction();
+        user.setLast(LocalDateTime.now());
+        session.getTransaction().commit();
+        session.close();
+    }
 }
