@@ -22,4 +22,7 @@ dependencies {
 
     // BCrypt
     implementation 'at.favre.lib:bcrypt:0.9.0'
+
+    // Validator
+    implementation 'commons-validator:commons-validator:1.6'
 }

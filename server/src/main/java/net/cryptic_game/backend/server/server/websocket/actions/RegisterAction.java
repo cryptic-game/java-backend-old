@@ -8,12 +8,14 @@ import net.cryptic_game.backend.server.server.websocket.WebSocketAction;
 import java.util.UUID;
 
 import static net.cryptic_game.backend.base.utils.JsonUtils.getString;
+import static net.cryptic_game.backend.base.utils.ValidationUtils.checkMail;
+import static net.cryptic_game.backend.base.utils.ValidationUtils.checkPassword;
 import static net.cryptic_game.backend.server.server.websocket.WebSocketUtils.build;
 
-public class LoginAction extends WebSocketAction {
+public class RegisterAction extends WebSocketAction {
 
-    public LoginAction() {
-        super("login");
+    public RegisterAction() {
+        super("register");
     }
 
     @Override
@@ -23,12 +25,22 @@ public class LoginAction extends WebSocketAction {
 
         String name = getString(data, "name");
         String password = getString(data, "password");
+        String mail = getString(data, "mail");
 
         if (name == null)
             return build(ServerResponseType.BAD_REQUEST, "MISSING_NAME", tag);
 
         if (password == null)
             return build(ServerResponseType.BAD_REQUEST, "MISSING_PASSWORD", tag);
+
+        if (mail == null)
+            return build(ServerResponseType.BAD_REQUEST, "MISSING_MAIL", tag);
+
+        if(!checkPassword(password))
+            return build(ServerResponseType.BAD_REQUEST, "INVALID_PASSWORD", tag);
+
+        if(!checkMail(mail))
+            return build(ServerResponseType.BAD_REQUEST, "INVALID_MAIL", tag);
 
         return null;
     }
