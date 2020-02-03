@@ -150,3 +150,8 @@ gradle-app.setting
 
 # End of https://www.gitignore.io/api/linux,gradle,windows,intellij+all
 !.idea/
+/.idea/dataSources.xml
+/.idea/discord.xml
+/.idea/jarRepositories.xml
+/.idea/vcs.xml
+/.idea/dataSources/
