@@ -38,7 +38,7 @@ public class Session extends TableModelAutoId {
         return this.user;
     }
 
-    public void setUser(final User user) {
+    protected void setUser(final User user) {
         this.user = user;
     }
 
@@ -46,7 +46,7 @@ public class Session extends TableModelAutoId {
         return this.deviceName;
     }
 
-    public void setDeviceName(final String deviceName) {
+    protected void setDeviceName(final String deviceName) {
         this.deviceName = deviceName;
     }
 
@@ -54,7 +54,7 @@ public class Session extends TableModelAutoId {
         return this.expire;
     }
 
-    public void setExpire(final LocalDateTime expire) {
+    protected void setExpire(final LocalDateTime expire) {
         this.expire = expire;
     }
 
@@ -62,7 +62,7 @@ public class Session extends TableModelAutoId {
         return this.valid;
     }
 
-    public void setValid(final boolean valid) {
+    protected void setValid(final boolean valid) {
         this.valid = valid;
     }
 
@@ -70,7 +70,7 @@ public class Session extends TableModelAutoId {
         return this.lastActive;
     }
 
-    public void setLastActive(final LocalDateTime lastActive) {
+    protected void setLastActive(final LocalDateTime lastActive) {
         this.lastActive = lastActive;
     }
 }

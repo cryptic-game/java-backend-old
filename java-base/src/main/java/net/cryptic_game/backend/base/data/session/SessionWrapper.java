@@ -5,10 +5,13 @@ import net.cryptic_game.backend.base.config.BaseConfig;
 import net.cryptic_game.backend.base.config.Config;
 import net.cryptic_game.backend.base.data.user.User;
 import net.cryptic_game.backend.base.sql.SQLConnection;
+import net.cryptic_game.backend.base.utils.SQLUtils;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class SessionWrapper {
@@ -40,11 +43,20 @@ public class SessionWrapper {
         return session;
     }
 
+    public static void closeSession(final Session session) {
+        final org.hibernate.Session sqlSession = sqlConnection.openSession();
+        sqlSession.beginTransaction();
+        session.setValid(false);
+        sqlSession.update(session);
+        sqlSession.getTransaction().commit();
+        sqlSession.close();
+    }
+
     public static boolean isValid(final Session session) {
         return session.isValid() && LocalDateTime.now().isBefore(session.getExpire());
     }
 
-    public static Session getSessionById(UUID id) {
+    public static Session getSessionById(final UUID id) {
         final org.hibernate.Session sqlSession = sqlConnection.openSession();
         Session session = sqlSession.find(Session.class, id);
         sqlSession.close();
@@ -52,7 +64,18 @@ public class SessionWrapper {
         return session;
     }
 
-    public static void setLastToCurrentTime(Session session) {
+    public static Session getSessionByDeviceNameAndLastActive(String deviceName, Date lastActive) {
+        final org.hibernate.Session sqlSession = sqlConnection.openSession();
+        final List<Session> sessions = SQLUtils.selectWhere(sqlSession, Session.class, "device_name", deviceName);
+        sqlSession.close();
+
+        if (!sessions.isEmpty()) {
+            //TODO
+        }
+        return null;
+    }
+
+    public static void setLastToCurrentTime(final Session session) {
         final org.hibernate.Session sqlSession = sqlConnection.openSession();
         sqlSession.beginTransaction();
         session.setLastActive(LocalDateTime.now());

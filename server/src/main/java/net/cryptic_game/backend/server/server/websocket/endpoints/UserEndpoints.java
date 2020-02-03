@@ -14,6 +14,7 @@ import net.cryptic_game.backend.server.client.Client;
 import net.cryptic_game.backend.server.server.ServerResponseType;
 import net.cryptic_game.backend.server.server.websocket.WebSocketUtils;
 
+import java.util.Date;
 import java.util.UUID;
 
 import static net.cryptic_game.backend.base.utils.ValidationUtils.checkMail;
@@ -81,6 +82,32 @@ public class UserEndpoints extends ApiCollection {
         if (!UserWrapper.verifyPassword(client.getUser(), password)) return build(ServerResponseType.UNAUTHORIZED, "INVALID_PASSWORD");
 
         UserWrapper.setPassword(client.getUser(), newPassword);
+
+        return build(ServerResponseType.OK);
+    }
+
+    @ApiEndpoint("logout")
+    public JsonObject logout(Client client,
+                             @ApiParameter(value = "device_name", optional = true) String deviceName,
+                             @ApiParameter(value = "last_active", optional = true) Date lastActive) {
+        if (client.getUser() == null) return build(ServerResponseType.FORBIDDEN, "NOT_LOGGED_IN");
+
+        if (deviceName == null && lastActive == null) {
+            client.logout();
+            return build(ServerResponseType.OK);
+        }
+
+        if (deviceName == null) return build(ServerResponseType.BAD_REQUEST, "MISSING_PARAMETER_DEVICE_NAME");
+        if (lastActive == null) return build(ServerResponseType.BAD_REQUEST, "MISSING_PARAMETER_LAST_ACTIVE");
+
+        Session session = SessionWrapper.getSessionByDeviceNameAndLastActive(deviceName, lastActive);
+
+        if (session == null) return build(ServerResponseType.NOT_FOUND, "SESSION_NOT_FOUND");
+
+        SessionWrapper.closeSession(session);
+
+        if (client.getSession().equals(session))
+            client.logout();
 
         return build(ServerResponseType.OK);
     }

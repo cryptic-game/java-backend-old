@@ -38,4 +38,9 @@ public class Client {
         this.session = SessionWrapper.openSession(user, deviceName);
         UserWrapper.setLastToCurrentTime(session.getUser());
     }
+
+    public void logout() {
+        SessionWrapper.closeSession(this.session);
+        this.session = null;
+    }
 }
