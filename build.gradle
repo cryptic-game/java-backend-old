@@ -12,9 +12,18 @@ subprojects {
         mavenCentral()
     }
 
-    jar {
-        from {
-            configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-        }
+    task copyDependencies(type: Copy) {
+        into new File(buildDir, 'dependencies')
+        from sourceSets.main.compileClasspath.collect { it.absolutePath }
     }
+    assemble.finalizedBy copyDependencies
+
+    jar {
+        manifest.attributes(
+                'Implementation-Title': project.name,
+                'Implementation-Version': project.version,
+                'Class-Path': sourceSets.main.compileClasspath.collect { "dependencies/${it.getName()}" }.join(' ')
+        )
+    }
+
 }
