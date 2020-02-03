@@ -5,3 +5,11 @@ plugins {
 dependencies {
     implementation project(":java-base")
 }
+
+def mainClassName = "net.cryptic_game.backend.daemon.App"
+
+jar {
+    manifest {
+        attributes "Main-Class": "$mainClassName"
+    }
+}
