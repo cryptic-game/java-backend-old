@@ -3,12 +3,15 @@ package net.cryptic_game.backend.base.api;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.cryptic_game.backend.base.utils.JsonUtils;
 
 import java.lang.reflect.Method;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+
+import static net.cryptic_game.backend.base.utils.JsonUtils.*;
 
 public abstract class ApiEndpointExecutor {
 
@@ -19,7 +22,8 @@ public abstract class ApiEndpointExecutor {
     private final List<ApiParameterData> parameters;
 
     public ApiEndpointExecutor(final String name, final ApiCollection apiCollection, final Method method) throws ApiParameterException {
-        if (apiCollection.getName() != null) this.name = apiCollection.getName() + "/" + name; else this.name = name;
+        if (apiCollection.getName() != null) this.name = apiCollection.getName() + "/" + name;
+        else this.name = name;
         this.apiCollection = apiCollection;
         this.method = method;
         this.parameters = this.loadParameters(this.method);
@@ -55,7 +59,11 @@ public abstract class ApiEndpointExecutor {
             } else if (parameter.getType() == boolean.class || parameter.getType() == Boolean.class) {
                 parameterValues[i] = json.get(parameter.getKey()).getAsBoolean();
             } else if (parameter.getType() == Date.class) {
-                parameterValues[i] = JsonUtils.getDate(json, parameter.getKey());
+                parameterValues[i] = getDate(json, parameter.getKey());
+            } else if (parameter.getType() == LocalDate.class) {
+                parameterValues[i] = getLocalDate(json, parameter.getKey());
+            } else if (parameter.getType() == LocalDateTime.class) {
+                parameterValues[i] = getLocalDateTime(json, parameter.getKey());
             } else if (parameter.getType() == JsonObject.class) {
                 parameterValues[i] = json.get(parameter.getKey()).getAsJsonObject();
             } else if (parameter.getType() == JsonArray.class) {

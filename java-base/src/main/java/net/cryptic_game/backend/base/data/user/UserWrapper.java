@@ -1,6 +1,7 @@
 package net.cryptic_game.backend.base.data.user;
 
 import net.cryptic_game.backend.base.AppBootstrap;
+import net.cryptic_game.backend.base.data.session.SessionWrapper;
 import net.cryptic_game.backend.base.sql.SQLConnection;
 import net.cryptic_game.backend.base.utils.SQLUtils;
 import net.cryptic_game.backend.base.utils.SecurityUtils;
@@ -67,6 +68,16 @@ public class UserWrapper {
         session.beginTransaction();
         user.setLast(LocalDateTime.now());
         session.update(user);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    public static void deleteUser(final User user) {
+        SessionWrapper.deleteSessions(user);
+
+        final Session session = sqlConnection.openSession();
+        session.beginTransaction();
+        session.delete(user);
         session.getTransaction().commit();
         session.close();
     }

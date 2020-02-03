@@ -10,7 +10,6 @@ import net.cryptic_game.backend.base.utils.SQLUtils;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,6 +28,7 @@ public class SessionWrapper {
     public static Session openSession(final User user, final String deviceName) {
         final Session session = new Session();
         session.setUser(user);
+        session.setToken(UUID.randomUUID());
         session.setDeviceName(deviceName);
         session.setExpire(LocalDateTime.now().plus(EXPIRE));
         session.setLastActive(LocalDateTime.now());
@@ -64,14 +64,12 @@ public class SessionWrapper {
         return session;
     }
 
-    public static Session getSessionByDeviceNameAndLastActive(String deviceName, Date lastActive) {
+    public static Session getSessionByToken(final UUID token) {
         final org.hibernate.Session sqlSession = sqlConnection.openSession();
-        final List<Session> sessions = SQLUtils.selectWhere(sqlSession, Session.class, "device_name", deviceName);
+        final List<Session> sessions = SQLUtils.selectWhere(sqlSession, Session.class, "token", token);
         sqlSession.close();
 
-        if (!sessions.isEmpty()) {
-            //TODO
-        }
+        if (!sessions.isEmpty()) return sessions.get(0);
         return null;
     }
 
@@ -80,6 +78,15 @@ public class SessionWrapper {
         sqlSession.beginTransaction();
         session.setLastActive(LocalDateTime.now());
         sqlSession.update(session);
+        sqlSession.getTransaction().commit();
+        sqlSession.close();
+    }
+
+    public static void deleteSessions(User user) {
+        final org.hibernate.Session sqlSession = sqlConnection.openSession();
+        sqlSession.beginTransaction();
+        sqlSession.createQuery("delete from Session where user.id = :userId")
+                .setParameter("userId", user.getId()).executeUpdate();
         sqlSession.getTransaction().commit();
         sqlSession.close();
     }

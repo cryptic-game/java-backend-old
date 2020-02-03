@@ -23,15 +23,15 @@ public class Client {
         return session;
     }
 
-    public User getUser() {
-        if (session == null) return null;
-        return this.session.getUser();
-    }
-
     public void setSession(final Session session) {
         this.session = session;
         SessionWrapper.setLastToCurrentTime(session);
         UserWrapper.setLastToCurrentTime(session.getUser());
+    }
+
+    public User getUser() {
+        if (session == null) return null;
+        return this.session.getUser();
     }
 
     public void setSession(final User user, final String deviceName) {

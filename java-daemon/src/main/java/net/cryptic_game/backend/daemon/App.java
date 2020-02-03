@@ -1,7 +1,6 @@
 package net.cryptic_game.backend.daemon;
 
 import net.cryptic_game.backend.base.AppBootstrap;
-import net.cryptic_game.backend.base.config.DefaultConfig;
 import net.cryptic_game.backend.daemon.config.DeamonConfig;
 
 public class App extends AppBootstrap {
@@ -11,7 +10,7 @@ public class App extends AppBootstrap {
     }
 
     public static void main(String[] args) {
-new App();
+        new App();
     }
 
     @Override

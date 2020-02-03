@@ -1,13 +1,18 @@
 package net.cryptic_game.backend.base.data.user;
 
 import com.google.gson.JsonObject;
+import net.cryptic_game.backend.base.data.session.Session;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -77,5 +82,25 @@ public class User extends TableModelAutoId {
 
     public void setLast(final LocalDateTime last) {
         this.last = last;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User that = (User) o;
+        return Objects.equals(this.getId(), that.getId()) &&
+                Objects.equals(this.getVersion(), that.getVersion()) &&
+                Objects.equals(this.getCreated(), that.getCreated()) &&
+                Objects.equals(this.getLast(), that.getLast()) &&
+                Objects.equals(this.getMail(), that.getMail()) &&
+                Objects.equals(this.getName(), that.getName()) &&
+                Objects.equals(this.getPasswordHash(), that.getPasswordHash());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getId(), this.getVersion(), this.getCreated(), this.getLast(),
+                this.getMail(), this.getName(), this.getPasswordHash());
     }
 }

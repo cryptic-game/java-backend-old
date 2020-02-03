@@ -3,10 +3,14 @@ package net.cryptic_game.backend.base.data.session;
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.data.user.User;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
+import net.cryptic_game.backend.base.utils.JsonBuilder;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "session")
@@ -16,6 +20,10 @@ public class Session extends TableModelAutoId {
     @JoinColumn(name = "user_id", nullable = false, updatable = false)
     @Type(type = "uuid-char")
     private User user;
+
+    @Column(name = "token", nullable = false, updatable = false, unique = true)
+    @Type(type = "uuid-char")
+    private UUID token;
 
     @Column(name = "device_name", nullable = false, updatable = false)
     private String deviceName;
@@ -31,7 +39,14 @@ public class Session extends TableModelAutoId {
 
     @Override
     public JsonObject serialize() {
-        return null;
+        return JsonBuilder.anJSON()
+                .add("id", this.getId().toString())
+                .add("user", this.getId().toString())
+                .add("device_name", this.getDeviceName())
+                .add("valid", this.isValid())
+                .add("expire", this.getExpire().toInstant(ZoneOffset.UTC).toEpochMilli())
+                .add("last_active", this.getLastActive().toInstant(ZoneOffset.UTC).toEpochMilli())
+                .build();
     }
 
     public User getUser() {
@@ -72,5 +87,33 @@ public class Session extends TableModelAutoId {
 
     protected void setLastActive(final LocalDateTime lastActive) {
         this.lastActive = lastActive;
+    }
+
+    public UUID getToken() {
+        return token;
+    }
+
+    public void setToken(final UUID token) {
+        this.token = token;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Session that = (Session) o;
+        return valid == that.isValid() &&
+                Objects.equals(this.getId(), that.getId()) &&
+                Objects.equals(this.getVersion(), that.getVersion()) &&
+                Objects.equals(this.getDeviceName(), that.getDeviceName()) &&
+                Objects.equals(this.getExpire(), that.getExpire()) &&
+                Objects.equals(this.getLastActive(), that.getLastActive()) &&
+                Objects.equals(this.getToken(), that.getToken());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getId(), this.getVersion(), this.getDeviceName(), this.getExpire(),
+                this.getLastActive(), this.isValid(), this.getToken());
     }
 }

@@ -14,7 +14,6 @@ import net.cryptic_game.backend.server.client.Client;
 import net.cryptic_game.backend.server.server.ServerResponseType;
 import net.cryptic_game.backend.server.server.websocket.WebSocketUtils;
 
-import java.util.Date;
 import java.util.UUID;
 
 import static net.cryptic_game.backend.base.utils.ValidationUtils.checkMail;
@@ -25,19 +24,20 @@ public class UserEndpoints extends ApiCollection {
 
     @ApiEndpoint("login")
     public JsonObject login(Client client,
-                                    @ApiParameter("name") String name,
-                                    @ApiParameter("password") String password,
-                                    @ApiParameter("device_name") String deviceName) {
+                            @ApiParameter("name") String name,
+                            @ApiParameter("password") String password,
+                            @ApiParameter("device_name") String deviceName) {
         if (client.getUser() != null) return build(ServerResponseType.FORBIDDEN, "ALREADY_LOGGED_IN");
 
         User user = UserWrapper.getByName(name);
 
         if (user == null) return build(ServerResponseType.UNAUTHORIZED, "INVALID_NAME");
-        if (!UserWrapper.verifyPassword(user, password)) return build(ServerResponseType.UNAUTHORIZED, "INVALID_PASSWORD");
+        if (!UserWrapper.verifyPassword(user, password))
+            return build(ServerResponseType.UNAUTHORIZED, "INVALID_PASSWORD");
 
         client.setSession(user, deviceName);
 
-        return build(ServerResponseType.OK, JsonBuilder.simple("session", client.getSession().getId().toString()));
+        return build(ServerResponseType.OK, JsonBuilder.simple("session", client.getSession().getToken().toString()));
     }
 
     @ApiEndpoint("register")
@@ -48,14 +48,14 @@ public class UserEndpoints extends ApiCollection {
                                @ApiParameter("device_name") String deviceName) {
         if (client.getUser() != null) return build(ServerResponseType.FORBIDDEN, "ALREADY_LOGGED_IN");
 
-        if(!checkPassword(password)) return build(ServerResponseType.BAD_REQUEST, "INVALID_PASSWORD");
-        if(!checkMail(mail)) return build(ServerResponseType.BAD_REQUEST, "INVALID_MAIL");
+        if (!checkPassword(password)) return build(ServerResponseType.BAD_REQUEST, "INVALID_PASSWORD");
+        if (!checkMail(mail)) return build(ServerResponseType.BAD_REQUEST, "INVALID_MAIL");
         if (UserWrapper.getByName(name) != null) return build(ServerResponseType.FORBIDDEN, "USER_ALREADY_EXISTS");
 
         User user = UserWrapper.register(name, mail, password);
         client.setSession(user, deviceName);
 
-        return build(ServerResponseType.OK, JsonBuilder.simple("session", client.getSession().getId().toString()));
+        return build(ServerResponseType.OK, JsonBuilder.simple("session", client.getSession().getToken().toString()));
 
     }
 
@@ -78,8 +78,10 @@ public class UserEndpoints extends ApiCollection {
                                @ApiParameter("new") String newPassword) {
         if (client.getUser() == null) return build(ServerResponseType.FORBIDDEN, "NOT_LOGGED_IN");
 
-        if (!ValidationUtils.checkPassword(newPassword)) return build(ServerResponseType.BAD_REQUEST, "INVALID_PASSWORD");
-        if (!UserWrapper.verifyPassword(client.getUser(), password)) return build(ServerResponseType.UNAUTHORIZED, "INVALID_PASSWORD");
+        if (!ValidationUtils.checkPassword(newPassword))
+            return build(ServerResponseType.BAD_REQUEST, "INVALID_PASSWORD");
+        if (!UserWrapper.verifyPassword(client.getUser(), password))
+            return build(ServerResponseType.UNAUTHORIZED, "INVALID_PASSWORD");
 
         UserWrapper.setPassword(client.getUser(), newPassword);
 
@@ -88,26 +90,37 @@ public class UserEndpoints extends ApiCollection {
 
     @ApiEndpoint("logout")
     public JsonObject logout(Client client,
-                             @ApiParameter(value = "device_name", optional = true) String deviceName,
-                             @ApiParameter(value = "last_active", optional = true) Date lastActive) {
+                             @ApiParameter(value = "session", optional = true) UUID sessionId) {
         if (client.getUser() == null) return build(ServerResponseType.FORBIDDEN, "NOT_LOGGED_IN");
 
-        if (deviceName == null && lastActive == null) {
+        if (sessionId == null) {
             client.logout();
             return build(ServerResponseType.OK);
         }
 
-        if (deviceName == null) return build(ServerResponseType.BAD_REQUEST, "MISSING_PARAMETER_DEVICE_NAME");
-        if (lastActive == null) return build(ServerResponseType.BAD_REQUEST, "MISSING_PARAMETER_LAST_ACTIVE");
-
-        Session session = SessionWrapper.getSessionByDeviceNameAndLastActive(deviceName, lastActive);
+        Session session = SessionWrapper.getSessionById(sessionId);
 
         if (session == null) return build(ServerResponseType.NOT_FOUND, "SESSION_NOT_FOUND");
 
-        SessionWrapper.closeSession(session);
-
         if (client.getSession().equals(session))
             client.logout();
+        else
+            SessionWrapper.closeSession(session);
+
+        return build(ServerResponseType.OK);
+    }
+
+    @ApiEndpoint("delete")
+    public JsonObject delete(Client client,
+                             @ApiParameter("password") String password) {
+        if (client.getUser() == null) return build(ServerResponseType.FORBIDDEN, "NOT_LOGGED_IN");
+
+        if (!UserWrapper.verifyPassword(client.getUser(), password))
+            return build(ServerResponseType.UNAUTHORIZED, "INVALID_PASSWORD");
+
+        User user = client.getUser();
+        client.logout();
+        UserWrapper.deleteUser(user);
 
         return build(ServerResponseType.OK);
     }

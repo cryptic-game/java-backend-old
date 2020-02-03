@@ -18,6 +18,7 @@ public abstract class ApiCollection {
     public ApiCollection(String name) {
         this.name = name;
     }
+
     public ApiCollection() {
         this(null);
     }
