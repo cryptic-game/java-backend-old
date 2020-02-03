@@ -3,7 +3,6 @@ package net.cryptic_game.backend.server.api;
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.api.*;
 import net.cryptic_game.backend.server.client.Client;
-import org.apache.logging.log4j.core.tools.picocli.CommandLine;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -42,14 +41,14 @@ public class ServerApiEndpointExecutor extends ApiEndpointExecutor {
                 + " is not instance of \"" + ServerApiExecutionData.class.toString() + "\".");
 
         Object[] validParameters = this.validateParameters(((ServerApiExecutionData) data).getData());
-        Object[] parameters= new Object[validParameters.length + 1];
+        Object[] parameters = new Object[validParameters.length + 1];
         parameters[0] = ((ServerApiExecutionData) data).getClient();
         System.arraycopy(validParameters, 0, parameters, 1, validParameters.length);
 
         try {
             return (JsonObject) this.method.invoke(this.apiCollection, parameters);
         } catch (IllegalAccessException | InvocationTargetException e) {
-            throw new ApiException("Unable to execute JsonApi entrypoint \"" + this.name + "\".", e);
+            throw new ApiException("Unable to execute endpoint \"" + this.name + "\".", e);
         }
     }
 }

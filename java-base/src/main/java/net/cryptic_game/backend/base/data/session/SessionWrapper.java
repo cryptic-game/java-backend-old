@@ -5,10 +5,12 @@ import net.cryptic_game.backend.base.config.BaseConfig;
 import net.cryptic_game.backend.base.config.Config;
 import net.cryptic_game.backend.base.data.user.User;
 import net.cryptic_game.backend.base.sql.SQLConnection;
+import net.cryptic_game.backend.base.utils.SQLUtils;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.UUID;
 
 public class SessionWrapper {
@@ -26,6 +28,7 @@ public class SessionWrapper {
     public static Session openSession(final User user, final String deviceName) {
         final Session session = new Session();
         session.setUser(user);
+        session.setToken(UUID.randomUUID());
         session.setDeviceName(deviceName);
         session.setExpire(LocalDateTime.now().plus(EXPIRE));
         session.setLastActive(LocalDateTime.now());
@@ -40,11 +43,20 @@ public class SessionWrapper {
         return session;
     }
 
+    public static void closeSession(final Session session) {
+        final org.hibernate.Session sqlSession = sqlConnection.openSession();
+        sqlSession.beginTransaction();
+        session.setValid(false);
+        sqlSession.update(session);
+        sqlSession.getTransaction().commit();
+        sqlSession.close();
+    }
+
     public static boolean isValid(final Session session) {
         return session.isValid() && LocalDateTime.now().isBefore(session.getExpire());
     }
 
-    public static Session getSessionById(UUID id) {
+    public static Session getSessionById(final UUID id) {
         final org.hibernate.Session sqlSession = sqlConnection.openSession();
         Session session = sqlSession.find(Session.class, id);
         sqlSession.close();
@@ -52,11 +64,29 @@ public class SessionWrapper {
         return session;
     }
 
-    public static void setLastToCurrentTime(Session session) {
+    public static Session getSessionByToken(final UUID token) {
+        final org.hibernate.Session sqlSession = sqlConnection.openSession();
+        final List<Session> sessions = SQLUtils.selectWhere(sqlSession, Session.class, "token", token);
+        sqlSession.close();
+
+        if (!sessions.isEmpty()) return sessions.get(0);
+        return null;
+    }
+
+    public static void setLastToCurrentTime(final Session session) {
         final org.hibernate.Session sqlSession = sqlConnection.openSession();
         sqlSession.beginTransaction();
         session.setLastActive(LocalDateTime.now());
         sqlSession.update(session);
+        sqlSession.getTransaction().commit();
+        sqlSession.close();
+    }
+
+    public static void deleteSessions(User user) {
+        final org.hibernate.Session sqlSession = sqlConnection.openSession();
+        sqlSession.beginTransaction();
+        sqlSession.createQuery("delete from Session where user.id = :userId")
+                .setParameter("userId", user.getId()).executeUpdate();
         sqlSession.getTransaction().commit();
         sqlSession.close();
     }

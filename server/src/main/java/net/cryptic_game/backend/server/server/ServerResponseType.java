@@ -24,9 +24,9 @@ public enum ServerResponseType implements ResponseType {
     INTERNAL_SERVER_ERROR(500, "INTERNAL_SERVER_ERROR", true),
     NOT_IMPLEMENTED(501, "NOT_IMPLEMENTED", true);
 
-    private int code;
-    private String name;
-    private boolean error;
+    private final int code;
+    private final String name;
+    private final boolean error;
 
     ServerResponseType(final int code, final String name, final boolean error) {
         this.code = code;

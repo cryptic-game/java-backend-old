@@ -8,8 +8,6 @@ import net.cryptic_game.backend.base.config.BaseConfig;
 import net.cryptic_game.backend.server.App;
 import net.cryptic_game.backend.server.server.ServerCodecInitializer;
 
-import java.util.Map;
-
 public class WebSocketInitializer implements ServerCodecInitializer {
 
     private static final String WEBSOCKET_PATH = "/";

@@ -24,8 +24,8 @@ public abstract class AppBootstrap {
     private static AppBootstrap instance;
 
     protected final Config config;
-    protected ApiHandler apiHandler;
     protected final SQLConnection sqlConnection;
+    protected ApiHandler apiHandler;
 
     public AppBootstrap(final DefaultConfig config) {
         AppBootstrap.instance = this;
@@ -45,13 +45,19 @@ public abstract class AppBootstrap {
         this.start();
     }
 
+    public static AppBootstrap getInstance() {
+        return instance;
+    }
+
     private void initSQLTableModels() throws SQLException {
         this.sqlConnection.addEntity(User.class);
         this.sqlConnection.addEntity(Session.class);
     }
 
     protected abstract void init();
+
     protected abstract void start();
+
     protected abstract void initApi();
 
     protected void setUpSQL() {
@@ -82,9 +88,5 @@ public abstract class AppBootstrap {
 
     public SQLConnection getSqlConnection() {
         return this.sqlConnection;
-    }
-
-    public static AppBootstrap getInstance() {
-        return instance;
     }
 }

@@ -23,19 +23,24 @@ public class Client {
         return session;
     }
 
-    public User getUser() {
-        if (session == null) return null;
-        return this.session.getUser();
-    }
-
     public void setSession(final Session session) {
         this.session = session;
         SessionWrapper.setLastToCurrentTime(session);
         UserWrapper.setLastToCurrentTime(session.getUser());
     }
 
+    public User getUser() {
+        if (session == null) return null;
+        return this.session.getUser();
+    }
+
     public void setSession(final User user, final String deviceName) {
         this.session = SessionWrapper.openSession(user, deviceName);
         UserWrapper.setLastToCurrentTime(session.getUser());
+    }
+
+    public void logout() {
+        SessionWrapper.closeSession(this.session);
+        this.session = null;
     }
 }
