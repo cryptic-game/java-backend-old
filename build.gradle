@@ -19,5 +19,4 @@ subprojects {
                 'Class-Path': sourceSets.main.compileClasspath.collect { "dependencies/${it.getName()}" }.join(' ')
         )
     }
-
 }

@@ -1,10 +1,10 @@
 package net.cryptic_game.backend.server.server.deamon;
 
 import net.cryptic_game.backend.server.deamon.DaemonHandler;
-import net.cryptic_game.backend.server.server.ServerCodec;
-import net.cryptic_game.backend.server.server.ServerCodecInitializer;
+import net.cryptic_game.backend.base.netty.NettyCodec;
+import net.cryptic_game.backend.base.netty.NettyInitializer;
 
-public class DaemonCodec implements ServerCodec {
+public class DaemonCodec implements NettyCodec {
 
     private final DaemonHandler daemonHandler;
 
@@ -13,7 +13,7 @@ public class DaemonCodec implements ServerCodec {
     }
 
     @Override
-    public ServerCodecInitializer getInitializer() {
+    public NettyInitializer getInitializer() {
         return new DaemonInitializer(this.daemonHandler);
     }
 }

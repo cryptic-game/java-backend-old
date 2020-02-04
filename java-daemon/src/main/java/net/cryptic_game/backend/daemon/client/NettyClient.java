@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.server.server;
+package net.cryptic_game.backend.daemon.client;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
@@ -15,10 +15,10 @@ import org.slf4j.LoggerFactory;
 
 import java.net.InetSocketAddress;
 
-public class NettyServer {
+public class NettyClient {
 
     private static final boolean EPOLL = Epoll.isAvailable();
-    private static final Logger log = LoggerFactory.getLogger(NettyServer.class);
+    private static final Logger log = LoggerFactory.getLogger(NettyClient.class);
 
     private final String name;
     private final InetSocketAddress inetAddress;
@@ -28,7 +28,7 @@ public class NettyServer {
 
     private Channel channel;
 
-    public NettyServer(final String name, final String host, final int port, final EventLoopGropHandler eventLoopGropHandler, final NettyCodec nettyCodec) {
+    public NettyClient(final String name, final String host, final int port, final EventLoopGropHandler eventLoopGropHandler, final NettyCodec nettyCodec) {
         this.name = name;
         this.inetAddress = new InetSocketAddress(host, port);
 

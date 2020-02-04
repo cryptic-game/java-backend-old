@@ -1,18 +1,18 @@
-package net.cryptic_game.backend.server.server;
+package net.cryptic_game.backend.base.netty;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.ssl.SslContext;
 
-public class NettyServerInitializer extends ChannelInitializer<SocketChannel> {
+public class NettyCodecInitializer extends ChannelInitializer<SocketChannel> {
 
     private final SslContext sslContext;
-    private final ServerCodecInitializer serverCodecInitializer;
+    private final NettyInitializer nettyInitializer;
 
-    NettyServerInitializer(final SslContext sslContext, final ServerCodecInitializer serverCodecInitializer) throws IllegalArgumentException {
+    public NettyCodecInitializer(final SslContext sslContext, final NettyInitializer nettyInitializer) throws IllegalArgumentException {
         this.sslContext = sslContext;
-        this.serverCodecInitializer = serverCodecInitializer;
+        this.nettyInitializer = nettyInitializer;
     }
 
     @Override
@@ -20,6 +20,6 @@ public class NettyServerInitializer extends ChannelInitializer<SocketChannel> {
         final ChannelPipeline pipeline = channel.pipeline();
 
         if (this.sslContext != null) pipeline.addLast("ssl", this.sslContext.newHandler(channel.alloc()));
-        serverCodecInitializer.configure(pipeline);
+        nettyInitializer.configure(pipeline);
     }
 }

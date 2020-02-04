@@ -1,8 +1,8 @@
-package net.cryptic_game.backend.server.server;
+package net.cryptic_game.backend.base.netty;
 
 import io.netty.channel.ChannelPipeline;
 
-public interface ServerCodecInitializer {
+public interface NettyInitializer {
 
     void configure(final ChannelPipeline pipeline);
 }

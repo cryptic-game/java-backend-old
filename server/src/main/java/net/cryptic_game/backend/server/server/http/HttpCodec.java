@@ -1,17 +1,17 @@
 package net.cryptic_game.backend.server.server.http;
 
-import net.cryptic_game.backend.server.server.ServerCodec;
-import net.cryptic_game.backend.server.server.ServerCodecInitializer;
+import net.cryptic_game.backend.base.netty.NettyCodec;
+import net.cryptic_game.backend.base.netty.NettyInitializer;
 import net.cryptic_game.backend.server.server.http.endpoints.PlayerLeaderboardEndpoint;
 import net.cryptic_game.backend.server.server.http.endpoints.PlayersOnlineEndpoint;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class HttpCodec implements ServerCodec {
+public class HttpCodec implements NettyCodec {
 
     private final Map<String, HttpEndpoint> endpoints;
-    private final ServerCodecInitializer initializer;
+    private final NettyInitializer initializer;
 
     public HttpCodec() {
         this.endpoints = new HashMap<>();
@@ -26,7 +26,7 @@ public class HttpCodec implements ServerCodec {
     }
 
     @Override
-    public ServerCodecInitializer getInitializer() {
+    public NettyInitializer getInitializer() {
         return this.initializer;
     }
 }

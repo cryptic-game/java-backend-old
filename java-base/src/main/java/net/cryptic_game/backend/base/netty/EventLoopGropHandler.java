@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.server.server;
+package net.cryptic_game.backend.base.netty;
 
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.epoll.Epoll;

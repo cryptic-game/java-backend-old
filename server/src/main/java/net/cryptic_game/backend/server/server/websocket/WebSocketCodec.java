@@ -1,11 +1,11 @@
 package net.cryptic_game.backend.server.server.websocket;
 
-import net.cryptic_game.backend.server.server.ServerCodec;
-import net.cryptic_game.backend.server.server.ServerCodecInitializer;
+import net.cryptic_game.backend.base.netty.NettyCodec;
+import net.cryptic_game.backend.base.netty.NettyInitializer;
 
-public class WebSocketCodec implements ServerCodec {
+public class WebSocketCodec implements NettyCodec {
 
-    private final ServerCodecInitializer initializer;
+    private final NettyInitializer initializer;
 
     public WebSocketCodec() {
         this.initializer = new WebSocketInitializer();
@@ -13,7 +13,7 @@ public class WebSocketCodec implements ServerCodec {
 
 
     @Override
-    public ServerCodecInitializer getInitializer() {
+    public NettyInitializer getInitializer() {
         return this.initializer;
     }
 }

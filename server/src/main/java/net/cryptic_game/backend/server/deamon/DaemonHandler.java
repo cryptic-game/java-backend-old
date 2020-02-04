@@ -18,7 +18,7 @@ public class DaemonHandler {
     }
 
     public Daemon getDeamon(final String name) {
-        return this.deamons.get(name);
+        return this.deamons.get(name.strip().toLowerCase());
     }
 
     public Function addFunction(final Function function) {
@@ -26,6 +26,6 @@ public class DaemonHandler {
     }
 
     public Function getFunction(final String name) {
-        return this.functions.get(name);
+        return this.functions.get(name.strip().toLowerCase());
     }
 }

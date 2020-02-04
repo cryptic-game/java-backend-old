@@ -6,9 +6,10 @@ import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import net.cryptic_game.backend.base.config.BaseConfig;
 import net.cryptic_game.backend.server.App;
-import net.cryptic_game.backend.server.server.ServerCodecInitializer;
+import net.cryptic_game.backend.base.netty.JsonMessageCodec;
+import net.cryptic_game.backend.base.netty.NettyInitializer;
 
-public class WebSocketInitializer implements ServerCodecInitializer {
+public class WebSocketInitializer implements NettyInitializer {
 
     private static final String WEBSOCKET_PATH = "/";
 
@@ -17,8 +18,8 @@ public class WebSocketInitializer implements ServerCodecInitializer {
         pipeline.addLast("codec", new HttpServerCodec());
         pipeline.addLast("aggregator", new HttpObjectAggregator(65536));
         pipeline.addLast(new WebSocketServerProtocolHandler(WebSocketInitializer.WEBSOCKET_PATH));
-        pipeline.addLast(new WebSocketJsonDecoder());
-        pipeline.addLast(new WebSocketJsonEncoder());
+        pipeline.addLast(new WebSocketServerCodec());
+        pipeline.addLast(new JsonMessageCodec());
         if (!App.getInstance().getConfig().getAsBoolean(BaseConfig.PRODUCTIVE)) pipeline.addLast(new WebSocketLogger());
         pipeline.addLast(new WebSocketHandler());
     }
