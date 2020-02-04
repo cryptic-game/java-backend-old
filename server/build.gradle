@@ -3,13 +3,19 @@ plugins {
 }
 
 dependencies {
-    implementation project(":java-base")
+    compile project(":java-base")
 }
 
 def mainClassName = "net.cryptic_game.backend.server.App"
 
 jar {
+        exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
+
     manifest {
         attributes "Main-Class": "$mainClassName"
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }

@@ -12,12 +12,6 @@ subprojects {
         mavenCentral()
     }
 
-    task copyDependencies(type: Copy) {
-        into new File(buildDir, 'dependencies')
-        from sourceSets.main.compileClasspath.collect { it.absolutePath }
-    }
-    assemble.finalizedBy copyDependencies
-
     jar {
         manifest.attributes(
                 'Implementation-Title': project.name,
