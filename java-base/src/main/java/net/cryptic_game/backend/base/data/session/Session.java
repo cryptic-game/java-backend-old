@@ -10,7 +10,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Objects;
-import java.util.UUID;
 
 @Entity
 @Table(name = "session")
@@ -21,9 +20,8 @@ public class Session extends TableModelAutoId {
     @Type(type = "uuid-char")
     private User user;
 
-    @Column(name = "token", nullable = false, updatable = false, unique = true)
-    @Type(type = "uuid-char")
-    private UUID token;
+    @Column(name = "token", nullable = false, updatable = false)
+    private String tokenHash;
 
     @Column(name = "device_name", nullable = false, updatable = false)
     private String deviceName;
@@ -89,12 +87,12 @@ public class Session extends TableModelAutoId {
         this.lastActive = lastActive;
     }
 
-    public UUID getToken() {
-        return token;
+    public String getTokenHash() {
+        return this.tokenHash;
     }
 
-    public void setToken(final UUID token) {
-        this.token = token;
+    public void setTokenHash(final String tokenHash) {
+        this.tokenHash = tokenHash;
     }
 
     @Override
@@ -108,12 +106,12 @@ public class Session extends TableModelAutoId {
                 Objects.equals(this.getDeviceName(), that.getDeviceName()) &&
                 Objects.equals(this.getExpire(), that.getExpire()) &&
                 Objects.equals(this.getLastActive(), that.getLastActive()) &&
-                Objects.equals(this.getToken(), that.getToken());
+                Objects.equals(this.getTokenHash(), that.getTokenHash());
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(this.getId(), this.getVersion(), this.getDeviceName(), this.getExpire(),
-                this.getLastActive(), this.isValid(), this.getToken());
+                this.getLastActive(), this.isValid(), this.getTokenHash());
     }
 }

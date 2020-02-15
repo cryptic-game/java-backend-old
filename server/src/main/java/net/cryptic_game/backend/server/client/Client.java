@@ -6,6 +6,8 @@ import net.cryptic_game.backend.base.data.session.SessionWrapper;
 import net.cryptic_game.backend.base.data.user.User;
 import net.cryptic_game.backend.base.data.user.UserWrapper;
 
+import java.util.UUID;
+
 public class Client {
 
     private final ChannelHandlerContext ctx;
@@ -34,8 +36,8 @@ public class Client {
         return this.session.getUser();
     }
 
-    public void setSession(final User user, final String deviceName) {
-        this.session = SessionWrapper.openSession(user, deviceName);
+    public void setSession(final User user, final UUID token, final String deviceName) {
+        this.session = SessionWrapper.openSession(user, token, deviceName);
         UserWrapper.setLastToCurrentTime(session.getUser());
     }
 

@@ -9,6 +9,7 @@ import net.cryptic_game.backend.base.data.session.SessionWrapper;
 import net.cryptic_game.backend.base.data.user.User;
 import net.cryptic_game.backend.base.data.user.UserWrapper;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
+import net.cryptic_game.backend.base.utils.SecurityUtils;
 import net.cryptic_game.backend.base.utils.ValidationUtils;
 import net.cryptic_game.backend.server.client.Client;
 import net.cryptic_game.backend.server.server.ServerResponseType;
@@ -35,9 +36,12 @@ public class UserEndpoints extends ApiCollection {
         if (!UserWrapper.verifyPassword(user, password))
             return build(ServerResponseType.UNAUTHORIZED, "INVALID_PASSWORD");
 
-        client.setSession(user, deviceName);
+        UUID token = UUID.randomUUID();
+        client.setSession(user, token, deviceName);
 
-        return build(ServerResponseType.OK, JsonBuilder.simple("session", client.getSession().getToken().toString()));
+        return build(ServerResponseType.OK, JsonBuilder.anJSON()
+                .add("session", client.getSession().getId())
+                .add("token", token).build());
     }
 
     @ApiEndpoint("register")
@@ -53,18 +57,25 @@ public class UserEndpoints extends ApiCollection {
         if (UserWrapper.getByName(name) != null) return build(ServerResponseType.FORBIDDEN, "USER_ALREADY_EXISTS");
 
         User user = UserWrapper.registerUser(name, mail, password);
-        client.setSession(user, deviceName);
+        UUID token = UUID.randomUUID();
+        client.setSession(user, token, deviceName);
 
-        return build(ServerResponseType.OK, JsonBuilder.simple("session", client.getSession().getToken().toString()));
+        return build(ServerResponseType.OK, JsonBuilder.anJSON()
+                .add("session", client.getSession().getId())
+                .add("token", token).build());
 
     }
 
     @ApiEndpoint("session")
-    public JsonObject session(Client client, @ApiParameter("session") UUID sessionToken) {
+    public JsonObject session(Client client,
+                              @ApiParameter("session") UUID sessionId,
+                              @ApiParameter("token") UUID token) {
         if (client.getUser() != null) return build(ServerResponseType.FORBIDDEN, "ALREADY_LOGGED_IN");
 
-        Session session = SessionWrapper.getSessionByToken(sessionToken);
+        Session session = SessionWrapper.getSessionById(sessionId);
         if (session == null) return WebSocketUtils.build(ServerResponseType.NOT_FOUND, "INVALID_SESSION");
+        if (!SecurityUtils.verify(token.toString(), session.getTokenHash()))
+            return WebSocketUtils.build(ServerResponseType.UNAUTHORIZED, "INVALID_SESSION_TOKEN");
         if (!session.isValid()) return WebSocketUtils.build(ServerResponseType.UNAUTHORIZED, "SESSION_EXPIRED");
 
         client.setSession(session);

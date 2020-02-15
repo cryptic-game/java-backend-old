@@ -5,11 +5,11 @@ import net.cryptic_game.backend.base.config.BaseConfig;
 import net.cryptic_game.backend.base.config.Config;
 import net.cryptic_game.backend.base.data.user.User;
 import net.cryptic_game.backend.base.sql.SQLConnection;
+import net.cryptic_game.backend.base.utils.SecurityUtils;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
 import java.util.UUID;
 
 public class SessionWrapper {
@@ -24,10 +24,10 @@ public class SessionWrapper {
         EXPIRE = Duration.of(config.getAsInt(BaseConfig.SESSION_EXPIRE), ChronoUnit.DAYS);
     }
 
-    public static Session openSession(final User user, final String deviceName) {
+    public static Session openSession(final User user, final UUID token, final String deviceName) {
         final Session session = new Session();
         session.setUser(user);
-        session.setToken(UUID.randomUUID());
+        session.setTokenHash(SecurityUtils.hash(token.toString()));
         session.setDeviceName(deviceName);
         session.setExpire(LocalDateTime.now().plus(EXPIRE));
         session.setLastActive(LocalDateTime.now());
@@ -61,18 +61,6 @@ public class SessionWrapper {
         sqlSession.close();
 
         return session;
-    }
-
-    public static Session getSessionByToken(final UUID token) {
-        final org.hibernate.Session sqlSession = sqlConnection.openSession();
-        final List<Session> sessions = sqlSession
-                .createQuery("select object (s) from Session as s where s.token = :token", Session.class)
-                .setParameter("token", token)
-                .getResultList();
-        sqlSession.close();
-
-        if (!sessions.isEmpty()) return sessions.get(0);
-        return null;
     }
 
     public static void setLastToCurrentTime(final Session session) {
