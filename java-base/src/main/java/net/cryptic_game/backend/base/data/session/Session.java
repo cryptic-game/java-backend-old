@@ -40,8 +40,8 @@ public class Session extends TableModelAutoId {
     @Override
     public JsonObject serialize() {
         return JsonBuilder.anJSON()
-                .add("id", this.getId().toString())
-                .add("user", this.getId().toString())
+                .add("id", this.getId())
+                .add("user", this.getId())
                 .add("device_name", this.getDeviceName())
                 .add("valid", this.isValid())
                 .add("expire", this.getExpire().toInstant(ZoneOffset.UTC).toEpochMilli())

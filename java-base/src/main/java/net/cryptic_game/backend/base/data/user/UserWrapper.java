@@ -3,7 +3,6 @@ package net.cryptic_game.backend.base.data.user;
 import net.cryptic_game.backend.base.AppBootstrap;
 import net.cryptic_game.backend.base.data.session.SessionWrapper;
 import net.cryptic_game.backend.base.sql.SQLConnection;
-import net.cryptic_game.backend.base.utils.SQLUtils;
 import net.cryptic_game.backend.base.utils.SecurityUtils;
 import org.hibernate.Session;
 
@@ -20,7 +19,7 @@ public class UserWrapper {
         sqlConnection = app.getSqlConnection();
     }
 
-    public static User register(final String name, final String mail, final String password) {
+    public static User registerUser(final String name, final String mail, final String password) {
         final LocalDateTime now = LocalDateTime.now();
 
         final User user = new User();
@@ -48,7 +47,10 @@ public class UserWrapper {
 
     public static User getByName(final String name) {
         final Session session = sqlConnection.openSession();
-        final List<User> users = SQLUtils.selectWhere(session, User.class, "name", name);
+        final List<User> users = session
+                .createQuery("select object (u) from User as u where u.name = :name", User.class)
+                .setParameter("name", name)
+                .getResultList();
         session.close();
 
         if (!users.isEmpty()) return users.get(0);

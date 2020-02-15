@@ -1,0 +1,72 @@
+package net.cryptic_game.backend.base.data.network.invitation;
+
+import net.cryptic_game.backend.base.AppBootstrap;
+import net.cryptic_game.backend.base.data.device.Device;
+import net.cryptic_game.backend.base.data.network.Network;
+import net.cryptic_game.backend.base.data.network.NetworkWrapper;
+import net.cryptic_game.backend.base.sql.SQLConnection;
+import org.hibernate.Session;
+
+import java.util.UUID;
+
+public class InvitationWrapper {
+
+    private static final SQLConnection sqlConnection;
+
+    static {
+        final AppBootstrap app = AppBootstrap.getInstance();
+        sqlConnection = app.getSqlConnection();
+    }
+
+    public static Invitation inviteDevice(final Network network, final Device device) {
+        final Invitation invitation = new Invitation();
+        invitation.setNetwork(network);
+        invitation.setDevice(device);
+        invitation.setRequest(false);
+
+        final Session session = sqlConnection.openSession();
+        session.beginTransaction();
+        session.save(invitation);
+        session.getTransaction().commit();
+        session.close();
+        return invitation;
+    }
+
+    public static Invitation requestNetwork(final Network network, final Device device) {
+        final Invitation invitation = new Invitation();
+        invitation.setNetwork(network);
+        invitation.setDevice(device);
+        invitation.setRequest(true);
+
+        final Session session = sqlConnection.openSession();
+        session.beginTransaction();
+        session.save(invitation);
+        session.getTransaction().commit();
+        session.close();
+        return invitation;
+    }
+
+    public static void acceptInvitation(final Invitation invitation) {
+        NetworkWrapper.addDevice(invitation.getNetwork(), invitation.getDevice());
+        deleteInvitation(invitation);
+    }
+
+    public static void denyInvitation(final Invitation invitation) {
+        deleteInvitation(invitation);
+    }
+
+    public static void deleteInvitation(final Invitation invitation) {
+        final Session sqlSession = sqlConnection.openSession();
+        sqlSession.beginTransaction();
+        sqlSession.delete(invitation);
+        sqlSession.getTransaction().commit();
+        sqlSession.close();
+    }
+
+    public static Invitation getInvitationById(UUID id) {
+        final Session sqlSession = sqlConnection.openSession();
+        Invitation invitation = sqlSession.find(Invitation.class, id);
+        sqlSession.close();
+        return invitation;
+    }
+}

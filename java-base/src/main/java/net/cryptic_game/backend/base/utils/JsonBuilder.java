@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 
 import javax.management.modelmbean.InvalidTargetObjectTypeException;
 import java.util.List;
+import java.util.UUID;
 
 public class JsonBuilder {
 
@@ -152,6 +153,18 @@ public class JsonBuilder {
      */
     public JsonBuilder add(final String key, final JsonElement value) {
         this.json.add(key, value);
+        return this;
+    }
+
+    /**
+     * Convenience method to add a new property associated with a {@link UUID} value.
+     *
+     * @param key   name of the property.
+     * @param value {@link UUID} value of associated with the property.
+     * @return the current object of {@link JsonBuilder}.
+     */
+    public JsonBuilder add(final String key, final UUID value) {
+        this.json.addProperty(key, value.toString());
         return this;
     }
 

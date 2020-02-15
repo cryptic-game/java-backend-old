@@ -4,6 +4,10 @@ import net.cryptic_game.backend.base.api.ApiHandler;
 import net.cryptic_game.backend.base.config.BaseConfig;
 import net.cryptic_game.backend.base.config.Config;
 import net.cryptic_game.backend.base.config.DefaultConfig;
+import net.cryptic_game.backend.base.data.device.Device;
+import net.cryptic_game.backend.base.data.network.Network;
+import net.cryptic_game.backend.base.data.network.invitation.Invitation;
+import net.cryptic_game.backend.base.data.network.member.Member;
 import net.cryptic_game.backend.base.data.session.Session;
 import net.cryptic_game.backend.base.data.user.User;
 import net.cryptic_game.backend.base.sql.SQLConnection;
@@ -52,6 +56,10 @@ public abstract class AppBootstrap {
     private void initSQLTableModels() throws SQLException {
         this.sqlConnection.addEntity(User.class);
         this.sqlConnection.addEntity(Session.class);
+        this.sqlConnection.addEntity(Device.class);
+        this.sqlConnection.addEntity(Invitation.class);
+        this.sqlConnection.addEntity(Network.class);
+        this.sqlConnection.addEntity(Member.class);
     }
 
     protected abstract void init();

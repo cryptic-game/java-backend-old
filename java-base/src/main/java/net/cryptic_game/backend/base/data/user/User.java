@@ -1,27 +1,23 @@
 package net.cryptic_game.backend.base.data.user;
 
 import com.google.gson.JsonObject;
-import net.cryptic_game.backend.base.data.session.Session;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "user")
 public class User extends TableModelAutoId {
 
-    @Column(name = "name", updatable = true, nullable = false)
+    @Column(name = "name", updatable = true, nullable = false, unique = true)
     private String name;
 
-    @Column(name = "mail", updatable = true, nullable = false)
+    @Column(name = "mail", updatable = true, nullable = false, unique = true)
     private String mail;
 
     @Column(name = "password", updatable = true, nullable = false)

@@ -52,7 +52,7 @@ public class UserEndpoints extends ApiCollection {
         if (!checkMail(mail)) return build(ServerResponseType.BAD_REQUEST, "INVALID_MAIL");
         if (UserWrapper.getByName(name) != null) return build(ServerResponseType.FORBIDDEN, "USER_ALREADY_EXISTS");
 
-        User user = UserWrapper.register(name, mail, password);
+        User user = UserWrapper.registerUser(name, mail, password);
         client.setSession(user, deviceName);
 
         return build(ServerResponseType.OK, JsonBuilder.simple("session", client.getSession().getToken().toString()));
@@ -60,10 +60,10 @@ public class UserEndpoints extends ApiCollection {
     }
 
     @ApiEndpoint("session")
-    public JsonObject session(Client client, @ApiParameter("session") UUID sessionUuid) {
+    public JsonObject session(Client client, @ApiParameter("session") UUID sessionToken) {
         if (client.getUser() != null) return build(ServerResponseType.FORBIDDEN, "ALREADY_LOGGED_IN");
 
-        Session session = SessionWrapper.getSessionById(sessionUuid);
+        Session session = SessionWrapper.getSessionByToken(sessionToken);
         if (session == null) return WebSocketUtils.build(ServerResponseType.NOT_FOUND, "INVALID_SESSION");
         if (!session.isValid()) return WebSocketUtils.build(ServerResponseType.UNAUTHORIZED, "SESSION_EXPIRED");
 

@@ -5,7 +5,6 @@ import net.cryptic_game.backend.base.config.BaseConfig;
 import net.cryptic_game.backend.base.config.Config;
 import net.cryptic_game.backend.base.data.user.User;
 import net.cryptic_game.backend.base.sql.SQLConnection;
-import net.cryptic_game.backend.base.utils.SQLUtils;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -66,7 +65,10 @@ public class SessionWrapper {
 
     public static Session getSessionByToken(final UUID token) {
         final org.hibernate.Session sqlSession = sqlConnection.openSession();
-        final List<Session> sessions = SQLUtils.selectWhere(sqlSession, Session.class, "token", token);
+        final List<Session> sessions = sqlSession
+                .createQuery("select object (s) from Session as s where s.token = :token", Session.class)
+                .setParameter("token", token)
+                .getResultList();
         sqlSession.close();
 
         if (!sessions.isEmpty()) return sessions.get(0);
