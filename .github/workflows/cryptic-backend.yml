@@ -1,0 +1,40 @@
+name: Cryptic Backend
+on:
+  push:
+    branches:
+      - master
+      - experimental
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 1.11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.11
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        run: ./gradlew installDist
+      - name: Grant execute permission for docker-entrypoint.sh
+        run: chmod +x docker/docker-entrypoint.sh
+      - name: Install dos2unix
+        run: sudo apt update && sudo apt install dos2unix -y && dos2unix docker/docker-entrypoint.sh
+      - name: Build Docker Image
+        run: docker build --no-cache --compress --pull -t "cryptic-backend" . -f "docker/Dockerfile"
+      - name: Login to DockerHub Registry
+        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+      - name: Get the version
+        id: vars
+        run: echo ::set-output name=tag::$(echo ${GITHUB_REF:11})
+      - name: Rename image to tagged image
+        run: docker tag cryptic-backend rubidiumdev/cryptic-backend:${{steps.vars.outputs.tag}}
+      - name: Push the tagged Docker image
+        run: docker push rubidiumdev/cryptic-backend:${{steps.vars.outputs.tag}}
+      - name: Rename image to latest image
+        run: docker tag rubidiumdev/cryptic-backend:${{steps.vars.outputs.tag}} rubidiumdev/cryptic-backend:latest
+      - name: Push the latest Docker image
+        run: docker push rubidiumdev/cryptic-backend:latest
+

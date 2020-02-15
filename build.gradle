@@ -1,22 +1,19 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group 'net.cryptic-game'
 version '0.3.0'
+
+application {
+    mainClassName = ""
+}
 
 subprojects {
     sourceCompatibility = targetCompatibility = 1.11
 
     repositories {
         mavenCentral()
-    }
-
-    jar {
-        manifest.attributes(
-                'Implementation-Title': project.name,
-                'Implementation-Version': project.version,
-                'Class-Path': sourceSets.main.compileClasspath.collect { "dependencies/${it.getName()}" }.join(' ')
-        )
     }
 }

@@ -34,7 +34,7 @@ public enum BaseConfig implements DefaultConfig {
         config.set(BaseConfig.PRODUCTIVE, true);
         config.set(BaseConfig.SESSION_EXPIRE, 14); // days
         config.set(BaseConfig.RESPONSE_TIMEOUT, 20); // 20 seconds
-        config.set(BaseConfig.LOG_LEVEL, "INFO");
+        config.set(BaseConfig.LOG_LEVEL, "WARN");
         config.set(BaseConfig.SENTRY_DSN, "");
     }
 }
