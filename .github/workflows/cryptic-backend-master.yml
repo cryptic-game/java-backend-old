@@ -1,0 +1,29 @@
+name: Cryptic Backend Docker Image
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 1.11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.11
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        run: ./gradlew installDist
+      - name: Grant execute permission for docker-entrypoint.sh
+        run: chmod +x docker/docker-entrypoint.sh
+      - name: Install dos2unix
+        run: sudo apt update && sudo apt install dos2unix -y && dos2unix docker/docker-entrypoint.sh
+      - name: Build Docker Image
+        run: docker build --no-cache --compress --pull -t "rubidiumdev/cryptic-backend:latest" . -f "docker/Dockerfile"
+      - name: Login to DockerHub Registry
+        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+      - name: Push the latest Docker image
+        run: docker push rubidiumdev/cryptic-backend:latest
+
