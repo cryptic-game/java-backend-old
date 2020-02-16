@@ -7,8 +7,6 @@ import net.cryptic_game.backend.base.data.network.NetworkWrapper;
 import net.cryptic_game.backend.base.sql.SQLConnection;
 import org.hibernate.Session;
 
-import java.util.UUID;
-
 public class InvitationWrapper {
 
     private static final SQLConnection sqlConnection;
@@ -18,11 +16,12 @@ public class InvitationWrapper {
         sqlConnection = app.getSqlConnection();
     }
 
-    public static Invitation inviteDevice(final Network network, final Device device) {
+    public static Invitation inviteDevice(final Network network, final Device device, final Device inviter) {
         final Invitation invitation = new Invitation();
         invitation.setNetwork(network);
         invitation.setDevice(device);
         invitation.setRequest(false);
+        invitation.setInviter(inviter);
 
         final Session session = sqlConnection.openSession();
         session.beginTransaction();
@@ -37,6 +36,7 @@ public class InvitationWrapper {
         invitation.setNetwork(network);
         invitation.setDevice(device);
         invitation.setRequest(true);
+        invitation.setInviter(null);
 
         final Session session = sqlConnection.openSession();
         session.beginTransaction();
@@ -63,9 +63,9 @@ public class InvitationWrapper {
         sqlSession.close();
     }
 
-    public static Invitation getInvitationById(UUID id) {
+    public static Invitation getInvitation(final Network network, final Device device) {
         final Session sqlSession = sqlConnection.openSession();
-        Invitation invitation = sqlSession.find(Invitation.class, id);
+        Invitation invitation = sqlSession.find(Invitation.class, new Invitation.InvitationKey(network, device));
         sqlSession.close();
         return invitation;
     }

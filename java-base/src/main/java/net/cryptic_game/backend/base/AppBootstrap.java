@@ -5,6 +5,7 @@ import net.cryptic_game.backend.base.config.BaseConfig;
 import net.cryptic_game.backend.base.config.Config;
 import net.cryptic_game.backend.base.config.DefaultConfig;
 import net.cryptic_game.backend.base.data.device.Device;
+import net.cryptic_game.backend.base.data.device.access.DeviceAccess;
 import net.cryptic_game.backend.base.data.network.Network;
 import net.cryptic_game.backend.base.data.network.invitation.Invitation;
 import net.cryptic_game.backend.base.data.network.member.Member;
@@ -60,6 +61,7 @@ public abstract class AppBootstrap {
         this.sqlConnection.addEntity(Invitation.class);
         this.sqlConnection.addEntity(Network.class);
         this.sqlConnection.addEntity(Member.class);
+        this.sqlConnection.addEntity(DeviceAccess.class);
     }
 
     protected abstract void init();
