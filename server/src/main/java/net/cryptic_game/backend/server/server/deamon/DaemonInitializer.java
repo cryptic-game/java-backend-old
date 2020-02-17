@@ -12,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 
 public class DaemonInitializer implements NettyInitializer {
 
-    private DaemonHandler daemonHandler;
+    private final DaemonHandler daemonHandler;
 
     public DaemonInitializer(final DaemonHandler daemonHandler) {
         this.daemonHandler = daemonHandler;

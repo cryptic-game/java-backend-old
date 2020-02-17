@@ -32,7 +32,7 @@ public abstract class ApiCollection {
                     try {
                         executors.add(executorClass.getDeclaredConstructor(String.class, ApiCollection.class, Method.class).newInstance(name, this, method));
                     } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
-                        logger.error("Error while loading Api entrypoint.", e);
+                        logger.error("Error while loading Api endpoint.", e);
                     }
                 }
             }

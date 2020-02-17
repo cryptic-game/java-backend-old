@@ -6,7 +6,7 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.epoll.Epoll;
 import io.netty.channel.epoll.EpollServerSocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import net.cryptic_game.backend.base.netty.EventLoopGropHandler;
+import net.cryptic_game.backend.base.netty.EventLoopGroupHandler;
 import net.cryptic_game.backend.base.netty.NettyCodec;
 import net.cryptic_game.backend.base.netty.NettyCodecInitializer;
 import net.cryptic_game.backend.base.netty.NettyInitializer;
@@ -23,16 +23,16 @@ public class NettyServer {
     private final String name;
     private final InetSocketAddress inetAddress;
 
-    private final EventLoopGropHandler eventLoopGropHandler;
+    private final EventLoopGroupHandler eventLoopGroupHandler;
     private final NettyInitializer nettyInitializer;
 
     private Channel channel;
 
-    public NettyServer(final String name, final String host, final int port, final EventLoopGropHandler eventLoopGropHandler, final NettyCodec nettyCodec) {
+    public NettyServer(final String name, final String host, final int port, final EventLoopGroupHandler eventLoopGroupHandler, final NettyCodec nettyCodec) {
         this.name = name;
         this.inetAddress = new InetSocketAddress(host, port);
 
-        this.eventLoopGropHandler = eventLoopGropHandler;
+        this.eventLoopGroupHandler = eventLoopGroupHandler;
         this.nettyInitializer = nettyCodec.getInitializer();
     }
 
@@ -46,7 +46,7 @@ public class NettyServer {
                 try {
                     this.channel = new ServerBootstrap()
                             .option(ChannelOption.SO_BACKLOG, 1024)
-                            .group(this.eventLoopGropHandler.getBossGroup(), this.eventLoopGropHandler.getWorkGroup())
+                            .group(this.eventLoopGroupHandler.getBossGroup(), this.eventLoopGroupHandler.getWorkGroup())
                             .channel(EPOLL ? EpollServerSocketChannel.class : NioServerSocketChannel.class)
                             .childHandler(new NettyCodecInitializer(null, this.nettyInitializer))
                             .bind(this.inetAddress)
@@ -57,7 +57,7 @@ public class NettyServer {
 
                     this.channel.closeFuture().sync();
                 } catch (IllegalArgumentException | InterruptedException e) {
-                    log.error("The server was closed unexpectedly.", e);
+                    log.error("The server was unexpectedly closed.", e);
                 } finally {
                     this.stop();
                 }

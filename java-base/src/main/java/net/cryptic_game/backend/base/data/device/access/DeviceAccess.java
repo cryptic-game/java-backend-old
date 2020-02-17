@@ -30,7 +30,7 @@ public class DeviceAccess extends TableModelAutoId {
     private LocalDateTime accessGranted;
 
     @Column(name = "expire", nullable = false, updatable = false)
-    private LocalDateTime exprie;
+    private LocalDateTime expire;
 
     @Column(name = "valid", nullable = false, updatable = true)
     private boolean valid;
@@ -59,12 +59,12 @@ public class DeviceAccess extends TableModelAutoId {
         this.accessGranted = accessGranted;
     }
 
-    public LocalDateTime getExprie() {
-        return this.exprie;
+    public LocalDateTime getExpire() {
+        return this.expire;
     }
 
-    public void setExprie(final LocalDateTime exprie) {
-        this.exprie = exprie;
+    public void setExpire(final LocalDateTime expire) {
+        this.expire = expire;
     }
 
     public boolean isValid() {
@@ -81,7 +81,7 @@ public class DeviceAccess extends TableModelAutoId {
                 .add("target_device", getDevice().getId())
                 .add("device", getUser().getId())
                 .add("granted", getAccessGranted().toInstant(ZoneOffset.UTC).toEpochMilli())
-                .add("expire", getExprie().toInstant(ZoneOffset.UTC).toEpochMilli())
+                .add("expire", getExpire().toInstant(ZoneOffset.UTC).toEpochMilli())
                 .add("valid", isValid())
                 .build();
     }
@@ -95,12 +95,12 @@ public class DeviceAccess extends TableModelAutoId {
                 Objects.equals(getDevice(), that.getDevice()) &&
                 Objects.equals(getUser(), that.getUser()) &&
                 Objects.equals(getAccessGranted(), that.getAccessGranted()) &&
-                Objects.equals(getExprie(), that.getExprie()) &&
+                Objects.equals(getExpire(), that.getExpire()) &&
                 Objects.equals(getId(), that.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getDevice(), getUser(), getAccessGranted(), getExprie(), isValid());
+        return Objects.hash(getId(), getDevice(), getUser(), getAccessGranted(), getExpire(), isValid());
     }
 }

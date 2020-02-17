@@ -20,7 +20,7 @@ public final class WebSocketLogger extends MessageToMessageCodec<JsonElement, Js
 
     @Override
     protected void decode(final ChannelHandlerContext ctx, final JsonElement msg, final List<Object> out) throws Exception {
-        logger.info("Recieved from " + ctx.channel().id() + ": " + msg.toString());
+        logger.info("Received from " + ctx.channel().id() + ": " + msg.toString());
         out.add(msg);
     }
 }

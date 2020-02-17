@@ -31,7 +31,7 @@ public class JsonBuilder {
      *
      * @param key   name of the property.
      * @param value the number value associated with the property.
-     * @return the newly created object of {@link JsonObject}.
+     * @return the a newly created object of {@link JsonObject}.
      */
     public static JsonObject simple(final String key, final Number value) {
         return anJSON().add(key, value).build();
@@ -170,7 +170,7 @@ public class JsonBuilder {
 
     /**
      * Convenience method to add a new property associated with a {@link List} value.
-     * List can have {@link String}, {@link Number}, {@link Boolean} or {@link Character} values
+     * List can have {@link String}, {@link Number}, {@link Boolean} or {@link Character} values.
      *
      * @param key    name of the property.
      * @param values {@link List} value of associated with the property.

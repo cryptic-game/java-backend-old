@@ -5,20 +5,20 @@ import java.util.Map;
 
 public class DaemonHandler {
 
-    private final Map<String, Daemon> deamons;
+    private final Map<String, Daemon> daemons;
     private final Map<String, Function> functions;
 
     public DaemonHandler() {
-        this.deamons = new HashMap<>();
+        this.daemons = new HashMap<>();
         this.functions = new HashMap<>();
     }
 
-    public Daemon addDeamon(final Daemon daemon) {
-        return this.deamons.put(daemon.getName(), daemon);
+    public Daemon addDaemon(final Daemon daemon) {
+        return this.daemons.put(daemon.getName(), daemon);
     }
 
-    public Daemon getDeamon(final String name) {
-        return this.deamons.get(name.strip().toLowerCase());
+    public Daemon getDaemon(final String name) {
+        return this.daemons.get(name.strip().toLowerCase());
     }
 
     public Function addFunction(final Function function) {

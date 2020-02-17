@@ -10,9 +10,6 @@ import net.cryptic_game.backend.server.server.http.HttpCodec;
 import net.cryptic_game.backend.server.server.websocket.WebSocketCodec;
 import net.cryptic_game.backend.server.server.websocket.endpoints.InfoEndpoints;
 import net.cryptic_game.backend.server.server.websocket.endpoints.UserEndpoints;
-import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
 
 public class App extends AppBootstrap {
 
@@ -29,12 +26,6 @@ public class App extends AppBootstrap {
 
     @Override
     protected void init() {
-        try {
-            throw new IOException("Messagedqw dqw");
-        } catch (IOException e) {
-            LoggerFactory.getLogger(App.class).error("Error while executing some stuff.", e);
-        }
-
         this.daemonHandler = new DaemonHandler();
         this.serverHandler = new NettyServerHandler();
 

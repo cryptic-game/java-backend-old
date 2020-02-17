@@ -8,7 +8,7 @@ public class ApiException extends IOException {
         super(message);
     }
 
-    public ApiException(final String messgae, final Throwable throwable) {
-        super(messgae, throwable);
+    public ApiException(final String message, final Throwable throwable) {
+        super(message, throwable);
     }
 }

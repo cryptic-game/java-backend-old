@@ -99,7 +99,7 @@ public class JsonUtils {
      * @param jsonObject The {@link JsonObject} where the value should be fetched.
      * @param key        The property name.
      * @return The {@link Date} value of the property.
-     * @deprecated Usage of {@link LocalDate} and {@link LocalDateTime} is prefered.
+     * @deprecated Usage of {@link LocalDate} and {@link LocalDateTime} is preferred.
      * Use {@link JsonUtils#getLocalDate(JsonObject, String)} and {@link JsonUtils#getLocalDateTime(JsonObject, String)} instead.
      */
     @Deprecated

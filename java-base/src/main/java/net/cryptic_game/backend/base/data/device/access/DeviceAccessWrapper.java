@@ -38,7 +38,7 @@ public class DeviceAccessWrapper {
         access.setDevice(device);
         access.setAccessGranted(LocalDateTime.now());
         access.setValid(true);
-        access.setExprie(LocalDateTime.now().plus(duration));
+        access.setExpire(LocalDateTime.now().plus(duration));
 
         sqlSession.beginTransaction();
         sqlSession.save(access);

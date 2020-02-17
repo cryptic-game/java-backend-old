@@ -48,7 +48,7 @@ public class ServerApiEndpointExecutor extends ApiEndpointExecutor {
         try {
             return (JsonObject) this.method.invoke(this.apiCollection, parameters);
         } catch (IllegalAccessException | InvocationTargetException e) {
-            throw new ApiException("Unable to execute endpoint \"" + this.name + "\".", e);
+            throw new ApiException("Unable to execute the endpoint \"" + this.name + "\".", e);
         }
     }
 }
