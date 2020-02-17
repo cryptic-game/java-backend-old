@@ -32,9 +32,8 @@ public abstract class AppBootstrap {
 
     protected final Config config;
     protected final SQLConnection sqlConnection;
-    protected ApiHandler apiHandler;
-
     private final String dist;
+    protected ApiHandler apiHandler;
 
     public AppBootstrap(final DefaultConfig config, final String dist) {
         AppBootstrap.instance = this;

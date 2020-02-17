@@ -1,7 +1,6 @@
 package net.cryptic_game.backend.server.server.websocket;
 
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageCodec;
 import org.slf4j.Logger;

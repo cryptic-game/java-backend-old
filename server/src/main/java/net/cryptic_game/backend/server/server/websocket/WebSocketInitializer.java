@@ -5,9 +5,9 @@ import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import net.cryptic_game.backend.base.config.BaseConfig;
-import net.cryptic_game.backend.server.App;
 import net.cryptic_game.backend.base.netty.JsonMessageCodec;
 import net.cryptic_game.backend.base.netty.NettyInitializer;
+import net.cryptic_game.backend.server.App;
 
 public class WebSocketInitializer implements NettyInitializer {
 

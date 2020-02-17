@@ -11,7 +11,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import static net.cryptic_game.backend.base.utils.JsonUtils.*;
+import static net.cryptic_game.backend.base.utils.JsonUtils.getDate;
+import static net.cryptic_game.backend.base.utils.JsonUtils.getLocalDate;
+import static net.cryptic_game.backend.base.utils.JsonUtils.getLocalDateTime;
 
 public abstract class ApiEndpointExecutor {
 
