@@ -10,6 +10,9 @@ import net.cryptic_game.backend.server.server.http.HttpCodec;
 import net.cryptic_game.backend.server.server.websocket.WebSocketCodec;
 import net.cryptic_game.backend.server.server.websocket.endpoints.InfoEndpoints;
 import net.cryptic_game.backend.server.server.websocket.endpoints.UserEndpoints;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
 
 public class App extends AppBootstrap {
 
@@ -17,7 +20,7 @@ public class App extends AppBootstrap {
     private NettyServerHandler serverHandler;
 
     public App() {
-        super(ServerConfig.CONFIG);
+        super(ServerConfig.CONFIG, "Java-Server");
     }
 
     public static void main(String[] args) {
@@ -26,10 +29,16 @@ public class App extends AppBootstrap {
 
     @Override
     protected void init() {
+        try {
+            throw new IOException("Messagedqw dqw");
+        } catch (IOException e) {
+            LoggerFactory.getLogger(App.class).error("Error while executing some stuff.", e);
+        }
+
         this.daemonHandler = new DaemonHandler();
         this.serverHandler = new NettyServerHandler();
 
-        this.serverHandler.addServer("deamon",
+        this.serverHandler.addServer("daemon",
                 this.config.getAsString(ServerConfig.DAEMON_HOST),
                 this.config.getAsInt(ServerConfig.DAEMON_PORT),
                 new HttpCodec());
@@ -43,6 +52,7 @@ public class App extends AppBootstrap {
                 this.config.getAsString(ServerConfig.HTTP_HOST),
                 this.config.getAsInt(ServerConfig.HTTP_PORT),
                 new HttpCodec());
+
     }
 
     @Override

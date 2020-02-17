@@ -9,7 +9,7 @@ public class App extends AppBootstrap {
     private NettyClientHandler clientHandler;
 
     public App() {
-        super(DaemonConfig.CONFIG);
+        super(DaemonConfig.CONFIG, "Java-Daemon");
     }
 
     public static void main(String[] args) {

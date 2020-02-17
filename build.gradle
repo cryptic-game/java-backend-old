@@ -11,6 +11,7 @@ application {
 }
 
 subprojects {
+    version project.parent.version
     sourceCompatibility = targetCompatibility = 1.11
 
     repositories {

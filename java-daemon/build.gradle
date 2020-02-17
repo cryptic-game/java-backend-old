@@ -8,5 +8,13 @@ dependencies {
 }
 
 application {
+    applicationName = "deamon"
     mainClassName = "net.cryptic_game.backend.daemon.App"
+    applicationDefaultJvmArgs = ["qasd"]
+}
+
+jar {
+    manifest {
+        attributes("Implementation-Version": project.version.toString())
+    }
 }

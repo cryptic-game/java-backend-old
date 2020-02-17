@@ -25,4 +25,7 @@ dependencies {
 
     // Validator
     api 'commons-validator:commons-validator:1.6'
+
+    // Sentry
+    api 'io.sentry:sentry-log4j2:1.7.30'
 }

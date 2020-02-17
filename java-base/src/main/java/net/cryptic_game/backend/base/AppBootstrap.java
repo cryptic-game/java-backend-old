@@ -1,5 +1,7 @@
 package net.cryptic_game.backend.base;
 
+import io.sentry.Sentry;
+import io.sentry.SentryClient;
 import net.cryptic_game.backend.base.api.ApiHandler;
 import net.cryptic_game.backend.base.config.BaseConfig;
 import net.cryptic_game.backend.base.config.Config;
@@ -32,10 +34,15 @@ public abstract class AppBootstrap {
     protected final SQLConnection sqlConnection;
     protected ApiHandler apiHandler;
 
-    public AppBootstrap(final DefaultConfig config) {
+    private final String dist;
+
+    public AppBootstrap(final DefaultConfig config, final String dist) {
         AppBootstrap.instance = this;
         this.config = new Config(config);
+        this.dist = dist;
         this.setLoglevel(Level.valueOf(this.config.getAsString(BaseConfig.LOG_LEVEL)));
+
+        this.initSentry();
 
         this.initApi();
         this.sqlConnection = new SQLConnection();
@@ -69,6 +76,23 @@ public abstract class AppBootstrap {
     protected abstract void start();
 
     protected abstract void initApi();
+
+    private void initSentry() {
+        final String dsn = this.config.getAsString(BaseConfig.SENTRY_DSN);
+
+        if (!dsn.isBlank()) {
+            final SentryClient client = Sentry.init(dsn + "?stacktrace.app.packages=net.cryptic_game");
+
+            final String version = AppBootstrap.class.getPackage().getImplementationVersion();
+            client.setRelease(version == null ? "debug" : version);
+            client.setEnvironment(this.config.getAsBoolean(BaseConfig.PRODUCTIVE) ? "production" : "development");
+            client.setDist(this.dist);
+
+//            final Map<String, Object> options = new HashMap<>();
+//            options.put("name", "value");
+//            client.setExtra(options);
+        }
+    }
 
     protected void setUpSQL() {
         this.sqlConnection.init(new SQLServer(
