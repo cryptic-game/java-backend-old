@@ -86,10 +86,8 @@ public abstract class AppBootstrap {
             client.setRelease(version == null ? "debug" : version);
             client.setEnvironment(this.config.getAsBoolean(BaseConfig.PRODUCTIVE) ? "production" : "development");
             client.setDist(this.dist);
+//            client.addExtra();
 
-//            final Map<String, Object> options = new HashMap<>();
-//            options.put("name", "value");
-//            client.setExtra(options);
         }
     }
 
