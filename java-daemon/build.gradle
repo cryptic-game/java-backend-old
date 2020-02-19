@@ -8,9 +8,8 @@ dependencies {
 }
 
 application {
-    applicationName = "deamon"
+    applicationName = "java-daemon"
     mainClassName = "net.cryptic_game.backend.daemon.App"
-    applicationDefaultJvmArgs = ["qasd"]
 }
 
 jar {
