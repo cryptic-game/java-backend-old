@@ -9,9 +9,6 @@ public enum ServerConfig implements DefaultConfig {
     CONFIG,
 
     // Values
-    DAEMON_HOST,
-    DAEMON_PORT,
-
     WEBSOCKET_HOST,
     WEBSOCKET_PORT,
 
@@ -20,9 +17,6 @@ public enum ServerConfig implements DefaultConfig {
 
     @Override
     public void iniConfig(final Config config) {
-        config.set(ServerConfig.DAEMON_HOST, "0.0.0.0");
-        config.set(ServerConfig.DAEMON_PORT, 4201);
-
         config.set(ServerConfig.WEBSOCKET_HOST, "0.0.0.0");
         config.set(ServerConfig.WEBSOCKET_PORT, 80);
 

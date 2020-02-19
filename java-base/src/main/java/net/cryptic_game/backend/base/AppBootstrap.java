@@ -87,7 +87,6 @@ public abstract class AppBootstrap {
             client.setEnvironment(this.config.getAsBoolean(BaseConfig.PRODUCTIVE) ? "production" : "development");
             client.setDist(this.dist);
 //            client.addExtra();
-
         }
     }
 

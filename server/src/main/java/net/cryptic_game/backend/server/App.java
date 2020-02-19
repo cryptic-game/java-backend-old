@@ -30,8 +30,7 @@ public class App extends AppBootstrap {
         this.serverHandler = new NettyServerHandler();
 
         this.serverHandler.addServer("daemon",
-                this.config.getAsString(ServerConfig.DAEMON_HOST),
-                this.config.getAsInt(ServerConfig.DAEMON_PORT),
+                "localhost", 4201,
                 new HttpCodec());
 
         this.serverHandler.addServer("websocket",

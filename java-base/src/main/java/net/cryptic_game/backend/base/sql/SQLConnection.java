@@ -50,10 +50,12 @@ public class SQLConnection {
         settings.put("connection.is-connection-validation-required", true);
         settings.put(Environment.JDBC_TIME_ZONE, "UTC");
 
-        settings.put(Environment.C3P0_MIN_SIZE, 3);
+        settings.put(Environment.C3P0_MIN_SIZE, 2);
         settings.put(Environment.C3P0_MAX_SIZE, 20);
-        settings.put(Environment.C3P0_ACQUIRE_INCREMENT, 5);
-        settings.put(Environment.C3P0_TIMEOUT, 1800);
+        settings.put(Environment.C3P0_ACQUIRE_INCREMENT, 3);
+        settings.put(Environment.C3P0_TIMEOUT, 300);
+        settings.put(Environment.C3P0_MAX_STATEMENTS, 50);
+        settings.put(Environment.C3P0_IDLE_TEST_PERIOD, 300);
 
         if (debug) settings.put(Environment.SHOW_SQL, true);
 
