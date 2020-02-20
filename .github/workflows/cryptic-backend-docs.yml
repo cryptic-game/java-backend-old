@@ -17,7 +17,9 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build Docs with Gradle
-        run: ./gradlew aggregateJavadocs createDocs
+        run: ./gradlew aggregateJavadocs
+      - name: Include Custom CSS into Docs with Gradle
+        run: ./gradlew createDocs
       - name: Push Docs with Github
         run: |
           git config --local user.email "action@github.com"
