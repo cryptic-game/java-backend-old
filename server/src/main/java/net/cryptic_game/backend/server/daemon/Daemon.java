@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.server.deamon;
+package net.cryptic_game.backend.server.daemon;
 
 import io.netty.channel.ChannelHandlerContext;
 

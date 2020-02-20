@@ -3,8 +3,12 @@ package net.cryptic_game.backend.base.utils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.cryptic_game.backend.base.interfaces.JsonSerializable;
 
-import javax.management.modelmbean.InvalidTargetObjectTypeException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.InvalidPropertiesFormatException;
 import java.util.List;
 import java.util.UUID;
 
@@ -175,8 +179,9 @@ public class JsonBuilder {
      * @param key    name of the property.
      * @param values {@link List} value of associated with the property.
      * @return the current object of {@link JsonBuilder}.
+     * @throws InvalidPropertiesFormatException Type is not supported by {@link JsonArray}
      */
-    public <T> JsonBuilder add(final String key, final List<T> values) throws InvalidTargetObjectTypeException {
+    public <T> JsonBuilder add(final String key, final List<T> values) throws InvalidPropertiesFormatException {
 
         JsonArray array = new JsonArray();
 
@@ -191,8 +196,14 @@ public class JsonBuilder {
                 array.add((Character) value);
             } else if (value instanceof JsonElement) {
                 array.add((JsonElement) value);
+            } else if (value instanceof LocalDateTime) {
+                array.add(((LocalDateTime) value).toInstant(ZoneOffset.UTC).toEpochMilli());
+            } else if (value instanceof LocalDate) {
+                array.add(((LocalDate) value).atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli());
+            } else if (value instanceof JsonSerializable) {
+                array.add(((JsonSerializable) value).serialize());
             } else {
-                throw new InvalidTargetObjectTypeException();
+                throw new InvalidPropertiesFormatException(value.getClass() + " can not be added to a JsonArray!");
             }
         }
 

@@ -4,7 +4,7 @@ import net.cryptic_game.backend.base.AppBootstrap;
 import net.cryptic_game.backend.base.api.ApiHandler;
 import net.cryptic_game.backend.server.api.ServerApiEndpointExecutor;
 import net.cryptic_game.backend.server.config.ServerConfig;
-import net.cryptic_game.backend.server.deamon.DaemonHandler;
+import net.cryptic_game.backend.server.daemon.DaemonHandler;
 import net.cryptic_game.backend.server.server.NettyServerHandler;
 import net.cryptic_game.backend.server.server.http.HttpCodec;
 import net.cryptic_game.backend.server.server.websocket.WebSocketCodec;

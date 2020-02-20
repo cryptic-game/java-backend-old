@@ -1,9 +1,9 @@
-package net.cryptic_game.backend.server.server.deamon;
+package net.cryptic_game.backend.server.server.daemon;
 
 import com.google.gson.JsonObject;
 import io.netty.channel.ChannelHandlerContext;
 import net.cryptic_game.backend.base.netty.NettyHandler;
-import net.cryptic_game.backend.server.deamon.DaemonHandler;
+import net.cryptic_game.backend.server.daemon.DaemonHandler;
 
 public class DaemonContentHandler extends NettyHandler<JsonObject> {
 
