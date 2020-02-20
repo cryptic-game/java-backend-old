@@ -12,4 +12,4 @@ This is the official rewrite of the Cryptic backend.
 
 ### Other
 
-[License](LICENSE.html)
+[License](LICENSE)
