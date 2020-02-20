@@ -1,5 +1,5 @@
 ## Cryptic Java Backend Rewrite
-![Build](https://github.com/cryptic-game/java-backend-dev/workflows/Cryptic%20Backend%20Build/badge.svg?branch=master)
+![Build](https://github.com/cryptic-game/java-backend-dev/workflows/Cryptic%20Backend%20Build/badge.svg)
 
 This is the official rewrite of the Cryptic backend.
 
@@ -7,9 +7,9 @@ This is the official rewrite of the Cryptic backend.
 
 * [Getting Started](getting-started.html)
 * [Deployment](deployment.html)
-* [Java documentation](https://cryptic-game.github.io/java-backend-dev/javadoc/latest/index.html)
-* [Api Documentation](https://cryptic-game.github.io/java-backend-dev/api/latest/index.html)
+* [Java documentation](javadoc/latest/index.html)
+* [Api Documentation](api/latest/index.html)
 
 ### Other
 
-[License](https://github.com/cryptic-game/java-backend-dev/blob/gh-pages/LICENSE)
+[License](LICENSE.html)
