@@ -2,7 +2,7 @@
 ![Build](https://github.com/cryptic-game/java-backend-dev/workflows/Cryptic%20Backend%20Build/badge.svg?branch=master)
 ![Docker Image](https://github.com/cryptic-game/java-backend-dev/workflows/Cryptic%20Backend%20Docker%20Image/badge.svg)
 
-This is the Java backend of the Cryptic project.
+This is the [Java Backend](https://cryptic-game.github.io/java-backend-dev/) of the Cryptic project.
 
 ## Getting Started
 
