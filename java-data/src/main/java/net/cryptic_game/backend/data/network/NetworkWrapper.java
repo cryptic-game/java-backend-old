@@ -3,7 +3,6 @@ package net.cryptic_game.backend.data.network;
 import net.cryptic_game.backend.base.AppBootstrap;
 import net.cryptic_game.backend.base.sql.SQLConnection;
 import net.cryptic_game.backend.data.device.Device;
-import net.cryptic_game.backend.data.network.member.Member;
 import net.cryptic_game.backend.data.network.member.MemberWrapper;
 import org.hibernate.Session;
 
@@ -29,39 +28,39 @@ public class NetworkWrapper {
         network.setHidden(hidden);
         network.setCreated(now);
 
-        final Session session = sqlConnection.openSession();
-        session.beginTransaction();
-        session.save(network);
-        session.getTransaction().commit();
-        session.close();
+        final Session sqlSession = sqlConnection.openSession();
+        sqlSession.beginTransaction();
+        sqlSession.save(network);
+        sqlSession.getTransaction().commit();
+        sqlSession.close();
         return network;
     }
 
     public static Network getById(final UUID id) {
-        final Session session = sqlConnection.openSession();
-        final Network network = session.find(Network.class, id);
-        session.close();
+        final Session sqlSession = sqlConnection.openSession();
+        final Network network = sqlSession.find(Network.class, id);
+        sqlSession.close();
         return network;
     }
 
     public static Network getByName(final String name) {
-        final Session session = sqlConnection.openSession();
-        final List<Network> networks = session
+        final Session sqlSession = sqlConnection.openSession();
+        final List<Network> networks = sqlSession
                 .createQuery("select object (n) from Network as n where n.name = :name", Network.class)
                 .setParameter("name", name)
                 .getResultList();
-        session.close();
+        sqlSession.close();
 
         if (!networks.isEmpty()) return networks.get(0);
         return null;
     }
 
     private static void updateNetwork(Network network) {
-        final Session session = sqlConnection.openSession();
-        session.beginTransaction();
-        session.update(network);
-        session.getTransaction().commit();
-        session.close();
+        final Session sqlSession = sqlConnection.openSession();
+        sqlSession.beginTransaction();
+        sqlSession.update(network);
+        sqlSession.getTransaction().commit();
+        sqlSession.close();
     }
 
     public static boolean updateName(final Network network, final String newName) {
@@ -82,14 +81,24 @@ public class NetworkWrapper {
     }
 
     public static void deleteNetwork(final Network network) {
-        final Session session = sqlConnection.openSession();
-        session.beginTransaction();
-        session.delete(network);
-        session.getTransaction().commit();
-        session.close();
+        final Session sqlSession = sqlConnection.openSession();
+        sqlSession.beginTransaction();
+        sqlSession.delete(network);
+        sqlSession.getTransaction().commit();
+        sqlSession.close();
     }
 
-    public static Member addDevice(final Network network, final Device device) {
-        return MemberWrapper.createMembership(network, device);
+    public static void addDevice(final Network network, final Device device) {
+        MemberWrapper.createMembership(network, device);
+    }
+
+    public static boolean areDevicesConnected(Device device1, Device device2) {
+        try (final Session sqlSession = sqlConnection.openSession()) {
+            return sqlSession.createQuery("select object (n) from Network n, Member m1 where m1.key.network in " +
+                    "(select m2.key.network from Member m2 where m2.key.device = :device2) and m1.key.device = :device1 and n = m1.key.network", Network.class)
+                    .setParameter("device1", device1)
+                    .setParameter("device2", device2)
+                    .getResultList().size() > 0;
+        }
     }
 }

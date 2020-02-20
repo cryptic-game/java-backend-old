@@ -93,11 +93,12 @@ public class File extends TableModelAutoId {
                 Objects.equals(getDevice(), file.getDevice()) &&
                 Objects.equals(getName(), file.getName()) &&
                 Objects.equals(getContent(), file.getContent()) &&
-                Objects.equals(getParentDirectory(), file.getParentDirectory());
+                Objects.equals(getParentDirectory(), file.getParentDirectory()) &&
+                Objects.equals(getId(), file.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getDevice(), getName(), getContent(), isDirectory(), getParentDirectory());
+        return Objects.hash(getId(), getDevice(), getName(), getContent(), isDirectory(), getParentDirectory());
     }
 }

@@ -35,4 +35,23 @@ public class DeviceWrapper {
     public static boolean hasUserAccessPermissions(final Device device, final User user) {
         return device.getOwner().equals(user) || getCoOwnersOfDevice(device).contains(user);
     }
+
+    public static Device createDevice(String name, User owner, boolean poweredOn) {
+        final Session sqlSession = sqlConnection.openSession();
+
+        final Device device = new Device();
+        device.setName(name);
+        device.setOwner(owner);
+        device.setPoweredOn(poweredOn);
+
+        sqlSession.beginTransaction();
+        sqlSession.save(device);
+        sqlSession.getTransaction().commit();
+        sqlSession.close();
+        return device;
+    }
+
+    public static Device createDevice(String name, User owner) {
+        return createDevice(name, owner, true);
+    }
 }
