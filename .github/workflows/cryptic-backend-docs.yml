@@ -20,10 +20,15 @@ jobs:
         run: ./gradlew aggregateJavadoc createDocs
       - name: Push Docs with Github
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git remote add github "https://JannikEmmerich:${{ secrets.GH_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
-          git add ./docs/
-          git commit -m "Update Docs"
-          git push github HEAD:${GITHUB_REF}
+          git config --local user.email "cryptic-game@protonmail.com"
+          git config --local user.name "Cryptic Bot"
+          git remote add github "https://cryptic-bot:${{ secrets.GH_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
+          git checkout gh-pages
+          rm ./javadoc/latest -rf
+          git add ./javadoc/latest
+          git commit -m "Remove old docs"
+          git checkout ${GITHUB_REF##*/}
+          git add ./javadoc
+          git commit -m "Update docs"
+          git push github gh-pages
 

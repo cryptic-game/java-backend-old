@@ -21,18 +21,10 @@ subprojects {
 }
 
 task cleanDocs(type: Delete) {
-    delete "$projectDir/docs/javadoc/$version/"
-    delete "$projectDir/docs/javadoc/latest/"
+    delete "$projectDir/javadoc/latest/"
 }
 
 task createDocs(type: Copy, dependsOn: cleanDocs) {
-    def docs = file("$project.buildDir/docs/javadoc/")
-    into "$projectDir/docs/javadoc/"
-
-    from(docs) {
-        into "$version/"
-    }
-    from(docs) {
-        into "latest/"
-    }
+    from "$project.buildDir/javadoc/"
+    into "$projectDir/javadoc/latest/"
 }
