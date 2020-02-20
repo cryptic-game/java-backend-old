@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.data.session;
+package net.cryptic_game.backend.data.user.session;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;

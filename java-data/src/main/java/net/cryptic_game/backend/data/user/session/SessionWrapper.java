@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.data.session;
+package net.cryptic_game.backend.data.user.session;
 
 import net.cryptic_game.backend.base.AppBootstrap;
 import net.cryptic_game.backend.base.config.BaseConfig;
