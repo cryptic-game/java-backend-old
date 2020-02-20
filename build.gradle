@@ -1,7 +1,22 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+
+    dependencies {
+        classpath 'com.netflix.nebula:gradle-aggregate-javadocs-plugin:2.2.+'
+    }
+}
+
 plugins {
     id 'java'
     id 'application'
 }
+
+apply plugin: 'nebula-aggregate-javadocs'
 
 group 'net.cryptic-game'
 version '0.3.0'
@@ -16,5 +31,22 @@ subprojects {
 
     repositories {
         mavenCentral()
+    }
+}
+
+task cleanDocs(type: Delete) {
+    delete "$projectDir/docs/javadoc/$version/"
+    delete "$projectDir/docs/javadoc/latest/"
+}
+
+task createDocs(type: Copy, dependsOn: cleanDocs) {
+    def docs = file("$project.buildDir/docs/javadoc/")
+    into "$projectDir/docs/javadoc/"
+
+    from(docs) {
+        into "$version/"
+    }
+    from(docs) {
+        into "latest/"
     }
 }
