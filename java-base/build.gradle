@@ -5,8 +5,8 @@ plugins {
 
 dependencies {
     // Database
-    api 'org.hibernate:hibernate-core:5.4.10.Final'
-    api 'org.hibernate:hibernate-c3p0:5.4.10.Final'
+    api 'org.hibernate:hibernate-core:5.4.12.Final'
+    api 'org.hibernate:hibernate-c3p0:5.4.12.Final'
     api 'mysql:mysql-connector-java:8.0.19'
     api 'org.mariadb.jdbc:mariadb-java-client:2.5.4'
 
@@ -31,6 +31,4 @@ dependencies {
 
     // Reflections
     api 'org.reflections:reflections:0.9.12'
-
-
 }
