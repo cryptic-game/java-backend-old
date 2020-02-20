@@ -20,9 +20,9 @@ net.cryptic_game.backend.server
 net.cryptic_game.backend.server.api
 net.cryptic_game.backend.server.client
 net.cryptic_game.backend.server.config
-net.cryptic_game.backend.server.deamon
+net.cryptic_game.backend.server.daemon
 net.cryptic_game.backend.server.server
-net.cryptic_game.backend.server.server.deamon
+net.cryptic_game.backend.server.server.daemon
 net.cryptic_game.backend.server.server.http
 net.cryptic_game.backend.server.server.http.endpoints
 net.cryptic_game.backend.server.server.websocket
