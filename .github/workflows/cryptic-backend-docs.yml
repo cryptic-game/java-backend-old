@@ -19,6 +19,7 @@ jobs:
           git config --local user.email "cryptic-game@protonmail.com"
           git config --local user.name "Cryptic Bot"
           git remote add github "https://cryptic-bot:${{ secrets.GH_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
+          git fetch github
           git checkout gh-pages
           rm ./javadoc/latest/* -rf
           touch ./javadoc/latest/.gitkeep
