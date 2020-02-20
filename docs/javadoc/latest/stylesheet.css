@@ -395,7 +395,7 @@ body.class-declaration .summary h3, body.class-declaration .details h3, body.cla
 .contentContainer .description dl dd, .contentContainer .details dl dd, .serializedFormContainer dl dd {
     margin: 5px 0 10px 0px;
     font-size: 14px;
-    font-family: 'DejaVu Serif', Georgia, "Times New Roman", Times, serif;
+    font-family: 'Lato', Arial, Helvetica, sans-serif;
 }
 
 .serializedFormContainer dl.nameValue dt {
@@ -602,7 +602,7 @@ td.colFirst a:link, td.colFirst a:visited, td.colSecond a:link, td.colSecond a:v
 
 div.block {
     font-size: 14px;
-    font-family: 'DejaVu Serif', Georgia, "Times New Roman", Times, serif;
+    font-family: 'Lato', Arial, Helvetica, sans-serif;
 }
 
 td.colLast div {
@@ -664,7 +664,7 @@ h1.hidden {
 
 .deprecationBlock {
     font-size: 14px;
-    font-family: 'DejaVu Serif', Georgia, "Times New Roman", Times, serif;
+    font-family: 'Lato', Arial, Helvetica, sans-serif;
     border-style: solid;
     border-width: thin;
     border-radius: 10px;
