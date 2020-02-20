@@ -1,10 +1,10 @@
 package net.cryptic_game.backend.server.client;
 
 import io.netty.channel.ChannelHandlerContext;
-import net.cryptic_game.backend.base.data.session.Session;
-import net.cryptic_game.backend.base.data.session.SessionWrapper;
-import net.cryptic_game.backend.base.data.user.User;
-import net.cryptic_game.backend.base.data.user.UserWrapper;
+import net.cryptic_game.backend.data.session.Session;
+import net.cryptic_game.backend.data.session.SessionWrapper;
+import net.cryptic_game.backend.data.user.User;
+import net.cryptic_game.backend.data.user.UserWrapper;
 
 import java.util.UUID;
 

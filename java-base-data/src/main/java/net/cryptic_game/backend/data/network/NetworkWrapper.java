@@ -1,10 +1,10 @@
-package net.cryptic_game.backend.base.data.network;
+package net.cryptic_game.backend.data.network;
 
 import net.cryptic_game.backend.base.AppBootstrap;
-import net.cryptic_game.backend.base.data.device.Device;
-import net.cryptic_game.backend.base.data.network.member.Member;
-import net.cryptic_game.backend.base.data.network.member.MemberWrapper;
 import net.cryptic_game.backend.base.sql.SQLConnection;
+import net.cryptic_game.backend.data.device.Device;
+import net.cryptic_game.backend.data.network.member.Member;
+import net.cryptic_game.backend.data.network.member.MemberWrapper;
 import org.hibernate.Session;
 
 import java.time.LocalDateTime;

@@ -1,9 +1,9 @@
-package net.cryptic_game.backend.base.data.device.access;
+package net.cryptic_game.backend.data.device.access;
 
 import net.cryptic_game.backend.base.AppBootstrap;
-import net.cryptic_game.backend.base.data.device.Device;
-import net.cryptic_game.backend.base.data.user.User;
 import net.cryptic_game.backend.base.sql.SQLConnection;
+import net.cryptic_game.backend.data.device.Device;
+import net.cryptic_game.backend.data.user.User;
 import org.hibernate.Session;
 
 import java.time.Duration;
@@ -22,7 +22,7 @@ public class DeviceAccessWrapper {
     public static boolean hasUserAccessToDevice(final User user, final Device device) {
         try (Session sqlSession = sqlConnection.openSession()) {
             return sqlSession
-                    .createQuery("select object (a) from DeviceAccess a where a.user = :user and a.device = :device and a.valid = true and a.exprie > :currentDate", DeviceAccess.class)
+                    .createQuery("select object (a) from DeviceAccess a where a.user = :user and a.device = :device and a.valid = true and a.expire > :currentDate", DeviceAccess.class)
                     .setParameter("user", user)
                     .setParameter("device", device)
                     .setParameter("currentDate", LocalDateTime.now())
@@ -50,7 +50,7 @@ public class DeviceAccessWrapper {
     public static List<DeviceAccess> getAccessesToDevice(final Device device) {
         try (Session sqlSession = sqlConnection.openSession()) {
             return sqlSession
-                    .createQuery("select object (a) from DeviceAccess a where a.device = :device and a.valid = true and a.exprie > :currentDate", DeviceAccess.class)
+                    .createQuery("select object (a) from DeviceAccess a where a.device = :device and a.valid = true and a.expire > :currentDate", DeviceAccess.class)
                     .setParameter("device", device)
                     .setParameter("currentDate", LocalDateTime.now())
                     .getResultList();

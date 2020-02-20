@@ -1,10 +1,10 @@
-package net.cryptic_game.backend.base.data.network.member;
+package net.cryptic_game.backend.data.network.member;
 
 import com.google.gson.JsonObject;
-import net.cryptic_game.backend.base.data.device.Device;
-import net.cryptic_game.backend.base.data.network.Network;
 import net.cryptic_game.backend.base.sql.models.TableModel;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
+import net.cryptic_game.backend.data.device.Device;
+import net.cryptic_game.backend.data.network.Network;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;

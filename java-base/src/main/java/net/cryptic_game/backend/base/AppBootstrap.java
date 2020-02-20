@@ -6,20 +6,15 @@ import net.cryptic_game.backend.base.api.ApiHandler;
 import net.cryptic_game.backend.base.config.BaseConfig;
 import net.cryptic_game.backend.base.config.Config;
 import net.cryptic_game.backend.base.config.DefaultConfig;
-import net.cryptic_game.backend.base.data.device.Device;
-import net.cryptic_game.backend.base.data.device.access.DeviceAccess;
-import net.cryptic_game.backend.base.data.network.Network;
-import net.cryptic_game.backend.base.data.network.invitation.Invitation;
-import net.cryptic_game.backend.base.data.network.member.Member;
-import net.cryptic_game.backend.base.data.session.Session;
-import net.cryptic_game.backend.base.data.user.User;
 import net.cryptic_game.backend.base.sql.SQLConnection;
 import net.cryptic_game.backend.base.sql.SQLServer;
 import net.cryptic_game.backend.base.sql.SQLServerType;
+import net.cryptic_game.backend.base.sql.models.TableModel;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.config.LoggerConfig;
+import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,13 +56,9 @@ public abstract class AppBootstrap {
     }
 
     private void initSQLTableModels() throws SQLException {
-        this.sqlConnection.addEntity(User.class);
-        this.sqlConnection.addEntity(Session.class);
-        this.sqlConnection.addEntity(Device.class);
-        this.sqlConnection.addEntity(Invitation.class);
-        this.sqlConnection.addEntity(Network.class);
-        this.sqlConnection.addEntity(Member.class);
-        this.sqlConnection.addEntity(DeviceAccess.class);
+        for (Class<? extends TableModel> modelClass : new Reflections("net.cryptic_game.backend.data").getSubTypesOf(TableModel.class)) {
+            this.sqlConnection.addEntity(modelClass);
+        }
     }
 
     protected abstract void init();

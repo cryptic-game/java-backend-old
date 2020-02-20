@@ -28,4 +28,9 @@ dependencies {
 
     // Sentry
     api 'io.sentry:sentry-log4j2:1.7.30'
+
+    // Reflections
+    api 'org.reflections:reflections:0.9.12'
+
+
 }

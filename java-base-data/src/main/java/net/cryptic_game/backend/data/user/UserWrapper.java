@@ -1,9 +1,9 @@
-package net.cryptic_game.backend.base.data.user;
+package net.cryptic_game.backend.data.user;
 
 import net.cryptic_game.backend.base.AppBootstrap;
-import net.cryptic_game.backend.base.data.session.SessionWrapper;
 import net.cryptic_game.backend.base.sql.SQLConnection;
 import net.cryptic_game.backend.base.utils.SecurityUtils;
+import net.cryptic_game.backend.data.session.SessionWrapper;
 import org.hibernate.Session;
 
 import java.time.LocalDateTime;

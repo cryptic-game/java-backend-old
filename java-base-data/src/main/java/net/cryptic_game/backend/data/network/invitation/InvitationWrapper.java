@@ -1,10 +1,10 @@
-package net.cryptic_game.backend.base.data.network.invitation;
+package net.cryptic_game.backend.data.network.invitation;
 
 import net.cryptic_game.backend.base.AppBootstrap;
-import net.cryptic_game.backend.base.data.device.Device;
-import net.cryptic_game.backend.base.data.network.Network;
-import net.cryptic_game.backend.base.data.network.NetworkWrapper;
 import net.cryptic_game.backend.base.sql.SQLConnection;
+import net.cryptic_game.backend.data.device.Device;
+import net.cryptic_game.backend.data.network.Network;
+import net.cryptic_game.backend.data.network.NetworkWrapper;
 import org.hibernate.Session;
 
 public class InvitationWrapper {

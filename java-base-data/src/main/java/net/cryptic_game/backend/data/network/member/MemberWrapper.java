@@ -1,9 +1,9 @@
-package net.cryptic_game.backend.base.data.network.member;
+package net.cryptic_game.backend.data.network.member;
 
 import net.cryptic_game.backend.base.AppBootstrap;
-import net.cryptic_game.backend.base.data.device.Device;
-import net.cryptic_game.backend.base.data.network.Network;
 import net.cryptic_game.backend.base.sql.SQLConnection;
+import net.cryptic_game.backend.data.device.Device;
+import net.cryptic_game.backend.data.network.Network;
 import org.hibernate.Session;
 
 public class MemberWrapper {
