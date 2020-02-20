@@ -28,7 +28,7 @@ jobs:
           git add ./javadoc/latest
           git commit -m "Remove old docs"
           git checkout ${GITHUB_REF##*/}
-          git add ./javadoc
+          git add ./javadoc/
           git commit -m "Update docs"
           git push github gh-pages
 

@@ -25,6 +25,6 @@ task cleanDocs(type: Delete) {
 }
 
 task createDocs(type: Copy, dependsOn: cleanDocs) {
-    from "$project.buildDir/javadoc/"
+    from "$project.buildDir/docs/javadoc/"
     into "$projectDir/javadoc/latest/"
 }
