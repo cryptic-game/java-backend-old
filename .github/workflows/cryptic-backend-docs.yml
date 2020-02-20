@@ -31,6 +31,7 @@ jobs:
         run: ./gradlew aggregateJavadoc createDocs
       - name: Push Docs with Github
         run: |
+          git checkout -- gradlew
           git show gh-pages:javadoc/latest javadoc/latest
           git checkout gh-pages
           git add ./javadoc/latest/
