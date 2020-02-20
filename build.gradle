@@ -39,12 +39,7 @@ task cleanDocs(type: Delete) {
     delete "$projectDir/docs/javadoc/latest/"
 }
 
-task updateDocsStyles(type: Copy, dependsOn: cleanDocs) {
-    from "$projectDir/gradle/javadoc/"
-    into "$project.buildDir/docs/javadoc/"
-}
-
-task createDocs(type: Copy, dependsOn: updateDocsStyles) {
+task createDocs(type: Copy, dependsOn: cleanDocs) {
     def docs = file("$project.buildDir/docs/javadoc/")
     into "$projectDir/docs/javadoc/"
 
