@@ -22,7 +22,6 @@ jobs:
           git fetch github
           git checkout gh-pages
           rm ./javadoc/latest/* -rf
-          touch ./javadoc/latest/.gitkeep
           git add ./javadoc/latest/
           git commit -m "Remove old docs"
           git checkout ${GITHUB_REF##*/}
