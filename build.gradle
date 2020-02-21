@@ -33,5 +33,5 @@ task linkSentry(type: Exec) {
     commandLine "sentry-cli", "releases", "new", "-p", "${System.env.SENTRY_PROJECT}", "${version.toString()}"
     commandLine "sentry-cli", "releases", "set-commits", "--auto", "${version.toString()}"
     commandLine "sentry-cli", "releases", "finalize", "${version.toString()}"
-    commandLine "sentry-cli", "releases", "deploy", "${version.toString()}", "new", "-e", "${System.env.SENTRY_DEPLOY_ENVIRONMENT}"
+    commandLine "sentry-cli", "releases", "deploys", "${version.toString()}", "new", "-e", "${System.env.SENTRY_DEPLOY_ENVIRONMENT}"
 }
