@@ -13,6 +13,7 @@ jobs:
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       SENTRY_ORG: cryptic
       SENTRY_PROJECT: java-backend
+      SENTRY_LOG_LEVEL: DEBUG
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 1.11
