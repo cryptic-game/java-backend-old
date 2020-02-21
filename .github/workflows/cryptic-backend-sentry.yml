@@ -24,12 +24,12 @@ jobs:
         run: curl -sL https://sentry.io/get-cli/ | bash
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      - name: Gradle Env Development
+      - name: Gradle Development
         if: github.ref == 'refs/heads/experimental'
         env:
           SENTRY_DEPLOY_ENVIRONMENT: development
         run: ./gradlew linkSentry
-      - name: Gradle Env Production
+      - name: Gradle Production
         if: github.ref == 'refs/heads/master'
         env:
           SENTRY_DEPLOY_ENVIRONMENT: production
