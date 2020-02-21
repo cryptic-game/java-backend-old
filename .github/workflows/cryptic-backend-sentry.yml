@@ -20,10 +20,10 @@ jobs:
         with:
           java-version: 1.11
       - name: Setup Env Development
-        if: ${GITHUB_REF##*/} == 'experimental'
+        if: '${GITHUB_REF##*/}' == 'experimental'
         run: export SENTRY_DEPLOY_ENVIRONMENT=development
       - name: Setup Env Production
-        if: ${GITHUB_REF##*/} == 'master'
+        if: '${GITHUB_REF##*/}' == 'master'
         run: export SENTRY_DEPLOY_ENVIRONMENT=production
       - name: Setup Sentry CLI
         run: curl -sL https://sentry.io/get-cli/ | bash
