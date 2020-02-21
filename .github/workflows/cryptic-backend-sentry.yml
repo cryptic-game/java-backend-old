@@ -20,7 +20,7 @@ jobs:
         with:
           java-version: 1.11
       - name: Setup Env Development
-        if: github.ref == K'refs/heads/experimental'
+        if: github.ref == 'refs/heads/experimental'
         run: export SENTRY_DEPLOY_ENVIRONMENT=development
       - name: Setup Env Production
         if: github.ref == 'refs/heads/master'
