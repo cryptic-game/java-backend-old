@@ -1,5 +1,5 @@
 # Cryptic Java Backend
-![Build](https://github.com/cryptic-game/java-backend-dev/workflows/Cryptic%20Backend%20Build/badge.svg?branch=master)
+![Build](https://github.com/cryptic-game/java-backend-dev/workflows/Cryptic%20Backend%20Build/badge.svg)
 
 This is the [Java Backend](https://cryptic-game.github.io/java-backend-dev/) of the Cryptic project.
 
