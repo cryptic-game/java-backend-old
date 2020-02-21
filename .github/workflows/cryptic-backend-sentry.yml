@@ -24,13 +24,23 @@ jobs:
         run: curl -sL https://sentry.io/get-cli/ | bash
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      - name: Gradle Development
+      - name: Sentry Development
         if: github.ref == 'refs/heads/experimental'
         env:
           SENTRY_DEPLOY_ENVIRONMENT: development
-        run: ./gradlew linkSentry
-      - name: Gradle Production
+        run: |
+          export SENTRY_RELEASE=$(./gradlew version | grep Version | cut -c9-)
+          sentry-cli releases new -p $SENTRY_PROJECT $SENTRY_RELEASE
+          sentry-cli releases set-commits --auto $SENTRY_RELEASE
+          sentry-cli releases finalize $SENTRY_RELEASE
+          sentry-cli releases deploys $SENTRY_RELEASE new -e $SENTRY_DEPLOY_ENVIRONMENT
+      - name: Sentry Production
         if: github.ref == 'refs/heads/master'
         env:
           SENTRY_DEPLOY_ENVIRONMENT: production
-        run: ./gradlew linkSentry
+        run: |
+          export SENTRY_RELEASE=$(./gradlew version | grep Version | cut -c9-)
+          sentry-cli releases new -p $SENTRY_PROJECT $SENTRY_RELEASE
+          sentry-cli releases set-commits --auto $SENTRY_RELEASE
+          sentry-cli releases finalize $SENTRY_RELEASE
+          sentry-cli releases deploys $SENTRY_RELEASE new -e $SENTRY_DEPLOY_ENVIRONMENT
