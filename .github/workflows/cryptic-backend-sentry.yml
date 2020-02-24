@@ -13,7 +13,7 @@ jobs:
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       SENTRY_ORG: cryptic
       SENTRY_PROJECT: java-backend
-      SENTRY_LOG_LEVEL: DEBUG
+      SENTRY_LOG_LEVEL: INFO
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 1.11
@@ -43,4 +43,3 @@ jobs:
           sentry-cli releases new -p $SENTRY_PROJECT $SENTRY_RELEASE
           sentry-cli releases set-commits --auto $SENTRY_RELEASE
           sentry-cli releases finalize $SENTRY_RELEASE
-          sentry-cli releases deploys $SENTRY_RELEASE new -e $SENTRY_DEPLOY_ENVIRONMENT
