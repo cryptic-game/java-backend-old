@@ -16,7 +16,7 @@ public class NettyClientHandler {
         this.eventLoopGroupHandler = new EventLoopGroupHandler();
     }
 
-    public void addServer(final String name, final String host, final int port, final NettyCodec nettyCodec) {
+    public void addClient(final String name, final String host, final int port, final NettyCodec nettyCodec) {
         this.clients.add(new NettyClient(name, host, port, this.eventLoopGroupHandler, nettyCodec));
     }
 

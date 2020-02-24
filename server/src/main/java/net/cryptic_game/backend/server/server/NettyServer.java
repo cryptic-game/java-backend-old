@@ -53,15 +53,24 @@ public class NettyServer {
                             .sync()
                             .channel();
 
-                    log.info("This Server is now listening on port " + this.inetAddress.getPort() + ".");
+                    log.info("This Server \"" + this.getName() + "\" is now listening on " + this.inetAddress + ".");
 
                     this.channel.closeFuture().sync();
-                } catch (IllegalArgumentException | InterruptedException e) {
-                    log.error("The server was unexpectedly closed.", e);
-                } finally {
-                    this.stop();
+                } catch (Exception e) {
+                    log.error("The server \"" + this.getName() + "\" was unexpectedly closed.", e);
                 }
+                log.info("Restarting in 20 seconds.");
+                try {
+                    Thread.sleep(1000 * 20); // 20 seconds
+                } catch (InterruptedException ignored) {
+                }
+                this.restart();
             }, this.getName()).start();
+    }
+
+    private void restart() {
+        this.stop();
+        this.start();
     }
 
     public String getName() {
