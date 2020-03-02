@@ -10,6 +10,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Contains management methods for {@link User}
+ *
+ * @since 0.3.0
+ */
 public class UserWrapper {
 
     private static final SQLConnection sqlConnection;
@@ -19,6 +24,14 @@ public class UserWrapper {
         sqlConnection = app.getSqlConnection();
     }
 
+    /**
+     * Create a {@link User} with the given user data
+     *
+     * @param name     The name of the new user
+     * @param mail     The mail address of the new user
+     * @param password The password of the new user
+     * @return The instance of the created {@link User}
+     */
     public static User registerUser(final String name, final String mail, final String password) {
         final LocalDateTime now = LocalDateTime.now();
 
@@ -38,6 +51,12 @@ public class UserWrapper {
         return user;
     }
 
+    /**
+     * Fetches the {@link User} with the given id
+     *
+     * @param id The id of the User
+     * @return The instance of the fetched {@link User} if it exists | null if the {@link User} does not exist
+     */
     public static User getById(final UUID id) {
         final Session session = sqlConnection.openSession();
         final User user = session.find(User.class, id);
@@ -45,6 +64,12 @@ public class UserWrapper {
         return user;
     }
 
+    /**
+     * Fetches the {@link User} with the give name
+     *
+     * @param name The name of the user
+     * @return The instance of the fetched {@link User} if it exists | null if the {@link User} does not exist
+     */
     public static User getByName(final String name) {
         final Session session = sqlConnection.openSession();
         final List<User> users = session
