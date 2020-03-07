@@ -1,8 +1,8 @@
 package net.cryptic_game.backend.internal.device;
 
 import com.google.gson.JsonObject;
-import net.cryptic_game.backend.User;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
+import net.cryptic_game.backend.user.User;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;

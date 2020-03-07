@@ -1,4 +1,4 @@
-package net.cryptic_game.backend;
+package net.cryptic_game.backend.inventory;
 
 public enum HardwareType {
 

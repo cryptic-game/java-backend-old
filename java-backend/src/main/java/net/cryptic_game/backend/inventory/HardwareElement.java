@@ -1,4 +1,6 @@
-package net.cryptic_game.backend;
+package net.cryptic_game.backend.inventory;
+
+import net.cryptic_game.backend.TableModelId;
 
 public interface HardwareElement extends TableModelId {
 

@@ -1,4 +1,7 @@
-package net.cryptic_game.backend;
+package net.cryptic_game.backend.network;
+
+import net.cryptic_game.backend.TableModelId;
+import net.cryptic_game.backend.device.Device;
 
 public interface NetworkMember extends TableModelId {
 

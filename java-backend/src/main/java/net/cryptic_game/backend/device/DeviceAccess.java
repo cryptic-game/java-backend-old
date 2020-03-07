@@ -1,4 +1,7 @@
-package net.cryptic_game.backend;
+package net.cryptic_game.backend.device;
+
+import net.cryptic_game.backend.TableModelId;
+import net.cryptic_game.backend.user.User;
 
 import java.time.LocalDateTime;
 
