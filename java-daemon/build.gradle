@@ -5,7 +5,8 @@ plugins {
 
 dependencies {
     compile project(":java-base")
-    compile project(":java-data")
+    compile project(":java-backend")
+    compile project(":java-backend-impl")
 }
 
 application {
