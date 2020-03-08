@@ -7,6 +7,7 @@ dependencies {
     implementation(project(":java-base"))
     implementation(project(":java-backend"))
     implementation(project(":java-backend-impl"))
+    implementation(project(":java-data"))
 }
 
 application {
