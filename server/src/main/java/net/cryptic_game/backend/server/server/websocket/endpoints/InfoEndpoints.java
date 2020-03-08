@@ -13,15 +13,17 @@ import net.cryptic_game.backend.server.server.ServerResponseType;
 
 public class InfoEndpoints extends ApiCollection {
 
-    @ApiEndpoint("online")
-    public JsonObject online(Client client) {
-        return build(ServerResponseType.OK, simple("online", ClientWrapper.getOnlineCount()));
-    }
+  @ApiEndpoint("online")
+  public JsonObject online(Client client) {
+    return build(ServerResponseType.OK, simple("online", ClientWrapper.getOnlineCount()));
+  }
 
-    @ApiEndpoint("info")
-    public JsonObject info(Client client) {
-        if (client.getUser() == null) return build(ServerResponseType.FORBIDDEN, "NOT_LOGGED_IN");
-        return build(ServerResponseType.OK, JsonBuilder.anJSON()
-                .add("user", client.getUser().serialize()).build());
-    }
+  @ApiEndpoint("info")
+  public JsonObject info(Client client) {
+      if (client.getUser() == null) {
+          return build(ServerResponseType.FORBIDDEN, "NOT_LOGGED_IN");
+      }
+    return build(ServerResponseType.OK, JsonBuilder.anJSON()
+        .add("user", client.getUser().serialize()).build());
+  }
 }

@@ -5,15 +5,15 @@ import net.cryptic_game.backend.base.netty.NettyInitializer;
 
 public class WebSocketCodec implements NettyCodec {
 
-    private final NettyInitializer initializer;
+  private final NettyInitializer initializer;
 
-    public WebSocketCodec() {
-        this.initializer = new WebSocketInitializer();
-    }
+  public WebSocketCodec() {
+    this.initializer = new WebSocketInitializer();
+  }
 
 
-    @Override
-    public NettyInitializer getInitializer() {
-        return this.initializer;
-    }
+  @Override
+  public NettyInitializer getInitializer() {
+    return this.initializer;
+  }
 }

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="INFO">
-    <Appenders>
-        <Console name="console" target="SYSTEM_OUT">
-            <PatternLayout
-                    pattern="%highlight{[%d{yyyy-MM-dd] [HH:mm:ss}] [Daemon] [%t] [%level]: %msg}{FATAL=red, ERROR=red, WARN=yellow, INFO=reset, DEBUG=green, TRACE=blue}%n"/>
-        </Console>
-    </Appenders>
-    <Loggers>
-        <Root level="info" additivity="false">
-            <AppenderRef ref="console"/>
-        </Root>
-    </Loggers>
+  <Appenders>
+    <Console name="console" target="SYSTEM_OUT">
+      <PatternLayout
+        pattern="%highlight{[%d{yyyy-MM-dd] [HH:mm:ss}] [Daemon] [%t] [%level]: %msg}{FATAL=red, ERROR=red, WARN=yellow, INFO=reset, DEBUG=green, TRACE=blue}%n"/>
+    </Console>
+  </Appenders>
+  <Loggers>
+    <Root additivity="false" level="info">
+      <AppenderRef ref="console"/>
+    </Root>
+  </Loggers>
 </Configuration>

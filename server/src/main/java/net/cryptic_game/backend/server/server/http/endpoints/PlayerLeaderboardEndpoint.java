@@ -1,18 +1,18 @@
 package net.cryptic_game.backend.server.server.http.endpoints;
 
+import static net.cryptic_game.backend.base.utils.JsonBuilder.simple;
+
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.server.server.http.HttpEndpoint;
 
-import static net.cryptic_game.backend.base.utils.JsonBuilder.simple;
-
 public class PlayerLeaderboardEndpoint extends HttpEndpoint {
 
-    public PlayerLeaderboardEndpoint() {
-        super("leaderboard");
-    }
+  public PlayerLeaderboardEndpoint() {
+    super("leaderboard");
+  }
 
-    @Override
-    public JsonObject handleRequest() {
+  @Override
+  public JsonObject handleRequest() {
 //        JSONBuilder jsonBuilder = JSONBuilder.anJSON()
 //                .add("ms", "server")
 //                .add("endpoint", Collections.singletonList("leaderboard"))
@@ -21,6 +21,6 @@ public class PlayerLeaderboardEndpoint extends HttpEndpoint {
 //
 //        sendHTTP(channel, simple("users", ));
 
-        return simple("work-in-progress", true);
-    }
+    return simple("work-in-progress", true);
+  }
 }

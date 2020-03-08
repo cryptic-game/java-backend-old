@@ -18,8 +18,8 @@ jobs:
         run: ./gradlew installDist
       - name: Grant execute permission for docker-entrypoint.sh
         run: chmod +x docker/docker-entrypoint.sh
-#      - name: Install dos2unix
-#        run: sudo apt-get update && sudo apt-get install dos2unix -y && dos2unix docker/docker-entrypoint.sh
+      #      - name: Install dos2unix
+      #        run: sudo apt-get update && sudo apt-get install dos2unix -y && dos2unix docker/docker-entrypoint.sh
       - name: Build Docker Image
         run: docker build --no-cache --compress --pull -t "rubidiumdev/cryptic-backend:latest" . -f "docker/Dockerfile"
       - name: Login to DockerHub Registry

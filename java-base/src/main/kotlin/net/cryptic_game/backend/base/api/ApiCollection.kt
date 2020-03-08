@@ -2,12 +2,11 @@ package net.cryptic_game.backend.base.api
 
 import com.google.gson.JsonObject
 import org.slf4j.LoggerFactory
-import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.Method
-import java.util.*
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
-import kotlin.reflect.full.*
+import kotlin.reflect.full.declaredFunctions
+import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.jvm.javaMethod
 import kotlin.reflect.jvm.jvmErasure
 
@@ -19,7 +18,7 @@ abstract class ApiCollection @JvmOverloads constructor(val name: String? = null)
         val executors = this::class.declaredFunctions.filter { function ->
             val annotation = function.findAnnotation<ApiEndpoint>()
             annotation != null && validateMethod(annotation.value, function)
-        }.map {function ->
+        }.map { function ->
             val constructor = executorClass.constructors.firstOrNull { constructor ->
                 val parameters = constructor.parameters
                 parameters.size == 3 && parameters.map { it.type.jvmErasure } == (listOf(String::class, ApiCollection::class, Method::class))

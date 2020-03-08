@@ -27,18 +27,18 @@ public class UserEndpoints extends ApiCollection {
       @ApiParameter("name") String name,
       @ApiParameter("password") String password,
       @ApiParameter("device_name") String deviceName) {
-      if (client.getUser() != null) {
-          return build(ServerResponseType.FORBIDDEN, "ALREADY_LOGGED_IN");
-      }
+    if (client.getUser() != null) {
+      return build(ServerResponseType.FORBIDDEN, "ALREADY_LOGGED_IN");
+    }
 
     User user = UserWrapper.getByName(name);
 
-      if (user == null) {
-          return build(ServerResponseType.UNAUTHORIZED, "INVALID_NAME");
-      }
-      if (!UserWrapper.verifyPassword(user, password)) {
-          return build(ServerResponseType.UNAUTHORIZED, "INVALID_PASSWORD");
-      }
+    if (user == null) {
+      return build(ServerResponseType.UNAUTHORIZED, "INVALID_NAME");
+    }
+    if (!UserWrapper.verifyPassword(user, password)) {
+      return build(ServerResponseType.UNAUTHORIZED, "INVALID_PASSWORD");
+    }
 
     UUID token = UUID.randomUUID();
     client.setSession(user, token, deviceName);
@@ -54,19 +54,19 @@ public class UserEndpoints extends ApiCollection {
       @ApiParameter("password") String password,
       @ApiParameter("mail") String mail,
       @ApiParameter("deviceName") String deviceName) {
-      if (client.getUser() != null) {
-          return build(ServerResponseType.FORBIDDEN, "ALREADY_LOGGED_IN");
-      }
+    if (client.getUser() != null) {
+      return build(ServerResponseType.FORBIDDEN, "ALREADY_LOGGED_IN");
+    }
 
-      if (!checkPassword(password)) {
-          return build(ServerResponseType.BAD_REQUEST, "INVALID_PASSWORD");
-      }
-      if (!checkMail(mail)) {
-          return build(ServerResponseType.BAD_REQUEST, "INVALID_MAIL");
-      }
-      if (UserWrapper.getByName(name) != null) {
-          return build(ServerResponseType.FORBIDDEN, "USER_ALREADY_EXISTS");
-      }
+    if (!checkPassword(password)) {
+      return build(ServerResponseType.BAD_REQUEST, "INVALID_PASSWORD");
+    }
+    if (!checkMail(mail)) {
+      return build(ServerResponseType.BAD_REQUEST, "INVALID_MAIL");
+    }
+    if (UserWrapper.getByName(name) != null) {
+      return build(ServerResponseType.FORBIDDEN, "USER_ALREADY_EXISTS");
+    }
 
     User user = UserWrapper.registerUser(name, mail, password);
     UUID token = UUID.randomUUID();
@@ -82,20 +82,20 @@ public class UserEndpoints extends ApiCollection {
   public JsonObject session(Client client,
       @ApiParameter("session") UUID sessionId,
       @ApiParameter("token") UUID token) {
-      if (client.getUser() != null) {
-          return build(ServerResponseType.FORBIDDEN, "ALREADY_LOGGED_IN");
-      }
+    if (client.getUser() != null) {
+      return build(ServerResponseType.FORBIDDEN, "ALREADY_LOGGED_IN");
+    }
 
     Session session = SessionWrapper.getSessionById(sessionId);
-      if (session == null) {
-          return WebSocketUtils.build(ServerResponseType.NOT_FOUND, "INVALID_SESSION");
-      }
-      if (!SecurityUtils.verify(token.toString(), session.getTokenHash())) {
-          return WebSocketUtils.build(ServerResponseType.UNAUTHORIZED, "INVALID_SESSION_TOKEN");
-      }
-      if (!session.isValid()) {
-          return WebSocketUtils.build(ServerResponseType.UNAUTHORIZED, "SESSION_EXPIRED");
-      }
+    if (session == null) {
+      return WebSocketUtils.build(ServerResponseType.NOT_FOUND, "INVALID_SESSION");
+    }
+    if (!SecurityUtils.verify(token.toString(), session.getTokenHash())) {
+      return WebSocketUtils.build(ServerResponseType.UNAUTHORIZED, "INVALID_SESSION_TOKEN");
+    }
+    if (!session.isValid()) {
+      return WebSocketUtils.build(ServerResponseType.UNAUTHORIZED, "SESSION_EXPIRED");
+    }
 
     client.setSession(session);
 
@@ -106,16 +106,16 @@ public class UserEndpoints extends ApiCollection {
   public JsonObject password(Client client,
       @ApiParameter("password") String password,
       @ApiParameter("new") String newPassword) {
-      if (client.getUser() == null) {
-          return build(ServerResponseType.FORBIDDEN, "NOT_LOGGED_IN");
-      }
+    if (client.getUser() == null) {
+      return build(ServerResponseType.FORBIDDEN, "NOT_LOGGED_IN");
+    }
 
-      if (!ValidationUtils.checkPassword(newPassword)) {
-          return build(ServerResponseType.BAD_REQUEST, "INVALID_PASSWORD");
-      }
-      if (!UserWrapper.verifyPassword(client.getUser(), password)) {
-          return build(ServerResponseType.UNAUTHORIZED, "INVALID_PASSWORD");
-      }
+    if (!ValidationUtils.checkPassword(newPassword)) {
+      return build(ServerResponseType.BAD_REQUEST, "INVALID_PASSWORD");
+    }
+    if (!UserWrapper.verifyPassword(client.getUser(), password)) {
+      return build(ServerResponseType.UNAUTHORIZED, "INVALID_PASSWORD");
+    }
 
     UserWrapper.setPassword(client.getUser(), newPassword);
 
@@ -125,9 +125,9 @@ public class UserEndpoints extends ApiCollection {
   @ApiEndpoint("logout")
   public JsonObject logout(Client client,
       @ApiParameter(value = "session", optional = true) UUID sessionId) {
-      if (client.getUser() == null) {
-          return build(ServerResponseType.FORBIDDEN, "NOT_LOGGED_IN");
-      }
+    if (client.getUser() == null) {
+      return build(ServerResponseType.FORBIDDEN, "NOT_LOGGED_IN");
+    }
 
     if (sessionId == null) {
       client.logout();
@@ -136,15 +136,15 @@ public class UserEndpoints extends ApiCollection {
 
     Session session = SessionWrapper.getSessionById(sessionId);
 
-      if (session == null) {
-          return build(ServerResponseType.NOT_FOUND, "SESSION_NOT_FOUND");
-      }
+    if (session == null) {
+      return build(ServerResponseType.NOT_FOUND, "SESSION_NOT_FOUND");
+    }
 
-      if (client.getSession().equals(session)) {
-          client.logout();
-      } else {
-          SessionWrapper.closeSession(session);
-      }
+    if (client.getSession().equals(session)) {
+      client.logout();
+    } else {
+      SessionWrapper.closeSession(session);
+    }
 
     return build(ServerResponseType.OK);
   }
@@ -152,13 +152,13 @@ public class UserEndpoints extends ApiCollection {
   @ApiEndpoint("delete")
   public JsonObject delete(Client client,
       @ApiParameter("password") String password) {
-      if (client.getUser() == null) {
-          return build(ServerResponseType.FORBIDDEN, "NOT_LOGGED_IN");
-      }
+    if (client.getUser() == null) {
+      return build(ServerResponseType.FORBIDDEN, "NOT_LOGGED_IN");
+    }
 
-      if (!UserWrapper.verifyPassword(client.getUser(), password)) {
-          return build(ServerResponseType.UNAUTHORIZED, "INVALID_PASSWORD");
-      }
+    if (!UserWrapper.verifyPassword(client.getUser(), password)) {
+      return build(ServerResponseType.UNAUTHORIZED, "INVALID_PASSWORD");
+    }
 
     User user = client.getUser();
     client.logout();

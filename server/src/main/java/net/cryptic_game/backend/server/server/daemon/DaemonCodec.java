@@ -6,14 +6,14 @@ import net.cryptic_game.backend.server.daemon.DaemonHandler;
 
 public class DaemonCodec implements NettyCodec {
 
-    private final DaemonHandler daemonHandler;
+  private final DaemonHandler daemonHandler;
 
-    public DaemonCodec(final DaemonHandler daemonHandler) {
-        this.daemonHandler = daemonHandler;
-    }
+  public DaemonCodec(final DaemonHandler daemonHandler) {
+    this.daemonHandler = daemonHandler;
+  }
 
-    @Override
-    public NettyInitializer getInitializer() {
-        return new DaemonInitializer(this.daemonHandler);
-    }
+  @Override
+  public NettyInitializer getInitializer() {
+    return new DaemonInitializer(this.daemonHandler);
+  }
 }
