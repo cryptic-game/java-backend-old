@@ -15,26 +15,20 @@ private val logger = LoggerFactory.getLogger(ApiCollection::class.java)
 
 abstract class ApiCollection @JvmOverloads constructor(val name: String? = null) {
 
-    @ExperimentalStdlibApi // using hasAnnotation is safe since you would do the exact same implementation anyways
     fun load(executorClass: KClass<out ApiEndpointExecutor>): List<ApiEndpointExecutor> {
-        val executors: MutableList<ApiEndpointExecutor> = ArrayList()
-        this::class.declaredFunctions.forEach { function ->
-            if (function.hasAnnotation<ApiEndpoint>()) {
-                val name = function.findAnnotation<ApiEndpoint>()!!.value
-                if (validateMethod(name, function)) {
-                    val constructor = executorClass.constructors.firstOrNull { constructor ->
-                        val parameters = constructor.parameters
-                        parameters.size == 3 && parameters.map { it.type.jvmErasure } == (listOf(String::class, ApiCollection::class, Method::class))
-                    } ?: error("No matching constructor found")
-                    executors.add(constructor.call(name, this, function.javaMethod))
-                }
-            }
+        val executors = this::class.declaredFunctions.filter { function ->
+            val annotation = function.findAnnotation<ApiEndpoint>()
+            annotation != null && validateMethod(annotation.value, function)
+        }.map {function ->
+            val constructor = executorClass.constructors.firstOrNull { constructor ->
+                val parameters = constructor.parameters
+                parameters.size == 3 && parameters.map { it.type.jvmErasure } == (listOf(String::class, ApiCollection::class, Method::class))
+            } ?: error("No matching constructor found")
+            constructor.call(name, this, function.javaMethod)
         }
-
-        if (executors.size == 0) logger.warn("""Api Collection "$name" has no endpoints.""")
+        if (executors.isEmpty()) logger.warn("""Api Collection "$name" has no endpoints.""")
         return executors
     }
-
 
     private fun validateMethod(name: String, function: KFunction<*>): Boolean {
         if (function.returnType.jvmErasure != JsonObject::class) {
@@ -43,4 +37,5 @@ abstract class ApiCollection @JvmOverloads constructor(val name: String? = null)
         }
         return true
     }
+
 }

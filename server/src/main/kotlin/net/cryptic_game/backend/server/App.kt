@@ -33,7 +33,6 @@ class App : AppBootstrap(ServerConfig.CONFIG, "Java-Server") {
 
     override fun start() = serverHandler.start()
 
-    @ExperimentalStdlibApi
     override fun initApi() {
         apiHandler = ApiHandler(ServerApiEndpointExecutor::class.java)
         apiHandler.registerApiCollection(UserEndpoints())
