@@ -1,6 +1,4 @@
 plugins {
-    java
-    application
     id("io.freefair.aggregate-javadoc") version "5.0.0-rc2"
     kotlin("jvm") version "1.3.70"
 }
@@ -10,11 +8,6 @@ repositories {
 }
 
 group = "net.cryptic-game"
-version = "0.3.0"
-
-application {
-    mainClassName = ""
-}
 
 subprojects {
     apply(plugin = "java")
