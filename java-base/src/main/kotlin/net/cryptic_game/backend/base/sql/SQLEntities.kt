@@ -60,8 +60,8 @@ enum class SQLServerType(
 
     NONE("none", "none", Driver::class, Dialect::class);
 
-    val driver: String = driver.simpleName ?: "Unknown"
-    val dialect: String = dialect.simpleName ?: "Unknown"
+    val driver: String = driver.qualifiedName ?: "Unknown"
+    val dialect: String = dialect.qualifiedName ?: "Unknown"
 
     companion object {
         @JvmStatic
