@@ -17,10 +17,6 @@ abstract class ApiCollection @JvmOverloads constructor(val name: String? = null)
 
     @ExperimentalStdlibApi // using hasAnnotation is safe since you would do the exact same implementation anyways
     fun load(executorClass: KClass<out ApiEndpointExecutor>): List<ApiEndpointExecutor> {
-        fun handleError(e: Throwable) {
-            logger.error("Error while loading Api endpoint.", e)
-        }
-
         val executors: MutableList<ApiEndpointExecutor> = ArrayList()
         this::class.declaredFunctions.forEach { function ->
             if (function.hasAnnotation<ApiEndpoint>()) {
