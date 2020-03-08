@@ -11,7 +11,7 @@ dependencies {
 
 application {
     applicationName = "java-daemon"
-    mainClassName = "net.cryptic_game.backend.daemon.App"
+    mainClassName = "net.cryptic_game.backend.daemon.AppKt"
 }
 
 tasks {

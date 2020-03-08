@@ -2,10 +2,10 @@ package net.cryptic_game.backend.base.netty
 
 import com.google.gson.JsonElement
 import com.google.gson.JsonParser
-import io.netty.channel.*
-import io.netty.channel.epoll.Epoll
-import io.netty.channel.epoll.EpollEventLoopGroup
-import io.netty.channel.nio.NioEventLoopGroup
+import io.netty.channel.ChannelHandlerContext
+import io.netty.channel.ChannelInitializer
+import io.netty.channel.ChannelPipeline
+import io.netty.channel.SimpleChannelInboundHandler
 import io.netty.channel.socket.SocketChannel
 import io.netty.handler.codec.MessageToMessageCodec
 import io.netty.handler.ssl.SslContext

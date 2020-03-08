@@ -12,7 +12,7 @@ dependencies {
 
 application {
     applicationName = "server"
-    mainClassName = "net.cryptic_game.backend.server.App"
+    mainClassName = "net.cryptic_game.backend.server.AppKt"
 }
 
 tasks {
