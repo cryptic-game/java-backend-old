@@ -85,7 +85,7 @@ class SQLConnection {
     private fun generateSettings(sqlServer: SQLServer, debug: Boolean): Properties {
         val settings = Properties()
         settings[Environment.DRIVER] = sqlServer.sqlServerType.driver
-        settings[Environment.URL] = "jdbc:" + sqlServer.sqlServerType.urlPrefix + "://" + sqlServer.host + ":" + sqlServer.port + "/" + sqlServer.database + "?autoReconnect=true&useUnicode=true&characterEncoding=utf-8"
+        settings[Environment.URL] = "jdbc:" + sqlServer.sqlServerType.urlPrefix + "://" + sqlServer.host  + ":" + sqlServer.port + "/" + sqlServer.database + "?autoReconnect=true&useUnicode=true&characterEncoding=utf-8"
         settings[Environment.AUTOCOMMIT] = false
         settings[Environment.USER] = sqlServer.username
         settings[Environment.PASS] = sqlServer.password

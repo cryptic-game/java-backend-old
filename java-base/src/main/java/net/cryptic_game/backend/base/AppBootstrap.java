@@ -55,7 +55,7 @@ public abstract class AppBootstrap {
     }
 
     private void initSQLTableModels() throws SQLException {
-        for (Class<? extends TableModel> modelClass : new Reflections("net.cryptic_game.backend.data").getSubTypesOf(TableModel.class)) {
+        for (Class<? extends TableModel> modelClass : new Reflections("net.cryptic_game.backend.base.sql").getSubTypesOf(TableModel.class)) {
             this.sqlConnection.addEntity(modelClass);
         }
     }
