@@ -1,15 +1,19 @@
 package net.cryptic_game.backend.data.network.member;
 
 import com.google.gson.JsonObject;
-import net.cryptic_game.backend.base.sql.models.TableModel;
+import java.io.Serializable;
+import java.util.Objects;
+import javax.persistence.Embeddable;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import net.cryptic_game.backend.base.sql.TableModel;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
 import net.cryptic_game.backend.data.device.Device;
 import net.cryptic_game.backend.data.network.Network;
 import org.hibernate.annotations.Type;
-
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Objects;
 
 @Entity
 @Table(name = "network_member")

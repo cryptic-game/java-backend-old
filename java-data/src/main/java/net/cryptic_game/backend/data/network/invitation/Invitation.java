@@ -1,7 +1,7 @@
 package net.cryptic_game.backend.data.network.invitation;
 
 import com.google.gson.JsonObject;
-import net.cryptic_game.backend.base.sql.models.TableModel;
+import net.cryptic_game.backend.base.sql.TableModel;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
 import net.cryptic_game.backend.data.device.Device;
 import net.cryptic_game.backend.data.network.Network;

@@ -1,15 +1,18 @@
 package net.cryptic_game.backend.data.network;
 
 import com.google.gson.JsonObject;
-import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
-import net.cryptic_game.backend.base.utils.JsonBuilder;
-import net.cryptic_game.backend.data.device.Device;
-import org.hibernate.annotations.Type;
-
-import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import net.cryptic_game.backend.base.sql.TableModelAutoId;
+import net.cryptic_game.backend.base.utils.JsonBuilder;
+import net.cryptic_game.backend.data.device.Device;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "network_network")

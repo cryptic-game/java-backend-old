@@ -3,9 +3,9 @@ package net.cryptic_game.backend.server.server.http;
 import io.netty.channel.ChannelPipeline;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
-import net.cryptic_game.backend.base.netty.NettyInitializer;
 
 import java.util.Map;
+import net.cryptic_game.backend.base.netty.NettyInitializer;
 
 public class HttpServerInitializer implements NettyInitializer {
 

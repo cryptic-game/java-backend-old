@@ -1,9 +1,12 @@
 package net.cryptic_game.backend.server.server.websocket.endpoints;
 
+import static net.cryptic_game.backend.base.utils.ValidationUtils.checkMail;
+import static net.cryptic_game.backend.base.utils.ValidationUtils.checkPassword;
+import static net.cryptic_game.backend.server.server.websocket.WebSocketUtils.build;
+
 import com.google.gson.JsonObject;
+import java.util.UUID;
 import net.cryptic_game.backend.base.api.ApiCollection;
-import net.cryptic_game.backend.base.api.ApiEndpoint;
-import net.cryptic_game.backend.base.api.ApiParameter;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
 import net.cryptic_game.backend.base.utils.SecurityUtils;
 import net.cryptic_game.backend.base.utils.ValidationUtils;
@@ -15,19 +18,12 @@ import net.cryptic_game.backend.server.client.Client;
 import net.cryptic_game.backend.server.server.ServerResponseType;
 import net.cryptic_game.backend.server.server.websocket.WebSocketUtils;
 
-import java.util.UUID;
-
-import static net.cryptic_game.backend.base.utils.ValidationUtils.checkMail;
-import static net.cryptic_game.backend.base.utils.ValidationUtils.checkPassword;
-import static net.cryptic_game.backend.server.server.websocket.WebSocketUtils.build;
-
 public class UserEndpoints extends ApiCollection {
 
-    @ApiEndpoint("login")
     public JsonObject login(Client client,
-                            @ApiParameter("name") String name,
-                            @ApiParameter("password") String password,
-                            @ApiParameter("device_name") String deviceName) {
+                            String name,
+                            String password,
+                            String deviceName) {
         if (client.getUser() != null) return build(ServerResponseType.FORBIDDEN, "ALREADY_LOGGED_IN");
 
         User user = UserWrapper.getByName(name);
@@ -44,12 +40,11 @@ public class UserEndpoints extends ApiCollection {
                 .add("token", token).build());
     }
 
-    @ApiEndpoint("register")
     public JsonObject register(Client client,
-                               @ApiParameter("name") String name,
-                               @ApiParameter("password") String password,
-                               @ApiParameter("mail") String mail,
-                               @ApiParameter("device_name") String deviceName) {
+                               String name,
+                               String password,
+                               String mail,
+                               String deviceName) {
         if (client.getUser() != null) return build(ServerResponseType.FORBIDDEN, "ALREADY_LOGGED_IN");
 
         if (!checkPassword(password)) return build(ServerResponseType.BAD_REQUEST, "INVALID_PASSWORD");
@@ -66,10 +61,9 @@ public class UserEndpoints extends ApiCollection {
 
     }
 
-    @ApiEndpoint("session")
     public JsonObject session(Client client,
-                              @ApiParameter("session") UUID sessionId,
-                              @ApiParameter("token") UUID token) {
+                              UUID sessionId,
+                              UUID token) {
         if (client.getUser() != null) return build(ServerResponseType.FORBIDDEN, "ALREADY_LOGGED_IN");
 
         Session session = SessionWrapper.getSessionById(sessionId);
@@ -83,10 +77,9 @@ public class UserEndpoints extends ApiCollection {
         return build(ServerResponseType.OK);
     }
 
-    @ApiEndpoint("password")
     public JsonObject password(Client client,
-                               @ApiParameter("password") String password,
-                               @ApiParameter("new") String newPassword) {
+                               String password,
+                               String newPassword) {
         if (client.getUser() == null) return build(ServerResponseType.FORBIDDEN, "NOT_LOGGED_IN");
 
         if (!ValidationUtils.checkPassword(newPassword))
@@ -99,9 +92,8 @@ public class UserEndpoints extends ApiCollection {
         return build(ServerResponseType.OK);
     }
 
-    @ApiEndpoint("logout")
     public JsonObject logout(Client client,
-                             @ApiParameter(value = "session", optional = true) UUID sessionId) {
+                             UUID sessionId) {
         if (client.getUser() == null) return build(ServerResponseType.FORBIDDEN, "NOT_LOGGED_IN");
 
         if (sessionId == null) {
@@ -121,9 +113,8 @@ public class UserEndpoints extends ApiCollection {
         return build(ServerResponseType.OK);
     }
 
-    @ApiEndpoint("delete")
     public JsonObject delete(Client client,
-                             @ApiParameter("password") String password) {
+                             String password) {
         if (client.getUser() == null) return build(ServerResponseType.FORBIDDEN, "NOT_LOGGED_IN");
 
         if (!UserWrapper.verifyPassword(client.getUser(), password))

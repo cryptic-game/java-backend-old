@@ -1,10 +1,9 @@
 package net.cryptic_game.backend.daemon.client;
 
-import net.cryptic_game.backend.base.netty.EventLoopGroupHandler;
-import net.cryptic_game.backend.base.netty.NettyCodec;
-
 import java.util.HashSet;
 import java.util.Set;
+import net.cryptic_game.backend.base.netty.EventLoopGroupHandler;
+import net.cryptic_game.backend.base.netty.NettyCodec;
 
 public class NettyClientHandler {
 

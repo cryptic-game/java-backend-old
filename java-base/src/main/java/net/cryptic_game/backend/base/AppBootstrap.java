@@ -2,6 +2,7 @@ package net.cryptic_game.backend.base;
 
 import io.sentry.Sentry;
 import io.sentry.SentryClient;
+import java.sql.SQLException;
 import net.cryptic_game.backend.base.api.ApiHandler;
 import net.cryptic_game.backend.base.config.BaseConfig;
 import net.cryptic_game.backend.base.config.Config;
@@ -9,7 +10,7 @@ import net.cryptic_game.backend.base.config.DefaultConfig;
 import net.cryptic_game.backend.base.sql.SQLConnection;
 import net.cryptic_game.backend.base.sql.SQLServer;
 import net.cryptic_game.backend.base.sql.SQLServerType;
-import net.cryptic_game.backend.base.sql.models.TableModel;
+import net.cryptic_game.backend.base.sql.TableModel;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LoggerContext;
@@ -17,8 +18,6 @@ import org.apache.logging.log4j.core.config.LoggerConfig;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.sql.SQLException;
 
 public abstract class AppBootstrap {
 

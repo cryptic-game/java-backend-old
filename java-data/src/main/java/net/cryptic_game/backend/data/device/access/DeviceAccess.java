@@ -1,7 +1,7 @@
 package net.cryptic_game.backend.data.device.access;
 
 import com.google.gson.JsonObject;
-import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
+import net.cryptic_game.backend.base.sql.TableModelAutoId;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
 import net.cryptic_game.backend.data.device.Device;
 import net.cryptic_game.backend.data.user.User;

@@ -5,10 +5,10 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.*;
-import net.cryptic_game.backend.base.netty.NettyHandler;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import net.cryptic_game.backend.base.netty.NettyHandler;
 
 import static net.cryptic_game.backend.base.utils.JsonBuilder.simple;
 

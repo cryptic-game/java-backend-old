@@ -5,6 +5,10 @@ plugins {
     kotlin("jvm") version "1.3.70"
 }
 
+repositories {
+    jcenter()
+}
+
 group = "net.cryptic-game"
 version = "0.3.0"
 
@@ -20,6 +24,10 @@ subprojects {
 
     repositories {
         mavenCentral()
+    }
+
+    dependencies {
+        implementation(kotlin("stdlib-jdk8"))
     }
 
     configure<JavaPluginConvention> {

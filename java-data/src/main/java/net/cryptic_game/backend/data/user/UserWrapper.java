@@ -1,14 +1,13 @@
 package net.cryptic_game.backend.data.user;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
 import net.cryptic_game.backend.base.AppBootstrap;
 import net.cryptic_game.backend.base.sql.SQLConnection;
 import net.cryptic_game.backend.base.utils.SecurityUtils;
 import net.cryptic_game.backend.data.user.session.SessionWrapper;
 import org.hibernate.Session;
-
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * Contains management methods for {@link User}

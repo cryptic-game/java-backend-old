@@ -1,14 +1,13 @@
 package net.cryptic_game.backend.data.user;
 
 import com.google.gson.JsonObject;
-import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import net.cryptic_game.backend.base.sql.TableModelAutoId;
 
 /**
  * Entity representing an user entry in the database

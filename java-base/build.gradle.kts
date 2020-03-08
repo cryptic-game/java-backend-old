@@ -1,5 +1,4 @@
 plugins {
-    java
     `java-library`
 }
 
@@ -31,6 +30,9 @@ dependencies {
 
     // Reflections
     api("org.reflections:reflections:0.9.12")
+    implementation(kotlin("stdlib-jdk8"))
 
-
+}
+repositories {
+    mavenCentral()
 }

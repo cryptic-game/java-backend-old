@@ -19,7 +19,7 @@ public class ServerApiExecutor extends ApiExecutor {
 
         ServerApiExecutionData executionData = (ServerApiExecutionData) data;
 
-        final ApiEndpointExecutor endpoint = this.apiHandler.getEndpointExecutor(executionData.getEndpoint());
+        final ApiEndpointExecutor endpoint = this.getApiHandler().getEndpointExecutor(executionData.getEndpoint());
         if (endpoint == null) return build(ServerResponseType.NOT_FOUND, "UNKNOWN_ACTION");
 
         try {
