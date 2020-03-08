@@ -5,41 +5,43 @@ import org.slf4j.LoggerFactory
 import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.Method
 import java.util.*
+import kotlin.reflect.KClass
+import kotlin.reflect.KFunction
+import kotlin.reflect.full.*
+import kotlin.reflect.jvm.javaMethod
+import kotlin.reflect.jvm.jvmErasure
 
 private val logger = LoggerFactory.getLogger(ApiCollection::class.java)
 
 abstract class ApiCollection @JvmOverloads constructor(val name: String? = null) {
 
-    fun load(executorClass: Class<out ApiEndpointExecutor>): List<ApiEndpointExecutor> {
+    @ExperimentalStdlibApi // using hasAnnotation is safe since you would do the exact same implementation anyways
+    fun load(executorClass: KClass<out ApiEndpointExecutor>): List<ApiEndpointExecutor> {
         fun handleError(e: Throwable) {
             logger.error("Error while loading Api endpoint.", e)
         }
+
         val executors: MutableList<ApiEndpointExecutor> = ArrayList()
-        this.javaClass.declaredMethods.forEach { method ->
-            if (method.isAnnotationPresent(ApiEndpoint::class.java)) {
-                val name = method.getAnnotation(ApiEndpoint::class.java).value
-                if (validateMethod(name, method)) {
-                    try {
-                        executors.add(executorClass.getDeclaredConstructor(String::class.java, ApiCollection::class.java, Method::class.java).newInstance(name, this, method))
-                    } catch (e: NoSuchMethodException) {
-                        handleError(e)
-                    } catch (e: IllegalAccessException) {
-                        handleError(e)
-                    } catch (e: InstantiationException) {
-                        handleError(e)
-                    } catch (e: InvocationTargetException) {
-                        handleError(e)
-                    }
+        this::class.declaredFunctions.forEach { function ->
+            if (function.hasAnnotation<ApiEndpoint>()) {
+                val name = function.findAnnotation<ApiEndpoint>()!!.value
+                if (validateMethod(name, function)) {
+                    val constructor = executorClass.constructors.firstOrNull { constructor ->
+                        val parameters = constructor.parameters
+                        parameters.size == 3 && parameters.map { it.type.jvmErasure } == (listOf(String::class, ApiCollection::class, Method::class))
+                    } ?: error("No matching constructor found")
+                    executors.add(constructor.call(name, this, function.javaMethod))
                 }
             }
         }
+
         if (executors.size == 0) logger.warn("""Api Collection "$name" has no endpoints.""")
         return executors
     }
 
 
-    private fun validateMethod(name: String, method: Method): Boolean {
-        if (method.returnType != JsonObject::class.java) {
+    private fun validateMethod(name: String, function: KFunction<*>): Boolean {
+        if (function.returnType.jvmErasure != JsonObject::class) {
             logger.warn("""Endpoint "${this.name}/ $name " has not the return type "${JsonObject::class.simpleName}".""")
             return false
         }

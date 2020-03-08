@@ -13,6 +13,7 @@ class ApiHandler(private val executorClass: Class<out ApiEndpointExecutor>) {
         executors[executor.getName()] = executor
     }
 
+    @ExperimentalStdlibApi
     fun registerApiCollection(collection: ApiCollection) =
-            collection.load(executorClass).forEach { executor: ApiEndpointExecutor -> registerEndpoint(executor) }
+            collection.load(executorClass.kotlin).forEach { executor: ApiEndpointExecutor -> registerEndpoint(executor) }
 }
