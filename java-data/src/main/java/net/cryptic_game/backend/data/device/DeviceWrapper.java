@@ -2,8 +2,8 @@ package net.cryptic_game.backend.data.device;
 
 import net.cryptic_game.backend.base.AppBootstrap;
 import net.cryptic_game.backend.base.sql.SQLConnection;
+import net.cryptic_game.backend.data.User;
 import net.cryptic_game.backend.data.device.access.DeviceAccessWrapper;
-import net.cryptic_game.backend.data.user.User;
 import org.hibernate.Session;
 
 import java.util.ArrayList;

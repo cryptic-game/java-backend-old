@@ -1,19 +1,21 @@
-package net.cryptic_game.backend.data.user;
+package net.cryptic_game.backend.data;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
+import net.cryptic_game.backend.base.utils.SecurityUtils;
+import org.hibernate.Session;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 import java.util.Objects;
 
 /**
  * Entity representing an user entry in the database
  *
- * @see UserWrapper Management class
  * @since 0.3.0
  */
 @Entity
@@ -42,19 +44,47 @@ public class User extends TableModelAutoId {
     }
 
     /**
-     * Generates a {@link JsonObject} containg all relevent {@link User} information
+     * Create a {@link User} with the given user data
      *
-     * @return The generated {@link JsonObject}
+     * @param name     The name of the new user
+     * @param mail     The mail address of the new user
+     * @param password The password of the new user
+     * @return The instance of the created {@link User}
      */
-    @Override
-    public JsonObject serialize() {
-        final JsonObject json = new JsonObject();
-        json.addProperty("id", this.getId().toString());
-        json.addProperty("name", this.getName());
-        json.addProperty("mail", this.getMail());
-        json.addProperty("created", this.getCreated().toInstant(ZoneOffset.UTC).toEpochMilli());
-        json.addProperty("last", this.getLast().toInstant(ZoneOffset.UTC).toEpochMilli());
-        return json;
+    public static User createUser(final String name, final String mail, final String password) {
+        final LocalDateTime now = LocalDateTime.now();
+
+        final User user = new User();
+        user.setName(name);
+        user.setMail(mail);
+        user.setCreated(now);
+        user.setLast(now);
+        user.setPassword(password);
+
+        final Session session = sqlConnection.openSession();
+        session.beginTransaction();
+        session.save(user);
+        session.getTransaction().commit();
+        session.close();
+        return user;
+    }
+
+    /**
+     * Fetches the {@link User} with the give name
+     *
+     * @param name The name of the user
+     * @return The instance of the fetched {@link User} if it exists | null if the {@link User} does not exist
+     */
+    public static User getByName(final String name) {
+        final Session session = sqlConnection.openSession();
+        final List<User> users = session
+                .createQuery("select object (u) from User as u where u.name = :name", User.class)
+                .setParameter("name", name)
+                .getResultList();
+        session.close();
+
+        if (!users.isEmpty()) return users.get(0);
+        return null;
     }
 
     /**
@@ -112,6 +142,25 @@ public class User extends TableModelAutoId {
     }
 
     /**
+     * Set a new password for the given {@link User}
+     *
+     * @param newPassword New password to be set
+     */
+    public void setPassword(final String newPassword) {
+        this.setPasswordHash(SecurityUtils.hash(newPassword));
+    }
+
+    /**
+     * Checks whether a password matches the current password of the {@link User}
+     *
+     * @param input The password to be checked
+     * @return true if the password is correct | false if the password is wrong
+     */
+    public boolean verifyPassword(final String input) {
+        return SecurityUtils.verify(input, this.getPasswordHash());
+    }
+
+    /**
      * Returns the creation date of the {@link User}
      *
      * @return Creation date of the {@link User}
@@ -145,6 +194,31 @@ public class User extends TableModelAutoId {
      */
     public void setLast(final LocalDateTime last) {
         this.last = last;
+    }
+
+    /**
+     * Deletes the {@link User}
+     */
+    @Override
+    public void delete() {
+        // TODO Delete Sessions related to the user
+        super.delete();
+    }
+
+    /**
+     * Generates a {@link JsonObject} containg all relevent {@link User} information
+     *
+     * @return The generated {@link JsonObject}
+     */
+    @Override
+    public JsonObject serialize() {
+        final JsonObject json = new JsonObject();
+        json.addProperty("id", this.getId().toString());
+        json.addProperty("name", this.getName());
+        json.addProperty("mail", this.getMail());
+        json.addProperty("created", this.getCreated().toInstant(ZoneOffset.UTC).toEpochMilli());
+        json.addProperty("last", this.getLast().toInstant(ZoneOffset.UTC).toEpochMilli());
+        return json;
     }
 
     /**

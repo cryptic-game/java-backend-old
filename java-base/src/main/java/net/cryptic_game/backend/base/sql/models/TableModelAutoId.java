@@ -1,5 +1,6 @@
 package net.cryptic_game.backend.base.sql.models;
 
+import org.hibernate.Session;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
@@ -25,5 +26,18 @@ public abstract class TableModelAutoId extends TableModel {
 
     public void setId(final UUID id) {
         this.id = id;
+    }
+
+    /**
+     * Fetches the entity with the given id
+     *
+     * @param id The id of the entity
+     * @return The instance of the fetched entity if it exists | null if the entity does not exist
+     */
+    public static <T extends TableModelAutoId> T getById(Class<T> entityClass, final UUID id) {
+        final Session session = sqlConnection.openSession();
+        final T entity = session.find(entityClass, id);
+        session.close();
+        return entity;
     }
 }

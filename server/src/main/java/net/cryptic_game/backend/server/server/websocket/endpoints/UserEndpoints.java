@@ -7,8 +7,7 @@ import net.cryptic_game.backend.base.api.ApiParameter;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
 import net.cryptic_game.backend.base.utils.SecurityUtils;
 import net.cryptic_game.backend.base.utils.ValidationUtils;
-import net.cryptic_game.backend.data.user.User;
-import net.cryptic_game.backend.data.user.UserWrapper;
+import net.cryptic_game.backend.data.User;
 import net.cryptic_game.backend.data.user.session.Session;
 import net.cryptic_game.backend.data.user.session.SessionWrapper;
 import net.cryptic_game.backend.server.client.Client;
@@ -30,10 +29,10 @@ public class UserEndpoints extends ApiCollection {
                             @ApiParameter("device_name") String deviceName) {
         if (client.getUser() != null) return build(ServerResponseType.FORBIDDEN, "ALREADY_LOGGED_IN");
 
-        User user = UserWrapper.getByName(name);
+        User user = User.getByName(name);
 
         if (user == null) return build(ServerResponseType.UNAUTHORIZED, "INVALID_NAME");
-        if (!UserWrapper.verifyPassword(user, password))
+        if (!user.verifyPassword(password))
             return build(ServerResponseType.UNAUTHORIZED, "INVALID_PASSWORD");
 
         UUID token = UUID.randomUUID();
@@ -54,9 +53,9 @@ public class UserEndpoints extends ApiCollection {
 
         if (!checkPassword(password)) return build(ServerResponseType.BAD_REQUEST, "INVALID_PASSWORD");
         if (!checkMail(mail)) return build(ServerResponseType.BAD_REQUEST, "INVALID_MAIL");
-        if (UserWrapper.getByName(name) != null) return build(ServerResponseType.FORBIDDEN, "USER_ALREADY_EXISTS");
+        if (User.getByName(name) != null) return build(ServerResponseType.FORBIDDEN, "USER_ALREADY_EXISTS");
 
-        User user = UserWrapper.registerUser(name, mail, password);
+        User user = User.createUser(name, mail, password);
         UUID token = UUID.randomUUID();
         client.setSession(user, token, deviceName);
 
@@ -91,10 +90,11 @@ public class UserEndpoints extends ApiCollection {
 
         if (!ValidationUtils.checkPassword(newPassword))
             return build(ServerResponseType.BAD_REQUEST, "INVALID_PASSWORD");
-        if (!UserWrapper.verifyPassword(client.getUser(), password))
+        if (!client.getUser().verifyPassword(password))
             return build(ServerResponseType.UNAUTHORIZED, "INVALID_PASSWORD");
 
-        UserWrapper.setPassword(client.getUser(), newPassword);
+        client.getUser().setPassword(newPassword);
+        client.getUser().update();
 
         return build(ServerResponseType.OK);
     }
@@ -126,12 +126,12 @@ public class UserEndpoints extends ApiCollection {
                              @ApiParameter("password") String password) {
         if (client.getUser() == null) return build(ServerResponseType.FORBIDDEN, "NOT_LOGGED_IN");
 
-        if (!UserWrapper.verifyPassword(client.getUser(), password))
+        if (!client.getUser().verifyPassword(password))
             return build(ServerResponseType.UNAUTHORIZED, "INVALID_PASSWORD");
 
         User user = client.getUser();
         client.logout();
-        UserWrapper.deleteUser(user);
+        client.getUser().delete();
 
         return build(ServerResponseType.OK);
     }

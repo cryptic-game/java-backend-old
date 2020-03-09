@@ -5,7 +5,7 @@ import net.cryptic_game.backend.base.config.BaseConfig;
 import net.cryptic_game.backend.base.config.Config;
 import net.cryptic_game.backend.base.sql.SQLConnection;
 import net.cryptic_game.backend.base.utils.SecurityUtils;
-import net.cryptic_game.backend.data.user.User;
+import net.cryptic_game.backend.data.User;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
