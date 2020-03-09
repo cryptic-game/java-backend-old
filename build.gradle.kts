@@ -2,7 +2,7 @@ plugins {
     java
     application
     id("io.freefair.aggregate-javadoc") version "5.0.0-rc2"
-    kotlin("jvm") version "1.3.70"
+//    kotlin("jvm") version "1.3.70"
 }
 
 group = "net.cryptic-game"
@@ -14,7 +14,7 @@ application {
 
 subprojects {
     apply(plugin = "java")
-    apply(plugin = "kotlin")
+//    apply(plugin = "kotlin")
 
     version = project.parent!!.version
 
@@ -26,15 +26,15 @@ subprojects {
         sourceCompatibility = JavaVersion.VERSION_11
     }
 
-    tasks {
-        compileKotlin {
-            kotlinOptions.jvmTarget = "11"
-        }
-
-        compileTestKotlin {
-            kotlinOptions.jvmTarget = "11"
-        }
-    }
+//    tasks {
+//        compileKotlin {
+//            kotlinOptions.jvmTarget = "11"
+//        }
+//
+//        compileTestKotlin {
+//            kotlinOptions.jvmTarget = "11"
+//        }
+//    }
 }
 
 tasks {
