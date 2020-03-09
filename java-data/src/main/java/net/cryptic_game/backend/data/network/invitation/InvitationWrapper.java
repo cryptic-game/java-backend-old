@@ -9,66 +9,66 @@ import org.hibernate.Session;
 
 public class InvitationWrapper {
 
-  private static final SQLConnection sqlConnection;
+    private static final SQLConnection sqlConnection;
 
-  static {
-    final AppBootstrap app = AppBootstrap.getInstance();
-    sqlConnection = app.getSqlConnection();
-  }
+    static {
+        final AppBootstrap app = AppBootstrap.getInstance();
+        sqlConnection = app.getSqlConnection();
+    }
 
-  public static Invitation inviteDevice(final Network network, final Device device,
-      final Device inviter) {
-    final Invitation invitation = new Invitation();
-    invitation.setNetwork(network);
-    invitation.setDevice(device);
-    invitation.setRequest(false);
-    invitation.setInviter(inviter);
+    public static Invitation inviteDevice(final Network network, final Device device,
+                                          final Device inviter) {
+        final Invitation invitation = new Invitation();
+        invitation.setNetwork(network);
+        invitation.setDevice(device);
+        invitation.setRequest(false);
+        invitation.setInviter(inviter);
 
-    final Session session = sqlConnection.openSession();
-    session.beginTransaction();
-    session.save(invitation);
-    session.getTransaction().commit();
-    session.close();
-    return invitation;
-  }
+        final Session session = sqlConnection.openSession();
+        session.beginTransaction();
+        session.save(invitation);
+        session.getTransaction().commit();
+        session.close();
+        return invitation;
+    }
 
-  public static Invitation requestNetwork(final Network network, final Device device) {
-    final Invitation invitation = new Invitation();
-    invitation.setNetwork(network);
-    invitation.setDevice(device);
-    invitation.setRequest(true);
-    invitation.setInviter(null);
+    public static Invitation requestNetwork(final Network network, final Device device) {
+        final Invitation invitation = new Invitation();
+        invitation.setNetwork(network);
+        invitation.setDevice(device);
+        invitation.setRequest(true);
+        invitation.setInviter(null);
 
-    final Session session = sqlConnection.openSession();
-    session.beginTransaction();
-    session.save(invitation);
-    session.getTransaction().commit();
-    session.close();
-    return invitation;
-  }
+        final Session session = sqlConnection.openSession();
+        session.beginTransaction();
+        session.save(invitation);
+        session.getTransaction().commit();
+        session.close();
+        return invitation;
+    }
 
-  public static void acceptInvitation(final Invitation invitation) {
-    NetworkWrapper.addDevice(invitation.getNetwork(), invitation.getDevice());
-    deleteInvitation(invitation);
-  }
+    public static void acceptInvitation(final Invitation invitation) {
+        NetworkWrapper.addDevice(invitation.getNetwork(), invitation.getDevice());
+        deleteInvitation(invitation);
+    }
 
-  public static void denyInvitation(final Invitation invitation) {
-    deleteInvitation(invitation);
-  }
+    public static void denyInvitation(final Invitation invitation) {
+        deleteInvitation(invitation);
+    }
 
-  public static void deleteInvitation(final Invitation invitation) {
-    final Session sqlSession = sqlConnection.openSession();
-    sqlSession.beginTransaction();
-    sqlSession.delete(invitation);
-    sqlSession.getTransaction().commit();
-    sqlSession.close();
-  }
+    public static void deleteInvitation(final Invitation invitation) {
+        final Session sqlSession = sqlConnection.openSession();
+        sqlSession.beginTransaction();
+        sqlSession.delete(invitation);
+        sqlSession.getTransaction().commit();
+        sqlSession.close();
+    }
 
-  public static Invitation getInvitation(final Network network, final Device device) {
-    final Session sqlSession = sqlConnection.openSession();
-    Invitation invitation = sqlSession
-        .find(Invitation.class, new Invitation.InvitationKey(network, device));
-    sqlSession.close();
-    return invitation;
-  }
+    public static Invitation getInvitation(final Network network, final Device device) {
+        final Session sqlSession = sqlConnection.openSession();
+        Invitation invitation = sqlSession
+                .find(Invitation.class, new Invitation.InvitationKey(network, device));
+        sqlSession.close();
+        return invitation;
+    }
 }

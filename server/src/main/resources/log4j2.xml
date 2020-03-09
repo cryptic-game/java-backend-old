@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="INFO">
-  <Appenders>
-    <Console name="console" target="SYSTEM_OUT">
-      <PatternLayout
-        pattern="%highlight{[%d{yyyy-MM-dd] [HH:mm:ss}] [Server] [%t] [%level]: %msg}{FATAL=red, ERROR=red, WARN=yellow, INFO=reset, DEBUG=green, TRACE=blue}%n"/>
-    </Console>
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="%highlight{[%d{yyyy-MM-dd] [HH:mm:ss}] [Server] [%t] [%level]: %msg}{FATAL=red, ERROR=red, WARN=yellow, INFO=reset, DEBUG=green, TRACE=blue}%n"/>
+        </Console>
 
-    <Sentry name="Sentry"/>
-  </Appenders>
-  <Loggers>
-    <Root additivity="false" level="info">
-      <AppenderRef ref="console"/>
-      <appender-ref level="WARN" ref="Sentry"/>
-    </Root>
-  </Loggers>
+        <Sentry name="Sentry"/>
+    </Appenders>
+    <Loggers>
+        <Root additivity="false" level="info">
+            <AppenderRef ref="console"/>
+            <appender-ref level="WARN" ref="Sentry"/>
+        </Root>
+    </Loggers>
 </Configuration>
