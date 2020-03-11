@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Entity representing an user entry in the database
@@ -67,6 +68,16 @@ public class User extends TableModelAutoId {
         session.getTransaction().commit();
         session.close();
         return user;
+    }
+
+    /**
+     * Fetches the {@link User} with the given id
+     *
+     * @param id The id of the {@link User}
+     * @return The instance of the fetched {@link User} if it exists | null if the entity does not exist
+     */
+    public static User getById(final UUID id) {
+        return getById(User.class, id);
     }
 
     /**

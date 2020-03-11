@@ -1,9 +1,8 @@
 package net.cryptic_game.backend.server.client;
 
 import io.netty.channel.ChannelHandlerContext;
+import net.cryptic_game.backend.data.Session;
 import net.cryptic_game.backend.data.User;
-import net.cryptic_game.backend.data.user.session.Session;
-import net.cryptic_game.backend.data.user.session.SessionWrapper;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -27,7 +26,8 @@ public class Client {
 
     public void setSession(final Session session) {
         this.session = session;
-        SessionWrapper.setLastToCurrentTime(session);
+        session.setLastActive(LocalDateTime.now());
+        session.update();
         session.getUser().setLast(LocalDateTime.now());
         session.getUser().update();
     }
@@ -38,13 +38,14 @@ public class Client {
     }
 
     public void setSession(final User user, final UUID token, final String deviceName) {
-        this.session = SessionWrapper.openSession(user, token, deviceName);
+        this.session = Session.createSession(user, token, deviceName);
         session.getUser().setLast(LocalDateTime.now());
         session.getUser().update();
     }
 
     public void logout() {
-        SessionWrapper.closeSession(this.session);
+        this.session.setValid(false);
+        this.session.update();
         this.session = null;
     }
 }

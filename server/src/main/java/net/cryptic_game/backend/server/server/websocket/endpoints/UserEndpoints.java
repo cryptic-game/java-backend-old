@@ -7,9 +7,8 @@ import net.cryptic_game.backend.base.api.ApiParameter;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
 import net.cryptic_game.backend.base.utils.SecurityUtils;
 import net.cryptic_game.backend.base.utils.ValidationUtils;
+import net.cryptic_game.backend.data.Session;
 import net.cryptic_game.backend.data.User;
-import net.cryptic_game.backend.data.user.session.Session;
-import net.cryptic_game.backend.data.user.session.SessionWrapper;
 import net.cryptic_game.backend.server.client.Client;
 import net.cryptic_game.backend.server.server.ServerResponseType;
 import net.cryptic_game.backend.server.server.websocket.WebSocketUtils;
@@ -71,7 +70,7 @@ public class UserEndpoints extends ApiCollection {
                               @ApiParameter("token") UUID token) {
         if (client.getUser() != null) return build(ServerResponseType.FORBIDDEN, "ALREADY_LOGGED_IN");
 
-        Session session = SessionWrapper.getSessionById(sessionId);
+        Session session = Session.getById(sessionId);
         if (session == null) return WebSocketUtils.build(ServerResponseType.NOT_FOUND, "INVALID_SESSION");
         if (!SecurityUtils.verify(token.toString(), session.getTokenHash()))
             return WebSocketUtils.build(ServerResponseType.UNAUTHORIZED, "INVALID_SESSION_TOKEN");
@@ -109,14 +108,16 @@ public class UserEndpoints extends ApiCollection {
             return build(ServerResponseType.OK);
         }
 
-        Session session = SessionWrapper.getSessionById(sessionId);
+        Session session = Session.getById(sessionId);
 
         if (session == null) return build(ServerResponseType.NOT_FOUND, "SESSION_NOT_FOUND");
 
         if (client.getSession().equals(session))
             client.logout();
-        else
-            SessionWrapper.closeSession(session);
+        else {
+            session.setValid(false);
+            session.update();
+        }
 
         return build(ServerResponseType.OK);
     }
