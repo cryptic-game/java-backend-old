@@ -14,13 +14,13 @@ public final class WebSocketLogger extends MessageToMessageCodec<JsonElement, Js
 
     @Override
     protected void encode(final ChannelHandlerContext ctx, final JsonElement msg, final List<Object> out) throws Exception {
-        logger.info("Sent to " + ctx.channel().id() + ": " + msg.toString());
+        logger.info("Sent to " + ctx.channel().remoteAddress() + ": " + msg.toString());
         out.add(msg);
     }
 
     @Override
     protected void decode(final ChannelHandlerContext ctx, final JsonElement msg, final List<Object> out) throws Exception {
-        logger.info("Received from " + ctx.channel().id() + ": " + msg.toString());
+        logger.info("Received from " + ctx.channel().remoteAddress() + ": " + msg.toString());
         out.add(msg);
     }
 }
