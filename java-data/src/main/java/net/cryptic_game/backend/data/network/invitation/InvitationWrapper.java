@@ -2,9 +2,8 @@ package net.cryptic_game.backend.data.network.invitation;
 
 import net.cryptic_game.backend.base.AppBootstrap;
 import net.cryptic_game.backend.base.sql.SQLConnection;
+import net.cryptic_game.backend.data.Network;
 import net.cryptic_game.backend.data.device.Device;
-import net.cryptic_game.backend.data.network.Network;
-import net.cryptic_game.backend.data.network.NetworkWrapper;
 import org.hibernate.Session;
 
 public class InvitationWrapper {
@@ -47,8 +46,7 @@ public class InvitationWrapper {
     }
 
     public static void acceptInvitation(final Invitation invitation) {
-        NetworkWrapper.addDevice(invitation.getNetwork(), invitation.getDevice());
-        deleteInvitation(invitation);
+        //TODO
     }
 
     public static void denyInvitation(final Invitation invitation) {
