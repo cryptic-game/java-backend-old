@@ -2,7 +2,7 @@ package net.cryptic_game.backend.data.device.file;
 
 import net.cryptic_game.backend.base.AppBootstrap;
 import net.cryptic_game.backend.base.sql.SQLConnection;
-import net.cryptic_game.backend.data.device.Device;
+import net.cryptic_game.backend.data.Device;
 import org.hibernate.Session;
 
 import java.util.List;

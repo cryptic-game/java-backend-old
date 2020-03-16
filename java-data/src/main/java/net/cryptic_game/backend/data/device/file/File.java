@@ -3,7 +3,7 @@ package net.cryptic_game.backend.data.device.file;
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
-import net.cryptic_game.backend.data.device.Device;
+import net.cryptic_game.backend.data.Device;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;

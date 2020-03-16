@@ -3,7 +3,6 @@ package net.cryptic_game.backend.data;
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.sql.models.TableModel;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
-import net.cryptic_game.backend.data.device.Device;
 import org.hibernate.Session;
 import org.hibernate.annotations.Type;
 
