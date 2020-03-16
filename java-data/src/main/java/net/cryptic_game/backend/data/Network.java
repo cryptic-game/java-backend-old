@@ -96,7 +96,7 @@ public class Network extends TableModelAutoId {
     }
 
     /**
-     * Returns the Name of the {@link Network}
+     * Returns the name of the {@link Network}
      *
      * @return Name of the {@link Network}
      */
