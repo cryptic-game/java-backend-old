@@ -1,11 +1,14 @@
 package net.cryptic_game.backend.server;
 
+import io.netty.channel.unix.DomainSocketAddress;
 import net.cryptic_game.backend.base.AppBootstrap;
 import net.cryptic_game.backend.base.api.ApiHandler;
+import net.cryptic_game.backend.base.config.BaseConfig;
 import net.cryptic_game.backend.server.api.ServerApiEndpointExecutor;
 import net.cryptic_game.backend.server.config.ServerConfig;
 import net.cryptic_game.backend.server.daemon.DaemonHandler;
 import net.cryptic_game.backend.server.server.NettyServerHandler;
+import net.cryptic_game.backend.server.server.daemon.DaemonCodec;
 import net.cryptic_game.backend.server.server.http.HttpCodec;
 import net.cryptic_game.backend.server.server.websocket.WebSocketCodec;
 import net.cryptic_game.backend.server.server.websocket.endpoints.InfoEndpoints;
@@ -30,8 +33,8 @@ public class App extends AppBootstrap {
         this.serverHandler = new NettyServerHandler();
 
         this.serverHandler.addServer("daemon",
-                "localhost", 4201,
-                new HttpCodec());
+                new DomainSocketAddress(this.config.getAsString(BaseConfig.UNIX_SOCKET)),
+                new DaemonCodec(new DaemonHandler()), true);
 
         this.serverHandler.addServer("websocket",
                 this.config.getAsString(ServerConfig.WEBSOCKET_HOST),

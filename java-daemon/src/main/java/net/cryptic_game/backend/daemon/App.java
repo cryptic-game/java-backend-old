@@ -1,6 +1,9 @@
 package net.cryptic_game.backend.daemon;
 
+import io.netty.channel.unix.DomainSocketAddress;
 import net.cryptic_game.backend.base.AppBootstrap;
+import net.cryptic_game.backend.base.config.BaseConfig;
+import net.cryptic_game.backend.daemon.client.NettyClient;
 import net.cryptic_game.backend.daemon.client.NettyClientHandler;
 import net.cryptic_game.backend.daemon.client.daemon.DaemonClientCodec;
 import net.cryptic_game.backend.daemon.config.DaemonConfig;
@@ -8,6 +11,8 @@ import net.cryptic_game.backend.daemon.config.DaemonConfig;
 public class App extends AppBootstrap {
 
     private NettyClientHandler clientHandler;
+
+    private NettyClient client;
 
     public App() {
         super(DaemonConfig.CONFIG, "Java-Daemon");
@@ -21,8 +26,8 @@ public class App extends AppBootstrap {
     protected void init() {
         this.clientHandler = new NettyClientHandler();
 
-        this.clientHandler.addClient("daemon",
-                "localhost", 4201,
+        this.client = this.clientHandler.addClient("daemon",
+                new DomainSocketAddress(this.config.getAsString(BaseConfig.UNIX_SOCKET)),
                 new DaemonClientCodec());
     }
 

@@ -19,7 +19,9 @@ public enum BaseConfig implements DefaultConfig {
     SESSION_EXPIRE,
     RESPONSE_TIMEOUT,
     LOG_LEVEL,
-    SENTRY_DSN;
+    SENTRY_DSN,
+
+    UNIX_SOCKET;
 
     @Override
     public void iniConfig(final Config config) {
@@ -36,5 +38,7 @@ public enum BaseConfig implements DefaultConfig {
         config.set(BaseConfig.RESPONSE_TIMEOUT, 20); // 20 seconds
         config.set(BaseConfig.LOG_LEVEL, "WARN");
         config.set(BaseConfig.SENTRY_DSN, "");
+
+        config.set(BaseConfig.UNIX_SOCKET, "/var/run/cryptic.sock");
     }
 }

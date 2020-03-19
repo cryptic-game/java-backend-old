@@ -57,7 +57,10 @@ public class SQLConnection {
         settings.put(Environment.C3P0_MAX_STATEMENTS, 50);
         settings.put(Environment.C3P0_IDLE_TEST_PERIOD, 300);
 
-        if (debug) settings.put(Environment.SHOW_SQL, true);
+        if (debug) {
+            settings.put(Environment.SHOW_SQL, true);
+            settings.put(Environment.FORMAT_SQL, true);
+        }
 
         return settings;
     }

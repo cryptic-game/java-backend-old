@@ -4,7 +4,9 @@ import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.epoll.Epoll;
+import io.netty.channel.epoll.EpollServerDomainSocketChannel;
 import io.netty.channel.epoll.EpollServerSocketChannel;
+import io.netty.channel.kqueue.KQueueServerDomainSocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import net.cryptic_game.backend.base.netty.EventLoopGroupHandler;
 import net.cryptic_game.backend.base.netty.NettyCodec;
@@ -13,7 +15,7 @@ import net.cryptic_game.backend.base.netty.NettyInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 
 public class NettyServer {
 
@@ -21,16 +23,18 @@ public class NettyServer {
     private static final Logger log = LoggerFactory.getLogger(NettyServer.class);
 
     private final String name;
-    private final InetSocketAddress inetAddress;
+    private final SocketAddress address;
+    private final boolean unixSocket;
 
     private final EventLoopGroupHandler eventLoopGroupHandler;
     private final NettyInitializer nettyInitializer;
 
     private Channel channel;
 
-    public NettyServer(final String name, final String host, final int port, final EventLoopGroupHandler eventLoopGroupHandler, final NettyCodec nettyCodec) {
+    public NettyServer(final String name, SocketAddress address, final EventLoopGroupHandler eventLoopGroupHandler, final NettyCodec nettyCodec, boolean unixSocket) {
         this.name = name;
-        this.inetAddress = new InetSocketAddress(host, port);
+        this.address = address;
+        this.unixSocket = unixSocket;
 
         this.eventLoopGroupHandler = eventLoopGroupHandler;
         this.nettyInitializer = nettyCodec.getInitializer();
@@ -47,13 +51,14 @@ public class NettyServer {
                     this.channel = new ServerBootstrap()
                             .option(ChannelOption.SO_BACKLOG, 1024)
                             .group(this.eventLoopGroupHandler.getBossGroup(), this.eventLoopGroupHandler.getWorkGroup())
-                            .channel(EPOLL ? EpollServerSocketChannel.class : NioServerSocketChannel.class)
+                            .channel(this.unixSocket ? (EPOLL ? EpollServerDomainSocketChannel.class : KQueueServerDomainSocketChannel.class) :
+                                    (EPOLL ? EpollServerSocketChannel.class : NioServerSocketChannel.class))
                             .childHandler(new NettyCodecInitializer(null, this.nettyInitializer))
-                            .bind(this.inetAddress)
+                            .bind(this.address)
                             .sync()
                             .channel();
 
-                    log.info("This Server \"" + this.getName() + "\" is now listening on " + this.inetAddress + ".");
+                    log.info("This Server \"" + this.getName() + "\" is now listening on " + this.address + ".");
 
                     this.channel.closeFuture().sync();
                 } catch (Exception e) {

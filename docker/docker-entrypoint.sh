@@ -1,6 +1,8 @@
 #!/usr/bin/env sh
+echo 'Bootstrapping Java-Server...'
 ./server/bin/server &
 sleep 20
+echo 'Bootstrapping Java-Daemon...'
 ./java-daemon/bin/java-daemon &
 # Add Python Daemon start script
 
