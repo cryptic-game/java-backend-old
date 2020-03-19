@@ -17,9 +17,9 @@ public enum ResponseType implements net.cryptic_game.backend.base.interfaces.Res
     UNAUTHORIZED(401, "UNAUTHORIZED", true),
     FORBIDDEN(403, "FORBIDDEN", true),
     NOT_FOUND(404, "NOT_FOUND", true),
+    IM_A_TEAPOT(418, "IM_A_TEAPOT", true),
 
     // Server error responses
-    IM_A_TEAPOT(418, "IM_A_TEAPOT", true),
     INTERNAL_SERVER_ERROR(500, "INTERNAL_SERVER_ERROR", true),
     NOT_IMPLEMENTED(501, "NOT_IMPLEMENTED", true);
 

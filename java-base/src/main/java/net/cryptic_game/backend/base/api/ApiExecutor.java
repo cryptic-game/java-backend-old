@@ -10,5 +10,5 @@ public abstract class ApiExecutor {
         this.apiHandler = apiHandler;
     }
 
-    public abstract JsonObject execute(ApiExecutionData data) throws ApiException;
+    public abstract JsonObject execute(final ApiExecutionData data) throws ApiException;
 }
