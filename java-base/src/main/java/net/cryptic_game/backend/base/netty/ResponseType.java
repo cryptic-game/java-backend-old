@@ -21,7 +21,10 @@ public enum ResponseType implements net.cryptic_game.backend.base.interfaces.Res
 
     // Server error responses
     INTERNAL_SERVER_ERROR(500, "INTERNAL_SERVER_ERROR", true),
-    NOT_IMPLEMENTED(501, "NOT_IMPLEMENTED", true);
+    NOT_IMPLEMENTED(501, "NOT_IMPLEMENTED", true),
+
+    // Custom
+    PUSH(900, "PUSH", false);
 
     private final int code;
     private final String name;
