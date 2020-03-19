@@ -20,7 +20,7 @@ public class DaemonRegisterPacket implements JsonSerializable {
         this.functions = new HashSet<>();
     }
 
-    public DaemonRegisterPacket(final JsonObject json) {
+    public DaemonRegisterPacket(final JsonObject json, final Daemon daemon) {
         if (!(json.has("name") && json.has("functions"))) {
             throw new IllegalArgumentException("Missing \"name\" or \"functions\" property.");
         }
@@ -35,7 +35,7 @@ public class DaemonRegisterPacket implements JsonSerializable {
             }
 
             try {
-                this.functions.add(new Function(function.getAsJsonObject()));
+                this.functions.add(new Function(function.getAsJsonObject(), daemon));
             } catch (IllegalArgumentException e) {
                 throw new IllegalArgumentException(e.getMessage(), e);
             }

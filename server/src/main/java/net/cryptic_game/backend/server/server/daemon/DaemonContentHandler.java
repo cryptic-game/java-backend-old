@@ -22,7 +22,7 @@ public class DaemonContentHandler extends NettyHandler<JsonObject> {
 
     private final Map<String, DaemonEndpoint> endpoints;
 
-    public DaemonContentHandler(final DaemonHandler daemonHandler, Map<String, DaemonEndpoint> endpoints) {
+    public DaemonContentHandler(final DaemonHandler daemonHandler, final Map<String, DaemonEndpoint> endpoints) {
         this.daemonHandler = daemonHandler;
         this.endpoints = endpoints;
     }
