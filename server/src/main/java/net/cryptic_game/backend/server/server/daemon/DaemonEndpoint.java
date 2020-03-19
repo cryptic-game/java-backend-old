@@ -12,7 +12,7 @@ public abstract class DaemonEndpoint {
         this.name = name;
     }
 
-    public abstract JsonObject handleRequest(final UUID tag, final JsonObject data) throws Exception;
+    public abstract JsonObject handleRequest(final UUID tag, final UUID user, final JsonObject data) throws Exception;
 
     public String getName() {
         return this.name;
