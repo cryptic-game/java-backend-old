@@ -2,7 +2,6 @@ package net.cryptic_game.backend.base;
 
 import io.sentry.Sentry;
 import io.sentry.SentryClient;
-import net.cryptic_game.backend.base.api.ApiHandler;
 import net.cryptic_game.backend.base.config.BaseConfig;
 import net.cryptic_game.backend.base.config.Config;
 import net.cryptic_game.backend.base.config.DefaultConfig;
@@ -10,6 +9,7 @@ import net.cryptic_game.backend.base.sql.SQLConnection;
 import net.cryptic_game.backend.base.sql.SQLServer;
 import net.cryptic_game.backend.base.sql.SQLServerType;
 import net.cryptic_game.backend.base.sql.models.TableModel;
+import net.cryptic_game.backend.base.timeout.TimeoutHandler;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LoggerContext;
@@ -27,12 +27,13 @@ public abstract class AppBootstrap {
 
     protected final Config config;
     protected final SQLConnection sqlConnection;
+    private static TimeoutHandler timeoutHandler;
     private final String dist;
-    protected ApiHandler apiHandler;
 
     public AppBootstrap(final DefaultConfig config, final String dist) {
         AppBootstrap.instance = this;
         this.config = new Config(config);
+        timeoutHandler = new TimeoutHandler();
         this.dist = dist;
         this.setLoglevel(Level.valueOf(this.config.getAsString(BaseConfig.LOG_LEVEL)));
 
@@ -105,11 +106,11 @@ public abstract class AppBootstrap {
         return this.config;
     }
 
-    public ApiHandler getApiHandler() {
-        return apiHandler;
-    }
-
     public SQLConnection getSqlConnection() {
         return this.sqlConnection;
+    }
+
+    public static void addTimeout(final long ms, final Runnable runnable) {
+        timeoutHandler.addTimeout(ms, runnable);
     }
 }
