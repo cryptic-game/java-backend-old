@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.base.netty;
+package net.cryptic_game.backend.base.netty.codec;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;

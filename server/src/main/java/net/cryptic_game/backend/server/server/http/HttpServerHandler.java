@@ -1,6 +1,6 @@
 package net.cryptic_game.backend.server.server.http;
 
-import com.google.gson.JsonObject;
+import com.google.gson.JsonElement;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
@@ -58,7 +58,7 @@ public class HttpServerHandler extends NettyHandler<Object> {
         return this.build(status, simple("error", status.toString()));
     }
 
-    private FullHttpResponse build(final HttpResponseStatus status, final JsonObject json) {
+    private FullHttpResponse build(final HttpResponseStatus status, final JsonElement json) {
         final byte[] bytes = json.toString().getBytes(StandardCharsets.UTF_8);
         final FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1,
                 status,

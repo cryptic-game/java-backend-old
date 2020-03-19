@@ -28,8 +28,8 @@ public class WebSocketHandler extends NettyHandler<JsonObject> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, JsonObject json) throws Exception {
-        String action = getString(json, "action");
-        UUID tag = getUUID(json, "tag");
+        final String action = getString(json, "action");
+        final UUID tag = getUUID(json, "tag");
         JsonObject data = getJsonObject(json, "data");
 
         if (action == null) {

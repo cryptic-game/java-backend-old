@@ -1,9 +1,8 @@
 package net.cryptic_game.backend.server.server.http.endpoints;
 
 import com.google.gson.JsonObject;
+import net.cryptic_game.backend.base.utils.JsonBuilder;
 import net.cryptic_game.backend.server.server.http.HttpEndpoint;
-
-import static net.cryptic_game.backend.base.utils.JsonBuilder.simple;
 
 public class PlayerLeaderboardEndpoint extends HttpEndpoint {
 
@@ -21,6 +20,6 @@ public class PlayerLeaderboardEndpoint extends HttpEndpoint {
 //
 //        sendHTTP(channel, simple("users", ));
 
-        return simple("work-in-progress", true);
+        return JsonBuilder.simple("work-in-progress", true);
     }
 }
