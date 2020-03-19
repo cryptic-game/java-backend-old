@@ -10,6 +10,8 @@ import net.cryptic_game.backend.daemon.client.daemon.DaemonClientCodec;
 import net.cryptic_game.backend.daemon.config.DaemonConfig;
 import org.jboss.logging.Logger;
 
+import java.net.InetSocketAddress;
+
 public class App extends AppBootstrap {
 
     private NettyClientHandler clientHandler;
@@ -27,9 +29,10 @@ public class App extends AppBootstrap {
     protected void init() {
         this.clientHandler = new NettyClientHandler();
 
+        final boolean useUnixSocket = this.config.getAsBoolean(BaseConfig.USE_UNIX_SOCKET);
         this.client = this.clientHandler.addClient("daemon",
-                new DomainSocketAddress(this.config.getAsString(BaseConfig.UNIX_SOCKET)),
-                new DaemonClientCodec());
+                useUnixSocket ? new DomainSocketAddress(this.config.getAsString(BaseConfig.UNIX_SOCKET_PATH)) : new InetSocketAddress("localhost", 4012),
+                useUnixSocket, new DaemonClientCodec());
     }
 
     @Override

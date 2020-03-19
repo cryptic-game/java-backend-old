@@ -26,6 +26,10 @@ public class DaemonHandler {
         this.daemons = this.daemons.stream().filter(daemon -> !daemon.getChannelHandlerContext().equals(ctx)).collect(Collectors.toSet());
     }
 
+    public Set<Daemon> getDaemons() {
+        return this.daemons;
+    }
+
     public Function addFunction(final Function function) {
         return this.functions.put(function.getName(), function);
     }

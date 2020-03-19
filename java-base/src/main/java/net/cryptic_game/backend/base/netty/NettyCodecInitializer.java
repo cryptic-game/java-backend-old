@@ -20,6 +20,6 @@ public class NettyCodecInitializer extends ChannelInitializer<Channel> {
         final ChannelPipeline pipeline = channel.pipeline();
 
         if (this.sslContext != null) pipeline.addLast("ssl", this.sslContext.newHandler(channel.alloc()));
-        nettyInitializer.configure(pipeline);
+        this.nettyInitializer.configure(pipeline);
     }
 }

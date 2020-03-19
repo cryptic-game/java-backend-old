@@ -14,6 +14,8 @@ import net.cryptic_game.backend.server.server.websocket.WebSocketCodec;
 import net.cryptic_game.backend.server.server.websocket.endpoints.InfoEndpoints;
 import net.cryptic_game.backend.server.server.websocket.endpoints.UserEndpoints;
 
+import java.net.InetSocketAddress;
+
 public class App extends AppBootstrap {
 
     private DaemonHandler daemonHandler;
@@ -32,19 +34,18 @@ public class App extends AppBootstrap {
         this.daemonHandler = new DaemonHandler();
         this.serverHandler = new NettyServerHandler();
 
+        final boolean useUnixSocket = this.config.getAsBoolean(BaseConfig.USE_UNIX_SOCKET);
         this.serverHandler.addServer("daemon",
-                new DomainSocketAddress(this.config.getAsString(BaseConfig.UNIX_SOCKET)),
-                new DaemonCodec(this.daemonHandler), true);
+                useUnixSocket ? new DomainSocketAddress(this.config.getAsString(BaseConfig.UNIX_SOCKET_PATH)) : new InetSocketAddress("localhost", 4012),
+                useUnixSocket, new DaemonCodec(this.daemonHandler));
 
         this.serverHandler.addServer("websocket",
-                this.config.getAsString(ServerConfig.WEBSOCKET_HOST),
-                this.config.getAsInt(ServerConfig.WEBSOCKET_PORT),
-                new WebSocketCodec());
+                new InetSocketAddress(this.config.getAsString(ServerConfig.WEBSOCKET_HOST), this.config.getAsInt(ServerConfig.WEBSOCKET_PORT)),
+                false, new WebSocketCodec());
 
         this.serverHandler.addServer("http",
-                this.config.getAsString(ServerConfig.HTTP_HOST),
-                this.config.getAsInt(ServerConfig.HTTP_PORT),
-                new HttpCodec());
+                new InetSocketAddress(this.config.getAsString(ServerConfig.HTTP_HOST), this.config.getAsInt(ServerConfig.HTTP_PORT)),
+                false, new HttpCodec());
     }
 
     @Override
