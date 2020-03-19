@@ -3,10 +3,10 @@ package net.cryptic_game.backend.server.server.websocket.endpoints;
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.api.ApiCollection;
 import net.cryptic_game.backend.base.api.ApiEndpoint;
+import net.cryptic_game.backend.base.netty.server.ServerResponseType;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
 import net.cryptic_game.backend.server.client.Client;
 import net.cryptic_game.backend.server.client.ClientWrapper;
-import net.cryptic_game.backend.server.server.ServerResponseType;
 
 import static net.cryptic_game.backend.base.utils.JsonBuilder.simple;
 import static net.cryptic_game.backend.server.server.websocket.WebSocketUtils.build;

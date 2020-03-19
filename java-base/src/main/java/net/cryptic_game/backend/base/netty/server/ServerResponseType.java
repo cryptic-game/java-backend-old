@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.server.server;
+package net.cryptic_game.backend.base.netty.server;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.interfaces.ResponseType;

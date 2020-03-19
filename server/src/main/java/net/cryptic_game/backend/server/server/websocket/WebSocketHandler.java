@@ -5,11 +5,11 @@ import com.google.gson.JsonSyntaxException;
 import io.netty.channel.ChannelHandlerContext;
 import net.cryptic_game.backend.base.api.ApiExecutor;
 import net.cryptic_game.backend.base.netty.NettyHandler;
+import net.cryptic_game.backend.base.netty.server.ServerResponseType;
 import net.cryptic_game.backend.server.App;
 import net.cryptic_game.backend.server.api.ServerApiExecutionData;
 import net.cryptic_game.backend.server.api.ServerApiExecutor;
 import net.cryptic_game.backend.server.client.ClientWrapper;
-import net.cryptic_game.backend.server.server.ServerResponseType;
 
 import java.util.UUID;
 

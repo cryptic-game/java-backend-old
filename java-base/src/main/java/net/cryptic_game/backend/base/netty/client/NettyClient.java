@@ -1,13 +1,12 @@
-package net.cryptic_game.backend.server.server;
+package net.cryptic_game.backend.base.netty.client;
 
-import io.netty.bootstrap.ServerBootstrap;
+import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
-import io.netty.channel.ChannelOption;
 import io.netty.channel.epoll.Epoll;
-import io.netty.channel.epoll.EpollServerDomainSocketChannel;
-import io.netty.channel.epoll.EpollServerSocketChannel;
-import io.netty.channel.kqueue.KQueueServerDomainSocketChannel;
-import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.channel.epoll.EpollDomainSocketChannel;
+import io.netty.channel.epoll.EpollSocketChannel;
+import io.netty.channel.kqueue.KQueueDomainSocketChannel;
+import io.netty.channel.socket.nio.NioSocketChannel;
 import net.cryptic_game.backend.base.netty.EventLoopGroupHandler;
 import net.cryptic_game.backend.base.netty.NettyCodec;
 import net.cryptic_game.backend.base.netty.NettyCodecInitializer;
@@ -17,10 +16,10 @@ import org.slf4j.LoggerFactory;
 
 import java.net.SocketAddress;
 
-public class NettyServer {
+public class NettyClient {
 
     private static final boolean EPOLL = Epoll.isAvailable();
-    private static final Logger log = LoggerFactory.getLogger(NettyServer.class);
+    private static final Logger log = LoggerFactory.getLogger(NettyClient.class);
 
     private final String name;
     private final SocketAddress address;
@@ -31,7 +30,7 @@ public class NettyServer {
 
     private Channel channel;
 
-    public NettyServer(final String name, SocketAddress address, final EventLoopGroupHandler eventLoopGroupHandler, final NettyCodec nettyCodec, boolean unixSocket) {
+    public NettyClient(final String name, final SocketAddress address, final boolean unixSocket, final EventLoopGroupHandler eventLoopGroupHandler, final NettyCodec nettyCodec) {
         this.name = name;
         this.address = address;
         this.unixSocket = unixSocket;
@@ -48,34 +47,37 @@ public class NettyServer {
         if ((this.channel == null || !this.channel.isOpen()))
             new Thread(() -> {
                 try {
-                    this.channel = new ServerBootstrap()
-                            .option(ChannelOption.SO_BACKLOG, 1024)
-                            .group(this.eventLoopGroupHandler.getBossGroup(), this.eventLoopGroupHandler.getWorkGroup())
-                            .channel(this.unixSocket ? (EPOLL ? EpollServerDomainSocketChannel.class : KQueueServerDomainSocketChannel.class) :
-                                    (EPOLL ? EpollServerSocketChannel.class : NioServerSocketChannel.class))
-                            .childHandler(new NettyCodecInitializer(null, this.nettyInitializer))
-                            .bind(this.address)
+                    this.channel = new Bootstrap()
+                            .group(this.eventLoopGroupHandler.getWorkGroup())
+                            .channel(this.unixSocket ? (EPOLL ? EpollDomainSocketChannel.class : KQueueDomainSocketChannel.class) :
+                                    (EPOLL ? EpollSocketChannel.class : NioSocketChannel.class))
+                            .handler(new NettyCodecInitializer(null, this.nettyInitializer))
+                            .connect(this.address)
                             .sync()
                             .channel();
 
-                    log.info("This Server \"" + this.getName() + "\" is now listening on " + this.address + ".");
+                    log.info("The client \"" + this.getName() + "\" is now connected to " + this.address + ".");
 
                     this.channel.closeFuture().sync();
                 } catch (Exception e) {
-                    log.error("The server \"" + this.getName() + "\" was unexpectedly closed.", e);
+                    log.error("The client \"" + this.getName() + "\" was unexpectedly closed.", e);
                 }
-                log.info("Restarting in 20 seconds.");
+                log.info("Reconnecting in 20 seconds.");
                 try {
                     Thread.sleep(1000 * 20); // 20 seconds
                 } catch (InterruptedException ignored) {
                 }
-                this.restart();
+                this.reconnect();
             }, this.getName()).start();
     }
 
-    private void restart() {
+    public void reconnect() {
         this.stop();
         this.start();
+    }
+
+    public Channel getChannel() {
+        return this.channel;
     }
 
     public String getName() {
