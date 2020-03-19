@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.data.device.hardware;
+package net.cryptic_game.backend.data;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
@@ -11,7 +11,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "device_hardware_element")
-public class HardwareElement extends TableModelAutoId {
+public class DeviceHardwareElement extends TableModelAutoId {
 
     @Column(name = "name", updatable = true, nullable = false)
     private String name;
@@ -39,7 +39,7 @@ public class HardwareElement extends TableModelAutoId {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        HardwareElement that = (HardwareElement) o;
+        DeviceHardwareElement that = (DeviceHardwareElement) o;
         return Objects.equals(getName(), that.getName()) &&
                 Objects.equals(getManufacturer(), that.getManufacturer()) &&
                 Objects.equals(getId(), that.getId());

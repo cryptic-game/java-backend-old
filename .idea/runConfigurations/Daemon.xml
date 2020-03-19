@@ -1,6 +1,13 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Daemon" type="GradleRunConfiguration" factoryName="Gradle">
     <ExternalSystemSettings>
+      <option name="env">
+        <map>
+          <entry key="SQL_SERVER_HOSTNAME" value="127.0.0.1" />
+          <entry key="SQL_SERVER_PASSWORD" value="" />
+          <entry key="SQL_SERVER_USERNAME" value="root" />
+        </map>
+      </option>
       <option name="executionName" />
       <option name="externalProjectPath" value="$PROJECT_DIR$/java-daemon" />
       <option name="externalSystemIdString" value="GRADLE" />

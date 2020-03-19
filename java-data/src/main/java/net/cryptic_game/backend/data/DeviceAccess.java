@@ -1,15 +1,16 @@
-package net.cryptic_game.backend.data.device.access;
+package net.cryptic_game.backend.data;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
-import net.cryptic_game.backend.data.Device;
-import net.cryptic_game.backend.data.User;
+import org.hibernate.Session;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -78,6 +79,7 @@ public class DeviceAccess extends TableModelAutoId {
     @Override
     public JsonObject serialize() {
         return JsonBuilder.anJSON()
+                .add("id", this.getId())
                 .add("target_device", getDevice().getId())
                 .add("device", getUser().getId())
                 .add("granted", getAccessGranted().toInstant(ZoneOffset.UTC).toEpochMilli())
@@ -102,5 +104,44 @@ public class DeviceAccess extends TableModelAutoId {
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getDevice(), getUser(), getAccessGranted(), getExpire(), isValid());
+    }
+
+
+    public static boolean hasUserAccessToDevice(final User user, final Device device) { // übertragen
+        try (Session sqlSession = sqlConnection.openSession()) {
+            return sqlSession
+                    .createQuery("select object (a) from DeviceAccess a where a.user = :user and a.device = :device and a.valid = true and a.expire > :currentDate", DeviceAccess.class)
+                    .setParameter("user", user)
+                    .setParameter("device", device)
+                    .setParameter("currentDate", LocalDateTime.now())
+                    .getResultList().size() > 0;
+        }
+    }
+
+    public static DeviceAccess grantAccessToDevice(final User user, final Device device, final Duration duration) {
+        Session sqlSession = sqlConnection.openSession();
+
+        DeviceAccess access = new DeviceAccess();
+        access.setUser(user);
+        access.setDevice(device);
+        access.setAccessGranted(LocalDateTime.now());
+        access.setValid(true);
+        access.setExpire(LocalDateTime.now().plus(duration));
+
+        sqlSession.beginTransaction();
+        sqlSession.save(access);
+        sqlSession.getTransaction().commit();
+        sqlSession.close();
+        return access;
+    }
+
+    public static List<DeviceAccess> getAccessesToDevice(final Device device) {
+        try (Session sqlSession = sqlConnection.openSession()) {
+            return sqlSession
+                    .createQuery("select object (a) from DeviceAccess a where a.device = :device and a.valid = true and a.expire > :currentDate", DeviceAccess.class)
+                    .setParameter("device", device)
+                    .setParameter("currentDate", LocalDateTime.now())
+                    .getResultList();
+        }
     }
 }

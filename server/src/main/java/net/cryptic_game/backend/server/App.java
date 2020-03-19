@@ -42,7 +42,6 @@ public class App extends AppBootstrap {
                 this.config.getAsString(ServerConfig.HTTP_HOST),
                 this.config.getAsInt(ServerConfig.HTTP_PORT),
                 new HttpCodec());
-
     }
 
     @Override

@@ -1,17 +1,18 @@
-package net.cryptic_game.backend.data.device.file;
+package net.cryptic_game.backend.data;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
-import net.cryptic_game.backend.data.Device;
+import org.hibernate.Session;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "device_file")
-public class File extends TableModelAutoId {
+public class DeviceFile extends TableModelAutoId {
 
     @ManyToOne
     @JoinColumn(name = "device_id", nullable = false, updatable = false)
@@ -30,7 +31,7 @@ public class File extends TableModelAutoId {
     @ManyToOne
     @JoinColumn(name = "parent_dir_id", nullable = true, updatable = true)
     @Type(type = "uuid-char")
-    private File parentDirectory;
+    private DeviceFile parentDirectory;
 
     public Device getDevice() {
         return this.device;
@@ -64,11 +65,11 @@ public class File extends TableModelAutoId {
         this.isDirectory = isDirectory;
     }
 
-    public File getParentDirectory() {
+    public DeviceFile getParentDirectory() {
         return this.parentDirectory;
     }
 
-    public void setParentDirectory(final File parentDirectory) {
+    public void setParentDirectory(final DeviceFile parentDirectory) {
         this.parentDirectory = parentDirectory;
     }
 
@@ -88,7 +89,7 @@ public class File extends TableModelAutoId {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        File file = (File) o;
+        DeviceFile file = (DeviceFile) o;
         return isDirectory() == file.isDirectory() &&
                 Objects.equals(getDevice(), file.getDevice()) &&
                 Objects.equals(getName(), file.getName()) &&
@@ -100,5 +101,41 @@ public class File extends TableModelAutoId {
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getDevice(), getName(), getContent(), isDirectory(), getParentDirectory());
+    }
+
+
+
+    private static DeviceFile createFile(final Device device, final String name, final String contents, final boolean isDirectory, final DeviceFile parentDir) {
+        final Session sqlSession = sqlConnection.openSession();
+
+        final DeviceFile file = new DeviceFile();
+        file.setDevice(device);
+        file.setName(name);
+        file.setContent(contents);
+        file.setIsDirectory(isDirectory);
+        file.setParentDirectory(parentDir);
+
+        sqlSession.beginTransaction();
+        sqlSession.save(file);
+        sqlSession.getTransaction().commit();
+        sqlSession.close();
+        return file;
+    }
+
+    public static DeviceFile createFile(final Device device, final String name, final String contents, final DeviceFile parentDir) {
+        return createFile(device, name, contents, false, parentDir);
+    }
+
+    public static DeviceFile createDirectory(final Device device, final String name, final DeviceFile parentDir) {
+        return createFile(device, name, "", true, parentDir);
+    }
+
+    public static List<DeviceFile> getFilesByDevice(final Device device) {
+        try (final Session sqlSession = sqlConnection.openSession()) {
+            return sqlSession
+                    .createQuery("select object (f) from File f where f.device = :device", DeviceFile.class)
+                    .setParameter("device", device)
+                    .getResultList();
+        }
     }
 }

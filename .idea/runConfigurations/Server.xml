@@ -1,6 +1,15 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Server" type="GradleRunConfiguration" factoryName="Gradle">
     <ExternalSystemSettings>
+      <option name="env">
+        <map>
+          <entry key="HTTP_HOST" value="127.0.0.1" />
+          <entry key="SQL_SERVER_HOSTNAME" value="127.0.0.1" />
+          <entry key="SQL_SERVER_PASSWORD" value="" />
+          <entry key="SQL_SERVER_USERNAME" value="root" />
+          <entry key="WEBSOCKET_HOST" value="127.0.0.1" />
+        </map>
+      </option>
       <option name="executionName" />
       <option name="externalProjectPath" value="$PROJECT_DIR$/server" />
       <option name="externalSystemIdString" value="GRADLE" />

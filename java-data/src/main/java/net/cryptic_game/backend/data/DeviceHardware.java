@@ -1,9 +1,8 @@
-package net.cryptic_game.backend.data.device.hardware;
+package net.cryptic_game.backend.data;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
-import net.cryptic_game.backend.data.Device;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -11,7 +10,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "device_hardware")
-public class Hardware extends TableModelAutoId {
+public class DeviceHardware extends TableModelAutoId {
 
     @ManyToOne
     @JoinColumn(name = "device_id", updatable = false, nullable = false)
@@ -21,7 +20,7 @@ public class Hardware extends TableModelAutoId {
     @ManyToOne
     @JoinColumn(name = "element_id", updatable = false, nullable = false)
     @Type(type = "uuid-char")
-    private HardwareElement element;
+    private DeviceHardwareElement element;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", updatable = false, nullable = false)
@@ -35,11 +34,11 @@ public class Hardware extends TableModelAutoId {
         this.device = device;
     }
 
-    public HardwareElement getElement() {
+    public DeviceHardwareElement getElement() {
         return this.element;
     }
 
-    public void setElement(final HardwareElement element) {
+    public void setElement(final DeviceHardwareElement element) {
         this.element = element;
     }
 
@@ -55,7 +54,7 @@ public class Hardware extends TableModelAutoId {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Hardware hardware = (Hardware) o;
+        DeviceHardware hardware = (DeviceHardware) o;
         return Objects.equals(getDevice(), hardware.getDevice()) &&
                 Objects.equals(getElement(), hardware.getElement()) &&
                 getType() == hardware.getType() &&
@@ -76,4 +75,12 @@ public class Hardware extends TableModelAutoId {
                 .add("type", this.getType().toString())
                 .build();
     }
+
+
+    public enum HardwareType {
+
+        PROCESSOR, MAINBOARD, RAM, COOLER, GRAPHIC_CARD, DISK, POWER_PACK, CASE
+    }
+
+
 }

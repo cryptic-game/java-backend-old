@@ -1,9 +1,8 @@
-package net.cryptic_game.backend.data.device.workload;
+package net.cryptic_game.backend.data;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.sql.models.TableModel;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
-import net.cryptic_game.backend.data.Device;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -12,7 +11,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "device_workload")
-public class Workload extends TableModel implements Serializable {
+public class DeviceWorkload extends TableModel implements Serializable {
 
     @Id
     @ManyToOne
@@ -142,7 +141,7 @@ public class Workload extends TableModel implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Workload workload = (Workload) o;
+        DeviceWorkload workload = (DeviceWorkload) o;
         return Float.compare(workload.getPerformanceCPU(), getPerformanceCPU()) == 0 &&
                 Float.compare(workload.getPerformanceGPU(), getPerformanceGPU()) == 0 &&
                 Float.compare(workload.getPerformanceRAM(), getPerformanceRAM()) == 0 &&
