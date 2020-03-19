@@ -36,6 +36,8 @@ public abstract class AppBootstrap {
         this.dist = dist;
         this.setLoglevel(Level.valueOf(this.config.getAsString(BaseConfig.LOG_LEVEL)));
 
+        log.info("Starting " + dist + "...");
+
         this.initSentry();
 
         this.initApi();

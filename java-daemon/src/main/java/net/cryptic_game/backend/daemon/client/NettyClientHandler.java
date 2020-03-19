@@ -1,5 +1,6 @@
 package net.cryptic_game.backend.daemon.client;
 
+import io.netty.channel.unix.DomainSocketAddress;
 import net.cryptic_game.backend.base.netty.EventLoopGroupHandler;
 import net.cryptic_game.backend.base.netty.NettyCodec;
 
@@ -16,8 +17,10 @@ public class NettyClientHandler {
         this.eventLoopGroupHandler = new EventLoopGroupHandler();
     }
 
-    public void addClient(final String name, final String host, final int port, final NettyCodec nettyCodec) {
-        this.clients.add(new NettyClient(name, host, port, this.eventLoopGroupHandler, nettyCodec));
+    public NettyClient addClient(final String name, final DomainSocketAddress socketAddress, final NettyCodec nettyCodec) {
+        final NettyClient client = new NettyClient(name, socketAddress, this.eventLoopGroupHandler, nettyCodec);
+        this.clients.add(client);
+        return client;
     }
 
     public void start() {

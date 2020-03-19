@@ -1,11 +1,11 @@
 package net.cryptic_game.backend.base.netty;
 
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
-import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.ssl.SslContext;
 
-public class NettyCodecInitializer extends ChannelInitializer<SocketChannel> {
+public class NettyCodecInitializer extends ChannelInitializer<Channel> {
 
     private final SslContext sslContext;
     private final NettyInitializer nettyInitializer;
@@ -16,7 +16,7 @@ public class NettyCodecInitializer extends ChannelInitializer<SocketChannel> {
     }
 
     @Override
-    protected void initChannel(final SocketChannel channel) {
+    protected void initChannel(final Channel channel) {
         final ChannelPipeline pipeline = channel.pipeline();
 
         if (this.sslContext != null) pipeline.addLast("ssl", this.sslContext.newHandler(channel.alloc()));

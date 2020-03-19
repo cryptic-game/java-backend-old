@@ -3,7 +3,7 @@
     <Appenders>
         <Console name="console" target="SYSTEM_OUT">
             <PatternLayout
-                    pattern="%highlight{[%d{yyyy-MM-dd] [HH:mm:ss}] [Daemon] [%t] [%level]: %msg}{FATAL=red, ERROR=red, WARN=yellow, INFO=reset, DEBUG=green, TRACE=blue}%n"/>
+                    pattern="%highlight{[%d{yyyy-MM-dd] [HH:mm:ss}] [Java-Daemon] [%t] [%level]: %msg}{FATAL=red, ERROR=red, WARN=yellow, INFO=reset, DEBUG=green, TRACE=blue}%n"/>
         </Console>
     </Appenders>
     <Loggers>
