@@ -13,19 +13,22 @@ import java.util.Set;
 public class Function implements JsonSerializable {
 
     private final String name;
+    private final Daemon daemon;
     private final Set<FunctionArgument> arguments;
 
-    public Function(final String name, final Set<FunctionArgument> arguments) {
+    public Function(final String name, final Daemon daemon, final Set<FunctionArgument> arguments) {
         this.name = name;
+        this.daemon = daemon;
         this.arguments = arguments;
     }
 
-    public Function(final JsonObject json) throws IllegalArgumentException {
+    public Function(final JsonObject json, final Daemon daemon) throws IllegalArgumentException {
         if (!(json.has("name") && json.has("arguments"))) {
             throw new IllegalArgumentException("Missing \"name\" or \"arguments\" property.");
         }
 
         this.name = json.get("name").getAsString();
+        this.daemon = daemon;
         this.arguments = new HashSet<>();
 
         final JsonArray jsonArguments = json.get("arguments").getAsJsonArray();
@@ -52,6 +55,10 @@ public class Function implements JsonSerializable {
 
     public String getName() {
         return this.name;
+    }
+
+    public Daemon getDaemon() {
+        return this.daemon;
     }
 
     public Set<FunctionArgument> getArguments() {

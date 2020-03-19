@@ -5,7 +5,8 @@ import com.google.gson.JsonSyntaxException;
 import io.netty.channel.ChannelHandlerContext;
 import net.cryptic_game.backend.base.api.ApiExecutor;
 import net.cryptic_game.backend.base.netty.NettyHandler;
-import net.cryptic_game.backend.base.netty.server.ServerResponseType;
+import net.cryptic_game.backend.base.netty.ResponseType;
+import net.cryptic_game.backend.base.utils.JsonSocketUtils;
 import net.cryptic_game.backend.server.App;
 import net.cryptic_game.backend.server.api.ServerApiExecutionData;
 import net.cryptic_game.backend.server.api.ServerApiExecutor;
@@ -13,10 +14,8 @@ import net.cryptic_game.backend.server.client.ClientWrapper;
 
 import java.util.UUID;
 
-import static net.cryptic_game.backend.base.utils.JsonUtils.getJsonObject;
-import static net.cryptic_game.backend.base.utils.JsonUtils.getString;
-import static net.cryptic_game.backend.base.utils.JsonUtils.getUUID;
-import static net.cryptic_game.backend.server.server.websocket.WebSocketUtils.build;
+import static net.cryptic_game.backend.base.utils.JsonSocketUtils.build;
+import static net.cryptic_game.backend.base.utils.JsonUtils.*;
 
 public class WebSocketHandler extends NettyHandler<JsonObject> {
 
@@ -33,12 +32,12 @@ public class WebSocketHandler extends NettyHandler<JsonObject> {
         JsonObject data = getJsonObject(json, "data");
 
         if (action == null) {
-            ctx.write(build(ServerResponseType.BAD_REQUEST, "MISSING_ACTION"));
+            ctx.write(build(ResponseType.BAD_REQUEST, "MISSING_ACTION"));
             return;
         }
 
         if (tag == null) {
-            ctx.write(build(ServerResponseType.BAD_REQUEST, "MISSING_TAG"));
+            ctx.write(build(ResponseType.BAD_REQUEST, "MISSING_TAG"));
             return;
         }
 
@@ -63,11 +62,11 @@ public class WebSocketHandler extends NettyHandler<JsonObject> {
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         if (cause.getCause() instanceof JsonSyntaxException) {
-            ctx.write(WebSocketUtils.build(ServerResponseType.BAD_REQUEST, "JSON_SYNTAX_ERROR"));
+            ctx.write(JsonSocketUtils.build(ResponseType.BAD_REQUEST, "JSON_SYNTAX_ERROR"));
             return;
         }
 
         super.exceptionCaught(ctx, cause);
-        ctx.write(WebSocketUtils.build(ServerResponseType.INTERNAL_SERVER_ERROR));
+        ctx.write(JsonSocketUtils.build(ResponseType.INTERNAL_SERVER_ERROR));
     }
 }

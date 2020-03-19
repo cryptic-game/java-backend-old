@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.server.daemon;
+package net.cryptic_game.backend.base.daemon;
 
 import com.google.gson.JsonObject;
 import io.netty.channel.ChannelHandlerContext;

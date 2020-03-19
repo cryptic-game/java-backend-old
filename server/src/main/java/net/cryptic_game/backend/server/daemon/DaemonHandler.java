@@ -1,6 +1,8 @@
 package net.cryptic_game.backend.server.daemon;
 
 import io.netty.channel.ChannelHandlerContext;
+import net.cryptic_game.backend.base.daemon.Daemon;
+import net.cryptic_game.backend.base.daemon.Function;
 
 import java.util.HashMap;
 import java.util.HashSet;

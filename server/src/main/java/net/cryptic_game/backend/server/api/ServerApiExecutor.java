@@ -2,9 +2,9 @@ package net.cryptic_game.backend.server.api;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.api.*;
-import net.cryptic_game.backend.base.netty.server.ServerResponseType;
+import net.cryptic_game.backend.base.netty.ResponseType;
 
-import static net.cryptic_game.backend.server.server.websocket.WebSocketUtils.build;
+import static net.cryptic_game.backend.base.utils.JsonSocketUtils.build;
 
 public class ServerApiExecutor extends ApiExecutor {
 
@@ -20,12 +20,12 @@ public class ServerApiExecutor extends ApiExecutor {
         ServerApiExecutionData executionData = (ServerApiExecutionData) data;
 
         final ApiEndpointExecutor endpoint = this.apiHandler.getEndpointExecutor(executionData.getEndpoint());
-        if (endpoint == null) return build(ServerResponseType.NOT_FOUND, "UNKNOWN_ACTION");
+        if (endpoint == null) return build(ResponseType.NOT_FOUND, "UNKNOWN_ACTION");
 
         try {
             return endpoint.execute(data);
         } catch (ApiParameterException e) {
-            return build(ServerResponseType.BAD_REQUEST, e.getMessage());
+            return build(ResponseType.BAD_REQUEST, e.getMessage());
         }
     }
 }

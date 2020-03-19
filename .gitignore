@@ -156,3 +156,4 @@ gradle-app.setting
 /.idea/dataSources/
 /.idea/codeStyles/
 /.idea/compiler.xml
+/.idea/.name
