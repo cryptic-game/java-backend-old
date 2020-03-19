@@ -1,18 +1,16 @@
-package net.cryptic_game.backend.data;
+package net.cryptic_game.backend.data.currency;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
+import net.cryptic_game.backend.data.user.User;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import java.time.ZoneOffset;
 import java.util.Objects;
 
 public class CurrencyAccess extends TableModelAutoId {
-
-
 
     @ManyToOne
     @JoinColumn(name = "user_id", updatable = false, nullable = false)
@@ -25,30 +23,30 @@ public class CurrencyAccess extends TableModelAutoId {
     private CurrencyWallet wallet;
 
     public User getUser() {
-        return user;
+        return this.user;
     }
 
-    public void setUser(User user_source) {
-        this.user = user_source;
+    public void setUser(final User user) {
+        this.user = user;
     }
 
     public CurrencyWallet getWallet() {
-        return wallet;
+        return this.wallet;
     }
 
-    public void setWallet(CurrencyWallet wallet) {
+    public void setWallet(final CurrencyWallet wallet) {
         this.wallet = wallet;
     }
-
 
     @Override
     public JsonObject serialize() {
         return JsonBuilder.anJSON()
                 .add("id", this.getId())
-                .add( "user_id", this.getUser().getId())
+                .add("user_id", this.getUser().getId())
                 .add("wallet_id", this.getWallet().getId())
                 .build();
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

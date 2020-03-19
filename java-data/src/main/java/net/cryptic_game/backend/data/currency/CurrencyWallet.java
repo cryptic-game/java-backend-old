@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.data;
+package net.cryptic_game.backend.data.currency;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
@@ -18,27 +18,35 @@ public class CurrencyWallet extends TableModelAutoId {
     @Column(name = "time_stamp", updatable = false, nullable = false)
     private LocalDateTime timeStamp;
 
-
     @Column(name = "key", updatable = true, nullable = true)
     private String key;
 
     @Column(name = "amount", updatable = true, nullable = false)
     private int amount;
 
+    public LocalDateTime getTimeStamp() {
+        return this.timeStamp;
+    }
 
-    public LocalDateTime getTimeStamp() { return timeStamp; }
+    public void setTimeStamp(final LocalDateTime timeStamp) {
+        this.timeStamp = timeStamp;
+    }
 
-    public void setTime_stamp(LocalDateTime time_stamp) { this.timeStamp = timeStamp; }
+    public String getKey() {
+        return this.key;
+    }
 
+    public void setKey(final String sendAmount) {
+        this.key = sendAmount;
+    }
 
-    public String getKey() { return key; }
+    public int getAmount() {
+        return this.amount;
+    }
 
-    public void setKey(String send_amount) { this.key = send_amount; }
-
-    public int getAmount() { return amount; }
-
-    public void setAmount(int amount) { this.amount = amount; }
-
+    public void setAmount(final int amount) {
+        this.amount = amount;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -55,12 +63,11 @@ public class CurrencyWallet extends TableModelAutoId {
         return Objects.hash(getTimeStamp(), getKey(), getAmount());
     }
 
-
     @Override
     public JsonObject serialize() {
         return JsonBuilder.anJSON()
                 .add("id", this.getId())
-                .add( "time_stamp", this.getTimeStamp().toInstant(ZoneOffset.UTC).toEpochMilli())
+                .add("time_stamp", this.getTimeStamp().toInstant(ZoneOffset.UTC).toEpochMilli())
                 .add("send_amount", this.getKey())
                 .add("destination_uuid", this.getAmount())
                 .build();

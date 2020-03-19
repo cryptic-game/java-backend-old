@@ -1,18 +1,20 @@
-package net.cryptic_game.backend.data;
+package net.cryptic_game.backend.data.service;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.util.Objects;
 
 
 @Entity
 @Table(name = "service_bruteforce")
 public class ServiceBruteforce extends TableModelAutoId {
-
 
     @Column(name = "started", updatable = false, nullable = true) // updatable?
     private int started;
@@ -25,29 +27,28 @@ public class ServiceBruteforce extends TableModelAutoId {
     @Column(name = "progress", updatable = true, nullable = true)
     private float progress;
 
-
     public int getStarted() {
-        return started;
+        return this.started;
     }
 
-    public void setStarted(int started) {
+    public void setStarted(final int started) {
         this.started = started;
     }
 
     public Service getTargetService() {
-        return targetService;
+        return this.targetService;
     }
 
-    public void setTargetService(Service targetService) {
+    public void setTargetService(final Service targetService) {
         this.targetService = targetService;
     }
 
 
     public float getProgress() {
-        return progress;
+        return this.progress;
     }
 
-    public void setProgress(float progress) {
+    public void setProgress(final float progress) {
         this.progress = progress;
     }
 

@@ -1,8 +1,8 @@
 package net.cryptic_game.backend.server.client;
 
 import io.netty.channel.ChannelHandlerContext;
-import net.cryptic_game.backend.data.Session;
-import net.cryptic_game.backend.data.User;
+import net.cryptic_game.backend.data.user.Session;
+import net.cryptic_game.backend.data.user.User;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

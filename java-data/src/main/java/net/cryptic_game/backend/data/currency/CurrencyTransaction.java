@@ -1,9 +1,10 @@
-package net.cryptic_game.backend.data;
+package net.cryptic_game.backend.data.currency;
 
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
+import net.cryptic_game.backend.data.user.User;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -16,17 +17,17 @@ import java.util.Objects;
 public class CurrencyTransaction extends TableModelAutoId {
 
     @Column(name = "time_stamp", updatable = false, nullable = false)
-    private LocalDateTime time_stamp;
+    private LocalDateTime timeStamp;
 
     @ManyToOne
     @JoinColumn(name = "source_id", updatable = false, nullable = false)
     @Type(type = "uuid-char")
-    private User user_source;
+    private User userSource;
 
     @ManyToOne
     @JoinColumn(name = "destination_id", nullable = false, updatable = false)
     @Type(type = "uuid-char")
-    private User user_destination;
+    private User userDestination;
 
     @Column(name = "send_amount", updatable = false, nullable = false)
     private int sendAmount;
@@ -37,52 +38,51 @@ public class CurrencyTransaction extends TableModelAutoId {
     @Column(name = "origin", updatable = false, nullable = true)
     private String origin;
 
-    public LocalDateTime getTime_stamp() {
-        return time_stamp;
+    public LocalDateTime getTimeStamp() {
+        return this.timeStamp;
     }
 
-    public void setTime_stamp(LocalDateTime time_stamp) {
-        this.time_stamp = time_stamp;
+    public void setTimeStamp(final LocalDateTime timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
-    public User getUser_source() {
-        return user_source;
+    public User getUserSource() {
+        return this.userSource;
     }
 
-    public void setUser_source(User user_source) {
-        this.user_source = user_source;
+    public void setUserSource(final User userSource) {
+        this.userSource = userSource;
     }
 
-    public User getUser_destination() {
-        return user_destination;
+    public User getUserDestination() {
+        return this.userDestination;
     }
 
-    public void setUser_destination(User user_destination) {
-        this.user_destination = user_destination;
+    public void setUserDestination(final User userDestination) {
+        this.userDestination = userDestination;
     }
 
     public int getSendAmount() {
-        return sendAmount;
+        return this.sendAmount;
     }
 
-    public void setSendAmount(int sendAmount) {
+    public void setSendAmount(final int sendAmount) {
         this.sendAmount = sendAmount;
     }
 
-
     public String getUsage() {
-        return usage;
+        return this.usage;
     }
 
-    public void setUsage(String usage) {
+    public void setUsage(final String usage) {
         this.usage = usage;
     }
 
     public String getOrigin() {
-        return origin;
+        return this.origin;
     }
 
-    public void setOrigin(String origin) {
+    public void setOrigin(final String origin) {
         this.origin = origin;
     }
 
@@ -90,10 +90,10 @@ public class CurrencyTransaction extends TableModelAutoId {
     public JsonObject serialize() {
         return JsonBuilder.anJSON()
                 .add("id", this.getId())
-                .add("time_stamp", this.getTime_stamp().toInstant(ZoneOffset.UTC).toEpochMilli())
-                .add("source_id", this.getUser_source().getId())
+                .add("time_stamp", this.getTimeStamp().toInstant(ZoneOffset.UTC).toEpochMilli())
+                .add("source_id", this.getUserSource().getId())
                 .add("SendAmount", this.getSendAmount())
-                .add("destination_id", this.getUser_destination().getId())
+                .add("destination_id", this.getUserDestination().getId())
                 .add("usage", this.getUsage())
                 .add("origin", this.getOrigin())
                 .build();
@@ -105,16 +105,16 @@ public class CurrencyTransaction extends TableModelAutoId {
         if (o == null || getClass() != o.getClass()) return false;
         CurrencyTransaction that = (CurrencyTransaction) o;
         return getSendAmount() == that.getSendAmount() &&
-                Objects.equals(getTime_stamp(), that.getTime_stamp()) &&
-                Objects.equals(getUser_source().getId(), that.getUser_source().getId()) &&
-                Objects.equals(getUser_destination().getId(), that.getUser_destination().getId()) &&
+                Objects.equals(getTimeStamp(), that.getTimeStamp()) &&
+                Objects.equals(getUserSource().getId(), that.getUserSource().getId()) &&
+                Objects.equals(getUserDestination().getId(), that.getUserDestination().getId()) &&
                 Objects.equals(getUsage(), that.getUsage()) &&
                 Objects.equals(getOrigin(), that.getOrigin());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getTime_stamp(), getUser_source().getId(), getSendAmount(), getUser_destination().getId(), getUsage(), getOrigin());
+        return Objects.hash(getTimeStamp(), getUserSource().getId(), getSendAmount(), getUserDestination().getId(), getUsage(), getOrigin());
     }
 
 

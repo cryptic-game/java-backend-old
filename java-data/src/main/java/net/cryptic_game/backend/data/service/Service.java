@@ -1,8 +1,10 @@
-package net.cryptic_game.backend.data;
+package net.cryptic_game.backend.data.service;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
+import net.cryptic_game.backend.data.device.Device;
+import net.cryptic_game.backend.data.user.User;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.JoinColumn;
@@ -31,42 +33,42 @@ public class Service extends TableModelAutoId {
     private User user;
 
     public Device getDevice() {
-        return device;
+        return this.device;
     }
 
-    public void setDevice(Device device) {
+    public void setDevice(final Device device) {
         this.device = device;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     public boolean isRunning() {
-        return running;
+        return this.running;
     }
 
-    public void setRunning(boolean running) {
+    public void setRunning(final boolean running) {
         this.running = running;
     }
 
     public int getRunningPort() {
-        return runningPort;
+        return this.runningPort;
     }
 
-    public void setRunningPort(int runningPort) {
+    public void setRunningPort(final int runningPort) {
         this.runningPort = runningPort;
     }
 
     public User getUser() {
-        return user;
+        return this.user;
     }
 
-    public void setUser(User user) {
+    public void setUser(final User user) {
         this.user = user;
     }
 

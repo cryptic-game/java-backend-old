@@ -1,8 +1,9 @@
-package net.cryptic_game.backend.data;
+package net.cryptic_game.backend.data.service;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
+import net.cryptic_game.backend.data.currency.CurrencyWallet;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -11,7 +12,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "service_miner")
 public class ServiceMiner extends TableModelAutoId {
-
 
     @ManyToOne
     @JoinColumn(name = "wallet", nullable = true, updatable = true)
@@ -25,26 +25,26 @@ public class ServiceMiner extends TableModelAutoId {
     private float power;
 
     public CurrencyWallet getWallet() {
-        return wallet;
+        return this.wallet;
     }
 
-    public void setWallet(CurrencyWallet wallet) {
+    public void setWallet(final CurrencyWallet wallet) {
         this.wallet = wallet;
     }
 
     public int getStarted() {
-        return started;
+        return this.started;
     }
 
-    public void setStarted(int started) {
+    public void setStarted(final int started) {
         this.started = started;
     }
 
     public float getPower() {
-        return power;
+        return this.power;
     }
 
-    public void setPower(float power) {
+    public void setPower(final float power) {
         this.power = power;
     }
 
@@ -72,7 +72,4 @@ public class ServiceMiner extends TableModelAutoId {
     public int hashCode() {
         return Objects.hash(getWallet(), getStarted(), getPower());
     }
-
-
-
 }
