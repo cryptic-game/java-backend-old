@@ -21,7 +21,8 @@ public enum BaseConfig implements DefaultConfig {
     LOG_LEVEL,
     SENTRY_DSN,
 
-    UNIX_SOCKET;
+    USE_UNIX_SOCKET,
+    UNIX_SOCKET_PATH;
 
     @Override
     public void iniConfig(final Config config) {
@@ -39,6 +40,7 @@ public enum BaseConfig implements DefaultConfig {
         config.set(BaseConfig.LOG_LEVEL, "WARN");
         config.set(BaseConfig.SENTRY_DSN, "");
 
-        config.set(BaseConfig.UNIX_SOCKET, "/var/run/cryptic.sock");
+        config.set(BaseConfig.USE_UNIX_SOCKET, true);
+        config.set(BaseConfig.UNIX_SOCKET_PATH, "/var/run/cryptic.sock");
     }
 }

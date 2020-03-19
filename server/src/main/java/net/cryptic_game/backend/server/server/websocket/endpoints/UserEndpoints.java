@@ -4,12 +4,12 @@ import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.api.ApiCollection;
 import net.cryptic_game.backend.base.api.ApiEndpoint;
 import net.cryptic_game.backend.base.api.ApiParameter;
+import net.cryptic_game.backend.base.netty.server.ServerResponseType;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
 import net.cryptic_game.backend.base.utils.ValidationUtils;
 import net.cryptic_game.backend.data.user.Session;
 import net.cryptic_game.backend.data.user.User;
 import net.cryptic_game.backend.server.client.Client;
-import net.cryptic_game.backend.server.server.ServerResponseType;
 import net.cryptic_game.backend.server.server.websocket.WebSocketUtils;
 
 import java.util.UUID;

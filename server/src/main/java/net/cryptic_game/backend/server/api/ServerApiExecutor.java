@@ -2,7 +2,7 @@ package net.cryptic_game.backend.server.api;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.api.*;
-import net.cryptic_game.backend.server.server.ServerResponseType;
+import net.cryptic_game.backend.base.netty.server.ServerResponseType;
 
 import static net.cryptic_game.backend.server.server.websocket.WebSocketUtils.build;
 
