@@ -10,7 +10,7 @@ public abstract class DaemonEndpoint {
         this.name = name;
     }
 
-    public abstract JsonObject handleRequest(JsonObject data) throws Exception;
+    public abstract JsonObject handleRequest(final JsonObject data) throws Exception;
 
     public String getName() {
         return this.name;
