@@ -12,7 +12,7 @@ public class RespondEndpoint extends DaemonEndpoint {
     }
 
     @Override
-    public JsonObject handleRequest(final UUID tag, final JsonObject data) throws Exception {
+    public JsonObject handleRequest(final UUID tag, final UUID userId, final JsonObject data) throws Exception {
         return null;
     }
 }

@@ -66,6 +66,6 @@ public class DaemonContentHandler extends NettyHandler<JsonObject> {
             return;
         }
 
-        ctx.write(endpoint.handleRequest(tag, data));
+        ctx.write(endpoint.handleRequest(tag, getUUID(msg, "user"), data));
     }
 }
