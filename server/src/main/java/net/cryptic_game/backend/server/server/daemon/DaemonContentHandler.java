@@ -10,10 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
+import java.util.UUID;
 
 import static net.cryptic_game.backend.base.utils.JsonSocketUtils.build;
-import static net.cryptic_game.backend.base.utils.JsonUtils.getJsonObject;
-import static net.cryptic_game.backend.base.utils.JsonUtils.getString;
+import static net.cryptic_game.backend.base.utils.JsonUtils.*;
 
 public class DaemonContentHandler extends NettyHandler<JsonObject> {
 
@@ -41,10 +41,17 @@ public class DaemonContentHandler extends NettyHandler<JsonObject> {
 
     @Override
     protected void channelRead0(final ChannelHandlerContext ctx, final JsonObject msg) throws Exception {
-        String endpointName = getString(msg, "endpoint");
-        JsonObject data = getJsonObject(msg, "data");
+        final String endpointName = getString(msg, "endpoint");
+        final UUID tag = getUUID(msg, "tag");
+        final JsonObject data = getJsonObject(msg, "data");
+
         if (endpointName == null) {
             ctx.write(build(ResponseType.BAD_REQUEST, "MISSING_ENDPOINT"));
+            return;
+        }
+
+        if (tag == null) {
+            ctx.write(build(ResponseType.BAD_REQUEST, "MISSING_TAG"));
             return;
         }
 
@@ -59,6 +66,6 @@ public class DaemonContentHandler extends NettyHandler<JsonObject> {
             return;
         }
 
-        ctx.write(endpoint.handleRequest(data));
+        ctx.write(endpoint.handleRequest(tag, data));
     }
 }
