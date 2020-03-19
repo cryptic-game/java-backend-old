@@ -1,10 +1,9 @@
-package net.cryptic_game.backend.base.netty.server;
+package net.cryptic_game.backend.base.netty;
 
 import com.google.gson.JsonObject;
-import net.cryptic_game.backend.base.interfaces.ResponseType;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
 
-public enum ServerResponseType implements ResponseType {
+public enum ResponseType implements net.cryptic_game.backend.base.interfaces.ResponseType {
 
     // Information responses
 
@@ -28,7 +27,7 @@ public enum ServerResponseType implements ResponseType {
     private final String name;
     private final boolean error;
 
-    ServerResponseType(final int code, final String name, final boolean error) {
+    ResponseType(final int code, final String name, final boolean error) {
         this.code = code;
         this.name = name;
         this.error = error;
