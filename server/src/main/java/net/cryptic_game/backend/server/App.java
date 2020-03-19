@@ -34,7 +34,7 @@ public class App extends AppBootstrap {
 
         this.serverHandler.addServer("daemon",
                 new DomainSocketAddress(this.config.getAsString(BaseConfig.UNIX_SOCKET)),
-                new DaemonCodec(new DaemonHandler()), true);
+                new DaemonCodec(this.daemonHandler), true);
 
         this.serverHandler.addServer("websocket",
                 this.config.getAsString(ServerConfig.WEBSOCKET_HOST),

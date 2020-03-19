@@ -1,24 +1,29 @@
 package net.cryptic_game.backend.server.daemon;
 
+import io.netty.channel.ChannelHandlerContext;
+
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class DaemonHandler {
 
-    private final Map<String, Daemon> daemons;
     private final Map<String, Function> functions;
+    private Set<Daemon> daemons;
 
     public DaemonHandler() {
-        this.daemons = new HashMap<>();
+        this.daemons = new HashSet<>();
         this.functions = new HashMap<>();
     }
 
-    public Daemon addDaemon(final Daemon daemon) {
-        return this.daemons.put(daemon.getName(), daemon);
+    public void addDaemon(final Daemon daemon) {
+        this.daemons.add(daemon);
     }
 
-    public Daemon getDaemon(final String name) {
-        return this.daemons.get(name.strip().toLowerCase());
+    public void removeDaemon(final ChannelHandlerContext ctx) {
+        this.daemons = this.daemons.stream().filter(daemon -> !daemon.getChannelHandlerContext().equals(ctx)).collect(Collectors.toSet());
     }
 
     public Function addFunction(final Function function) {

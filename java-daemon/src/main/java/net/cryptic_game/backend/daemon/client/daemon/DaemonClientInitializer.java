@@ -10,6 +10,7 @@ import net.cryptic_game.backend.base.netty.NettyInitializer;
 import java.nio.charset.StandardCharsets;
 
 public class DaemonClientInitializer implements NettyInitializer {
+
     @Override
     public void configure(final ChannelPipeline pipeline) {
         pipeline.addLast(new JsonObjectDecoder());

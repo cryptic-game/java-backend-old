@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.Function;
 
@@ -176,6 +177,16 @@ public class JsonUtils {
     }
 
     public static <T> JsonArray toArray(final List<T> items, final Function<T, JsonElement> function) {
+        final JsonArray array = new JsonArray();
+        items.forEach(item -> array.add(function.apply(item)));
+        return array;
+    }
+
+    public static <T extends JsonSerializable> JsonArray toArray(final Set<T> items) {
+        return toArray(items, JsonSerializable::serialize);
+    }
+
+    public static <T> JsonArray toArray(final Set<T> items, final Function<T, JsonElement> function) {
         final JsonArray array = new JsonArray();
         items.forEach(item -> array.add(function.apply(item)));
         return array;

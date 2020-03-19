@@ -4,16 +4,19 @@ import io.netty.channel.ChannelHandlerContext;
 
 public class Daemon {
 
-    private final String name;
     private final ChannelHandlerContext ctx;
+    private String name;
 
-    public Daemon(final String name, final ChannelHandlerContext ctx) {
-        this.name = name;
+    public Daemon(final ChannelHandlerContext ctx) {
         this.ctx = ctx;
     }
 
     public String getName() {
         return this.name;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
     }
 
     public ChannelHandlerContext getChannelHandlerContext() {
