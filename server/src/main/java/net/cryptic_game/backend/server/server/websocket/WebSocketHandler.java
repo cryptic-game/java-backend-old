@@ -7,15 +7,13 @@ import net.cryptic_game.backend.base.api.ApiExecutor;
 import net.cryptic_game.backend.base.netty.NettyHandler;
 import net.cryptic_game.backend.base.netty.ResponseType;
 import net.cryptic_game.backend.base.utils.JsonSocketUtils;
+import net.cryptic_game.backend.base.utils.JsonUtils;
 import net.cryptic_game.backend.server.App;
 import net.cryptic_game.backend.server.api.ServerApiExecutionData;
 import net.cryptic_game.backend.server.api.ServerApiExecutor;
 import net.cryptic_game.backend.server.client.ClientWrapper;
 
 import java.util.UUID;
-
-import static net.cryptic_game.backend.base.utils.JsonSocketUtils.build;
-import static net.cryptic_game.backend.base.utils.JsonUtils.*;
 
 public class WebSocketHandler extends NettyHandler<JsonObject> {
 
@@ -27,23 +25,23 @@ public class WebSocketHandler extends NettyHandler<JsonObject> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, JsonObject json) throws Exception {
-        final String action = getString(json, "action");
-        final UUID tag = getUUID(json, "tag");
-        JsonObject data = getJsonObject(json, "data");
+        final String endpoint = JsonUtils.getString(json, "endpoint");
+        final UUID tag = JsonUtils.getUUID(json, "tag");
+        JsonObject data = JsonUtils.getJsonObject(json, "data");
 
-        if (action == null) {
-            ctx.write(build(ResponseType.BAD_REQUEST, "MISSING_ACTION"));
+        if (endpoint == null) {
+            ctx.write(JsonSocketUtils.build(ResponseType.BAD_REQUEST, "MISSING_ACTION"));
             return;
         }
 
         if (tag == null) {
-            ctx.write(build(ResponseType.BAD_REQUEST, "MISSING_TAG"));
+            ctx.write(JsonSocketUtils.build(ResponseType.BAD_REQUEST, "MISSING_TAG"));
             return;
         }
 
         if (data == null) data = new JsonObject();
 
-        JsonObject response = this.executor.execute(new ServerApiExecutionData(action, ClientWrapper.getClient(ctx), data));
+        JsonObject response = this.executor.execute(new ServerApiExecutionData(endpoint, ClientWrapper.getClient(ctx), data));
         response.addProperty("tag", tag.toString());
 
         ctx.write(response);

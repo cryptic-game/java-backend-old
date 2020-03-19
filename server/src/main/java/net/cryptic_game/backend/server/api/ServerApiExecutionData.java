@@ -10,21 +10,21 @@ public class ServerApiExecutionData extends ApiExecutionData {
     private final Client client;
     private final JsonObject data;
 
-    public ServerApiExecutionData(String endpoint, Client client, JsonObject data) {
+    public ServerApiExecutionData(final String endpoint, final Client client, final JsonObject data) {
         this.endpoint = endpoint;
         this.client = client;
         this.data = data;
     }
 
     public String getEndpoint() {
-        return endpoint;
+        return this.endpoint;
     }
 
     public Client getClient() {
-        return client;
+        return this.client;
     }
 
     public JsonObject getData() {
-        return data;
+        return this.data;
     }
 }
