@@ -156,7 +156,6 @@ $RECYCLE.BIN/
 
 ### Gradle ###
 .gradle
-build/
 
 # Ignore Gradle GUI config
 gradle-app.setting
@@ -169,8 +168,3 @@ gradle-app.setting
 
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
-
-### Gradle Patch ###
-**/build/
-
-# End of https://www.gitignore.io/api/java,linux,gradle,windows,intellij+all
