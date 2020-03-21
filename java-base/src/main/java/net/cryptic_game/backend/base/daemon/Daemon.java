@@ -1,7 +1,7 @@
 package net.cryptic_game.backend.base.daemon;
 
 import com.google.gson.JsonObject;
-import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.Channel;
 import net.cryptic_game.backend.base.interfaces.JsonSerializable;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
 
@@ -10,12 +10,13 @@ import java.time.ZoneOffset;
 
 public class Daemon implements JsonSerializable {
 
-    private final ChannelHandlerContext ctx;
+    private final Channel channel;
     private final LocalDateTime connectedSince;
     private String name;
 
-    public Daemon(final ChannelHandlerContext ctx) {
-        this.ctx = ctx;
+    public Daemon(final Channel channel, final String name) {
+        this.channel = channel;
+        this.name = name;
         this.connectedSince = LocalDateTime.now();
     }
 
@@ -31,15 +32,11 @@ public class Daemon implements JsonSerializable {
         return this.name;
     }
 
-    public void setName(final String name) {
-        this.name = name;
-    }
-
     public LocalDateTime getConnectedSince() {
         return this.connectedSince;
     }
 
-    public ChannelHandlerContext getChannelHandlerContext() {
-        return this.ctx;
+    public Channel getChannel() {
+        return this.channel;
     }
 }

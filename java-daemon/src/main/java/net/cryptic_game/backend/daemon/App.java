@@ -26,6 +26,14 @@ public class App extends AppBootstrap {
     }
 
     @Override
+    protected void preInit() {
+    }
+
+    @Override
+    protected void initApi() {
+    }
+
+    @Override
     protected void init() {
         this.clientHandler = new NettyClientHandler();
 
@@ -50,9 +58,5 @@ public class App extends AppBootstrap {
             Logger.getLogger(App.class).info(json.toString());
             this.client.getChannel().write(json);
         }).start();
-    }
-
-    @Override
-    protected void initApi() {
     }
 }

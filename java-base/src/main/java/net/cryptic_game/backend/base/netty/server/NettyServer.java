@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.SocketAddress;
+import java.util.List;
 
 public class NettyServer {
 
@@ -27,17 +28,17 @@ public class NettyServer {
     private final boolean unixSocket;
 
     private final EventLoopGroupHandler eventLoopGroupHandler;
-    private final NettyInitializer nettyInitializer;
+    private final List<NettyCodecInitializer<?>> nettyInitializers;
 
     private Channel channel;
 
-    public NettyServer(final String name, SocketAddress address, final boolean unixSocket, final EventLoopGroupHandler eventLoopGroupHandler, final NettyCodec nettyCodec) {
+    public NettyServer(final String name, SocketAddress address, final boolean unixSocket, final EventLoopGroupHandler eventLoopGroupHandler, final NettyCodec<?> nettyCodec) {
         this.name = name;
         this.address = address;
         this.unixSocket = unixSocket;
 
         this.eventLoopGroupHandler = eventLoopGroupHandler;
-        this.nettyInitializer = nettyCodec.getInitializer();
+        this.nettyInitializers = nettyCodec.getInitializers();
     }
 
     protected void stop() {
@@ -53,7 +54,7 @@ public class NettyServer {
                             .group(this.eventLoopGroupHandler.getBossGroup(), this.eventLoopGroupHandler.getWorkGroup())
                             .channel(this.unixSocket ? (EPOLL ? EpollServerDomainSocketChannel.class : KQueueServerDomainSocketChannel.class) :
                                     (EPOLL ? EpollServerSocketChannel.class : NioServerSocketChannel.class))
-                            .childHandler(new NettyCodecInitializer(null, this.nettyInitializer))
+                            .childHandler(new NettyInitializer(null, this.nettyInitializers))
                             .bind(this.address)
                             .sync()
                             .channel();
