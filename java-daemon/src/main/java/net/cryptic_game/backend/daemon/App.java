@@ -8,7 +8,6 @@ import net.cryptic_game.backend.base.netty.client.NettyClient;
 import net.cryptic_game.backend.base.netty.client.NettyClientHandler;
 import net.cryptic_game.backend.daemon.client.daemon.DaemonClientCodec;
 import net.cryptic_game.backend.daemon.config.DaemonConfig;
-import org.jboss.logging.Logger;
 
 import java.net.InetSocketAddress;
 
@@ -50,13 +49,12 @@ public class App extends AppBootstrap {
 
         new Thread(() -> {
             try {
-                Thread.sleep(2000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             json.addProperty("test", 1);
-            Logger.getLogger(App.class).info(json.toString());
-            this.client.getChannel().write(json);
+            this.client.getChannel().writeAndFlush(json);
         }).start();
     }
 }
