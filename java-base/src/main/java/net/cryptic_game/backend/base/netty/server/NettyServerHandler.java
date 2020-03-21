@@ -17,7 +17,7 @@ public class NettyServerHandler {
         this.eventLoopGroupHandler = new EventLoopGroupHandler();
     }
 
-    public void addServer(final String name, SocketAddress address, final boolean unixSocket, final NettyCodec nettyCodec) {
+    public void addServer(final String name, SocketAddress address, final boolean unixSocket, final NettyCodec<?> nettyCodec) {
         this.servers.add(new NettyServer(name, address, unixSocket, this.eventLoopGroupHandler, nettyCodec));
     }
 

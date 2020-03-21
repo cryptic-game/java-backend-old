@@ -21,15 +21,6 @@ public class JsonBuilder implements JsonSerializable {
     }
 
     /**
-     * @deprecated use {@link JsonBuilder#build()}
-     */
-    @Deprecated
-    @Override
-    public JsonObject serialize() {
-        return this.build();
-    }
-
-    /**
      * Creates a new object of {@link JsonBuilder}.
      *
      * @return the {@link JsonBuilder} that has been created.
@@ -107,6 +98,15 @@ public class JsonBuilder implements JsonSerializable {
      */
     public static JsonObject error(final String message) {
         return simple("error", message);
+    }
+
+    /**
+     * @deprecated use {@link JsonBuilder#build()}
+     */
+    @Deprecated
+    @Override
+    public JsonObject serialize() {
+        return this.build();
     }
 
     /**

@@ -14,7 +14,7 @@ public class HttpEndpointHandler {
     private static final Logger log = LoggerFactory.getLogger(HttpEndpointHandler.class);
 
     private final Set<ApiEndpointCollection> apiCollections;
-    private ApiEndpointList apiList;
+    private final ApiEndpointList apiList;
 
     public HttpEndpointHandler() {
         this.apiCollections = new HashSet<>();

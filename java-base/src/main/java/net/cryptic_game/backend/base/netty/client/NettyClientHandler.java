@@ -17,7 +17,7 @@ public class NettyClientHandler {
         this.eventLoopGroupHandler = new EventLoopGroupHandler();
     }
 
-    public NettyClient addClient(final String name, final SocketAddress address, final boolean unixSocket, final NettyCodec nettyCodec) {
+    public NettyClient addClient(final String name, final SocketAddress address, final boolean unixSocket, final NettyCodec<?> nettyCodec) {
         final NettyClient client = new NettyClient(name, address, unixSocket, this.eventLoopGroupHandler, nettyCodec);
         this.clients.add(client);
         return client;
