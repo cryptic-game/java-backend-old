@@ -67,7 +67,7 @@ public class SQLConnection {
 
     public void addEntity(final Class<? extends TableModel> entity) throws SQLException {
         if (this.factory == null) this.configuration.addAnnotatedClass(entity);
-        else throw new SQLException("It's to late to register any more entities.");
+        else throw new SQLException("It's too late to register any more entities.");
     }
 
     public Session openSession() throws HibernateException {

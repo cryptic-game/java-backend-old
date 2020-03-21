@@ -12,7 +12,7 @@ public class Daemon implements JsonSerializable {
 
     private final Channel channel;
     private final LocalDateTime connectedSince;
-    private String name;
+    private final String name;
 
     public Daemon(final Channel channel, final String name) {
         this.channel = channel;

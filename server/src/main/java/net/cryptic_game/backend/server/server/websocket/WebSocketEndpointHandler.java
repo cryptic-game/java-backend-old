@@ -15,7 +15,7 @@ public class WebSocketEndpointHandler {
     private static final Logger log = LoggerFactory.getLogger(WebSocketEndpointHandler.class);
 
     private final Set<ApiEndpointCollection> apiCollections;
-    private ApiEndpointList apiList;
+    private final ApiEndpointList apiList;
 
     public WebSocketEndpointHandler() {
         this.apiCollections = new HashSet<>();

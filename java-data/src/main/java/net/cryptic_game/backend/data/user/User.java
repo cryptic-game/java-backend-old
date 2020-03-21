@@ -15,7 +15,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * Entity representing an user entry in the database
+ * Entity representing a user entry in the database
  *
  * @since 0.3.0
  */

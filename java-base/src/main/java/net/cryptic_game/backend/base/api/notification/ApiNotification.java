@@ -47,7 +47,7 @@ public class ApiNotification implements JsonSerializable {
 
     public void send() {
         if (this.topic == null || this.clients == null) {
-            throw new ApiNotificationException("Topic or clients were not specified.");
+            throw new ApiNotificationException("Topic or clients haven't been specified.");
         } else {
             this.send(this.clients.stream().filter(client -> client.hasSubscribed(this.topic)).collect(Collectors.toUnmodifiableSet()));
         }

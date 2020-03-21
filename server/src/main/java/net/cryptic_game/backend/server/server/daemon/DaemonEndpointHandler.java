@@ -15,7 +15,7 @@ public class DaemonEndpointHandler {
     private static final Logger log = LoggerFactory.getLogger(DaemonEndpointHandler.class);
 
     private final Set<ApiEndpointCollection> apiCollections;
-    private ApiEndpointList apiList;
+    private final ApiEndpointList apiList;
 
     public DaemonEndpointHandler() {
         this.apiCollections = new HashSet<>();
