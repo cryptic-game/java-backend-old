@@ -24,10 +24,9 @@ public abstract class AppBootstrap {
 
     private static final Logger log = LoggerFactory.getLogger(AppBootstrap.class);
     private static AppBootstrap instance;
-
+    private static TimeoutHandler timeoutHandler;
     protected final Config config;
     protected final SQLConnection sqlConnection;
-    private static TimeoutHandler timeoutHandler;
     private final String dist;
 
     public AppBootstrap(final DefaultConfig config, final String dist) {
@@ -41,6 +40,7 @@ public abstract class AppBootstrap {
 
         this.initSentry();
 
+        this.preInit();
         this.initApi();
         this.sqlConnection = new SQLConnection();
 
@@ -58,17 +58,23 @@ public abstract class AppBootstrap {
         return instance;
     }
 
+    public static void addTimeout(final long ms, final Runnable runnable) {
+        timeoutHandler.addTimeout(ms, runnable);
+    }
+
     private void initSQLTableModels() throws SQLException {
         for (Class<? extends TableModel> modelClass : new Reflections("net.cryptic_game.backend.data").getSubTypesOf(TableModel.class)) {
             this.sqlConnection.addEntity(modelClass);
         }
     }
 
+    protected abstract void preInit();
+
+    protected abstract void initApi();
+
     protected abstract void init();
 
     protected abstract void start();
-
-    protected abstract void initApi();
 
     private void initSentry() {
         final String dsn = this.config.getAsString(BaseConfig.SENTRY_DSN);
@@ -108,9 +114,5 @@ public abstract class AppBootstrap {
 
     public SQLConnection getSqlConnection() {
         return this.sqlConnection;
-    }
-
-    public static void addTimeout(final long ms, final Runnable runnable) {
-        timeoutHandler.addTimeout(ms, runnable);
     }
 }

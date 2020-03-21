@@ -1,20 +1,13 @@
 package net.cryptic_game.backend.server.server.websocket;
 
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.MessageToMessageCodec;
-import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import net.cryptic_game.backend.base.api.endpoint.ApiEndpointFinder;
+import net.cryptic_game.backend.base.api.netty.JsonApiServerCodec;
+import net.cryptic_game.backend.base.netty.NettyCodec;
 
-import java.util.List;
+public class WebSocketServerCodec extends NettyCodec<WebSocketServerCodecInitializer> {
 
-public class WebSocketServerCodec extends MessageToMessageCodec<TextWebSocketFrame, String> {
-
-    @Override
-    protected void encode(final ChannelHandlerContext ctx, final String msg, final List<Object> out) throws Exception {
-        out.add(new TextWebSocketFrame(msg));
-    }
-
-    @Override
-    protected void decode(ChannelHandlerContext ctx, TextWebSocketFrame msg, List<Object> out) throws Exception {
-        out.add(msg.text());
+    public WebSocketServerCodec(final WebSocketEndpointHandler webSocketEndpointHandler) {
+        super(new WebSocketServerCodecInitializer(), new JsonApiServerCodec(new ApiEndpointFinder(webSocketEndpointHandler.getApiList()), webSocketEndpointHandler.getApiList().getClientList()));
+        this.initializer.setCodec(this);
     }
 }

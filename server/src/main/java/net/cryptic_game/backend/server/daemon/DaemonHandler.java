@@ -1,6 +1,6 @@
 package net.cryptic_game.backend.server.daemon;
 
-import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.Channel;
 import net.cryptic_game.backend.base.daemon.Daemon;
 import net.cryptic_game.backend.base.daemon.Function;
 
@@ -24,8 +24,8 @@ public class DaemonHandler {
         this.daemons.add(daemon);
     }
 
-    public void removeDaemon(final ChannelHandlerContext ctx) {
-        this.daemons = this.daemons.stream().filter(daemon -> !daemon.getChannelHandlerContext().equals(ctx)).collect(Collectors.toSet());
+    public void removeDaemon(final Channel channel) {
+        this.daemons = this.daemons.stream().filter(daemon -> !daemon.getChannel().equals(channel)).collect(Collectors.toSet());
     }
 
     public Set<Daemon> getDaemons() {

@@ -3,6 +3,7 @@ package net.cryptic_game.backend.base.daemon;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import io.netty.channel.Channel;
 import net.cryptic_game.backend.base.interfaces.JsonSerializable;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
 import net.cryptic_game.backend.base.utils.JsonUtils;
@@ -12,30 +13,28 @@ import java.util.Set;
 
 public class DaemonRegisterPacket implements JsonSerializable {
 
+    private final Daemon daemon;
     private final String name;
     private final Set<Function> functions;
 
     public DaemonRegisterPacket(final String name) {
+        this.daemon = null;
         this.name = name;
         this.functions = new HashSet<>();
     }
 
-    public DaemonRegisterPacket(final JsonObject json, final Daemon daemon) {
-        if (!(json.has("name") && json.has("functions"))) {
-            throw new IllegalArgumentException("Missing \"name\" or \"functions\" property.");
-        }
-
-        this.name = json.get("name").getAsString();
+    public DaemonRegisterPacket(final Channel channel, final String name, final JsonArray jsonFunctions) {
+        this.daemon = new Daemon(channel, name);
+        this.name = name;
         this.functions = new HashSet<>();
 
-        final JsonArray jsonFunctions = json.get("arguments").getAsJsonArray();
         for (final JsonElement function : jsonFunctions) {
             if (!function.isJsonObject()) {
                 throw new IllegalArgumentException("In the Function-Array (\"functions\"-property) is an Object witch is not a JsonObject.");
             }
 
             try {
-                this.functions.add(new Function(function.getAsJsonObject(), daemon));
+                this.functions.add(new Function(function.getAsJsonObject(), this.daemon));
             } catch (IllegalArgumentException e) {
                 throw new IllegalArgumentException(e.getMessage(), e);
             }
@@ -48,6 +47,10 @@ public class DaemonRegisterPacket implements JsonSerializable {
                 .add("name", this.getName())
                 .add("functions", JsonUtils.toArray(this.functions))
                 .build();
+    }
+
+    public Daemon getDaemon() {
+        return this.daemon;
     }
 
     public String getName() {

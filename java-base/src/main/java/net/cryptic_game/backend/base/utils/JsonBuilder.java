@@ -12,12 +12,21 @@ import java.util.InvalidPropertiesFormatException;
 import java.util.List;
 import java.util.UUID;
 
-public class JsonBuilder {
+public class JsonBuilder implements JsonSerializable {
 
     private final JsonObject json;
 
     private JsonBuilder() {
         this.json = new JsonObject();
+    }
+
+    /**
+     * @deprecated use {@link JsonBuilder#build()}
+     */
+    @Deprecated
+    @Override
+    public JsonObject serialize() {
+        return this.build();
     }
 
     /**
