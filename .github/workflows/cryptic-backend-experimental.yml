@@ -18,12 +18,9 @@ jobs:
         run: ./gradlew installDist
       - name: Grant execute permission for docker-entrypoint.sh
         run: chmod +x docker/docker-entrypoint.sh
-#      - name: Install dos2unix
-#        run: sudo apt update && sudo apt install dos2unix -y && dos2unix docker/docker-entrypoint.sh
-      - name: Build Docker Image
-        run: docker build --no-cache --compress --pull -t "rubidiumdev/cryptic-backend:experimental" . -f "docker/Dockerfile"
-      - name: Login to DockerHub Registry
-        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-      - name: Push the latest Docker image
-        run: docker push rubidiumdev/cryptic-backend:experimental
-
+      - uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          repository: rubidiumdev/cryptic-backend
+          tags: latest
