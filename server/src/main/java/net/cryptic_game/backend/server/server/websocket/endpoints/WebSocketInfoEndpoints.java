@@ -5,8 +5,8 @@ import net.cryptic_game.backend.base.api.endpoint.ApiEndpoint;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
+import net.cryptic_game.backend.data.user.Session;
 import net.cryptic_game.backend.data.user.User;
-import net.cryptic_game.backend.data.user.session.Session;
 import net.cryptic_game.backend.server.client.ClientWrapper;
 
 import static net.cryptic_game.backend.base.utils.JsonBuilder.simple;

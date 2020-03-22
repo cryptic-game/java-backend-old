@@ -5,11 +5,10 @@ import net.cryptic_game.backend.base.api.endpoint.*;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
 import net.cryptic_game.backend.base.utils.SecurityUtils;
 import net.cryptic_game.backend.base.utils.ValidationUtils;
+import net.cryptic_game.backend.data.user.Session;
 import net.cryptic_game.backend.data.user.User;
-import net.cryptic_game.backend.data.user.UserWrapper;
-import net.cryptic_game.backend.data.user.session.Session;
-import net.cryptic_game.backend.data.user.session.SessionWrapper;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class WebSocketUserEndpoints extends ApiEndpointCollection {
@@ -27,17 +26,17 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "ALREADY_LOGGED_IN");
         }
 
-        final User user = UserWrapper.getByName(name);
+        final User user = User.getByName(name);
 
         if (user == null) {
             return new ApiResponse(ApiResponseType.UNAUTHORIZED, "INVALID_NAME");
         }
-        if (!UserWrapper.verifyPassword(user, password)) {
+        if (!user.verifyPassword(password)) {
             return new ApiResponse(ApiResponseType.UNAUTHORIZED, "INVALID_PASSWORD");
         }
 
         final UUID token = UUID.randomUUID();
-        final Session session = SessionWrapper.openSession(user, token, deviceName);
+        final Session session = Session.createSession(user, token, deviceName);
 
         client.add(session);
 
@@ -64,13 +63,13 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_MAIL");
         }
 
-        if (UserWrapper.getByName(name) != null) {
+        if (User.getByName(name) != null) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "USER_ALREADY_EXISTS");
         }
 
         final UUID token = UUID.randomUUID();
-        final User user = UserWrapper.registerUser(name, mail, password);
-        final Session session = SessionWrapper.openSession(user, token, deviceName);
+        final User user = User.createUser(name, mail, password);
+        final Session session = Session.createSession(user, token, deviceName);
         client.add(session);
 
         return new ApiResponse(ApiResponseType.OK, JsonBuilder.anJSON()
@@ -88,7 +87,7 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "ALREADY_LOGGED_IN");
         }
 
-        Session session = SessionWrapper.getSessionById(sessionId);
+        Session session = Session.getById(sessionId);
         if (session == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "INVALID_SESSION");
         }
@@ -100,8 +99,10 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
         }
 
         client.add(session);
-        SessionWrapper.setLastToCurrentTime(session);
-        UserWrapper.setLastToCurrentTime(session.getUser());
+        session.setLastActive(LocalDateTime.now());
+        session.getUser().setLast(LocalDateTime.now());
+        session.getUser().update();
+        session.update();
 
         return new ApiResponse(ApiResponseType.OK);
     }
@@ -120,11 +121,12 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
 
         final User user = client.get(User.class);
 
-        if (!UserWrapper.verifyPassword(user, password)) {
+        if (!user.verifyPassword(password)) {
             return new ApiResponse(ApiResponseType.UNAUTHORIZED, "INVALID_PASSWORD");
         }
 
-        UserWrapper.setPassword(user, newPassword);
+        user.setPassword(newPassword);
+        user.update();
 
         return new ApiResponse(ApiResponseType.OK);
     }
@@ -136,17 +138,22 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
         }
 
         if (sessionId == null) {
-            SessionWrapper.closeSession(client.get(Session.class));
+            Session session = client.get(Session.class);
+            session.setValid(false);
+            ;
+            session.update();
             return new ApiResponse(ApiResponseType.OK);
         }
 
-        Session session = SessionWrapper.getSessionById(sessionId);
+        Session session = Session.getById(sessionId);
 
         if (session == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "SESSION_NOT_FOUND");
         }
 
-        SessionWrapper.closeSession(session);
+        session.setValid(false);
+        ;
+        session.update();
 
         return new ApiResponse(ApiResponseType.OK);
     }
@@ -159,12 +166,15 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
 
         final User user = client.get(User.class);
 
-        if (!UserWrapper.verifyPassword(user, password)) {
+        if (!user.verifyPassword(password)) {
             return new ApiResponse(ApiResponseType.UNAUTHORIZED, "INVALID_PASSWORD");
         }
 
-        SessionWrapper.closeSession(client.get(Session.class));
-        UserWrapper.deleteUser(user);
+        Session session = client.get(Session.class);
+        session.setValid(false);
+        ;
+        session.update();
+        user.delete();
 
         return new ApiResponse(ApiResponseType.OK);
     }
