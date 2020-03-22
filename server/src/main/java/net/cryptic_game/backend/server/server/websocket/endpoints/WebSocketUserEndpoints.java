@@ -3,7 +3,6 @@ package net.cryptic_game.backend.server.server.websocket.endpoints;
 import net.cryptic_game.backend.base.api.client.ApiClient;
 import net.cryptic_game.backend.base.api.endpoint.*;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
-import net.cryptic_game.backend.base.utils.SecurityUtils;
 import net.cryptic_game.backend.base.utils.ValidationUtils;
 import net.cryptic_game.backend.data.user.Session;
 import net.cryptic_game.backend.data.user.User;
@@ -91,7 +90,7 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
         if (session == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "INVALID_SESSION");
         }
-        if (!SecurityUtils.verify(token.toString(), session.getTokenHash())) {
+        if (!token.equals(session.getToken())) {
             return new ApiResponse(ApiResponseType.UNAUTHORIZED, "INVALID_SESSION_TOKEN");
         }
         if (!session.isValid()) {
@@ -140,7 +139,6 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
         if (sessionId == null) {
             Session session = client.get(Session.class);
             session.setValid(false);
-            ;
             session.update();
             return new ApiResponse(ApiResponseType.OK);
         }
@@ -152,7 +150,6 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
         }
 
         session.setValid(false);
-        ;
         session.update();
 
         return new ApiResponse(ApiResponseType.OK);
@@ -172,7 +169,7 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
 
         Session session = client.get(Session.class);
         session.setValid(false);
-        ;
+
         session.update();
         user.delete();
 
