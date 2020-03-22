@@ -8,22 +8,19 @@ public class FunctionArgument implements JsonSerializable {
 
     private final String name;
     private final boolean required;
-    private final FunctionArgumentType type;
 
-    public FunctionArgument(final String name, final boolean required, final FunctionArgumentType type) {
+    public FunctionArgument(final String name, final boolean required) {
         this.name = name;
         this.required = required;
-        this.type = type;
     }
 
     public FunctionArgument(final JsonObject json) {
-        if (!(json.has("name") && json.has("required") && json.has("type"))) {
-            throw new IllegalArgumentException("Missing \"name\" or \"required\" or \"type\" property.");
+        if (!(json.has("name") && json.has("required"))) {
+            throw new IllegalArgumentException("Missing \"name\" or \"required\" property.");
         }
 
         this.name = json.get("name").getAsString();
         this.required = json.get("required").getAsBoolean();
-        this.type = FunctionArgumentType.valueOf(json.get("type").getAsString().toUpperCase());
     }
 
     @Override
@@ -31,7 +28,6 @@ public class FunctionArgument implements JsonSerializable {
         return JsonBuilder.anJSON()
                 .add("name", this.getName())
                 .add("required", this.isRequired())
-                .add("type", this.getType().name().toLowerCase())
                 .build();
     }
 
@@ -41,9 +37,5 @@ public class FunctionArgument implements JsonSerializable {
 
     public boolean isRequired() {
         return this.required;
-    }
-
-    public FunctionArgumentType getType() {
-        return this.type;
     }
 }

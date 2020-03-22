@@ -2,7 +2,7 @@ package net.cryptic_game.backend.base.api.endpoint;
 
 import java.util.List;
 
-class ApiEndpointParameterData {
+public class ApiEndpointParameterData {
 
     private final String key;
     private final Class<?> type;
@@ -16,11 +16,11 @@ class ApiEndpointParameterData {
         this.optional = optional;
     }
 
-    String getKey() {
+    public String getKey() {
         return this.key;
     }
 
-    Class<?> getType() {
+    public Class<?> getType() {
         return this.type;
     }
 
@@ -28,7 +28,7 @@ class ApiEndpointParameterData {
         return this.parameters;
     }
 
-    boolean isOptional() {
+    public boolean isOptional() {
         return this.optional;
     }
 }

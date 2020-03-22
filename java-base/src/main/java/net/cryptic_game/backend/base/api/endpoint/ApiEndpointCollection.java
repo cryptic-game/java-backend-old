@@ -2,6 +2,7 @@ package net.cryptic_game.backend.base.api.endpoint;
 
 import net.cryptic_game.backend.base.AppBootstrap;
 import net.cryptic_game.backend.base.api.client.ApiClientList;
+import net.cryptic_game.backend.base.sql.SQLConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,10 +17,12 @@ public abstract class ApiEndpointCollection {
     protected final AppBootstrap appBootstrap;
     private final String name;
     protected ApiClientList clients;
+    protected SQLConnection sqlConnection;
 
     public ApiEndpointCollection(final String name) {
         this.name = name.strip().toLowerCase();
         this.appBootstrap = AppBootstrap.getInstance();
+        this.sqlConnection = this.appBootstrap.getSqlConnection();
     }
 
     Set<ApiEndpointExecutor> load() {

@@ -40,7 +40,7 @@ public class JsonApiServerContentHandler extends NettyChannelHandler<JsonObject>
 
         ApiResponse apiResponse = null;
         JsonElement tag = null;
-        boolean logged = false;
+//        boolean logged = false;
 
         if (request.has("tag")) tag = request.get("tag");
         else apiResponse = new ApiResponse(ApiResponseType.BAD_REQUEST, "MISSING_TAG");
@@ -50,8 +50,8 @@ public class JsonApiServerContentHandler extends NettyChannelHandler<JsonObject>
             final JsonObject data = request.has("data") ? request.get("data").getAsJsonObject() : new JsonObject();
             try {
                 apiResponse = this.executor.execute(this.clientList.get(ctx.channel()), endpoint, data);
-                log.info("Json Server - \"" + ctx.channel().remoteAddress().toString().substring(1) + "\" requested \"" + endpoint + "\" with result \"" + apiResponse.toString() + "\".");
-                logged = true;
+//                log.info("Json Server - \"" + ctx.channel().remoteAddress().toString().substring(1) + "\" requested \"" + endpoint + "\" with result \"" + apiResponse.toString() + "\".");
+//                logged = true;
             } catch (ApiException e) {
                 log.error("Error while executing JsonApi-Endpoint \"" + endpoint + "\".", e);
                 apiResponse = new ApiResponse(ApiResponseType.INTERNAL_SERVER_ERROR);
@@ -60,9 +60,9 @@ public class JsonApiServerContentHandler extends NettyChannelHandler<JsonObject>
             apiResponse = new ApiResponse(ApiResponseType.BAD_REQUEST, "MISSING_ENDPOINT");
         }
 
-        if (!logged) {
-            log.info("\"" + ctx.channel().remoteAddress().toString().substring(1) + "\" requested a bad request with result \"" + apiResponse.getType().toString() + "\".");
-        }
+//        if (!logged) {
+//            log.info("\"" + ctx.channel().remoteAddress().toString().substring(1) + "\" requested a bad request with result \"" + apiResponse.getType().toString() + "\".");
+//        }
 
         final JsonObject response = new JsonObject();
         response.addProperty("tag", tag == null ? "00000000-0000-0000-0000-000000000000" : tag.getAsString());

@@ -49,4 +49,8 @@ public class ApiEndpointList {
     public ApiClientList getClientList() {
         return this.clientList;
     }
+
+    public HashMap<String, ApiEndpointExecutor> getApiExecutors() {
+        return this.apiExecutors;
+    }
 }

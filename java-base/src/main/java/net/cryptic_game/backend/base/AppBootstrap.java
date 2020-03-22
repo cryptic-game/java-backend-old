@@ -115,4 +115,8 @@ public abstract class AppBootstrap {
     public SQLConnection getSqlConnection() {
         return this.sqlConnection;
     }
+
+    protected String getName() {
+        return this.dist;
+    }
 }

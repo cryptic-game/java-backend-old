@@ -69,7 +69,7 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
         }
 
         final UUID token = UUID.randomUUID();
-        final User user = UserWrapper.getByName(name);
+        final User user = UserWrapper.registerUser(name, mail, password);
         final Session session = SessionWrapper.openSession(user, token, deviceName);
         client.add(session);
 

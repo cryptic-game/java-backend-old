@@ -39,4 +39,8 @@ public class DaemonHandler {
     public Function getFunction(final String name) {
         return this.functions.get(name.strip().toLowerCase());
     }
+
+    public void executeFunction(final Function function) {
+//        AppBootstrap.addTimeout();
+    }
 }

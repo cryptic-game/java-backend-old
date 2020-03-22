@@ -12,7 +12,7 @@ import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
 
-class ApiEndpointExecutor {
+public class ApiEndpointExecutor {
 
     private static final Logger log = LoggerFactory.getLogger(ApiEndpointExecutor.class);
 
@@ -79,7 +79,11 @@ class ApiEndpointExecutor {
         return new ApiEndpointParameterData(apiParameters.name(), null, parameterDataList, apiParameters.optional());
     }
 
-    String getName() {
+    public String getName() {
         return this.name;
+    }
+
+    public List<ApiEndpointParameterData> getParameters() {
+        return this.parameters;
     }
 }

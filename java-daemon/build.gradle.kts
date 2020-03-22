@@ -1,10 +1,12 @@
 plugins {
     application
+    `java-library`
 }
 
 dependencies {
-    implementation(project(":java-base"))
-    implementation(project(":java-data"))
+    api(project(":java-base"))
+    api(project(":java-data"))
+    implementation(project(":java-daemon-endpoints"))
 }
 
 application {
