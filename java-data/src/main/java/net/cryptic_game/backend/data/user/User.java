@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
@@ -42,6 +43,19 @@ public class User extends TableModelAutoId {
      * Empty constructor to create a new {@link User}
      */
     public User() {
+    }
+
+    /**
+     * Create a {@link User} instance from a {@link JsonObject}.
+     *
+     * @param json is the {@link JsonObject} representation of the {@link User}.
+     */
+    public User(final JsonObject json) {
+        this.setId(UUID.fromString(json.get("id").getAsString()));
+        this.name = json.get("name").getAsString();
+        this.mail = json.get("main").getAsString();
+        this.created = LocalDateTime.ofInstant(Instant.ofEpochMilli(json.get("name").getAsLong()), ZoneOffset.UTC);
+        this.last = LocalDateTime.ofInstant(Instant.ofEpochMilli(json.get("last").getAsLong()), ZoneOffset.UTC);
     }
 
     /**
