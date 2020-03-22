@@ -7,14 +7,15 @@ dependencies {
     api("org.hibernate:hibernate-core:5.4.12.Final")
     api("org.hibernate:hibernate-c3p0:5.4.12.Final")
     api("mysql:mysql-connector-java:8.0.19")
-    api("org.mariadb.jdbc:mariadb-java-client:2.5.4")
+    api("org.mariadb.jdbc:mariadb-java-client:2.6.0")
+    api("org.postgresql:postgresql:42.2.11")
 
     // Logger
-    api("org.apache.logging.log4j:log4j-core:2.13.0")
-    api("org.apache.logging.log4j:log4j-slf4j-impl:2.13.0")
+    api("org.apache.logging.log4j:log4j-core:2.13.1")
+    api("org.apache.logging.log4j:log4j-slf4j-impl:2.13.1")
 
     // Network
-    api("io.netty:netty-all:4.1.45.Final")
+    api("io.netty:netty-all:4.1.48.Final")
 
     // Json
     api("com.google.code.gson:gson:2.8.6")

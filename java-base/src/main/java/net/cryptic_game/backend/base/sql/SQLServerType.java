@@ -8,6 +8,20 @@ import java.sql.Driver;
  * All available Drivers:
  * <ul>
  *     <li>
+ *         PostgreSQL
+ *         <ul>
+ *             <li>pg_08_1: 8.1</li>
+ *             <li>pg_08_2: 8.2</li>
+ *             <li>pg_09_0: 8.2</li>
+ *             <li>pg_09_1: 8.2</li>
+ *             <li>pg_09_2: 8.2</li>
+ *             <li>pg_09_3: 8.2</li>
+ *             <li>pg_09_4: 8.2</li>
+ *             <li>pg_09_5: 8.2</li>
+ *             <li>pg_10_0: 8.2</li>
+ *         </ul>
+ *     </li>
+ *     <li>
  *         MariaDB
  *         <ul>
  *             <li>mariadb_05_3: 05.3</li>
@@ -28,6 +42,16 @@ import java.sql.Driver;
  * </ul>
  */
 public enum SQLServerType {
+
+    POSTGRE_SQL_08_1("pg_08_1", "postgresql", org.postgresql.Driver.class, PostgreSQL81Dialect.class),
+    POSTGRE_SQL_08_2("pg_08_2", "postgresql", org.postgresql.Driver.class, PostgreSQL82Dialect.class),
+    POSTGRE_SQL_09_0("pg_09_0", "postgresql", org.postgresql.Driver.class, PostgreSQL9Dialect.class),
+    POSTGRE_SQL_09_1("pg_09_1", "postgresql", org.postgresql.Driver.class, PostgreSQL91Dialect.class),
+    POSTGRE_SQL_09_2("pg_09_2", "postgresql", org.postgresql.Driver.class, PostgreSQL92Dialect.class),
+    POSTGRE_SQL_09_3("pg_09_3", "postgresql", org.postgresql.Driver.class, PostgreSQL93Dialect.class),
+    POSTGRE_SQL_09_4("pg_09_4", "postgresql", org.postgresql.Driver.class, PostgreSQL94Dialect.class),
+    POSTGRE_SQL_09_5("pg_09_5", "postgresql", org.postgresql.Driver.class, PostgreSQL95Dialect.class),
+    POSTGRE_SQL_10_0("pg_10_0", "postgresql", org.postgresql.Driver.class, PostgreSQL10Dialect.class),
 
     MARIADB_05_3("mariadb_05_3", "mariadb", org.mariadb.jdbc.Driver.class, MariaDB53Dialect.class),
     MARIADB_10_0("mariadb_10_0", "mariadb", org.mariadb.jdbc.Driver.class, MariaDB10Dialect.class),

@@ -16,9 +16,9 @@ public class Function implements JsonSerializable {
     private final Daemon daemon;
     private final Set<FunctionArgument> arguments;
 
-    public Function(final String name, final Daemon daemon, final Set<FunctionArgument> arguments) {
+    public Function(final String name, final Set<FunctionArgument> arguments) {
         this.name = name;
-        this.daemon = daemon;
+        this.daemon = null;
         this.arguments = arguments;
     }
 
@@ -49,8 +49,17 @@ public class Function implements JsonSerializable {
     public JsonObject serialize() {
         return JsonBuilder.anJSON()
                 .add("name", this.getName())
-                .add("arguments", JsonUtils.toArray(this.getArguments()))
+                .add("arguments", JsonUtils.toArray(this.arguments))
                 .build();
+    }
+
+    public boolean validateArguments(final JsonObject json) {
+        for (final FunctionArgument argument : this.arguments) {
+            if (!json.has(argument.getName())) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public String getName() {
@@ -59,9 +68,5 @@ public class Function implements JsonSerializable {
 
     public Daemon getDaemon() {
         return this.daemon;
-    }
-
-    public Set<FunctionArgument> getArguments() {
-        return this.arguments;
     }
 }
