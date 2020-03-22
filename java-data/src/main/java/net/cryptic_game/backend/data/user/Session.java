@@ -6,7 +6,6 @@ import net.cryptic_game.backend.base.config.BaseConfig;
 import net.cryptic_game.backend.base.config.Config;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
-import net.cryptic_game.backend.base.utils.SecurityUtils;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -40,7 +39,8 @@ public class Session extends TableModelAutoId {
     private User user;
 
     @Column(name = "token", nullable = false, updatable = false)
-    private String tokenHash;
+    @Type(type = "uuid-char")
+    private UUID token;
 
     @Column(name = "device_name", nullable = false, updatable = false)
     private String deviceName;
@@ -71,7 +71,7 @@ public class Session extends TableModelAutoId {
     public static Session createSession(final User user, final UUID token, final String deviceName) {
         final Session session = new Session();
         session.setUser(user);
-        session.setTokenHash(SecurityUtils.hash(token.toString()));
+        session.setToken(token);
         session.setDeviceName(deviceName);
         session.setExpire(LocalDateTime.now().plus(EXPIRE));
         session.setLastActive(LocalDateTime.now());
@@ -187,21 +187,21 @@ public class Session extends TableModelAutoId {
     }
 
     /**
-     * Returns the token hash of the {@link Session}
+     * Returns the token of the {@link Session}
      *
-     * @return Token hash of the {@link Session}
+     * @return Token of the {@link Session}
      */
-    public String getTokenHash() {
-        return this.tokenHash;
+    public UUID getToken() {
+        return this.token;
     }
 
     /**
-     * Sets a new token hash of the {@link Session}
+     * Sets a new token of the {@link Session}
      *
-     * @param tokenHash New token hash to be set
+     * @param token New token to be set
      */
-    public void setTokenHash(final String tokenHash) {
-        this.tokenHash = tokenHash;
+    public void setToken(final UUID token) {
+        this.token = token;
     }
 
     /**
@@ -238,7 +238,7 @@ public class Session extends TableModelAutoId {
                 Objects.equals(this.getDeviceName(), that.getDeviceName()) &&
                 Objects.equals(this.getExpire(), that.getExpire()) &&
                 Objects.equals(this.getLastActive(), that.getLastActive()) &&
-                Objects.equals(this.getTokenHash(), that.getTokenHash());
+                Objects.equals(this.getToken(), that.getToken());
     }
 
     /**
@@ -249,6 +249,6 @@ public class Session extends TableModelAutoId {
     @Override
     public int hashCode() {
         return Objects.hash(this.getId(), this.getVersion(), this.getDeviceName(), this.getExpire(),
-                this.getLastActive(), this.isValid(), this.getTokenHash());
+                this.getLastActive(), this.isValid(), this.getToken());
     }
 }

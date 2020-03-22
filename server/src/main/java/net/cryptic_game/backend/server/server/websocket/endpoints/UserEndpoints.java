@@ -5,7 +5,6 @@ import net.cryptic_game.backend.base.api.ApiCollection;
 import net.cryptic_game.backend.base.api.ApiEndpoint;
 import net.cryptic_game.backend.base.api.ApiParameter;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
-import net.cryptic_game.backend.base.utils.SecurityUtils;
 import net.cryptic_game.backend.base.utils.ValidationUtils;
 import net.cryptic_game.backend.data.user.Session;
 import net.cryptic_game.backend.data.user.User;
@@ -72,7 +71,7 @@ public class UserEndpoints extends ApiCollection {
 
         Session session = Session.getById(sessionId);
         if (session == null) return WebSocketUtils.build(ServerResponseType.NOT_FOUND, "INVALID_SESSION");
-        if (!SecurityUtils.verify(token.toString(), session.getTokenHash()))
+        if (!token.equals(session.getToken()))
             return WebSocketUtils.build(ServerResponseType.UNAUTHORIZED, "INVALID_SESSION_TOKEN");
         if (!session.isValid()) return WebSocketUtils.build(ServerResponseType.UNAUTHORIZED, "SESSION_EXPIRED");
 
