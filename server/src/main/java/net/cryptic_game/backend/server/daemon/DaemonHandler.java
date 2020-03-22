@@ -1,8 +1,10 @@
 package net.cryptic_game.backend.server.daemon;
 
+import com.google.gson.JsonObject;
 import io.netty.channel.Channel;
 import net.cryptic_game.backend.base.daemon.Daemon;
 import net.cryptic_game.backend.base.daemon.Function;
+import net.cryptic_game.backend.data.user.User;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -40,7 +42,7 @@ public class DaemonHandler {
         return this.functions.get(name.strip().toLowerCase());
     }
 
-    public void executeFunction(final Function function) {
-//        AppBootstrap.addTimeout();
+    public void executeFunction(final Function function, final User user, final JsonObject data) {
+        // TODO: Implement This
     }
 }
