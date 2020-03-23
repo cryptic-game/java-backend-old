@@ -11,7 +11,7 @@ The Java Server supports Unix sockets as well as network sockets. Therefore, we 
 | The Unix-Socket can be reached under `/run/cryptic.sock` | The Network-Socket can be reched at the port `4012`. Please note that the network socket nut listens on the hostname `localhost` or the IP address `127.0.0.1`.  |
 In both variants communication takes place via Json requests and replies.
 
-## API
+## Api
 
 ### Registering a Daemon on the Server
 ```json5
@@ -64,4 +64,4 @@ Response:
   } 
 }
 ```
-[Response Status Codes][../api/0.3.0/response-codes.html]
+[Response Status Codes](../api/0.3.0/response-codes.html)
