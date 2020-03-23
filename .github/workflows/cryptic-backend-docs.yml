@@ -27,7 +27,7 @@ jobs:
           DEBUG: true
           TARGET_FOLDER: javadoc/latest
           CLEAN: true
-          CLEAN_EXCLUDE: '["LICENSE", "api", "README.md", "_config.yml", "deployment.md", "getting-startet.md", "index.md", "license.md"]'
+          CLEAN_EXCLUDE: '["LICENSE", "daemon-api", "api", "README.md", "_config.yml", "deployment.md", "getting-startet.md", "index.md", "license.md"]'
           GIT_CONFIG_NAME: GitHub Actions
           GIT_CONFIG_EMAIL: actions@github.com
 
