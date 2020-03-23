@@ -2,6 +2,7 @@ package net.cryptic_game.backend.base.api.netty;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 import io.netty.channel.ChannelHandlerContext;
 import net.cryptic_game.backend.base.api.ApiException;
 import net.cryptic_game.backend.base.api.client.ApiClientList;
@@ -40,29 +41,34 @@ public class JsonApiServerContentHandler extends NettyChannelHandler<JsonObject>
     }
 
     @Override
-    protected void channelRead0(final ChannelHandlerContext ctx, final JsonObject request) {
-        if (request.has("response") && request.get("response").getAsBoolean()) {
-            if (this.consumer != null) consumer.accept(request);
-            return;
-        }
+    protected void channelRead0(ChannelHandlerContext ctx, JsonObject msg) throws Exception {
+        channelRead0(ctx, msg, null);
+    }
 
-        ApiResponse apiResponse = null;
+    protected void channelRead0(final ChannelHandlerContext ctx, final JsonObject request, ApiResponse apiResponse) {
         JsonElement tag = null;
 
-        if (request.has("tag")) tag = request.get("tag");
-        else apiResponse = new ApiResponse(ApiResponseType.BAD_REQUEST, "MISSING_TAG");
-
-        if (apiResponse == null) if (request.has("endpoint")) {
-            final String endpoint = request.get("endpoint").getAsString();
-            final JsonObject data = request.has("data") ? request.get("data").getAsJsonObject() : new JsonObject();
-            try {
-                apiResponse = this.executor.execute(this.clientList.get(ctx.channel()), tag, endpoint, data);
-            } catch (ApiException e) {
-                log.error("Error while executing JsonApi-Endpoint \"" + endpoint + "\".", e);
-                apiResponse = new ApiResponse(ApiResponseType.INTERNAL_SERVER_ERROR);
+        if (apiResponse == null) {
+            if (request.has("response") && request.get("response").getAsBoolean()) {
+                if (this.consumer != null) consumer.accept(request);
+                return;
             }
-        } else {
-            apiResponse = new ApiResponse(ApiResponseType.BAD_REQUEST, "MISSING_ENDPOINT");
+
+            if (request.has("tag")) tag = request.get("tag");
+            else apiResponse = new ApiResponse(ApiResponseType.BAD_REQUEST, "MISSING_TAG");
+
+            if (apiResponse == null) if (request.has("endpoint")) {
+                final String endpoint = request.get("endpoint").getAsString();
+                final JsonObject data = request.has("data") ? request.get("data").getAsJsonObject() : new JsonObject();
+                try {
+                    apiResponse = this.executor.execute(this.clientList.get(ctx.channel()), tag, endpoint, data);
+                } catch (ApiException e) {
+                    log.error("Error while executing JsonApi-Endpoint \"" + endpoint + "\".", e);
+                    apiResponse = new ApiResponse(ApiResponseType.INTERNAL_SERVER_ERROR);
+                }
+            } else {
+                apiResponse = new ApiResponse(ApiResponseType.BAD_REQUEST, "MISSING_ENDPOINT");
+            }
         }
 
         if (apiResponse != null) {
@@ -78,6 +84,16 @@ public class JsonApiServerContentHandler extends NettyChannelHandler<JsonObject>
             //       to handle the incoming response from the daemon.
 
             ctx.write(response);
+        }
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        if (cause.getCause() instanceof JsonSyntaxException)
+            channelRead0(ctx, new JsonObject(), new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_JSON"));
+        else {
+            super.exceptionCaught(ctx, cause);
+            channelRead0(ctx, new JsonObject(), new ApiResponse(ApiResponseType.INTERNAL_SERVER_ERROR));
         }
     }
 }
