@@ -8,6 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.UUID;
 
@@ -62,11 +66,10 @@ final class ApiEndpointValidator {
                             parameterValues[i] = json.get(parameter.getKey()).getAsFloat();
                         } else if (parameter.getType() == boolean.class || parameter.getType() == Boolean.class) {
                             parameterValues[i] = json.get(parameter.getKey()).getAsBoolean();
-//                       TODO ADD THIS
-//                       } else if (parameter.getType() == LocalDate.class) {
-//                            parameterValues[i] = LocalDate.parse(json.get(parameter.getKey()).getAsString(), JsonUtils.DATE_FORMATTER);
-//                        } else if (parameter.getType() == LocalDateTime.class) {
-//                            parameterValues[i] = LocalDateTime.parse(json.get(parameter.getKey()).getAsString(), JsonUtils.DATE_TIME_FORMATTER);
+                        } else if (parameter.getType() == LocalDate.class) {
+                            parameterValues[i] = LocalDate.ofInstant(Instant.ofEpochMilli(json.get(parameter.getKey()).getAsLong()), ZoneOffset.UTC);
+                        } else if (parameter.getType() == LocalDateTime.class) {
+                            parameterValues[i] = LocalDateTime.ofInstant(Instant.ofEpochMilli(json.get(parameter.getKey()).getAsLong()), ZoneOffset.UTC);
                         } else if (parameter.getType() == JsonObject.class) {
                             parameterValues[i] = json.get(parameter.getKey()).getAsJsonObject();
                         } else if (parameter.getType() == JsonArray.class) {
