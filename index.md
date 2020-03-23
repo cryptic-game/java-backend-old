@@ -9,6 +9,7 @@ This is the official rewrite of the Cryptic backend.
 * [Deployment](deployment.html)
 * [Java documentation](javadoc/latest/index.html)
 * [Api Documentation](api/latest/index.html)
+* [Daemon Api Documentation](daemon-api/latest/index.html)
 
 ### Other
 
