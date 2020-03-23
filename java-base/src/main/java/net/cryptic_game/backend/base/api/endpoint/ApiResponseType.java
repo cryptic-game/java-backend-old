@@ -24,7 +24,8 @@ public enum ApiResponseType implements JsonSerializable {
     NOT_IMPLEMENTED(501, "NOT_IMPLEMENTED", true),
 
     // Custom
-    PUSH(900, "PUSH", false);
+    PUSH(900, "PUSH", false),
+    ALREADY_EXISTS(901, "ALREADY_EXISTS", false);
 
     final int code;
     final String name;
