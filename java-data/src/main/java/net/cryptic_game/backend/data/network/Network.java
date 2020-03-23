@@ -31,8 +31,8 @@ public class Network extends TableModelAutoId {
     @Type(type = "uuid-char")
     private Device owner;
 
-    @Column(name = "hidden", updatable = true, nullable = false)
-    private boolean hidden;
+    @Column(name = "public", updatable = true, nullable = false)
+    private boolean _public;
 
     @Column(name = "created", updatable = false, nullable = false)
     private LocalDateTime created;
@@ -51,13 +51,13 @@ public class Network extends TableModelAutoId {
      * @param hidden Hidden state of the {@link Network}
      * @return The instance of the created {@link Network}
      */
-    public static Network createNetwork(final String name, final Device owner, final boolean hidden) {
+    public static Network createNetwork(final String name, final Device owner, final boolean _public) {
         final LocalDateTime now = LocalDateTime.now();
 
         final Network network = new Network();
         network.setName(name);
         network.setOwner(owner);
-        network.setHidden(hidden);
+        network.setPublic(_public);
         network.setCreated(now);
 
         final Session sqlSession = sqlConnection.openSession();
@@ -97,7 +97,7 @@ public class Network extends TableModelAutoId {
     }
 
     /**
-     * Fetches the {@link Network} owned by the give {@link Device}
+     * Fetches all {@link Network}'s owned by the give {@link Device}
      *
      * @param device The {@link Device}
      * @return A {@link List} containing the fetched {@link Network}'s
@@ -107,6 +107,20 @@ public class Network extends TableModelAutoId {
         final List<Network> networks = sqlSession
                 .createQuery("select object (n) from Network as n where n.owner = :device", Network.class)
                 .setParameter("device", device)
+                .getResultList();
+        sqlSession.close();
+        return networks;
+    }
+
+    /**
+     * Fetches all public {@link Network}'s
+     *
+     * @return A {@link List} containing the fetched {@link Network}'s
+     */
+    public static List<Network> getPublicNetworks() {
+        final Session sqlSession = sqlConnection.openSession();
+        final List<Network> networks = sqlSession
+                .createQuery("select object (n) from Network as n where n._public = false", Network.class)
                 .getResultList();
         sqlSession.close();
         return networks;
@@ -149,21 +163,21 @@ public class Network extends TableModelAutoId {
     }
 
     /**
-     * Returns the hidden state of the {@link Network}
+     * Returns the _public state of the {@link Network}
      *
      * @return Hidden state of the {@link Network}
      */
-    public boolean isHidden() {
-        return this.hidden;
+    public boolean isPublic() {
+        return this._public;
     }
 
     /**
-     * Sets a new hidden state of the {@link Network}
+     * Sets a new _public state of the {@link Network}
      *
-     * @param hidden New hidden state to be set
+     * @param _public New _public state to be set
      */
-    public void setHidden(final boolean hidden) {
-        this.hidden = hidden;
+    public void setPublic(final boolean _public) {
+        this._public = _public;
     }
 
     /**
@@ -195,7 +209,7 @@ public class Network extends TableModelAutoId {
                 .add("id", this.getId())
                 .add("name", this.getName())
                 .add("owner", this.getOwner().getId())
-                .add("hidden", this.isHidden())
+                .add("_public", this.isPublic())
                 .add("created", this.getCreated().toInstant(ZoneOffset.UTC).toEpochMilli())
                 .build();
     }
@@ -211,7 +225,7 @@ public class Network extends TableModelAutoId {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
         Network network = (Network) o;
-        return this.isHidden() == network.isHidden() &&
+        return this.isPublic() == network.isPublic() &&
                 this.getName().equals(network.getName()) &&
                 this.getOwner().equals(network.getOwner()) &&
                 this.getCreated().equals(network.getCreated()) &&
@@ -225,6 +239,6 @@ public class Network extends TableModelAutoId {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.getId(), this.getName(), this.getOwner(), this.isHidden(), this.getCreated());
+        return Objects.hash(this.getId(), this.getName(), this.getOwner(), this.isPublic(), this.getCreated());
     }
 }

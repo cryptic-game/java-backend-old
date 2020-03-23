@@ -1,6 +1,6 @@
 package net.cryptic_game.backend.endpoints.network;
 
-import com.google.gson.JsonObject;
+import com.google.gson.JsonArray;
 import net.cryptic_game.backend.base.api.endpoint.*;
 import net.cryptic_game.backend.data.device.Device;
 import net.cryptic_game.backend.data.network.Network;
@@ -16,12 +16,12 @@ public class NetworkEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("create")
-    public ApiResponse create(@ApiParameter("user") JsonObject userJson,
+    public ApiResponse create(@ApiParameter("user_id") UUID userId,
                               @ApiParameter("name") String name,
                               @ApiParameter("hidden") boolean hidden,
-                              @ApiParameter("device") UUID deviceUUID) {
-        User user = new User(userJson);
-        Device device = Device.getById(deviceUUID);
+                              @ApiParameter("device") UUID deviceId) {
+        User user = User.getById(userId);
+        Device device = Device.getById(deviceId);
 
         if (!device.hasUserAccess(user))
             return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_ACCESS_DENIED");
@@ -39,5 +39,28 @@ public class NetworkEndpoints extends ApiEndpointCollection {
         NetworkMember.createMember(network, device);
 
         return new ApiResponse(ApiResponseType.OK, network.serialize());
+    }
+
+    @ApiEndpoint("list")
+    public ApiResponse list(@ApiParameter("user_id") UUID userId,
+                            @ApiParameter(value = "device", optional = true) UUID deviceId) {
+        if (deviceId == null) {
+            JsonArray networks = new JsonArray();
+            Network.getPublicNetworks().forEach(network -> networks.add(network.serialize()));
+            return new ApiResponse(ApiResponseType.OK, networks);
+        }
+
+        User user = User.getById(userId);
+        Device device = Device.getById(deviceId);
+
+        if (!device.hasUserAccess(user))
+            return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_ACCESS_DENIED");
+
+        if (!device.isPoweredOn())
+            return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
+
+        JsonArray networks = new JsonArray();
+        NetworkMember.getMembershipsOfDevice(device).forEach(networkMember -> networks.add(networkMember.serialize()));
+        return new ApiResponse(ApiResponseType.OK, networks);
     }
 }
