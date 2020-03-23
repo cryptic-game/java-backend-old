@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -89,13 +89,13 @@ loadScripts(document, 'script');</script>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
@@ -136,7 +136,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="../../../data/network/invitation/Invitation.html" title="class in net.cryptic_game.backend.data.network.invitation">Invitation</a></code>, <code><a href="../../../data/network/member/Member.html" title="class in net.cryptic_game.backend.data.network.member">Member</a></code>, <code><a href="TableModelAutoId.html" title="class in net.cryptic_game.backend.base.sql.models">TableModelAutoId</a></code>, <code><a href="TableModelId.html" title="class in net.cryptic_game.backend.base.sql.models">TableModelId</a></code>, <code><a href="../../../data/device/workload/Workload.html" title="class in net.cryptic_game.backend.data.device.workload">Workload</a></code></dd>
+<dd><code><a href="../../../data/device/DeviceWorkload.html" title="class in net.cryptic_game.backend.data.device">DeviceWorkload</a></code>, <code><a href="../../../data/network/NetworkInvitation.html" title="class in net.cryptic_game.backend.data.network">NetworkInvitation</a></code>, <code><a href="../../../data/network/NetworkMember.html" title="class in net.cryptic_game.backend.data.network">NetworkMember</a></code>, <code><a href="TableModelAutoId.html" title="class in net.cryptic_game.backend.base.sql.models">TableModelAutoId</a></code>, <code><a href="TableModelId.html" title="class in net.cryptic_game.backend.base.sql.models">TableModelId</a></code></dd>
 </dl>
 <hr>
 <pre>@MappedSuperclass
@@ -149,6 +149,29 @@ implements <a href="../../interfaces/JsonSerializable.html" title="interface in 
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
+<ul class="blockList">
+<li class="blockList"><a id="field.summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<table class="memberSummary">
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected static <a href="../SQLConnection.html" title="class in net.cryptic_game.backend.base.sql">SQLConnection</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sqlConnection">sqlConnection</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</table>
+</li>
+</ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <section role="region">
 <ul class="blockList">
@@ -185,13 +208,23 @@ implements <a href="../../interfaces/JsonSerializable.html" title="interface in 
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#delete()">delete</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getVersion()">getVersion</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setVersion(int)">setVersion</a></span>&#8203;(int&nbsp;version)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update()">update</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -218,6 +251,25 @@ implements <a href="../../interfaces/JsonSerializable.html" title="interface in 
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
+<!-- ============ FIELD DETAIL =========== -->
+<section role="region">
+<ul class="blockList">
+<li class="blockList"><a id="field.detail">
+<!--   -->
+</a>
+<h3>Field Detail</h3>
+<a id="sqlConnection">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>sqlConnection</h4>
+<pre>protected static final&nbsp;<a href="../SQLConnection.html" title="class in net.cryptic_game.backend.base.sql">SQLConnection</a> sqlConnection</pre>
+</li>
+</ul>
+</li>
+</ul>
+</section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <section role="region">
 <ul class="blockList">
@@ -256,10 +308,28 @@ implements <a href="../../interfaces/JsonSerializable.html" title="interface in 
 <a id="setVersion(int)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>setVersion</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setVersion&#8203;(int&nbsp;version)</pre>
+</li>
+</ul>
+<a id="update()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>update</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;update()</pre>
+</li>
+</ul>
+<a id="delete()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>delete</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;delete()</pre>
 </li>
 </ul>
 </li>
@@ -314,13 +384,13 @@ implements <a href="../../interfaces/JsonSerializable.html" title="interface in 
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>

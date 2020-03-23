@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":9,"i1":10,"i2":9,"i3":9,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -89,7 +89,7 @@ loadScripts(document, 'script');</script>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -148,12 +148,34 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <pre>@Entity
 public class <span class="typeNameLabel">Network</span>
 extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in net.cryptic_game.backend.base.sql.models">TableModelAutoId</a></pre>
+<div class="block">Entity representing an network entry in the database</div>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>0.3.0</dd>
+</dl>
 </li>
 </ul>
 </div>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
+<ul class="blockList">
+<li class="blockList"><a id="field.summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a id="fields.inherited.from.class.net.cryptic_game.backend.base.sql.models.TableModel">
+<!--   -->
+</a>
+<h3>Fields inherited from class&nbsp;net.cryptic_game.backend.base.sql.models.<a href="../../base/sql/models/TableModel.html" title="class in net.cryptic_game.backend.base.sql.models">TableModel</a></h3>
+<code><a href="../../base/sql/models/TableModel.html#sqlConnection">sqlConnection</a></code></li>
+</ul>
+</li>
+</ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <section role="region">
 <ul class="blockList">
@@ -169,7 +191,9 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 </tr>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">Network</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Empty constructor to create a new <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></div>
+</td>
 </tr>
 </table>
 </li>
@@ -183,66 +207,111 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colFirst"><code>static <a href="Network.html" title="class in net.cryptic_game.backend.data.network">Network</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createNetwork(java.lang.String,net.cryptic_game.backend.data.device.Device,boolean)">createNetwork</a></span>&#8203;(java.lang.String&nbsp;name,
+             <a href="../device/Device.html" title="class in net.cryptic_game.backend.data.device">Device</a>&nbsp;owner,
+             boolean&nbsp;hidden)</code></th>
+<td class="colLast">
+<div class="block">Creates a new <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>java.time.LocalDateTime</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCreated()">getCreated</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
+<td class="colLast">
+<div class="block">Compares an <code>Object</code> if it equals the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getName()">getName</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colFirst"><code>static <a href="Network.html" title="class in net.cryptic_game.backend.data.network">Network</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getById(java.util.UUID)">getById</a></span>&#8203;(java.util.UUID&nbsp;id)</code></th>
+<td class="colLast">
+<div class="block">Fetches the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a> with the given id</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="../device/Device.html" title="class in net.cryptic_game.backend.data.device">Device</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOwner()">getOwner</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colFirst"><code>static <a href="Network.html" title="class in net.cryptic_game.backend.data.network">Network</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getByName(java.lang.String)">getByName</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
+<td class="colLast">
+<div class="block">Fetches the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a> with the given name</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colFirst"><code>java.time.LocalDateTime</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCreated()">getCreated</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns the creation date of the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isHidden()">isHidden</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getName()">getName</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns the name of the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>com.google.gson.JsonObject</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#serialize()">serialize</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colFirst"><code><a href="../device/Device.html" title="class in net.cryptic_game.backend.data.device">Device</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOwner()">getOwner</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns the owner <a href="../device/Device.html" title="class in net.cryptic_game.backend.data.device"><code>Device</code></a> of the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCreated(java.time.LocalDateTime)">setCreated</a></span>&#8203;(java.time.LocalDateTime&nbsp;created)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Hashes the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a> using <code>Objects</code> hash method</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setHidden(boolean)">setHidden</a></span>&#8203;(boolean&nbsp;hidden)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isHidden()">isHidden</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns the hidden state of the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></div>
+</td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setName(java.lang.String)">setName</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colFirst"><code>com.google.gson.JsonObject</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#serialize()">serialize</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Generates a <code>JsonObject</code> containg all relevent <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a> information</div>
+</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCreated(java.time.LocalDateTime)">setCreated</a></span>&#8203;(java.time.LocalDateTime&nbsp;created)</code></th>
+<td class="colLast">
+<div class="block">Sets a new creation date of the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></div>
+</td>
+</tr>
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setHidden(boolean)">setHidden</a></span>&#8203;(boolean&nbsp;hidden)</code></th>
+<td class="colLast">
+<div class="block">Sets a new hidden state of the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></div>
+</td>
+</tr>
+<tr id="i12" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setName(java.lang.String)">setName</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
+<td class="colLast">
+<div class="block">Sets a new name of the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></div>
+</td>
+</tr>
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setOwner(net.cryptic_game.backend.data.device.Device)">setOwner</a></span>&#8203;(<a href="../device/Device.html" title="class in net.cryptic_game.backend.data.device">Device</a>&nbsp;owner)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Sets a new owner <a href="../device/Device.html" title="class in net.cryptic_game.backend.data.device"><code>Device</code></a> of the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -250,14 +319,14 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;net.cryptic_game.backend.base.sql.models.<a href="../../base/sql/models/TableModelAutoId.html" title="class in net.cryptic_game.backend.base.sql.models">TableModelAutoId</a></h3>
-<code><a href="../../base/sql/models/TableModelAutoId.html#getId()">getId</a>, <a href="../../base/sql/models/TableModelAutoId.html#setId(java.util.UUID)">setId</a></code></li>
+<code><a href="../../base/sql/models/TableModelAutoId.html#getById(java.lang.Class,java.util.UUID)">getById</a>, <a href="../../base/sql/models/TableModelAutoId.html#getId()">getId</a>, <a href="../../base/sql/models/TableModelAutoId.html#setId(java.util.UUID)">setId</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.net.cryptic_game.backend.base.sql.models.TableModel">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;net.cryptic_game.backend.base.sql.models.<a href="../../base/sql/models/TableModel.html" title="class in net.cryptic_game.backend.base.sql.models">TableModel</a></h3>
-<code><a href="../../base/sql/models/TableModel.html#getVersion()">getVersion</a>, <a href="../../base/sql/models/TableModel.html#setVersion(int)">setVersion</a></code></li>
+<code><a href="../../base/sql/models/TableModel.html#delete()">delete</a>, <a href="../../base/sql/models/TableModel.html#getVersion()">getVersion</a>, <a href="../../base/sql/models/TableModel.html#setVersion(int)">setVersion</a>, <a href="../../base/sql/models/TableModel.html#update()">update</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -289,6 +358,7 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <li class="blockList">
 <h4>Network</h4>
 <pre>public&nbsp;Network()</pre>
+<div class="block">Empty constructor to create a new <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></div>
 </li>
 </ul>
 </li>
@@ -301,6 +371,58 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="createNetwork(java.lang.String,net.cryptic_game.backend.data.device.Device,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>createNetwork</h4>
+<pre class="methodSignature">public static&nbsp;<a href="Network.html" title="class in net.cryptic_game.backend.data.network">Network</a>&nbsp;createNetwork&#8203;(java.lang.String&nbsp;name,
+                                    <a href="../device/Device.html" title="class in net.cryptic_game.backend.data.device">Device</a>&nbsp;owner,
+                                    boolean&nbsp;hidden)</pre>
+<div class="block">Creates a new <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - Name of the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></dd>
+<dd><code>owner</code> - Owner of the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></dd>
+<dd><code>hidden</code> - Hidden state of the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The instance of the created <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></dd>
+</dl>
+</li>
+</ul>
+<a id="getById(java.util.UUID)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getById</h4>
+<pre class="methodSignature">public static&nbsp;<a href="Network.html" title="class in net.cryptic_game.backend.data.network">Network</a>&nbsp;getById&#8203;(java.util.UUID&nbsp;id)</pre>
+<div class="block">Fetches the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a> with the given id</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>id</code> - The id of the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The instance of the fetched <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a> if it exists | null if the entity does not exist</dd>
+</dl>
+</li>
+</ul>
+<a id="getByName(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getByName</h4>
+<pre class="methodSignature">public static&nbsp;<a href="Network.html" title="class in net.cryptic_game.backend.data.network">Network</a>&nbsp;getByName&#8203;(java.lang.String&nbsp;name)</pre>
+<div class="block">Fetches the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a> with the given name</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - The name of the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The instance of the fetched <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a> if it exists | null if the entity does not exist</dd>
+</dl>
+</li>
+</ul>
 <a id="getName()">
 <!--   -->
 </a>
@@ -308,6 +430,11 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <li class="blockList">
 <h4>getName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getName()</pre>
+<div class="block">Returns the name of the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Name of the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></dd>
+</dl>
 </li>
 </ul>
 <a id="setName(java.lang.String)">
@@ -317,6 +444,11 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <li class="blockList">
 <h4>setName</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setName&#8203;(java.lang.String&nbsp;name)</pre>
+<div class="block">Sets a new name of the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - New name to be set</dd>
+</dl>
 </li>
 </ul>
 <a id="getOwner()">
@@ -326,6 +458,11 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <li class="blockList">
 <h4>getOwner</h4>
 <pre class="methodSignature">public&nbsp;<a href="../device/Device.html" title="class in net.cryptic_game.backend.data.device">Device</a>&nbsp;getOwner()</pre>
+<div class="block">Returns the owner <a href="../device/Device.html" title="class in net.cryptic_game.backend.data.device"><code>Device</code></a> of the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Owner of the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></dd>
+</dl>
 </li>
 </ul>
 <a id="setOwner(net.cryptic_game.backend.data.device.Device)">
@@ -335,6 +472,11 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <li class="blockList">
 <h4>setOwner</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setOwner&#8203;(<a href="../device/Device.html" title="class in net.cryptic_game.backend.data.device">Device</a>&nbsp;owner)</pre>
+<div class="block">Sets a new owner <a href="../device/Device.html" title="class in net.cryptic_game.backend.data.device"><code>Device</code></a> of the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>owner</code> - New owner to be set</dd>
+</dl>
 </li>
 </ul>
 <a id="isHidden()">
@@ -344,6 +486,11 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <li class="blockList">
 <h4>isHidden</h4>
 <pre class="methodSignature">public&nbsp;boolean&nbsp;isHidden()</pre>
+<div class="block">Returns the hidden state of the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Hidden state of the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></dd>
+</dl>
 </li>
 </ul>
 <a id="setHidden(boolean)">
@@ -353,6 +500,11 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <li class="blockList">
 <h4>setHidden</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setHidden&#8203;(boolean&nbsp;hidden)</pre>
+<div class="block">Sets a new hidden state of the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>hidden</code> - New hidden state to be set</dd>
+</dl>
 </li>
 </ul>
 <a id="getCreated()">
@@ -362,6 +514,11 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <li class="blockList">
 <h4>getCreated</h4>
 <pre class="methodSignature">public&nbsp;java.time.LocalDateTime&nbsp;getCreated()</pre>
+<div class="block">Returns the creation date of the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Creation date of the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></dd>
+</dl>
 </li>
 </ul>
 <a id="setCreated(java.time.LocalDateTime)">
@@ -371,6 +528,11 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <li class="blockList">
 <h4>setCreated</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setCreated&#8203;(java.time.LocalDateTime&nbsp;created)</pre>
+<div class="block">Sets a new creation date of the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>created</code> - New creation date to be set</dd>
+</dl>
 </li>
 </ul>
 <a id="serialize()">
@@ -380,6 +542,11 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <li class="blockList">
 <h4>serialize</h4>
 <pre class="methodSignature">public&nbsp;com.google.gson.JsonObject&nbsp;serialize()</pre>
+<div class="block">Generates a <code>JsonObject</code> containg all relevent <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a> information</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The generated <code>JsonObject</code></dd>
+</dl>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">
@@ -389,9 +556,14 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <li class="blockList">
 <h4>equals</h4>
 <pre class="methodSignature">public&nbsp;boolean&nbsp;equals&#8203;(java.lang.Object&nbsp;o)</pre>
+<div class="block">Compares an <code>Object</code> if it equals the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>equals</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>o</code> - <code>Object</code> to compare</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>True if the <code>Object</code> equals the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a> | False if it does not</dd>
 </dl>
 </li>
 </ul>
@@ -402,9 +574,12 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <li class="blockList">
 <h4>hashCode</h4>
 <pre class="methodSignature">public&nbsp;int&nbsp;hashCode()</pre>
+<div class="block">Hashes the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a> using <code>Objects</code> hash method</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>hashCode</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Hash of the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -460,7 +635,7 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
