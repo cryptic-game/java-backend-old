@@ -26,7 +26,7 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: build/docs/javadoc/latest
+          FOLDER: build/docs/javadoc
           DEBUG: true
           TARGET_FOLDER: javadoc/latest
           CLEAN: true
