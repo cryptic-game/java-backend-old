@@ -5,12 +5,8 @@ import io.netty.channel.Channel;
 import net.cryptic_game.backend.base.daemon.Daemon;
 import net.cryptic_game.backend.base.daemon.Function;
 import net.cryptic_game.backend.base.utils.ApiUtils;
-import net.cryptic_game.backend.data.user.User;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class DaemonHandler {
@@ -43,8 +39,8 @@ public class DaemonHandler {
         return this.functions.get(name.strip().toLowerCase());
     }
 
-    public void executeFunction(final Function function, final User user, final JsonObject data) {
-        data.add("user", user.serialize());
+    public void executeFunction(final Function function, final UUID userId, final JsonObject data) {
+        data.addProperty("user_id", userId.toString());
         ApiUtils.request(function.getDaemon().getChannel(), function.getName(), data);
     }
 }
