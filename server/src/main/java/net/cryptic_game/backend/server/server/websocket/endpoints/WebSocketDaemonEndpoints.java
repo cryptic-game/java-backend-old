@@ -38,7 +38,7 @@ public class WebSocketDaemonEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_PARAMETERS");
         }
 
-        this.daemonHandler.executeFunction(client.getChannel(), function, session.getUser().getId(), data == null ? new JsonObject() : data);
+        this.daemonHandler.executeFunction(tag, client.getChannel(), function, session.getUser().getId(), data == null ? new JsonObject() : data);
 
         return null;
     }
