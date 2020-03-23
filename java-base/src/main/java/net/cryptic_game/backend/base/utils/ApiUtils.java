@@ -1,5 +1,6 @@
 package net.cryptic_game.backend.base.utils;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import io.netty.channel.Channel;
 
@@ -24,9 +25,10 @@ public class ApiUtils {
         return request(channel, endpoint, null);
     }
 
-    public static void response(final Channel channel, final UUID tag, final JsonObject data) {
+    public static void response(final Channel channel, final String tag, final JsonObject info, final JsonElement data) {
         final JsonBuilder builder = JsonBuilder.anJSON()
-                .add("tag", tag.toString())
+                .add("tag", tag)
+                .add("info", info)
                 .add("response", true);
         if (data != null) builder.add("data", data);
 

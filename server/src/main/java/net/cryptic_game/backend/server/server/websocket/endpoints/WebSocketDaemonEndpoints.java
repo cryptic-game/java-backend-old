@@ -18,6 +18,7 @@ public class WebSocketDaemonEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("send")
     public ApiResponse send(final ApiClient client,
+                            @ApiTag final String tag,
                             @ApiParameter("function_name") final String functionName,
                             @ApiParameter(value = "data", optional = true) final JsonObject data) {
 
@@ -37,7 +38,7 @@ public class WebSocketDaemonEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_PARAMETERS");
         }
 
-        this.daemonHandler.executeFunction(function, session.getUser().getId(), data == null ? new JsonObject() : data);
+        this.daemonHandler.executeFunction(client.getChannel(), function, session.getUser().getId(), data == null ? new JsonObject() : data);
 
         return null;
     }

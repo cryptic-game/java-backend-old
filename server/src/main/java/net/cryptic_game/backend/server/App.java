@@ -67,7 +67,7 @@ public class App extends AppBootstrap {
         final boolean useUnixSocket = this.config.getAsBoolean(BaseConfig.USE_UNIX_SOCKET);
         this.serverHandler.addServer("daemon",
                 useUnixSocket ? new DomainSocketAddress(this.config.getAsString(BaseConfig.UNIX_SOCKET_PATH)) : new InetSocketAddress("localhost", 4012),
-                useUnixSocket, new DaemonServerCodec(this.daemonEndpointHandler));
+                useUnixSocket, new DaemonServerCodec(this.daemonHandler, this.daemonEndpointHandler));
 
         this.serverHandler.addServer("websocket",
                 new InetSocketAddress(this.config.getAsString(ServerConfig.WEBSOCKET_HOST), this.config.getAsInt(ServerConfig.WEBSOCKET_PORT)),

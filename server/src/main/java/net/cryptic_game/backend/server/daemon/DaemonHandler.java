@@ -14,9 +14,12 @@ public class DaemonHandler {
     private final Map<String, Function> functions;
     private Set<Daemon> daemons;
 
+    private final HashMap<UUID, ClientRespond> channel;
+
     public DaemonHandler() {
         this.daemons = new HashSet<>();
         this.functions = new HashMap<>();
+        this.channel = new HashMap<>();
     }
 
     public void addDaemon(final Daemon daemon) {
@@ -39,8 +42,13 @@ public class DaemonHandler {
         return this.functions.get(name.strip().toLowerCase());
     }
 
-    public void executeFunction(final Function function, final UUID userId, final JsonObject data) {
+    public void executeFunction(final String tag, final Channel client, final Function function, final UUID userId, final JsonObject data) {
         data.addProperty("user_id", userId.toString());
-        ApiUtils.request(function.getDaemon().getChannel(), function.getName(), data);
+        this.channel.put(ApiUtils.request(function.getDaemon().getChannel(), function.getName(), data), new ClientRespond(tag, client));
+    }
+
+    public void respondToClient(final JsonObject json) {
+        final ClientRespond respond = this.channel.get(UUID.fromString(json.get("tag").getAsString()));
+        ApiUtils.response(respond.getChannel(), respond.getTag(), json.get("info").getAsJsonObject(), json.get("data"));
     }
 }
