@@ -19,12 +19,10 @@ jobs:
         run: chmod +x gradlew
       - name: Build Docs with Gradle
         run: ./gradlew aggregateJavadoc createDocs
-      - name: Debug
-        run: ls
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           BRANCH: gh-pages
           FOLDER: build/docs/javadoc
           DEBUG: true
