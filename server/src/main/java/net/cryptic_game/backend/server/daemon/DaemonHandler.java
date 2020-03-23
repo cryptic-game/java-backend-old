@@ -35,8 +35,8 @@ public class DaemonHandler {
         return this.daemons;
     }
 
-    public Function addFunction(final Function function) {
-        return this.functions.put(function.getName(), function);
+    public void addFunctions(final Set<Function> functions) {
+        functions.forEach(func -> this.functions.put(func.getName(), func));
     }
 
     public Function getFunction(final String name) {

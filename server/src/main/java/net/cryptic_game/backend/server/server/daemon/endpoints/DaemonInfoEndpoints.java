@@ -26,6 +26,7 @@ public class DaemonInfoEndpoints extends ApiEndpointCollection {
 
         final DaemonRegisterPacket drp = new DaemonRegisterPacket(client.getChannel(), name, functions);
         this.daemonHandler.addDaemon(drp.getDaemon());
+        this.daemonHandler.addFunctions(drp.getFunctions());
 
         log.info("Daemon \"" + name + "\" registered.");
 
