@@ -1,4 +1,4 @@
-# Daemon Api Documentation
+# Daemon Api Documentation v0.3.0
 
 This documentation explains how you can create your own implementation of a Daemon and connect it to our server.
 
@@ -6,9 +6,9 @@ This documentation explains how you can create your own implementation of a Daem
 
 The Java Server supports Unix sockets as well as network sockets. Therefore, we recommend implementing both variants.
 
-| Unix-Sockets                                             | Network-Sockets                                                                                                                                                  |
-|----------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
-| The Unix-Socket can be reached under `/run/cryptic.sock` | The Network-Socket can be reached at the port `4012`. Please note that the network socket nut listens on the hostname `localhost` or the IP address `127.0.0.1`. |
+| Unix-Sockets                                                 | Network-Sockets                                                                                                                                                     |
+|--------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
+| The Unix-Socket can be reached under `/var/run/cryptic.sock` | The Network-Socket can be reached at the port `4012`. Please note that the network socket only listens on the hostname `localhost` or the IPv4 address `127.0.0.1`. |
 
 In both variant's communication takes place via Json requests and replies.
 
