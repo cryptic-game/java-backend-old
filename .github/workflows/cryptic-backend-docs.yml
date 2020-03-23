@@ -4,7 +4,6 @@ on:
     branches:
       - master
       - experimental
-      - fix-github-actions
 
 jobs:
   build:
@@ -29,6 +28,6 @@ jobs:
           TARGET_FOLDER: javadoc/latest
           CLEAN: true
           CLEAN_EXCLUDE: '["LICENSE", "api", "README.md", "_config.yml", "deployment.md", "getting-startet.md", "index.md", "license.md"]'
-          GIT_CONFIG_NAME: github-actions
+          GIT_CONFIG_NAME: GitHub Actions
           GIT_CONFIG_EMAIL: actions@github.com
 
