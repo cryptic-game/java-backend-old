@@ -18,8 +18,8 @@ public class CurrencyWallet extends TableModelAutoId {
     @Column(name = "time_stamp", updatable = false, nullable = false)
     private LocalDateTime timeStamp;
 
-    @Column(name = "key", updatable = true, nullable = true)
-    private String key;
+    @Column(name = "password", updatable = true, nullable = true)
+    private String password;
 
     @Column(name = "amount", updatable = true, nullable = false)
     private int amount;
@@ -32,12 +32,12 @@ public class CurrencyWallet extends TableModelAutoId {
         this.timeStamp = timeStamp;
     }
 
-    public String getKey() {
-        return this.key;
+    public String getPassword() {
+        return this.password;
     }
 
-    public void setKey(final String sendAmount) {
-        this.key = sendAmount;
+    public void setPassword(final String sendAmount) {
+        this.password = sendAmount;
     }
 
     public int getAmount() {
@@ -55,12 +55,12 @@ public class CurrencyWallet extends TableModelAutoId {
         CurrencyWallet that = (CurrencyWallet) o;
         return getAmount() == that.getAmount() &&
                 Objects.equals(getTimeStamp(), that.getTimeStamp()) &&
-                Objects.equals(getKey(), that.getKey());
+                Objects.equals(getPassword(), that.getPassword());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getTimeStamp(), getKey(), getAmount());
+        return Objects.hash(getTimeStamp(), getPassword(), getAmount());
     }
 
     @Override
@@ -68,7 +68,7 @@ public class CurrencyWallet extends TableModelAutoId {
         return JsonBuilder.anJSON()
                 .add("id", this.getId())
                 .add("time_stamp", this.getTimeStamp().toInstant(ZoneOffset.UTC).toEpochMilli())
-                .add("send_amount", this.getKey())
+                .add("send_amount", this.getPassword())
                 .add("destination_uuid", this.getAmount())
                 .build();
     }

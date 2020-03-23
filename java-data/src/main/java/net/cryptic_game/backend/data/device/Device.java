@@ -124,6 +124,10 @@ public class Device extends TableModelAutoId {
         this.poweredOn = poweredOn;
     }
 
+    public boolean hasUserAccess(User user) {
+        return getOwner().equals(user) || DeviceAccess.hasUserAccessToDevice(user, this);
+    }
+
     /**
      * Generates a {@link JsonObject} containg all relevent {@link Device} information
      *

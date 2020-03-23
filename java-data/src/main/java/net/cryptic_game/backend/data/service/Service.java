@@ -7,10 +7,11 @@ import net.cryptic_game.backend.data.device.Device;
 import net.cryptic_game.backend.data.user.User;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "service_service")
 public class Service extends TableModelAutoId {
 
     @ManyToOne
@@ -18,13 +19,13 @@ public class Service extends TableModelAutoId {
     @Type(type = "uuid-char")
     private Device device;
 
-    @JoinColumn(name = "name", updatable = true, nullable = true)
+    @Column(name = "name", updatable = true, nullable = true)
     private String name;
 
-    @JoinColumn(name = "running", updatable = true, nullable = true, columnDefinition = "TINYINT")
+    @Column(name = "running", updatable = true, nullable = true, columnDefinition = "TINYINT")
     private boolean running;
 
-    @JoinColumn(name = "running_port", updatable = true, nullable = true)
+    @Column(name = "running_port", updatable = true, nullable = true)
     private int runningPort;
 
     @ManyToOne
