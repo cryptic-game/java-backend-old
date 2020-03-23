@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.UUID;
 
 final class ApiEndpointValidator {
 
@@ -72,6 +73,9 @@ final class ApiEndpointValidator {
                             parameterValues[i] = json.get(parameter.getKey()).getAsJsonArray();
                         } else if (parameter.getType() == JsonElement.class) {
                             parameterValues[i] = json.get(parameter.getKey()).getAsJsonArray();
+                        } else if (parameter.getType() == UUID.class) {
+                            parameterValues[i] = UUID.fromString(json.get(parameter.getKey()).getAsString());
+                            //TODO Add Exception
                         } else {
                             throw new ApiException("Not supported parameter. (\"" + name + ":" + parameter.getKey() + "\") type \"" + parameter.getType().getName() + "\"");
                         }

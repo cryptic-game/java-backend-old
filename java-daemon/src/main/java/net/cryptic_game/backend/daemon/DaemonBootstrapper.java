@@ -5,6 +5,7 @@ import net.cryptic_game.backend.base.api.endpoint.ApiEndpointExecutor;
 import net.cryptic_game.backend.base.daemon.DaemonRegisterPacket;
 import net.cryptic_game.backend.base.daemon.Function;
 import net.cryptic_game.backend.base.daemon.FunctionArgument;
+import net.cryptic_game.backend.base.utils.ApiUtils;
 import net.cryptic_game.backend.daemon.api.DaemonEndpointHandler;
 
 import java.util.HashMap;
@@ -23,7 +24,7 @@ public class DaemonBootstrapper {
 
     void sendRegisterPackage(final Channel channel) {
         this.loadFunctions();
-        channel.writeAndFlush(this.drp.serialize());
+        ApiUtils.request(channel, "daemon/register", this.drp.serialize());
     }
 
     private void loadFunctions() {

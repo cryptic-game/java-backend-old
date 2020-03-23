@@ -14,6 +14,7 @@ import net.cryptic_game.backend.server.server.http.HttpEndpointHandler;
 import net.cryptic_game.backend.server.server.http.HttpServerCodec;
 import net.cryptic_game.backend.server.server.websocket.WebSocketEndpointHandler;
 import net.cryptic_game.backend.server.server.websocket.WebSocketServerCodec;
+import net.cryptic_game.backend.server.server.websocket.endpoints.WebSocketDaemonEndpoints;
 import net.cryptic_game.backend.server.server.websocket.endpoints.WebSocketInfoEndpoints;
 import net.cryptic_game.backend.server.server.websocket.endpoints.WebSocketUserEndpoints;
 
@@ -50,12 +51,15 @@ public class App extends AppBootstrap {
     protected void initApi() {
         this.daemonEndpointHandler.addApiCollection(new DaemonInfoEndpoints(this.daemonHandler));
         this.daemonEndpointHandler.addApiCollection(new DaemonUserEndpoints());
+        this.daemonEndpointHandler.postInit();
 
         this.webSocketEndpointHandler.addApiCollection(new WebSocketUserEndpoints());
         this.webSocketEndpointHandler.addApiCollection(new WebSocketInfoEndpoints());
+        this.webSocketEndpointHandler.addApiCollection(new WebSocketDaemonEndpoints(this.daemonHandler));
         this.webSocketEndpointHandler.postInit();
 
         this.httpEndpointHandler.addApiCollection(new WebSocketInfoEndpoints());
+        this.httpEndpointHandler.postInit();
     }
 
     @Override
