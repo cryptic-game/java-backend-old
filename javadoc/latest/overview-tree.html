@@ -98,14 +98,23 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="horizontal">
 <li><a href="net/cryptic_game/backend/base/package-tree.html">net.cryptic_game.backend.base</a>, </li>
 <li><a href="net/cryptic_game/backend/base/api/package-tree.html">net.cryptic_game.backend.base.api</a>, </li>
+<li><a href="net/cryptic_game/backend/base/api/client/package-tree.html">net.cryptic_game.backend.base.api.client</a>, </li>
+<li><a href="net/cryptic_game/backend/base/api/endpoint/package-tree.html">net.cryptic_game.backend.base.api.endpoint</a>, </li>
+<li><a href="net/cryptic_game/backend/base/api/netty/package-tree.html">net.cryptic_game.backend.base.api.netty</a>, </li>
+<li><a href="net/cryptic_game/backend/base/api/notification/package-tree.html">net.cryptic_game.backend.base.api.notification</a>, </li>
 <li><a href="net/cryptic_game/backend/base/config/package-tree.html">net.cryptic_game.backend.base.config</a>, </li>
+<li><a href="net/cryptic_game/backend/base/daemon/package-tree.html">net.cryptic_game.backend.base.daemon</a>, </li>
 <li><a href="net/cryptic_game/backend/base/interfaces/package-tree.html">net.cryptic_game.backend.base.interfaces</a>, </li>
 <li><a href="net/cryptic_game/backend/base/netty/package-tree.html">net.cryptic_game.backend.base.netty</a>, </li>
+<li><a href="net/cryptic_game/backend/base/netty/client/package-tree.html">net.cryptic_game.backend.base.netty.client</a>, </li>
+<li><a href="net/cryptic_game/backend/base/netty/codec/package-tree.html">net.cryptic_game.backend.base.netty.codec</a>, </li>
+<li><a href="net/cryptic_game/backend/base/netty/server/package-tree.html">net.cryptic_game.backend.base.netty.server</a>, </li>
 <li><a href="net/cryptic_game/backend/base/sql/package-tree.html">net.cryptic_game.backend.base.sql</a>, </li>
 <li><a href="net/cryptic_game/backend/base/sql/models/package-tree.html">net.cryptic_game.backend.base.sql.models</a>, </li>
+<li><a href="net/cryptic_game/backend/base/timeout/package-tree.html">net.cryptic_game.backend.base.timeout</a>, </li>
 <li><a href="net/cryptic_game/backend/base/utils/package-tree.html">net.cryptic_game.backend.base.utils</a>, </li>
 <li><a href="net/cryptic_game/backend/daemon/package-tree.html">net.cryptic_game.backend.daemon</a>, </li>
-<li><a href="net/cryptic_game/backend/daemon/client/package-tree.html">net.cryptic_game.backend.daemon.client</a>, </li>
+<li><a href="net/cryptic_game/backend/daemon/api/package-tree.html">net.cryptic_game.backend.daemon.api</a>, </li>
 <li><a href="net/cryptic_game/backend/daemon/client/daemon/package-tree.html">net.cryptic_game.backend.daemon.client.daemon</a>, </li>
 <li><a href="net/cryptic_game/backend/daemon/config/package-tree.html">net.cryptic_game.backend.daemon.config</a>, </li>
 <li><a href="net/cryptic_game/backend/data/package-tree.html">net.cryptic_game.backend.data</a>, </li>
@@ -114,13 +123,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li><a href="net/cryptic_game/backend/data/network/package-tree.html">net.cryptic_game.backend.data.network</a>, </li>
 <li><a href="net/cryptic_game/backend/data/service/package-tree.html">net.cryptic_game.backend.data.service</a>, </li>
 <li><a href="net/cryptic_game/backend/data/user/package-tree.html">net.cryptic_game.backend.data.user</a>, </li>
+<li><a href="net/cryptic_game/backend/endpoints/package-tree.html">net.cryptic_game.backend.endpoints</a>, </li>
+<li><a href="net/cryptic_game/backend/endpoints/network/package-tree.html">net.cryptic_game.backend.endpoints.network</a>, </li>
 <li><a href="net/cryptic_game/backend/server/package-tree.html">net.cryptic_game.backend.server</a>, </li>
-<li><a href="net/cryptic_game/backend/server/api/package-tree.html">net.cryptic_game.backend.server.api</a>, </li>
 <li><a href="net/cryptic_game/backend/server/client/package-tree.html">net.cryptic_game.backend.server.client</a>, </li>
 <li><a href="net/cryptic_game/backend/server/config/package-tree.html">net.cryptic_game.backend.server.config</a>, </li>
 <li><a href="net/cryptic_game/backend/server/daemon/package-tree.html">net.cryptic_game.backend.server.daemon</a>, </li>
-<li><a href="net/cryptic_game/backend/server/server/package-tree.html">net.cryptic_game.backend.server.server</a>, </li>
 <li><a href="net/cryptic_game/backend/server/server/daemon/package-tree.html">net.cryptic_game.backend.server.server.daemon</a>, </li>
+<li><a href="net/cryptic_game/backend/server/server/daemon/endpoints/package-tree.html">net.cryptic_game.backend.server.server.daemon.endpoints</a>, </li>
 <li><a href="net/cryptic_game/backend/server/server/http/package-tree.html">net.cryptic_game.backend.server.server.http</a>, </li>
 <li><a href="net/cryptic_game/backend/server/server/http/endpoints/package-tree.html">net.cryptic_game.backend.server.server.http.endpoints</a>, </li>
 <li><a href="net/cryptic_game/backend/server/server/websocket/package-tree.html">net.cryptic_game.backend.server.server.websocket</a>, </li>
@@ -133,29 +143,30 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul>
 <li class="circle">java.lang.Object
 <ul>
-<li class="circle">net.cryptic_game.backend.base.api.<a href="net/cryptic_game/backend/base/api/ApiCollection.html" title="class in net.cryptic_game.backend.base.api"><span class="typeNameLink">ApiCollection</span></a>
+<li class="circle">net.cryptic_game.backend.base.api.client.<a href="net/cryptic_game/backend/base/api/client/ApiClient.html" title="class in net.cryptic_game.backend.base.api.client"><span class="typeNameLink">ApiClient</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.api.client.<a href="net/cryptic_game/backend/base/api/client/ApiClientList.html" title="class in net.cryptic_game.backend.base.api.client"><span class="typeNameLink">ApiClientList</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.api.endpoint.<a href="net/cryptic_game/backend/base/api/endpoint/ApiEndpointCollection.html" title="class in net.cryptic_game.backend.base.api.endpoint"><span class="typeNameLink">ApiEndpointCollection</span></a>
 <ul>
-<li class="circle">net.cryptic_game.backend.server.server.websocket.endpoints.<a href="net/cryptic_game/backend/server/server/websocket/endpoints/InfoEndpoints.html" title="class in net.cryptic_game.backend.server.server.websocket.endpoints"><span class="typeNameLink">InfoEndpoints</span></a></li>
-<li class="circle">net.cryptic_game.backend.server.server.websocket.endpoints.<a href="net/cryptic_game/backend/server/server/websocket/endpoints/UserEndpoints.html" title="class in net.cryptic_game.backend.server.server.websocket.endpoints"><span class="typeNameLink">UserEndpoints</span></a></li>
+<li class="circle">net.cryptic_game.backend.server.server.daemon.endpoints.<a href="net/cryptic_game/backend/server/server/daemon/endpoints/DaemonInfoEndpoints.html" title="class in net.cryptic_game.backend.server.server.daemon.endpoints"><span class="typeNameLink">DaemonInfoEndpoints</span></a></li>
+<li class="circle">net.cryptic_game.backend.server.server.daemon.endpoints.<a href="net/cryptic_game/backend/server/server/daemon/endpoints/DaemonUserEndpoints.html" title="class in net.cryptic_game.backend.server.server.daemon.endpoints"><span class="typeNameLink">DaemonUserEndpoints</span></a></li>
+<li class="circle">net.cryptic_game.backend.server.server.http.endpoints.<a href="net/cryptic_game/backend/server/server/http/endpoints/HttpInfoEndpoint.html" title="class in net.cryptic_game.backend.server.server.http.endpoints"><span class="typeNameLink">HttpInfoEndpoint</span></a></li>
+<li class="circle">net.cryptic_game.backend.endpoints.network.<a href="net/cryptic_game/backend/endpoints/network/NetworkEndpoints.html" title="class in net.cryptic_game.backend.endpoints.network"><span class="typeNameLink">NetworkEndpoints</span></a></li>
+<li class="circle">net.cryptic_game.backend.endpoints.network.<a href="net/cryptic_game/backend/endpoints/network/NetworkInvitationEndpoints.html" title="class in net.cryptic_game.backend.endpoints.network"><span class="typeNameLink">NetworkInvitationEndpoints</span></a></li>
+<li class="circle">net.cryptic_game.backend.endpoints.network.<a href="net/cryptic_game/backend/endpoints/network/NetworkMemberEndpoints.html" title="class in net.cryptic_game.backend.endpoints.network"><span class="typeNameLink">NetworkMemberEndpoints</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.api.notification.<a href="net/cryptic_game/backend/base/api/notification/NotificationEndpointCollection.html" title="class in net.cryptic_game.backend.base.api.notification"><span class="typeNameLink">NotificationEndpointCollection</span></a></li>
+<li class="circle">net.cryptic_game.backend.endpoints.<a href="net/cryptic_game/backend/endpoints/TestEndpoints.html" title="class in net.cryptic_game.backend.endpoints"><span class="typeNameLink">TestEndpoints</span></a></li>
+<li class="circle">net.cryptic_game.backend.server.server.websocket.endpoints.<a href="net/cryptic_game/backend/server/server/websocket/endpoints/WebSocketDaemonEndpoints.html" title="class in net.cryptic_game.backend.server.server.websocket.endpoints"><span class="typeNameLink">WebSocketDaemonEndpoints</span></a></li>
+<li class="circle">net.cryptic_game.backend.server.server.websocket.endpoints.<a href="net/cryptic_game/backend/server/server/websocket/endpoints/WebSocketInfoEndpoints.html" title="class in net.cryptic_game.backend.server.server.websocket.endpoints"><span class="typeNameLink">WebSocketInfoEndpoints</span></a></li>
+<li class="circle">net.cryptic_game.backend.server.server.websocket.endpoints.<a href="net/cryptic_game/backend/server/server/websocket/endpoints/WebSocketUserEndpoints.html" title="class in net.cryptic_game.backend.server.server.websocket.endpoints"><span class="typeNameLink">WebSocketUserEndpoints</span></a></li>
 </ul>
 </li>
-<li class="circle">net.cryptic_game.backend.base.api.<a href="net/cryptic_game/backend/base/api/ApiEndpointExecutor.html" title="class in net.cryptic_game.backend.base.api"><span class="typeNameLink">ApiEndpointExecutor</span></a>
-<ul>
-<li class="circle">net.cryptic_game.backend.server.api.<a href="net/cryptic_game/backend/server/api/ServerApiEndpointExecutor.html" title="class in net.cryptic_game.backend.server.api"><span class="typeNameLink">ServerApiEndpointExecutor</span></a></li>
-</ul>
-</li>
-<li class="circle">net.cryptic_game.backend.base.api.<a href="net/cryptic_game/backend/base/api/ApiExecutionData.html" title="class in net.cryptic_game.backend.base.api"><span class="typeNameLink">ApiExecutionData</span></a>
-<ul>
-<li class="circle">net.cryptic_game.backend.server.api.<a href="net/cryptic_game/backend/server/api/ServerApiExecutionData.html" title="class in net.cryptic_game.backend.server.api"><span class="typeNameLink">ServerApiExecutionData</span></a></li>
-</ul>
-</li>
-<li class="circle">net.cryptic_game.backend.base.api.<a href="net/cryptic_game/backend/base/api/ApiExecutor.html" title="class in net.cryptic_game.backend.base.api"><span class="typeNameLink">ApiExecutor</span></a>
-<ul>
-<li class="circle">net.cryptic_game.backend.server.api.<a href="net/cryptic_game/backend/server/api/ServerApiExecutor.html" title="class in net.cryptic_game.backend.server.api"><span class="typeNameLink">ServerApiExecutor</span></a></li>
-</ul>
-</li>
-<li class="circle">net.cryptic_game.backend.base.api.<a href="net/cryptic_game/backend/base/api/ApiHandler.html" title="class in net.cryptic_game.backend.base.api"><span class="typeNameLink">ApiHandler</span></a></li>
-<li class="circle">net.cryptic_game.backend.base.api.<a href="net/cryptic_game/backend/base/api/ApiParameterData.html" title="class in net.cryptic_game.backend.base.api"><span class="typeNameLink">ApiParameterData</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.api.endpoint.<a href="net/cryptic_game/backend/base/api/endpoint/ApiEndpointExecutor.html" title="class in net.cryptic_game.backend.base.api.endpoint"><span class="typeNameLink">ApiEndpointExecutor</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.api.endpoint.<a href="net/cryptic_game/backend/base/api/endpoint/ApiEndpointFinder.html" title="class in net.cryptic_game.backend.base.api.endpoint"><span class="typeNameLink">ApiEndpointFinder</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.api.endpoint.<a href="net/cryptic_game/backend/base/api/endpoint/ApiEndpointList.html" title="class in net.cryptic_game.backend.base.api.endpoint"><span class="typeNameLink">ApiEndpointList</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.api.endpoint.<a href="net/cryptic_game/backend/base/api/endpoint/ApiEndpointParameterData.html" title="class in net.cryptic_game.backend.base.api.endpoint"><span class="typeNameLink">ApiEndpointParameterData</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.api.notification.<a href="net/cryptic_game/backend/base/api/notification/ApiNotification.html" title="class in net.cryptic_game.backend.base.api.notification"><span class="typeNameLink">ApiNotification</span></a> (implements net.cryptic_game.backend.base.interfaces.<a href="net/cryptic_game/backend/base/interfaces/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.interfaces">JsonSerializable</a>)</li>
+<li class="circle">net.cryptic_game.backend.base.api.endpoint.<a href="net/cryptic_game/backend/base/api/endpoint/ApiResponse.html" title="class in net.cryptic_game.backend.base.api.endpoint"><span class="typeNameLink">ApiResponse</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.utils.<a href="net/cryptic_game/backend/base/utils/ApiUtils.html" title="class in net.cryptic_game.backend.base.utils"><span class="typeNameLink">ApiUtils</span></a></li>
 <li class="circle">net.cryptic_game.backend.base.<a href="net/cryptic_game/backend/base/AppBootstrap.html" title="class in net.cryptic_game.backend.base"><span class="typeNameLink">AppBootstrap</span></a>
 <ul>
 <li class="circle">net.cryptic_game.backend.daemon.<a href="net/cryptic_game/backend/daemon/App.html" title="class in net.cryptic_game.backend.daemon"><span class="typeNameLink">App</span></a></li>
@@ -170,26 +181,25 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul>
 <li class="circle">io.netty.handler.codec.MessageToMessageCodec&lt;INBOUND_IN,&#8203;OUTBOUND_IN&gt;
 <ul>
-<li class="circle">net.cryptic_game.backend.base.netty.<a href="net/cryptic_game/backend/base/netty/JsonMessageCodec.html" title="class in net.cryptic_game.backend.base.netty"><span class="typeNameLink">JsonMessageCodec</span></a></li>
-<li class="circle">net.cryptic_game.backend.server.server.websocket.<a href="net/cryptic_game/backend/server/server/websocket/WebSocketLogger.html" title="class in net.cryptic_game.backend.server.server.websocket"><span class="typeNameLink">WebSocketLogger</span></a></li>
-<li class="circle">net.cryptic_game.backend.server.server.websocket.<a href="net/cryptic_game/backend/server/server/websocket/WebSocketServerCodec.html" title="class in net.cryptic_game.backend.server.server.websocket"><span class="typeNameLink">WebSocketServerCodec</span></a></li>
+<li class="circle">net.cryptic_game.backend.server.server.http.<a href="net/cryptic_game/backend/server/server/http/HttpToStringMessageCodec.html" title="class in net.cryptic_game.backend.server.server.http"><span class="typeNameLink">HttpToStringMessageCodec</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.netty.codec.<a href="net/cryptic_game/backend/base/netty/codec/JsonMessageCodec.html" title="class in net.cryptic_game.backend.base.netty.codec"><span class="typeNameLink">JsonMessageCodec</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.netty.codec.<a href="net/cryptic_game/backend/base/netty/codec/MessageLoggerCodec.html" title="class in net.cryptic_game.backend.base.netty.codec"><span class="typeNameLink">MessageLoggerCodec</span></a></li>
+<li class="circle">net.cryptic_game.backend.server.server.websocket.<a href="net/cryptic_game/backend/server/server/websocket/WebsocketTextFrameMessageCodec.html" title="class in net.cryptic_game.backend.server.server.websocket"><span class="typeNameLink">WebsocketTextFrameMessageCodec</span></a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="circle">io.netty.channel.ChannelInitializer&lt;C&gt;
 <ul>
-<li class="circle">net.cryptic_game.backend.base.netty.<a href="net/cryptic_game/backend/base/netty/NettyCodecInitializer.html" title="class in net.cryptic_game.backend.base.netty"><span class="typeNameLink">NettyCodecInitializer</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.netty.<a href="net/cryptic_game/backend/base/netty/NettyInitializer.html" title="class in net.cryptic_game.backend.base.netty"><span class="typeNameLink">NettyInitializer</span></a></li>
 </ul>
 </li>
 <li class="circle">io.netty.channel.SimpleChannelInboundHandler&lt;I&gt;
 <ul>
-<li class="circle">net.cryptic_game.backend.base.netty.<a href="net/cryptic_game/backend/base/netty/NettyHandler.html" title="class in net.cryptic_game.backend.base.netty"><span class="typeNameLink">NettyHandler</span></a>&lt;T&gt;
+<li class="circle">net.cryptic_game.backend.base.netty.<a href="net/cryptic_game/backend/base/netty/NettyChannelHandler.html" title="class in net.cryptic_game.backend.base.netty"><span class="typeNameLink">NettyChannelHandler</span></a>&lt;T&gt;
 <ul>
-<li class="circle">net.cryptic_game.backend.daemon.client.daemon.<a href="net/cryptic_game/backend/daemon/client/daemon/DaemonClientHandler.html" title="class in net.cryptic_game.backend.daemon.client.daemon"><span class="typeNameLink">DaemonClientHandler</span></a></li>
-<li class="circle">net.cryptic_game.backend.server.server.daemon.<a href="net/cryptic_game/backend/server/server/daemon/DaemonContentHandler.html" title="class in net.cryptic_game.backend.server.server.daemon"><span class="typeNameLink">DaemonContentHandler</span></a></li>
-<li class="circle">net.cryptic_game.backend.server.server.http.<a href="net/cryptic_game/backend/server/server/http/HttpServerHandler.html" title="class in net.cryptic_game.backend.server.server.http"><span class="typeNameLink">HttpServerHandler</span></a></li>
-<li class="circle">net.cryptic_game.backend.server.server.websocket.<a href="net/cryptic_game/backend/server/server/websocket/WebSocketHandler.html" title="class in net.cryptic_game.backend.server.server.websocket"><span class="typeNameLink">WebSocketHandler</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.api.netty.<a href="net/cryptic_game/backend/base/api/netty/JsonApiServerContentHandler.html" title="class in net.cryptic_game.backend.base.api.netty"><span class="typeNameLink">JsonApiServerContentHandler</span></a></li>
+<li class="circle">net.cryptic_game.backend.server.server.websocket.<a href="net/cryptic_game/backend/server/server/websocket/WebSocketPingPongHandler.html" title="class in net.cryptic_game.backend.server.server.websocket"><span class="typeNameLink">WebSocketPingPongHandler</span></a></li>
 </ul>
 </li>
 </ul>
@@ -199,30 +209,44 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </ul>
 </li>
 <li class="circle">net.cryptic_game.backend.server.client.<a href="net/cryptic_game/backend/server/client/Client.html" title="class in net.cryptic_game.backend.server.client"><span class="typeNameLink">Client</span></a></li>
+<li class="circle">net.cryptic_game.backend.server.daemon.<a href="net/cryptic_game/backend/server/daemon/ClientRespond.html" title="class in net.cryptic_game.backend.server.daemon"><span class="typeNameLink">ClientRespond</span></a></li>
 <li class="circle">net.cryptic_game.backend.server.client.<a href="net/cryptic_game/backend/server/client/ClientWrapper.html" title="class in net.cryptic_game.backend.server.client"><span class="typeNameLink">ClientWrapper</span></a></li>
 <li class="circle">net.cryptic_game.backend.base.config.<a href="net/cryptic_game/backend/base/config/Config.html" title="class in net.cryptic_game.backend.base.config"><span class="typeNameLink">Config</span></a></li>
-<li class="circle">net.cryptic_game.backend.server.daemon.<a href="net/cryptic_game/backend/server/daemon/Daemon.html" title="class in net.cryptic_game.backend.server.daemon"><span class="typeNameLink">Daemon</span></a></li>
-<li class="circle">net.cryptic_game.backend.daemon.client.daemon.<a href="net/cryptic_game/backend/daemon/client/daemon/DaemonClientCodec.html" title="class in net.cryptic_game.backend.daemon.client.daemon"><span class="typeNameLink">DaemonClientCodec</span></a> (implements net.cryptic_game.backend.base.netty.<a href="net/cryptic_game/backend/base/netty/NettyCodec.html" title="interface in net.cryptic_game.backend.base.netty">NettyCodec</a>)</li>
-<li class="circle">net.cryptic_game.backend.daemon.client.daemon.<a href="net/cryptic_game/backend/daemon/client/daemon/DaemonClientInitializer.html" title="class in net.cryptic_game.backend.daemon.client.daemon"><span class="typeNameLink">DaemonClientInitializer</span></a> (implements net.cryptic_game.backend.base.netty.<a href="net/cryptic_game/backend/base/netty/NettyInitializer.html" title="interface in net.cryptic_game.backend.base.netty">NettyInitializer</a>)</li>
-<li class="circle">net.cryptic_game.backend.server.server.daemon.<a href="net/cryptic_game/backend/server/server/daemon/DaemonCodec.html" title="class in net.cryptic_game.backend.server.server.daemon"><span class="typeNameLink">DaemonCodec</span></a> (implements net.cryptic_game.backend.base.netty.<a href="net/cryptic_game/backend/base/netty/NettyCodec.html" title="interface in net.cryptic_game.backend.base.netty">NettyCodec</a>)</li>
+<li class="circle">net.cryptic_game.backend.base.daemon.<a href="net/cryptic_game/backend/base/daemon/Daemon.html" title="class in net.cryptic_game.backend.base.daemon"><span class="typeNameLink">Daemon</span></a> (implements net.cryptic_game.backend.base.interfaces.<a href="net/cryptic_game/backend/base/interfaces/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.interfaces">JsonSerializable</a>)</li>
+<li class="circle">net.cryptic_game.backend.daemon.<a href="net/cryptic_game/backend/daemon/DaemonBootstrapper.html" title="class in net.cryptic_game.backend.daemon"><span class="typeNameLink">DaemonBootstrapper</span></a></li>
+<li class="circle">net.cryptic_game.backend.daemon.api.<a href="net/cryptic_game/backend/daemon/api/DaemonEndpointHandler.html" title="class in net.cryptic_game.backend.daemon.api"><span class="typeNameLink">DaemonEndpointHandler</span></a></li>
+<li class="circle">net.cryptic_game.backend.server.server.daemon.<a href="net/cryptic_game/backend/server/server/daemon/DaemonEndpointHandler.html" title="class in net.cryptic_game.backend.server.server.daemon"><span class="typeNameLink">DaemonEndpointHandler</span></a></li>
 <li class="circle">net.cryptic_game.backend.server.daemon.<a href="net/cryptic_game/backend/server/daemon/DaemonHandler.html" title="class in net.cryptic_game.backend.server.daemon"><span class="typeNameLink">DaemonHandler</span></a></li>
-<li class="circle">net.cryptic_game.backend.server.server.daemon.<a href="net/cryptic_game/backend/server/server/daemon/DaemonInitializer.html" title="class in net.cryptic_game.backend.server.server.daemon"><span class="typeNameLink">DaemonInitializer</span></a> (implements net.cryptic_game.backend.base.netty.<a href="net/cryptic_game/backend/base/netty/NettyInitializer.html" title="interface in net.cryptic_game.backend.base.netty">NettyInitializer</a>)</li>
+<li class="circle">net.cryptic_game.backend.base.daemon.<a href="net/cryptic_game/backend/base/daemon/DaemonRegisterPacket.html" title="class in net.cryptic_game.backend.base.daemon"><span class="typeNameLink">DaemonRegisterPacket</span></a> (implements net.cryptic_game.backend.base.interfaces.<a href="net/cryptic_game/backend/base/interfaces/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.interfaces">JsonSerializable</a>)</li>
 <li class="circle">net.cryptic_game.backend.base.netty.<a href="net/cryptic_game/backend/base/netty/EventLoopGroupHandler.html" title="class in net.cryptic_game.backend.base.netty"><span class="typeNameLink">EventLoopGroupHandler</span></a></li>
-<li class="circle">net.cryptic_game.backend.server.daemon.<a href="net/cryptic_game/backend/server/daemon/Function.html" title="class in net.cryptic_game.backend.server.daemon"><span class="typeNameLink">Function</span></a></li>
-<li class="circle">net.cryptic_game.backend.server.server.http.<a href="net/cryptic_game/backend/server/server/http/HttpCodec.html" title="class in net.cryptic_game.backend.server.server.http"><span class="typeNameLink">HttpCodec</span></a> (implements net.cryptic_game.backend.base.netty.<a href="net/cryptic_game/backend/base/netty/NettyCodec.html" title="interface in net.cryptic_game.backend.base.netty">NettyCodec</a>)</li>
-<li class="circle">net.cryptic_game.backend.server.server.http.<a href="net/cryptic_game/backend/server/server/http/HttpEndpoint.html" title="class in net.cryptic_game.backend.server.server.http"><span class="typeNameLink">HttpEndpoint</span></a>
+<li class="circle">net.cryptic_game.backend.base.daemon.<a href="net/cryptic_game/backend/base/daemon/Function.html" title="class in net.cryptic_game.backend.base.daemon"><span class="typeNameLink">Function</span></a> (implements net.cryptic_game.backend.base.interfaces.<a href="net/cryptic_game/backend/base/interfaces/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.interfaces">JsonSerializable</a>)</li>
+<li class="circle">net.cryptic_game.backend.base.daemon.<a href="net/cryptic_game/backend/base/daemon/FunctionArgument.html" title="class in net.cryptic_game.backend.base.daemon"><span class="typeNameLink">FunctionArgument</span></a> (implements net.cryptic_game.backend.base.interfaces.<a href="net/cryptic_game/backend/base/interfaces/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.interfaces">JsonSerializable</a>)</li>
+<li class="circle">net.cryptic_game.backend.server.server.http.<a href="net/cryptic_game/backend/server/server/http/HttpEndpointHandler.html" title="class in net.cryptic_game.backend.server.server.http"><span class="typeNameLink">HttpEndpointHandler</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.utils.<a href="net/cryptic_game/backend/base/utils/JsonBuilder.html" title="class in net.cryptic_game.backend.base.utils"><span class="typeNameLink">JsonBuilder</span></a> (implements net.cryptic_game.backend.base.interfaces.<a href="net/cryptic_game/backend/base/interfaces/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.interfaces">JsonSerializable</a>)</li>
+<li class="circle">net.cryptic_game.backend.base.utils.<a href="net/cryptic_game/backend/base/utils/JsonSocketUtils.html" title="class in net.cryptic_game.backend.base.utils"><span class="typeNameLink">JsonSocketUtils</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.utils.<a href="net/cryptic_game/backend/base/utils/JsonUtils.html" title="class in net.cryptic_game.backend.base.utils"><span class="typeNameLink">JsonUtils</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.netty.client.<a href="net/cryptic_game/backend/base/netty/client/NettyClient.html" title="class in net.cryptic_game.backend.base.netty.client"><span class="typeNameLink">NettyClient</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.netty.client.<a href="net/cryptic_game/backend/base/netty/client/NettyClientHandler.html" title="class in net.cryptic_game.backend.base.netty.client"><span class="typeNameLink">NettyClientHandler</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.netty.<a href="net/cryptic_game/backend/base/netty/NettyCodec.html" title="class in net.cryptic_game.backend.base.netty"><span class="typeNameLink">NettyCodec</span></a>&lt;Initializer&gt;
 <ul>
-<li class="circle">net.cryptic_game.backend.server.server.http.endpoints.<a href="net/cryptic_game/backend/server/server/http/endpoints/PlayerLeaderboardEndpoint.html" title="class in net.cryptic_game.backend.server.server.http.endpoints"><span class="typeNameLink">PlayerLeaderboardEndpoint</span></a></li>
-<li class="circle">net.cryptic_game.backend.server.server.http.endpoints.<a href="net/cryptic_game/backend/server/server/http/endpoints/PlayersOnlineEndpoint.html" title="class in net.cryptic_game.backend.server.server.http.endpoints"><span class="typeNameLink">PlayersOnlineEndpoint</span></a></li>
+<li class="circle">net.cryptic_game.backend.daemon.client.daemon.<a href="net/cryptic_game/backend/daemon/client/daemon/DaemonClientCodec.html" title="class in net.cryptic_game.backend.daemon.client.daemon"><span class="typeNameLink">DaemonClientCodec</span></a></li>
+<li class="circle">net.cryptic_game.backend.server.server.daemon.<a href="net/cryptic_game/backend/server/server/daemon/DaemonServerCodec.html" title="class in net.cryptic_game.backend.server.server.daemon"><span class="typeNameLink">DaemonServerCodec</span></a></li>
+<li class="circle">net.cryptic_game.backend.server.server.http.<a href="net/cryptic_game/backend/server/server/http/HttpServerCodec.html" title="class in net.cryptic_game.backend.server.server.http"><span class="typeNameLink">HttpServerCodec</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.api.netty.<a href="net/cryptic_game/backend/base/api/netty/JsonApiServerCodec.html" title="class in net.cryptic_game.backend.base.api.netty"><span class="typeNameLink">JsonApiServerCodec</span></a></li>
+<li class="circle">net.cryptic_game.backend.server.server.websocket.<a href="net/cryptic_game/backend/server/server/websocket/WebSocketServerCodec.html" title="class in net.cryptic_game.backend.server.server.websocket"><span class="typeNameLink">WebSocketServerCodec</span></a></li>
 </ul>
 </li>
-<li class="circle">net.cryptic_game.backend.server.server.http.<a href="net/cryptic_game/backend/server/server/http/HttpServerInitializer.html" title="class in net.cryptic_game.backend.server.server.http"><span class="typeNameLink">HttpServerInitializer</span></a> (implements net.cryptic_game.backend.base.netty.<a href="net/cryptic_game/backend/base/netty/NettyInitializer.html" title="interface in net.cryptic_game.backend.base.netty">NettyInitializer</a>)</li>
-<li class="circle">net.cryptic_game.backend.base.utils.<a href="net/cryptic_game/backend/base/utils/JsonBuilder.html" title="class in net.cryptic_game.backend.base.utils"><span class="typeNameLink">JsonBuilder</span></a></li>
-<li class="circle">net.cryptic_game.backend.base.utils.<a href="net/cryptic_game/backend/base/utils/JsonUtils.html" title="class in net.cryptic_game.backend.base.utils"><span class="typeNameLink">JsonUtils</span></a></li>
-<li class="circle">net.cryptic_game.backend.daemon.client.<a href="net/cryptic_game/backend/daemon/client/NettyClient.html" title="class in net.cryptic_game.backend.daemon.client"><span class="typeNameLink">NettyClient</span></a></li>
-<li class="circle">net.cryptic_game.backend.daemon.client.<a href="net/cryptic_game/backend/daemon/client/NettyClientHandler.html" title="class in net.cryptic_game.backend.daemon.client"><span class="typeNameLink">NettyClientHandler</span></a></li>
-<li class="circle">net.cryptic_game.backend.server.server.<a href="net/cryptic_game/backend/server/server/NettyServer.html" title="class in net.cryptic_game.backend.server.server"><span class="typeNameLink">NettyServer</span></a></li>
-<li class="circle">net.cryptic_game.backend.server.server.<a href="net/cryptic_game/backend/server/server/NettyServerHandler.html" title="class in net.cryptic_game.backend.server.server"><span class="typeNameLink">NettyServerHandler</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.netty.<a href="net/cryptic_game/backend/base/netty/NettyCodecInitializer.html" title="class in net.cryptic_game.backend.base.netty"><span class="typeNameLink">NettyCodecInitializer</span></a>&lt;Codec&gt;
+<ul>
+<li class="circle">net.cryptic_game.backend.daemon.client.daemon.<a href="net/cryptic_game/backend/daemon/client/daemon/DaemonClientCodecInitializer.html" title="class in net.cryptic_game.backend.daemon.client.daemon"><span class="typeNameLink">DaemonClientCodecInitializer</span></a></li>
+<li class="circle">net.cryptic_game.backend.server.server.daemon.<a href="net/cryptic_game/backend/server/server/daemon/DaemonCodecServerInitializer.html" title="class in net.cryptic_game.backend.server.server.daemon"><span class="typeNameLink">DaemonCodecServerInitializer</span></a></li>
+<li class="circle">net.cryptic_game.backend.server.server.http.<a href="net/cryptic_game/backend/server/server/http/HttpServerCodecInitializer.html" title="class in net.cryptic_game.backend.server.server.http"><span class="typeNameLink">HttpServerCodecInitializer</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.api.netty.<a href="net/cryptic_game/backend/base/api/netty/JsonApiServerCodecInitializer.html" title="class in net.cryptic_game.backend.base.api.netty"><span class="typeNameLink">JsonApiServerCodecInitializer</span></a></li>
+<li class="circle">net.cryptic_game.backend.server.server.websocket.<a href="net/cryptic_game/backend/server/server/websocket/WebSocketServerCodecInitializer.html" title="class in net.cryptic_game.backend.server.server.websocket"><span class="typeNameLink">WebSocketServerCodecInitializer</span></a></li>
+</ul>
+</li>
+<li class="circle">net.cryptic_game.backend.base.netty.server.<a href="net/cryptic_game/backend/base/netty/server/NettyServer.html" title="class in net.cryptic_game.backend.base.netty.server"><span class="typeNameLink">NettyServer</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.netty.server.<a href="net/cryptic_game/backend/base/netty/server/NettyServerHandler.html" title="class in net.cryptic_game.backend.base.netty.server"><span class="typeNameLink">NettyServerHandler</span></a></li>
 <li class="circle">net.cryptic_game.backend.data.network.<a href="net/cryptic_game/backend/data/network/NetworkInvitation.InvitationKey.html" title="class in net.cryptic_game.backend.data.network"><span class="typeNameLink">NetworkInvitation.InvitationKey</span></a> (implements java.io.Serializable)</li>
 <li class="circle">net.cryptic_game.backend.data.network.<a href="net/cryptic_game/backend/data/network/NetworkMember.MemberKey.html" title="class in net.cryptic_game.backend.data.network"><span class="typeNameLink">NetworkMember.MemberKey</span></a> (implements java.io.Serializable)</li>
 <li class="circle">net.cryptic_game.backend.base.utils.<a href="net/cryptic_game/backend/base/utils/SecurityUtils.html" title="class in net.cryptic_game.backend.base.utils"><span class="typeNameLink">SecurityUtils</span></a></li>
@@ -243,6 +267,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="circle">net.cryptic_game.backend.data.device.<a href="net/cryptic_game/backend/data/device/DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><span class="typeNameLink">DeviceFile</span></a></li>
 <li class="circle">net.cryptic_game.backend.data.device.<a href="net/cryptic_game/backend/data/device/DeviceHardware.html" title="class in net.cryptic_game.backend.data.device"><span class="typeNameLink">DeviceHardware</span></a></li>
 <li class="circle">net.cryptic_game.backend.data.device.<a href="net/cryptic_game/backend/data/device/DeviceHardwareElement.html" title="class in net.cryptic_game.backend.data.device"><span class="typeNameLink">DeviceHardwareElement</span></a></li>
+<li class="circle">net.cryptic_game.backend.data.device.<a href="net/cryptic_game/backend/data/device/DeviceServiceReq.html" title="class in net.cryptic_game.backend.data.device"><span class="typeNameLink">DeviceServiceReq</span></a></li>
 <li class="circle">net.cryptic_game.backend.data.<a href="net/cryptic_game/backend/data/Inventory.html" title="class in net.cryptic_game.backend.data"><span class="typeNameLink">Inventory</span></a></li>
 <li class="circle">net.cryptic_game.backend.data.network.<a href="net/cryptic_game/backend/data/network/Network.html" title="class in net.cryptic_game.backend.data.network"><span class="typeNameLink">Network</span></a></li>
 <li class="circle">net.cryptic_game.backend.data.service.<a href="net/cryptic_game/backend/data/service/Service.html" title="class in net.cryptic_game.backend.data.service"><span class="typeNameLink">Service</span></a></li>
@@ -253,11 +278,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="circle">net.cryptic_game.backend.data.user.<a href="net/cryptic_game/backend/data/user/UserSettings.html" title="class in net.cryptic_game.backend.data.user"><span class="typeNameLink">UserSettings</span></a></li>
 </ul>
 </li>
-<li class="circle">net.cryptic_game.backend.base.sql.models.<a href="net/cryptic_game/backend/base/sql/models/TableModelId.html" title="class in net.cryptic_game.backend.base.sql.models"><span class="typeNameLink">TableModelId</span></a>
-<ul>
-<li class="circle">net.cryptic_game.backend.data.device.<a href="net/cryptic_game/backend/data/device/DeviceServiceReq.html" title="class in net.cryptic_game.backend.data.device"><span class="typeNameLink">DeviceServiceReq</span></a></li>
-</ul>
-</li>
+<li class="circle">net.cryptic_game.backend.base.sql.models.<a href="net/cryptic_game/backend/base/sql/models/TableModelId.html" title="class in net.cryptic_game.backend.base.sql.models"><span class="typeNameLink">TableModelId</span></a></li>
 </ul>
 </li>
 <li class="circle">java.lang.Throwable (implements java.io.Serializable)
@@ -268,7 +289,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul>
 <li class="circle">net.cryptic_game.backend.base.api.<a href="net/cryptic_game/backend/base/api/ApiException.html" title="class in net.cryptic_game.backend.base.api"><span class="typeNameLink">ApiException</span></a>
 <ul>
-<li class="circle">net.cryptic_game.backend.base.api.<a href="net/cryptic_game/backend/base/api/ApiParameterException.html" title="class in net.cryptic_game.backend.base.api"><span class="typeNameLink">ApiParameterException</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.api.endpoint.<a href="net/cryptic_game/backend/base/api/endpoint/ApiEndpointParameterException.html" title="class in net.cryptic_game.backend.base.api.endpoint"><span class="typeNameLink">ApiEndpointParameterException</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="circle">java.lang.RuntimeException
+<ul>
+<li class="circle">java.lang.IllegalStateException
+<ul>
+<li class="circle">net.cryptic_game.backend.base.api.notification.<a href="net/cryptic_game/backend/base/api/notification/ApiNotificationException.html" title="class in net.cryptic_game.backend.base.api.notification"><span class="typeNameLink">ApiNotificationException</span></a></li>
 </ul>
 </li>
 </ul>
@@ -277,10 +307,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </li>
 </ul>
 </li>
+<li class="circle">net.cryptic_game.backend.base.timeout.<a href="net/cryptic_game/backend/base/timeout/TimeoutHandler.html" title="class in net.cryptic_game.backend.base.timeout"><span class="typeNameLink">TimeoutHandler</span></a> (implements java.lang.Runnable)</li>
 <li class="circle">net.cryptic_game.backend.base.utils.<a href="net/cryptic_game/backend/base/utils/ValidationUtils.html" title="class in net.cryptic_game.backend.base.utils"><span class="typeNameLink">ValidationUtils</span></a></li>
-<li class="circle">net.cryptic_game.backend.server.server.websocket.<a href="net/cryptic_game/backend/server/server/websocket/WebSocketCodec.html" title="class in net.cryptic_game.backend.server.server.websocket"><span class="typeNameLink">WebSocketCodec</span></a> (implements net.cryptic_game.backend.base.netty.<a href="net/cryptic_game/backend/base/netty/NettyCodec.html" title="interface in net.cryptic_game.backend.base.netty">NettyCodec</a>)</li>
-<li class="circle">net.cryptic_game.backend.server.server.websocket.<a href="net/cryptic_game/backend/server/server/websocket/WebSocketInitializer.html" title="class in net.cryptic_game.backend.server.server.websocket"><span class="typeNameLink">WebSocketInitializer</span></a> (implements net.cryptic_game.backend.base.netty.<a href="net/cryptic_game/backend/base/netty/NettyInitializer.html" title="interface in net.cryptic_game.backend.base.netty">NettyInitializer</a>)</li>
-<li class="circle">net.cryptic_game.backend.server.server.websocket.<a href="net/cryptic_game/backend/server/server/websocket/WebSocketUtils.html" title="class in net.cryptic_game.backend.server.server.websocket"><span class="typeNameLink">WebSocketUtils</span></a></li>
+<li class="circle">net.cryptic_game.backend.server.server.websocket.<a href="net/cryptic_game/backend/server/server/websocket/WebSocketEndpointHandler.html" title="class in net.cryptic_game.backend.server.server.websocket"><span class="typeNameLink">WebSocketEndpointHandler</span></a></li>
 </ul>
 </li>
 </ul>
@@ -294,15 +323,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="circle">net.cryptic_game.backend.base.interfaces.<a href="net/cryptic_game/backend/base/interfaces/ResponseType.html" title="interface in net.cryptic_game.backend.base.interfaces"><span class="typeNameLink">ResponseType</span></a></li>
 </ul>
 </li>
-<li class="circle">net.cryptic_game.backend.base.netty.<a href="net/cryptic_game/backend/base/netty/NettyCodec.html" title="interface in net.cryptic_game.backend.base.netty"><span class="typeNameLink">NettyCodec</span></a></li>
-<li class="circle">net.cryptic_game.backend.base.netty.<a href="net/cryptic_game/backend/base/netty/NettyInitializer.html" title="interface in net.cryptic_game.backend.base.netty"><span class="typeNameLink">NettyInitializer</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.api.notification.<a href="net/cryptic_game/backend/base/api/notification/NotificationTopic.html" title="interface in net.cryptic_game.backend.base.api.notification"><span class="typeNameLink">NotificationTopic</span></a></li>
 </ul>
 </section>
 <section role="region">
 <h2 title="Annotation Type Hierarchy">Annotation Type Hierarchy</h2>
 <ul>
-<li class="circle">net.cryptic_game.backend.base.api.<a href="net/cryptic_game/backend/base/api/ApiEndpoint.html" title="annotation in net.cryptic_game.backend.base.api"><span class="typeNameLink">ApiEndpoint</span></a> (implements java.lang.annotation.Annotation)</li>
-<li class="circle">net.cryptic_game.backend.base.api.<a href="net/cryptic_game/backend/base/api/ApiParameter.html" title="annotation in net.cryptic_game.backend.base.api"><span class="typeNameLink">ApiParameter</span></a> (implements java.lang.annotation.Annotation)</li>
+<li class="circle">net.cryptic_game.backend.base.api.endpoint.<a href="net/cryptic_game/backend/base/api/endpoint/ApiEndpoint.html" title="annotation in net.cryptic_game.backend.base.api.endpoint"><span class="typeNameLink">ApiEndpoint</span></a> (implements java.lang.annotation.Annotation)</li>
+<li class="circle">net.cryptic_game.backend.base.api.endpoint.<a href="net/cryptic_game/backend/base/api/endpoint/ApiParameter.html" title="annotation in net.cryptic_game.backend.base.api.endpoint"><span class="typeNameLink">ApiParameter</span></a> (implements java.lang.annotation.Annotation)</li>
+<li class="circle">net.cryptic_game.backend.base.api.endpoint.<a href="net/cryptic_game/backend/base/api/endpoint/ApiParameters.html" title="annotation in net.cryptic_game.backend.base.api.endpoint"><span class="typeNameLink">ApiParameters</span></a> (implements java.lang.annotation.Annotation)</li>
+<li class="circle">net.cryptic_game.backend.base.api.endpoint.<a href="net/cryptic_game/backend/base/api/endpoint/ApiTag.html" title="annotation in net.cryptic_game.backend.base.api.endpoint"><span class="typeNameLink">ApiTag</span></a> (implements java.lang.annotation.Annotation)</li>
 </ul>
 </section>
 <section role="region">
@@ -312,11 +342,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul>
 <li class="circle">java.lang.Enum&lt;E&gt; (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable)
 <ul>
+<li class="circle">net.cryptic_game.backend.base.api.endpoint.<a href="net/cryptic_game/backend/base/api/endpoint/ApiResponseType.html" title="enum in net.cryptic_game.backend.base.api.endpoint"><span class="typeNameLink">ApiResponseType</span></a> (implements net.cryptic_game.backend.base.interfaces.<a href="net/cryptic_game/backend/base/interfaces/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.interfaces">JsonSerializable</a>)</li>
 <li class="circle">net.cryptic_game.backend.base.config.<a href="net/cryptic_game/backend/base/config/BaseConfig.html" title="enum in net.cryptic_game.backend.base.config"><span class="typeNameLink">BaseConfig</span></a> (implements net.cryptic_game.backend.base.config.<a href="net/cryptic_game/backend/base/config/DefaultConfig.html" title="interface in net.cryptic_game.backend.base.config">DefaultConfig</a>)</li>
 <li class="circle">net.cryptic_game.backend.daemon.config.<a href="net/cryptic_game/backend/daemon/config/DaemonConfig.html" title="enum in net.cryptic_game.backend.daemon.config"><span class="typeNameLink">DaemonConfig</span></a> (implements net.cryptic_game.backend.base.config.<a href="net/cryptic_game/backend/base/config/DefaultConfig.html" title="interface in net.cryptic_game.backend.base.config">DefaultConfig</a>)</li>
 <li class="circle">net.cryptic_game.backend.data.device.<a href="net/cryptic_game/backend/data/device/DeviceHardware.HardwareType.html" title="enum in net.cryptic_game.backend.data.device"><span class="typeNameLink">DeviceHardware.HardwareType</span></a></li>
 <li class="circle">net.cryptic_game.backend.server.config.<a href="net/cryptic_game/backend/server/config/ServerConfig.html" title="enum in net.cryptic_game.backend.server.config"><span class="typeNameLink">ServerConfig</span></a> (implements net.cryptic_game.backend.base.config.<a href="net/cryptic_game/backend/base/config/DefaultConfig.html" title="interface in net.cryptic_game.backend.base.config">DefaultConfig</a>)</li>
-<li class="circle">net.cryptic_game.backend.server.server.<a href="net/cryptic_game/backend/server/server/ServerResponseType.html" title="enum in net.cryptic_game.backend.server.server"><span class="typeNameLink">ServerResponseType</span></a> (implements net.cryptic_game.backend.base.interfaces.<a href="net/cryptic_game/backend/base/interfaces/ResponseType.html" title="interface in net.cryptic_game.backend.base.interfaces">ResponseType</a>)</li>
 <li class="circle">net.cryptic_game.backend.base.sql.<a href="net/cryptic_game/backend/base/sql/SQLServerType.html" title="enum in net.cryptic_game.backend.base.sql"><span class="typeNameLink">SQLServerType</span></a></li>
 </ul>
 </li>

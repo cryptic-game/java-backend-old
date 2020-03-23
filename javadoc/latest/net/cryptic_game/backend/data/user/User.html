@@ -148,7 +148,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <pre>@Entity
 public class <span class="typeNameLabel">User</span>
 extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in net.cryptic_game.backend.base.sql.models">TableModelAutoId</a></pre>
-<div class="block">Entity representing an user entry in the database</div>
+<div class="block">Entity representing a user entry in the database</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>0.3.0</dd>
@@ -193,6 +193,12 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">User</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Empty constructor to create a new <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.google.gson.JsonObject)">User</a></span>&#8203;(com.google.gson.JsonObject&nbsp;json)</code></th>
+<td class="colLast">
+<div class="block">Create a <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a> instance from a <code>JsonObject</code>.</div>
 </td>
 </tr>
 </table>
@@ -296,7 +302,7 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <td class="colFirst"><code>com.google.gson.JsonObject</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#serialize()">serialize</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Generates a <code>JsonObject</code> containg all relevent <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a> information</div>
+<div class="block">Generates a <code>JsonObject</code> containing all relevant <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a> information</div>
 </td>
 </tr>
 <tr id="i12" class="altColor">
@@ -389,11 +395,25 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <a id="&lt;init&gt;()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>User</h4>
 <pre>public&nbsp;User()</pre>
 <div class="block">Empty constructor to create a new <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
+</li>
+</ul>
+<a id="&lt;init&gt;(com.google.gson.JsonObject)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>User</h4>
+<pre>public&nbsp;User&#8203;(com.google.gson.JsonObject&nbsp;json)</pre>
+<div class="block">Create a <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a> instance from a <code>JsonObject</code>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>json</code> - is the <code>JsonObject</code> representation of the <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a>.</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -649,7 +669,7 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <li class="blockList">
 <h4>serialize</h4>
 <pre class="methodSignature">public&nbsp;com.google.gson.JsonObject&nbsp;serialize()</pre>
-<div class="block">Generates a <code>JsonObject</code> containg all relevent <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a> information</div>
+<div class="block">Generates a <code>JsonObject</code> containing all relevant <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a> information</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The generated <code>JsonObject</code></dd>

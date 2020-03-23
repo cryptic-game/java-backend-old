@@ -346,6 +346,36 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="hasUserAccessToDevice(net.cryptic_game.backend.data.user.User,net.cryptic_game.backend.data.device.Device)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>hasUserAccessToDevice</h4>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;hasUserAccessToDevice&#8203;(<a href="../user/User.html" title="class in net.cryptic_game.backend.data.user">User</a>&nbsp;user,
+                                            <a href="Device.html" title="class in net.cryptic_game.backend.data.device">Device</a>&nbsp;device)</pre>
+</li>
+</ul>
+<a id="grantAccessToDevice(net.cryptic_game.backend.data.user.User,net.cryptic_game.backend.data.device.Device,java.time.Duration)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>grantAccessToDevice</h4>
+<pre class="methodSignature">public static&nbsp;<a href="DeviceAccess.html" title="class in net.cryptic_game.backend.data.device">DeviceAccess</a>&nbsp;grantAccessToDevice&#8203;(<a href="../user/User.html" title="class in net.cryptic_game.backend.data.user">User</a>&nbsp;user,
+                                               <a href="Device.html" title="class in net.cryptic_game.backend.data.device">Device</a>&nbsp;device,
+                                               java.time.Duration&nbsp;duration)</pre>
+</li>
+</ul>
+<a id="getAccessesToDevice(net.cryptic_game.backend.data.device.Device)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAccessesToDevice</h4>
+<pre class="methodSignature">public static&nbsp;java.util.List&lt;<a href="DeviceAccess.html" title="class in net.cryptic_game.backend.data.device">DeviceAccess</a>&gt;&nbsp;getAccessesToDevice&#8203;(<a href="Device.html" title="class in net.cryptic_game.backend.data.device">Device</a>&nbsp;device)</pre>
+</li>
+</ul>
 <a id="getDevice()">
 <!--   -->
 </a>
@@ -461,7 +491,7 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <a id="hashCode()">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>hashCode</h4>
 <pre class="methodSignature">public&nbsp;int&nbsp;hashCode()</pre>
@@ -469,36 +499,6 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>hashCode</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
 </dl>
-</li>
-</ul>
-<a id="hasUserAccessToDevice(net.cryptic_game.backend.data.user.User,net.cryptic_game.backend.data.device.Device)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>hasUserAccessToDevice</h4>
-<pre class="methodSignature">public static&nbsp;boolean&nbsp;hasUserAccessToDevice&#8203;(<a href="../user/User.html" title="class in net.cryptic_game.backend.data.user">User</a>&nbsp;user,
-                                            <a href="Device.html" title="class in net.cryptic_game.backend.data.device">Device</a>&nbsp;device)</pre>
-</li>
-</ul>
-<a id="grantAccessToDevice(net.cryptic_game.backend.data.user.User,net.cryptic_game.backend.data.device.Device,java.time.Duration)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>grantAccessToDevice</h4>
-<pre class="methodSignature">public static&nbsp;<a href="DeviceAccess.html" title="class in net.cryptic_game.backend.data.device">DeviceAccess</a>&nbsp;grantAccessToDevice&#8203;(<a href="../user/User.html" title="class in net.cryptic_game.backend.data.user">User</a>&nbsp;user,
-                                               <a href="Device.html" title="class in net.cryptic_game.backend.data.device">Device</a>&nbsp;device,
-                                               java.time.Duration&nbsp;duration)</pre>
-</li>
-</ul>
-<a id="getAccessesToDevice(net.cryptic_game.backend.data.device.Device)">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>getAccessesToDevice</h4>
-<pre class="methodSignature">public static&nbsp;java.util.List&lt;<a href="DeviceAccess.html" title="class in net.cryptic_game.backend.data.device">DeviceAccess</a>&gt;&nbsp;getAccessesToDevice&#8203;(<a href="Device.html" title="class in net.cryptic_game.backend.data.device">Device</a>&nbsp;device)</pre>
 </li>
 </ul>
 </li>

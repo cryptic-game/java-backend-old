@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":6,"i1":10,"i2":10};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -88,7 +88,7 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -116,29 +116,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <main role="main">
 <div class="header">
 <div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">net.cryptic_game.backend.base.netty</a></div>
-<h2 title="Class NettyCodecInitializer" class="title">Class NettyCodecInitializer</h2>
+<h2 title="Class NettyCodecInitializer" class="title">Class NettyCodecInitializer&lt;Codec extends <a href="NettyCodec.html" title="class in net.cryptic_game.backend.base.netty">NettyCodec</a>&lt;?&gt;&gt;</h2>
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li>io.netty.channel.ChannelHandlerAdapter</li>
-<li>
-<ul class="inheritance">
-<li>io.netty.channel.ChannelInboundHandlerAdapter</li>
-<li>
-<ul class="inheritance">
-<li>io.netty.channel.ChannelInitializer&lt;io.netty.channel.socket.SocketChannel&gt;</li>
-<li>
-<ul class="inheritance">
-<li>net.cryptic_game.backend.base.netty.NettyCodecInitializer</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
+<li>net.cryptic_game.backend.base.netty.NettyCodecInitializer&lt;Codec&gt;</li>
 </ul>
 </li>
 </ul>
@@ -146,35 +131,18 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <dl>
-<dt>All Implemented Interfaces:</dt>
-<dd><code>io.netty.channel.ChannelHandler</code>, <code>io.netty.channel.ChannelInboundHandler</code></dd>
+<dt>Direct Known Subclasses:</dt>
+<dd><code><a href="../../daemon/client/daemon/DaemonClientCodecInitializer.html" title="class in net.cryptic_game.backend.daemon.client.daemon">DaemonClientCodecInitializer</a></code>, <code><a href="../../server/server/daemon/DaemonCodecServerInitializer.html" title="class in net.cryptic_game.backend.server.server.daemon">DaemonCodecServerInitializer</a></code>, <code><a href="../../server/server/http/HttpServerCodecInitializer.html" title="class in net.cryptic_game.backend.server.server.http">HttpServerCodecInitializer</a></code>, <code><a href="../api/netty/JsonApiServerCodecInitializer.html" title="class in net.cryptic_game.backend.base.api.netty">JsonApiServerCodecInitializer</a></code>, <code><a href="../../server/server/websocket/WebSocketServerCodecInitializer.html" title="class in net.cryptic_game.backend.server.server.websocket">WebSocketServerCodecInitializer</a></code></dd>
 </dl>
 <hr>
-<pre>public class <span class="typeNameLabel">NettyCodecInitializer</span>
-extends io.netty.channel.ChannelInitializer&lt;io.netty.channel.socket.SocketChannel&gt;</pre>
+<pre>public abstract class <span class="typeNameLabel">NettyCodecInitializer&lt;Codec extends <a href="NettyCodec.html" title="class in net.cryptic_game.backend.base.netty">NettyCodec</a>&lt;?&gt;&gt;</span>
+extends java.lang.Object</pre>
 </li>
 </ul>
 </div>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
-<!-- ======== NESTED CLASS SUMMARY ======== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="nested.class.summary">
-<!--   -->
-</a>
-<h3>Nested Class Summary</h3>
-<ul class="blockList">
-<li class="blockList"><a id="nested.classes.inherited.from.class.io.netty.channel.ChannelHandler">
-<!--   -->
-</a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;io.netty.channel.ChannelHandler</h3>
-<code>io.netty.channel.ChannelHandler.Sharable</code></li>
-</ul>
-</li>
-</ul>
-</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <section role="region">
 <ul class="blockList">
@@ -189,8 +157,7 @@ extends io.netty.channel.ChannelInitializer&lt;io.netty.channel.socket.SocketCha
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(io.netty.handler.ssl.SslContext,net.cryptic_game.backend.base.netty.NettyInitializer)">NettyCodecInitializer</a></span>&#8203;(io.netty.handler.ssl.SslContext&nbsp;sslContext,
-                     <a href="NettyInitializer.html" title="interface in net.cryptic_game.backend.base.netty">NettyInitializer</a>&nbsp;nettyInitializer)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">NettyCodecInitializer</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -205,39 +172,28 @@ extends io.netty.channel.ChannelInitializer&lt;io.netty.channel.socket.SocketCha
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>protected void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#initChannel(io.netty.channel.socket.SocketChannel)">initChannel</a></span>&#8203;(io.netty.channel.socket.SocketChannel&nbsp;channel)</code></th>
+<td class="colFirst"><code>abstract void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#configure(io.netty.channel.ChannelPipeline)">configure</a></span>&#8203;(io.netty.channel.ChannelPipeline&nbsp;pipeline)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>protected <a href="NettyCodecInitializer.html" title="type parameter in NettyCodecInitializer">Codec</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCodec()">getCodec</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCodec(Codec)">setCodec</a></span>&#8203;(<a href="NettyCodecInitializer.html" title="type parameter in NettyCodecInitializer">Codec</a>&nbsp;codec)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.io.netty.channel.ChannelInitializer">
-<!--   -->
-</a>
-<h3>Methods inherited from class&nbsp;io.netty.channel.ChannelInitializer</h3>
-<code>channelRegistered, exceptionCaught, handlerAdded, handlerRemoved</code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.io.netty.channel.ChannelInboundHandlerAdapter">
-<!--   -->
-</a>
-<h3>Methods inherited from class&nbsp;io.netty.channel.ChannelInboundHandlerAdapter</h3>
-<code>channelActive, channelInactive, channelRead, channelReadComplete, channelUnregistered, channelWritabilityChanged, userEventTriggered</code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.io.netty.channel.ChannelHandlerAdapter">
-<!--   -->
-</a>
-<h3>Methods inherited from class&nbsp;io.netty.channel.ChannelHandlerAdapter</h3>
-<code>ensureNotSharable, isSharable</code></li>
-</ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
@@ -261,19 +217,13 @@ extends io.netty.channel.ChannelInitializer&lt;io.netty.channel.socket.SocketCha
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(io.netty.handler.ssl.SslContext,net.cryptic_game.backend.base.netty.NettyInitializer)">
+<a id="&lt;init&gt;()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>NettyCodecInitializer</h4>
-<pre>public&nbsp;NettyCodecInitializer&#8203;(io.netty.handler.ssl.SslContext&nbsp;sslContext,
-                             <a href="NettyInitializer.html" title="interface in net.cryptic_game.backend.base.netty">NettyInitializer</a>&nbsp;nettyInitializer)
-                      throws java.lang.IllegalArgumentException</pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.IllegalArgumentException</code></dd>
-</dl>
+<pre>public&nbsp;NettyCodecInitializer()</pre>
 </li>
 </ul>
 </li>
@@ -286,17 +236,33 @@ extends io.netty.channel.ChannelInitializer&lt;io.netty.channel.socket.SocketCha
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="initChannel(io.netty.channel.socket.SocketChannel)">
+<a id="configure(io.netty.channel.ChannelPipeline)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>configure</h4>
+<pre class="methodSignature">public abstract&nbsp;void&nbsp;configure&#8203;(io.netty.channel.ChannelPipeline&nbsp;pipeline)</pre>
+</li>
+</ul>
+<a id="getCodec()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCodec</h4>
+<pre class="methodSignature">protected&nbsp;<a href="NettyCodecInitializer.html" title="type parameter in NettyCodecInitializer">Codec</a>&nbsp;getCodec()</pre>
+</li>
+</ul>
+<a id="setCodec(net.cryptic_game.backend.base.netty.NettyCodec)">
+<!--   -->
+</a><a id="setCodec(Codec)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>initChannel</h4>
-<pre class="methodSignature">protected&nbsp;void&nbsp;initChannel&#8203;(io.netty.channel.socket.SocketChannel&nbsp;channel)</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>initChannel</code>&nbsp;in class&nbsp;<code>io.netty.channel.ChannelInitializer&lt;io.netty.channel.socket.SocketChannel&gt;</code></dd>
-</dl>
+<h4>setCodec</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setCodec&#8203;(<a href="NettyCodecInitializer.html" title="type parameter in NettyCodecInitializer">Codec</a>&nbsp;codec)</pre>
 </li>
 </ul>
 </li>
@@ -350,7 +316,7 @@ extends io.netty.channel.ChannelInitializer&lt;io.netty.channel.socket.SocketCha
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>

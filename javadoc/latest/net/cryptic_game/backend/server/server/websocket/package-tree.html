@@ -113,17 +113,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul>
 <li class="circle">io.netty.handler.codec.MessageToMessageCodec&lt;INBOUND_IN,&#8203;OUTBOUND_IN&gt;
 <ul>
-<li class="circle">net.cryptic_game.backend.server.server.websocket.<a href="WebSocketLogger.html" title="class in net.cryptic_game.backend.server.server.websocket"><span class="typeNameLink">WebSocketLogger</span></a></li>
-<li class="circle">net.cryptic_game.backend.server.server.websocket.<a href="WebSocketServerCodec.html" title="class in net.cryptic_game.backend.server.server.websocket"><span class="typeNameLink">WebSocketServerCodec</span></a></li>
+<li class="circle">net.cryptic_game.backend.server.server.websocket.<a href="WebsocketTextFrameMessageCodec.html" title="class in net.cryptic_game.backend.server.server.websocket"><span class="typeNameLink">WebsocketTextFrameMessageCodec</span></a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="circle">io.netty.channel.SimpleChannelInboundHandler&lt;I&gt;
 <ul>
-<li class="circle">net.cryptic_game.backend.base.netty.<a href="../../../base/netty/NettyHandler.html" title="class in net.cryptic_game.backend.base.netty"><span class="typeNameLink">NettyHandler</span></a>&lt;T&gt;
+<li class="circle">net.cryptic_game.backend.base.netty.<a href="../../../base/netty/NettyChannelHandler.html" title="class in net.cryptic_game.backend.base.netty"><span class="typeNameLink">NettyChannelHandler</span></a>&lt;T&gt;
 <ul>
-<li class="circle">net.cryptic_game.backend.server.server.websocket.<a href="WebSocketHandler.html" title="class in net.cryptic_game.backend.server.server.websocket"><span class="typeNameLink">WebSocketHandler</span></a></li>
+<li class="circle">net.cryptic_game.backend.server.server.websocket.<a href="WebSocketPingPongHandler.html" title="class in net.cryptic_game.backend.server.server.websocket"><span class="typeNameLink">WebSocketPingPongHandler</span></a></li>
 </ul>
 </li>
 </ul>
@@ -132,9 +131,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </li>
 </ul>
 </li>
-<li class="circle">net.cryptic_game.backend.server.server.websocket.<a href="WebSocketCodec.html" title="class in net.cryptic_game.backend.server.server.websocket"><span class="typeNameLink">WebSocketCodec</span></a> (implements net.cryptic_game.backend.base.netty.<a href="../../../base/netty/NettyCodec.html" title="interface in net.cryptic_game.backend.base.netty">NettyCodec</a>)</li>
-<li class="circle">net.cryptic_game.backend.server.server.websocket.<a href="WebSocketInitializer.html" title="class in net.cryptic_game.backend.server.server.websocket"><span class="typeNameLink">WebSocketInitializer</span></a> (implements net.cryptic_game.backend.base.netty.<a href="../../../base/netty/NettyInitializer.html" title="interface in net.cryptic_game.backend.base.netty">NettyInitializer</a>)</li>
-<li class="circle">net.cryptic_game.backend.server.server.websocket.<a href="WebSocketUtils.html" title="class in net.cryptic_game.backend.server.server.websocket"><span class="typeNameLink">WebSocketUtils</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.netty.<a href="../../../base/netty/NettyCodec.html" title="class in net.cryptic_game.backend.base.netty"><span class="typeNameLink">NettyCodec</span></a>&lt;Initializer&gt;
+<ul>
+<li class="circle">net.cryptic_game.backend.server.server.websocket.<a href="WebSocketServerCodec.html" title="class in net.cryptic_game.backend.server.server.websocket"><span class="typeNameLink">WebSocketServerCodec</span></a></li>
+</ul>
+</li>
+<li class="circle">net.cryptic_game.backend.base.netty.<a href="../../../base/netty/NettyCodecInitializer.html" title="class in net.cryptic_game.backend.base.netty"><span class="typeNameLink">NettyCodecInitializer</span></a>&lt;Codec&gt;
+<ul>
+<li class="circle">net.cryptic_game.backend.server.server.websocket.<a href="WebSocketServerCodecInitializer.html" title="class in net.cryptic_game.backend.server.server.websocket"><span class="typeNameLink">WebSocketServerCodecInitializer</span></a></li>
+</ul>
+</li>
+<li class="circle">net.cryptic_game.backend.server.server.websocket.<a href="WebSocketEndpointHandler.html" title="class in net.cryptic_game.backend.server.server.websocket"><span class="typeNameLink">WebSocketEndpointHandler</span></a></li>
 </ul>
 </li>
 </ul>

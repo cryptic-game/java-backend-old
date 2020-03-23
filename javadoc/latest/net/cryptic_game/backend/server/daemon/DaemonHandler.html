@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -175,23 +175,42 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="Daemon.html" title="class in net.cryptic_game.backend.server.daemon">Daemon</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addDaemon(net.cryptic_game.backend.server.daemon.Daemon)">addDaemon</a></span>&#8203;(<a href="Daemon.html" title="class in net.cryptic_game.backend.server.daemon">Daemon</a>&nbsp;daemon)</code></th>
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addDaemon(net.cryptic_game.backend.base.daemon.Daemon)">addDaemon</a></span>&#8203;(<a href="../../base/daemon/Daemon.html" title="class in net.cryptic_game.backend.base.daemon">Daemon</a>&nbsp;daemon)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="Function.html" title="class in net.cryptic_game.backend.server.daemon">Function</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addFunction(net.cryptic_game.backend.server.daemon.Function)">addFunction</a></span>&#8203;(<a href="Function.html" title="class in net.cryptic_game.backend.server.daemon">Function</a>&nbsp;function)</code></th>
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addFunctions(java.util.Set)">addFunctions</a></span>&#8203;(java.util.Set&lt;<a href="../../base/daemon/Function.html" title="class in net.cryptic_game.backend.base.daemon">Function</a>&gt;&nbsp;functions)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="Daemon.html" title="class in net.cryptic_game.backend.server.daemon">Daemon</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDaemon(java.lang.String)">getDaemon</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#executeFunction(java.lang.String,io.netty.channel.Channel,net.cryptic_game.backend.base.daemon.Function,java.util.UUID,com.google.gson.JsonObject)">executeFunction</a></span>&#8203;(java.lang.String&nbsp;tag,
+               io.netty.channel.Channel&nbsp;client,
+               <a href="../../base/daemon/Function.html" title="class in net.cryptic_game.backend.base.daemon">Function</a>&nbsp;function,
+               java.util.UUID&nbsp;userId,
+               com.google.gson.JsonObject&nbsp;data)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="Function.html" title="class in net.cryptic_game.backend.server.daemon">Function</a></code></td>
+<td class="colFirst"><code>java.util.Set&lt;<a href="../../base/daemon/Daemon.html" title="class in net.cryptic_game.backend.base.daemon">Daemon</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDaemons()">getDaemons</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code><a href="../../base/daemon/Function.html" title="class in net.cryptic_game.backend.base.daemon">Function</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFunction(java.lang.String)">getFunction</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeDaemon(io.netty.channel.Channel)">removeDaemon</a></span>&#8203;(io.netty.channel.Channel&nbsp;channel)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#respondToClient(com.google.gson.JsonObject)">respondToClient</a></span>&#8203;(com.google.gson.JsonObject&nbsp;json)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -237,40 +256,71 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="addDaemon(net.cryptic_game.backend.server.daemon.Daemon)">
+<a id="addDaemon(net.cryptic_game.backend.base.daemon.Daemon)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addDaemon</h4>
-<pre class="methodSignature">public&nbsp;<a href="Daemon.html" title="class in net.cryptic_game.backend.server.daemon">Daemon</a>&nbsp;addDaemon&#8203;(<a href="Daemon.html" title="class in net.cryptic_game.backend.server.daemon">Daemon</a>&nbsp;daemon)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;addDaemon&#8203;(<a href="../../base/daemon/Daemon.html" title="class in net.cryptic_game.backend.base.daemon">Daemon</a>&nbsp;daemon)</pre>
 </li>
 </ul>
-<a id="getDaemon(java.lang.String)">
+<a id="removeDaemon(io.netty.channel.Channel)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getDaemon</h4>
-<pre class="methodSignature">public&nbsp;<a href="Daemon.html" title="class in net.cryptic_game.backend.server.daemon">Daemon</a>&nbsp;getDaemon&#8203;(java.lang.String&nbsp;name)</pre>
+<h4>removeDaemon</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;removeDaemon&#8203;(io.netty.channel.Channel&nbsp;channel)</pre>
 </li>
 </ul>
-<a id="addFunction(net.cryptic_game.backend.server.daemon.Function)">
+<a id="getDaemons()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>addFunction</h4>
-<pre class="methodSignature">public&nbsp;<a href="Function.html" title="class in net.cryptic_game.backend.server.daemon">Function</a>&nbsp;addFunction&#8203;(<a href="Function.html" title="class in net.cryptic_game.backend.server.daemon">Function</a>&nbsp;function)</pre>
+<h4>getDaemons</h4>
+<pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="../../base/daemon/Daemon.html" title="class in net.cryptic_game.backend.base.daemon">Daemon</a>&gt;&nbsp;getDaemons()</pre>
+</li>
+</ul>
+<a id="addFunctions(java.util.Set)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addFunctions</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;addFunctions&#8203;(java.util.Set&lt;<a href="../../base/daemon/Function.html" title="class in net.cryptic_game.backend.base.daemon">Function</a>&gt;&nbsp;functions)</pre>
 </li>
 </ul>
 <a id="getFunction(java.lang.String)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getFunction</h4>
-<pre class="methodSignature">public&nbsp;<a href="Function.html" title="class in net.cryptic_game.backend.server.daemon">Function</a>&nbsp;getFunction&#8203;(java.lang.String&nbsp;name)</pre>
+<pre class="methodSignature">public&nbsp;<a href="../../base/daemon/Function.html" title="class in net.cryptic_game.backend.base.daemon">Function</a>&nbsp;getFunction&#8203;(java.lang.String&nbsp;name)</pre>
+</li>
+</ul>
+<a id="executeFunction(java.lang.String,io.netty.channel.Channel,net.cryptic_game.backend.base.daemon.Function,java.util.UUID,com.google.gson.JsonObject)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>executeFunction</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;executeFunction&#8203;(java.lang.String&nbsp;tag,
+                            io.netty.channel.Channel&nbsp;client,
+                            <a href="../../base/daemon/Function.html" title="class in net.cryptic_game.backend.base.daemon">Function</a>&nbsp;function,
+                            java.util.UUID&nbsp;userId,
+                            com.google.gson.JsonObject&nbsp;data)</pre>
+</li>
+</ul>
+<a id="respondToClient(com.google.gson.JsonObject)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>respondToClient</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;respondToClient&#8203;(com.google.gson.JsonObject&nbsp;json)</pre>
 </li>
 </ul>
 </li>

@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":6};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
+var data = {"i0":10,"i1":10};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -89,14 +89,14 @@ loadScripts(document, 'script');</script>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
@@ -116,24 +116,78 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <main role="main">
 <div class="header">
 <div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">net.cryptic_game.backend.base.netty</a></div>
-<h2 title="Interface NettyCodec" class="title">Interface NettyCodec</h2>
+<h2 title="Class NettyCodec" class="title">Class NettyCodec&lt;Initializer extends <a href="NettyCodecInitializer.html" title="class in net.cryptic_game.backend.base.netty">NettyCodecInitializer</a>&lt;?&gt;&gt;</h2>
 </div>
 <div class="contentContainer">
+<ul class="inheritance">
+<li>java.lang.Object</li>
+<li>
+<ul class="inheritance">
+<li>net.cryptic_game.backend.base.netty.NettyCodec&lt;Initializer&gt;</li>
+</ul>
+</li>
+</ul>
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
 <dl>
-<dt>All Known Implementing Classes:</dt>
-<dd><code><a href="../../daemon/client/daemon/DaemonClientCodec.html" title="class in net.cryptic_game.backend.daemon.client.daemon">DaemonClientCodec</a></code>, <code><a href="../../server/server/daemon/DaemonCodec.html" title="class in net.cryptic_game.backend.server.server.daemon">DaemonCodec</a></code>, <code><a href="../../server/server/http/HttpCodec.html" title="class in net.cryptic_game.backend.server.server.http">HttpCodec</a></code>, <code><a href="../../server/server/websocket/WebSocketCodec.html" title="class in net.cryptic_game.backend.server.server.websocket">WebSocketCodec</a></code></dd>
+<dt>Direct Known Subclasses:</dt>
+<dd><code><a href="../../daemon/client/daemon/DaemonClientCodec.html" title="class in net.cryptic_game.backend.daemon.client.daemon">DaemonClientCodec</a></code>, <code><a href="../../server/server/daemon/DaemonServerCodec.html" title="class in net.cryptic_game.backend.server.server.daemon">DaemonServerCodec</a></code>, <code><a href="../../server/server/http/HttpServerCodec.html" title="class in net.cryptic_game.backend.server.server.http">HttpServerCodec</a></code>, <code><a href="../api/netty/JsonApiServerCodec.html" title="class in net.cryptic_game.backend.base.api.netty">JsonApiServerCodec</a></code>, <code><a href="../../server/server/websocket/WebSocketServerCodec.html" title="class in net.cryptic_game.backend.server.server.websocket">WebSocketServerCodec</a></code></dd>
 </dl>
 <hr>
-<pre>public interface <span class="typeNameLabel">NettyCodec</span></pre>
+<pre>public abstract class <span class="typeNameLabel">NettyCodec&lt;Initializer extends <a href="NettyCodecInitializer.html" title="class in net.cryptic_game.backend.base.netty">NettyCodecInitializer</a>&lt;?&gt;&gt;</span>
+extends java.lang.Object</pre>
 </li>
 </ul>
 </div>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
+<ul class="blockList">
+<li class="blockList"><a id="field.summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<table class="memberSummary">
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected <a href="NettyCodec.html" title="type parameter in NettyCodec">Initializer</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#initializer">initializer</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</table>
+</li>
+</ul>
+</section>
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
+<ul class="blockList">
+<li class="blockList"><a id="constructor.summary">
+<!--   -->
+</a>
+<h3>Constructor Summary</h3>
+<table class="memberSummary">
+<caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tr class="altColor">
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(Initializer,net.cryptic_game.backend.base.netty.NettyCodec...)">NettyCodec</a></span>&#8203;(<a href="NettyCodec.html" title="type parameter in NettyCodec">Initializer</a>&nbsp;initializer,
+          <a href="NettyCodec.html" title="class in net.cryptic_game.backend.base.netty">NettyCodec</a>&lt;?&gt;...&nbsp;childCodecs)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</table>
+</li>
+</ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
 <section role="region">
 <ul class="blockList">
@@ -142,18 +196,30 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="NettyInitializer.html" title="interface in net.cryptic_game.backend.base.netty">NettyInitializer</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInitializer()">getInitializer</a></span>()</code></th>
+<td class="colFirst"><code>java.util.List&lt;<a href="NettyCodecInitializer.html" title="class in net.cryptic_game.backend.base.netty">NettyCodecInitializer</a>&lt;?&gt;&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInitializers()">getInitializers</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setChildCodecs(net.cryptic_game.backend.base.netty.NettyCodec...)">setChildCodecs</a></span>&#8203;(<a href="NettyCodec.html" title="class in net.cryptic_game.backend.base.netty">NettyCodec</a>&lt;?&gt;...&nbsp;childCodecs)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
+</ul>
 </li>
 </ul>
 </section>
@@ -163,6 +229,47 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
+<!-- ============ FIELD DETAIL =========== -->
+<section role="region">
+<ul class="blockList">
+<li class="blockList"><a id="field.detail">
+<!--   -->
+</a>
+<h3>Field Detail</h3>
+<a id="initializer">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>initializer</h4>
+<pre>protected final&nbsp;<a href="NettyCodec.html" title="type parameter in NettyCodec">Initializer</a> extends <a href="NettyCodecInitializer.html" title="class in net.cryptic_game.backend.base.netty">NettyCodecInitializer</a>&lt;?&gt; initializer</pre>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
+<ul class="blockList">
+<li class="blockList"><a id="constructor.detail">
+<!--   -->
+</a>
+<h3>Constructor Detail</h3>
+<a id="&lt;init&gt;(net.cryptic_game.backend.base.netty.NettyCodecInitializer,net.cryptic_game.backend.base.netty.NettyCodec[])">
+<!--   -->
+</a><a id="&lt;init&gt;(Initializer,net.cryptic_game.backend.base.netty.NettyCodec...)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>NettyCodec</h4>
+<pre>public&nbsp;NettyCodec&#8203;(<a href="NettyCodec.html" title="type parameter in NettyCodec">Initializer</a>&nbsp;initializer,
+                  <a href="NettyCodec.html" title="class in net.cryptic_game.backend.base.netty">NettyCodec</a>&lt;?&gt;...&nbsp;childCodecs)</pre>
+</li>
+</ul>
+</li>
+</ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
 <section role="region">
 <ul class="blockList">
@@ -170,13 +277,22 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="getInitializer()">
+<a id="setChildCodecs(net.cryptic_game.backend.base.netty.NettyCodec...)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setChildCodecs</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setChildCodecs&#8203;(<a href="NettyCodec.html" title="class in net.cryptic_game.backend.base.netty">NettyCodec</a>&lt;?&gt;...&nbsp;childCodecs)</pre>
+</li>
+</ul>
+<a id="getInitializers()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>getInitializer</h4>
-<pre class="methodSignature"><a href="NettyInitializer.html" title="interface in net.cryptic_game.backend.base.netty">NettyInitializer</a>&nbsp;getInitializer()</pre>
+<h4>getInitializers</h4>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="NettyCodecInitializer.html" title="class in net.cryptic_game.backend.base.netty">NettyCodecInitializer</a>&lt;?&gt;&gt;&nbsp;getInitializers()</pre>
 </li>
 </ul>
 </li>
@@ -231,14 +347,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>

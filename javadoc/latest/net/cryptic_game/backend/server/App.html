@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":9,"i3":10};
+var data = {"i0":10,"i1":10,"i2":9,"i3":10,"i4":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -156,7 +156,7 @@ extends <a href="../base/AppBootstrap.html" title="class in net.cryptic_game.bac
 <!--   -->
 </a>
 <h3>Fields inherited from class&nbsp;net.cryptic_game.backend.base.<a href="../base/AppBootstrap.html" title="class in net.cryptic_game.backend.base">AppBootstrap</a></h3>
-<code><a href="../base/AppBootstrap.html#apiHandler">apiHandler</a>, <a href="../base/AppBootstrap.html#config">config</a>, <a href="../base/AppBootstrap.html#sqlConnection">sqlConnection</a></code></li>
+<code><a href="../base/AppBootstrap.html#config">config</a>, <a href="../base/AppBootstrap.html#sqlConnection">sqlConnection</a></code></li>
 </ul>
 </li>
 </ul>
@@ -213,6 +213,11 @@ extends <a href="../base/AppBootstrap.html" title="class in net.cryptic_game.bac
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#preInit()">preInit</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#start()">start</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -222,7 +227,7 @@ extends <a href="../base/AppBootstrap.html" title="class in net.cryptic_game.bac
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;net.cryptic_game.backend.base.<a href="../base/AppBootstrap.html" title="class in net.cryptic_game.backend.base">AppBootstrap</a></h3>
-<code><a href="../base/AppBootstrap.html#getApiHandler()">getApiHandler</a>, <a href="../base/AppBootstrap.html#getConfig()">getConfig</a>, <a href="../base/AppBootstrap.html#getInstance()">getInstance</a>, <a href="../base/AppBootstrap.html#getSqlConnection()">getSqlConnection</a>, <a href="../base/AppBootstrap.html#setUpSQL()">setUpSQL</a></code></li>
+<code><a href="../base/AppBootstrap.html#addTimeout(long,java.lang.Runnable)">addTimeout</a>, <a href="../base/AppBootstrap.html#getConfig()">getConfig</a>, <a href="../base/AppBootstrap.html#getInstance()">getInstance</a>, <a href="../base/AppBootstrap.html#getName()">getName</a>, <a href="../base/AppBootstrap.html#getSqlConnection()">getSqlConnection</a>, <a href="../base/AppBootstrap.html#setUpSQL()">setUpSQL</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -275,6 +280,32 @@ extends <a href="../base/AppBootstrap.html" title="class in net.cryptic_game.bac
 <pre class="methodSignature">public static&nbsp;void&nbsp;main&#8203;(java.lang.String[]&nbsp;args)</pre>
 </li>
 </ul>
+<a id="preInit()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>preInit</h4>
+<pre class="methodSignature">protected&nbsp;void&nbsp;preInit()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../base/AppBootstrap.html#preInit()">preInit</a></code>&nbsp;in class&nbsp;<code><a href="../base/AppBootstrap.html" title="class in net.cryptic_game.backend.base">AppBootstrap</a></code></dd>
+</dl>
+</li>
+</ul>
+<a id="initApi()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>initApi</h4>
+<pre class="methodSignature">protected&nbsp;void&nbsp;initApi()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../base/AppBootstrap.html#initApi()">initApi</a></code>&nbsp;in class&nbsp;<code><a href="../base/AppBootstrap.html" title="class in net.cryptic_game.backend.base">AppBootstrap</a></code></dd>
+</dl>
+</li>
+</ul>
 <a id="init()">
 <!--   -->
 </a>
@@ -291,26 +322,13 @@ extends <a href="../base/AppBootstrap.html" title="class in net.cryptic_game.bac
 <a id="start()">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>start</h4>
 <pre class="methodSignature">protected&nbsp;void&nbsp;start()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../base/AppBootstrap.html#start()">start</a></code>&nbsp;in class&nbsp;<code><a href="../base/AppBootstrap.html" title="class in net.cryptic_game.backend.base">AppBootstrap</a></code></dd>
-</dl>
-</li>
-</ul>
-<a id="initApi()">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>initApi</h4>
-<pre class="methodSignature">protected&nbsp;void&nbsp;initApi()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../base/AppBootstrap.html#initApi()">initApi</a></code>&nbsp;in class&nbsp;<code><a href="../base/AppBootstrap.html" title="class in net.cryptic_game.backend.base">AppBootstrap</a></code></dd>
 </dl>
 </li>
 </ul>

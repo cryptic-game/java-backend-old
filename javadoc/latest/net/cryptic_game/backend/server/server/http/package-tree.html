@@ -109,11 +109,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul>
 <li class="circle">io.netty.channel.ChannelInboundHandlerAdapter (implements io.netty.channel.ChannelInboundHandler)
 <ul>
-<li class="circle">io.netty.channel.SimpleChannelInboundHandler&lt;I&gt;
+<li class="circle">io.netty.channel.ChannelDuplexHandler (implements io.netty.channel.ChannelOutboundHandler)
 <ul>
-<li class="circle">net.cryptic_game.backend.base.netty.<a href="../../../base/netty/NettyHandler.html" title="class in net.cryptic_game.backend.base.netty"><span class="typeNameLink">NettyHandler</span></a>&lt;T&gt;
+<li class="circle">io.netty.handler.codec.MessageToMessageCodec&lt;INBOUND_IN,&#8203;OUTBOUND_IN&gt;
 <ul>
-<li class="circle">net.cryptic_game.backend.server.server.http.<a href="HttpServerHandler.html" title="class in net.cryptic_game.backend.server.server.http"><span class="typeNameLink">HttpServerHandler</span></a></li>
+<li class="circle">net.cryptic_game.backend.server.server.http.<a href="HttpToStringMessageCodec.html" title="class in net.cryptic_game.backend.server.server.http"><span class="typeNameLink">HttpToStringMessageCodec</span></a></li>
 </ul>
 </li>
 </ul>
@@ -122,9 +122,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </li>
 </ul>
 </li>
-<li class="circle">net.cryptic_game.backend.server.server.http.<a href="HttpCodec.html" title="class in net.cryptic_game.backend.server.server.http"><span class="typeNameLink">HttpCodec</span></a> (implements net.cryptic_game.backend.base.netty.<a href="../../../base/netty/NettyCodec.html" title="interface in net.cryptic_game.backend.base.netty">NettyCodec</a>)</li>
-<li class="circle">net.cryptic_game.backend.server.server.http.<a href="HttpEndpoint.html" title="class in net.cryptic_game.backend.server.server.http"><span class="typeNameLink">HttpEndpoint</span></a></li>
-<li class="circle">net.cryptic_game.backend.server.server.http.<a href="HttpServerInitializer.html" title="class in net.cryptic_game.backend.server.server.http"><span class="typeNameLink">HttpServerInitializer</span></a> (implements net.cryptic_game.backend.base.netty.<a href="../../../base/netty/NettyInitializer.html" title="interface in net.cryptic_game.backend.base.netty">NettyInitializer</a>)</li>
+<li class="circle">net.cryptic_game.backend.server.server.http.<a href="HttpEndpointHandler.html" title="class in net.cryptic_game.backend.server.server.http"><span class="typeNameLink">HttpEndpointHandler</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.netty.<a href="../../../base/netty/NettyCodec.html" title="class in net.cryptic_game.backend.base.netty"><span class="typeNameLink">NettyCodec</span></a>&lt;Initializer&gt;
+<ul>
+<li class="circle">net.cryptic_game.backend.server.server.http.<a href="HttpServerCodec.html" title="class in net.cryptic_game.backend.server.server.http"><span class="typeNameLink">HttpServerCodec</span></a></li>
+</ul>
+</li>
+<li class="circle">net.cryptic_game.backend.base.netty.<a href="../../../base/netty/NettyCodecInitializer.html" title="class in net.cryptic_game.backend.base.netty"><span class="typeNameLink">NettyCodecInitializer</span></a>&lt;Codec&gt;
+<ul>
+<li class="circle">net.cryptic_game.backend.server.server.http.<a href="HttpServerCodecInitializer.html" title="class in net.cryptic_game.backend.server.server.http"><span class="typeNameLink">HttpServerCodecInitializer</span></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

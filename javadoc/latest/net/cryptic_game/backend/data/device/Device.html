@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":9,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
+var data = {"i0":9,"i1":10,"i2":9,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -259,33 +259,38 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasUserAccess(net.cryptic_game.backend.data.user.User)">hasUserAccess</a></span>&#8203;(<a href="../user/User.html" title="class in net.cryptic_game.backend.data.user">User</a>&nbsp;user)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isPoweredOn()">isPoweredOn</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the power state of the <a href="Device.html" title="class in net.cryptic_game.backend.data.device"><code>Device</code></a></div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>com.google.gson.JsonObject</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#serialize()">serialize</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Generates a <code>JsonObject</code> containg all relevent <a href="Device.html" title="class in net.cryptic_game.backend.data.device"><code>Device</code></a> information</div>
+<div class="block">Generates a <code>JsonObject</code> containing all relevant <a href="Device.html" title="class in net.cryptic_game.backend.data.device"><code>Device</code></a> information</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setName(java.lang.String)">setName</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
 <div class="block">Sets a new name of the <a href="Device.html" title="class in net.cryptic_game.backend.data.device"><code>Device</code></a></div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setOwner(net.cryptic_game.backend.data.user.User)">setOwner</a></span>&#8203;(<a href="../user/User.html" title="class in net.cryptic_game.backend.data.user">User</a>&nbsp;owner)</code></th>
 <td class="colLast">
 <div class="block">Sets a new owner of the <a href="Device.html" title="class in net.cryptic_game.backend.data.device"><code>Device</code></a></div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPoweredOn(boolean)">setPoweredOn</a></span>&#8203;(boolean&nbsp;poweredOn)</code></th>
 <td class="colLast">
@@ -470,6 +475,15 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 </dl>
 </li>
 </ul>
+<a id="hasUserAccess(net.cryptic_game.backend.data.user.User)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>hasUserAccess</h4>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;hasUserAccess&#8203;(<a href="../user/User.html" title="class in net.cryptic_game.backend.data.user">User</a>&nbsp;user)</pre>
+</li>
+</ul>
 <a id="serialize()">
 <!--   -->
 </a>
@@ -477,7 +491,7 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <li class="blockList">
 <h4>serialize</h4>
 <pre class="methodSignature">public&nbsp;com.google.gson.JsonObject&nbsp;serialize()</pre>
-<div class="block">Generates a <code>JsonObject</code> containg all relevent <a href="Device.html" title="class in net.cryptic_game.backend.data.device"><code>Device</code></a> information</div>
+<div class="block">Generates a <code>JsonObject</code> containing all relevant <a href="Device.html" title="class in net.cryptic_game.backend.data.device"><code>Device</code></a> information</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The generated <code>JsonObject</code></dd>

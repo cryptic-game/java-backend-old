@@ -139,10 +139,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt>All Implemented Interfaces:</dt>
 <dd><code><a href="../../interfaces/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.interfaces">JsonSerializable</a></code></dd>
 </dl>
-<dl>
-<dt>Direct Known Subclasses:</dt>
-<dd><code><a href="../../../data/device/DeviceServiceReq.html" title="class in net.cryptic_game.backend.data.device">DeviceServiceReq</a></code></dd>
-</dl>
 <hr>
 <pre>@MappedSuperclass
 public abstract class <span class="typeNameLabel">TableModelId</span>
@@ -280,6 +276,23 @@ extends <a href="TableModel.html" title="class in net.cryptic_game.backend.base.
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="getById(java.lang.Class,java.util.UUID)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getById</h4>
+<pre class="methodSignature">public static&nbsp;&lt;T extends <a href="TableModelId.html" title="class in net.cryptic_game.backend.base.sql.models">TableModelId</a>&gt;&nbsp;T&nbsp;getById&#8203;(java.lang.Class&lt;T&gt;&nbsp;entityClass,
+                                                 java.util.UUID&nbsp;id)</pre>
+<div class="block">Fetches the entity with the given id</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>id</code> - The id of the entity</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The instance of the fetched entity if it exists | null if the entity does not exist</dd>
+</dl>
+</li>
+</ul>
 <a id="getId()">
 <!--   -->
 </a>
@@ -292,27 +305,10 @@ extends <a href="TableModel.html" title="class in net.cryptic_game.backend.base.
 <a id="setId(java.util.UUID)">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>setId</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setId&#8203;(java.util.UUID&nbsp;id)</pre>
-</li>
-</ul>
-<a id="getById(java.lang.Class,java.util.UUID)">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>getById</h4>
-<pre class="methodSignature">public static&nbsp;&lt;T extends <a href="TableModelId.html" title="class in net.cryptic_game.backend.base.sql.models">TableModelId</a>&gt;&nbsp;T&nbsp;getById&#8203;(java.lang.Class&lt;T&gt;&nbsp;entityClass,
-                                                 java.util.UUID&nbsp;id)</pre>
-<div class="block">Fetches the entity with the given id</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>id</code> - The id of the entity</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The instance of the fetched entity if it exists | null if the entity does not exist</dd>
-</dl>
 </li>
 </ul>
 </li>
