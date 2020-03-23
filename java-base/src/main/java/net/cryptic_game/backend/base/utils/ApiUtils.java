@@ -1,12 +1,11 @@
-package net.cryptic_game.backend.base.api.request;
+package net.cryptic_game.backend.base.utils;
 
 import com.google.gson.JsonObject;
 import io.netty.channel.Channel;
-import net.cryptic_game.backend.base.utils.JsonBuilder;
 
 import java.util.UUID;
 
-public class ApiRequest {
+public class ApiUtils {
 
     public static UUID request(final Channel channel, final String endpoint, final JsonObject data) {
         final UUID tag = UUID.randomUUID();

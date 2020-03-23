@@ -2,9 +2,9 @@ package net.cryptic_game.backend.server.daemon;
 
 import com.google.gson.JsonObject;
 import io.netty.channel.Channel;
-import net.cryptic_game.backend.base.api.request.ApiRequest;
 import net.cryptic_game.backend.base.daemon.Daemon;
 import net.cryptic_game.backend.base.daemon.Function;
+import net.cryptic_game.backend.base.utils.ApiUtils;
 import net.cryptic_game.backend.data.user.User;
 
 import java.util.HashMap;
@@ -45,6 +45,6 @@ public class DaemonHandler {
 
     public void executeFunction(final Function function, final User user, final JsonObject data) {
         data.add("user", user.serialize());
-        ApiRequest.request(function.getDaemon().getChannel(), function.getName(), data);
+        ApiUtils.request(function.getDaemon().getChannel(), function.getName(), data);
     }
 }

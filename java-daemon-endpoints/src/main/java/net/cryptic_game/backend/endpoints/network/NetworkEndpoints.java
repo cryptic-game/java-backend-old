@@ -16,7 +16,7 @@ public class NetworkEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("create")
-    public ApiResponse create(JsonObject userJson,
+    public ApiResponse create(@ApiParameter("user") JsonObject userJson,
                               @ApiParameter("name") String name,
                               @ApiParameter("hidden") boolean hidden,
                               @ApiParameter("device") UUID deviceUUID) {

@@ -49,6 +49,7 @@ public class App extends AppBootstrap {
                 e.printStackTrace();
             }
         }
+        this.daemonEndpointHandler.postInit();
     }
 
     @Override

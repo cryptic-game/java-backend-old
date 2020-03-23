@@ -22,9 +22,9 @@ public class WebSocketDaemonEndpoints extends ApiEndpointCollection {
     public ApiResponse send(final ApiClient client,
                             @ApiParameter("session_id") final UUID sessionId,
                             @ApiParameter("session_token") final UUID sessionToken,
-                            @ApiParameter("functionName") final String functionName,
+                            @ApiParameter("function_name") final String functionName,
                             @ApiParameter(value = "data", optional = true) final JsonObject data) {
-
+//TODO Check login via Client
         final Session session = Session.getById(sessionId);
         if (!(session != null && session.getToken().equals(sessionToken) && session.isValid())) {
             return new ApiResponse(ApiResponseType.UNAUTHORIZED, "INVALID_SESSION");
