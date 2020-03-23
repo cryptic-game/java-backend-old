@@ -12,9 +12,8 @@ import java.util.stream.Collectors;
 public class DaemonHandler {
 
     private final Map<String, Function> functions;
-    private Set<Daemon> daemons;
-
     private final HashMap<UUID, ClientRespond> channel;
+    private Set<Daemon> daemons;
 
     public DaemonHandler() {
         this.daemons = new HashSet<>();

@@ -129,7 +129,7 @@ public class NetworkInvitation extends TableModel {
     }
 
     /**
-     * Returns wheter the {@link NetworkInvitation} is a request
+     * Returns whether the {@link NetworkInvitation} is a request
      *
      * @return true if the {@link NetworkInvitation} is a request | false if it is not
      */
@@ -183,7 +183,7 @@ public class NetworkInvitation extends TableModel {
     }
 
     /**
-     * Generates a {@link JsonObject} containg all relevent {@link NetworkInvitation} information
+     * Generates a {@link JsonObject} containing all relevant {@link NetworkInvitation} information
      *
      * @return The generated {@link JsonObject}
      */

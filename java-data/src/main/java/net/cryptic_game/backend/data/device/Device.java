@@ -129,7 +129,7 @@ public class Device extends TableModelAutoId {
     }
 
     /**
-     * Generates a {@link JsonObject} containg all relevent {@link Device} information
+     * Generates a {@link JsonObject} containing all relevant {@link Device} information
      *
      * @return The generated {@link JsonObject}
      */

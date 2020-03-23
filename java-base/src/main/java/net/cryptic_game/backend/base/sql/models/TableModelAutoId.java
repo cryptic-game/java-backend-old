@@ -20,14 +20,6 @@ public abstract class TableModelAutoId extends TableModel {
     @Type(type = "uuid-char")
     private UUID id;
 
-    public UUID getId() {
-        return this.id;
-    }
-
-    public void setId(final UUID id) {
-        this.id = id;
-    }
-
     /**
      * Fetches the entity with the given id
      *
@@ -39,5 +31,13 @@ public abstract class TableModelAutoId extends TableModel {
         final T entity = session.find(entityClass, id);
         session.close();
         return entity;
+    }
+
+    public UUID getId() {
+        return this.id;
+    }
+
+    public void setId(final UUID id) {
+        this.id = id;
     }
 }

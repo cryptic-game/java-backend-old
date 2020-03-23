@@ -231,7 +231,7 @@ public class User extends TableModelAutoId {
     }
 
     /**
-     * Generates a {@link JsonObject} containg all relevent {@link User} information
+     * Generates a {@link JsonObject} containing all relevant {@link User} information
      *
      * @return The generated {@link JsonObject}
      */

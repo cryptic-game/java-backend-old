@@ -76,11 +76,9 @@ public class DeviceHardware extends TableModelAutoId {
                 .build();
     }
 
-
     public enum HardwareType {
 
         PROCESSOR, MAINBOARD, RAM, COOLER, GRAPHIC_CARD, DISK, POWER_PACK, CASE
     }
-
 
 }

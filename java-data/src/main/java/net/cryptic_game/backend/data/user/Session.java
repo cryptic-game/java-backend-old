@@ -205,7 +205,7 @@ public class Session extends TableModelAutoId {
     }
 
     /**
-     * Generates a {@link JsonObject} containg all relevent {@link Session} information
+     * Generates a {@link JsonObject} containing all relevant {@link Session} information
      *
      * @return The generated {@link JsonObject}
      */
