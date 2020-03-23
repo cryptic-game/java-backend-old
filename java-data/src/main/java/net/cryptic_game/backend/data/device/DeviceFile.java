@@ -33,6 +33,40 @@ public class DeviceFile extends TableModelAutoId {
     @Type(type = "uuid-char")
     private DeviceFile parentDirectory;
 
+    private static DeviceFile createFile(final Device device, final String name, final String contents, final boolean isDirectory, final DeviceFile parentDir) {
+        final Session sqlSession = sqlConnection.openSession();
+
+        final DeviceFile file = new DeviceFile();
+        file.setDevice(device);
+        file.setName(name);
+        file.setContent(contents);
+        file.setIsDirectory(isDirectory);
+        file.setParentDirectory(parentDir);
+
+        sqlSession.beginTransaction();
+        sqlSession.save(file);
+        sqlSession.getTransaction().commit();
+        sqlSession.close();
+        return file;
+    }
+
+    public static DeviceFile createFile(final Device device, final String name, final String contents, final DeviceFile parentDir) {
+        return createFile(device, name, contents, false, parentDir);
+    }
+
+    public static DeviceFile createDirectory(final Device device, final String name, final DeviceFile parentDir) {
+        return createFile(device, name, "", true, parentDir);
+    }
+
+    public static List<DeviceFile> getFilesByDevice(final Device device) {
+        try (final Session sqlSession = sqlConnection.openSession()) {
+            return sqlSession
+                    .createQuery("select object (f) from DeviceFile f where f.device = :device", DeviceFile.class)
+                    .setParameter("device", device)
+                    .getResultList();
+        }
+    }
+
     public Device getDevice() {
         return this.device;
     }
@@ -101,41 +135,5 @@ public class DeviceFile extends TableModelAutoId {
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getDevice(), getName(), getContent(), isDirectory(), getParentDirectory());
-    }
-
-
-
-    private static DeviceFile createFile(final Device device, final String name, final String contents, final boolean isDirectory, final DeviceFile parentDir) {
-        final Session sqlSession = sqlConnection.openSession();
-
-        final DeviceFile file = new DeviceFile();
-        file.setDevice(device);
-        file.setName(name);
-        file.setContent(contents);
-        file.setIsDirectory(isDirectory);
-        file.setParentDirectory(parentDir);
-
-        sqlSession.beginTransaction();
-        sqlSession.save(file);
-        sqlSession.getTransaction().commit();
-        sqlSession.close();
-        return file;
-    }
-
-    public static DeviceFile createFile(final Device device, final String name, final String contents, final DeviceFile parentDir) {
-        return createFile(device, name, contents, false, parentDir);
-    }
-
-    public static DeviceFile createDirectory(final Device device, final String name, final DeviceFile parentDir) {
-        return createFile(device, name, "", true, parentDir);
-    }
-
-    public static List<DeviceFile> getFilesByDevice(final Device device) {
-        try (final Session sqlSession = sqlConnection.openSession()) {
-            return sqlSession
-                    .createQuery("select object (f) from File f where f.device = :device", DeviceFile.class)
-                    .setParameter("device", device)
-                    .getResultList();
-        }
     }
 }

@@ -142,7 +142,7 @@ public class NetworkMember extends TableModel {
     }
 
     /**
-     * Generates a {@link JsonObject} containg all relevent {@link NetworkMember} information
+     * Generates a {@link JsonObject} containing all relevant {@link NetworkMember} information
      *
      * @return The generated {@link JsonObject}
      */

@@ -46,9 +46,9 @@ public class Network extends TableModelAutoId {
     /**
      * Creates a new {@link Network}
      *
-     * @param name   Name of the {@link Network}
-     * @param owner  Owner of the {@link Network}
-     * @param hidden Hidden state of the {@link Network}
+     * @param name    Name of the {@link Network}
+     * @param owner   Owner of the {@link Network}
+     * @param _public Public state of the {@link Network}
      * @return The instance of the created {@link Network}
      */
     public static Network createNetwork(final String name, final Device owner, final boolean _public) {
@@ -163,18 +163,18 @@ public class Network extends TableModelAutoId {
     }
 
     /**
-     * Returns the _public state of the {@link Network}
+     * Returns the public state of the {@link Network}
      *
-     * @return Hidden state of the {@link Network}
+     * @return Public state of the {@link Network}
      */
     public boolean isPublic() {
         return this._public;
     }
 
     /**
-     * Sets a new _public state of the {@link Network}
+     * Sets a new public state of the {@link Network}
      *
-     * @param _public New _public state to be set
+     * @param _public New public state to be set
      */
     public void setPublic(final boolean _public) {
         this._public = _public;
@@ -199,7 +199,7 @@ public class Network extends TableModelAutoId {
     }
 
     /**
-     * Generates a {@link JsonObject} containg all relevent {@link Network} information
+     * Generates a {@link JsonObject} containing all relevant {@link Network} information
      *
      * @return The generated {@link JsonObject}
      */

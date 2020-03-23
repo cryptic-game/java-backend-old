@@ -37,6 +37,44 @@ public class DeviceAccess extends TableModelAutoId {
     @Column(name = "valid", nullable = false, updatable = true)
     private boolean valid;
 
+    public static boolean hasUserAccessToDevice(final User user, final Device device) {
+        try (Session sqlSession = sqlConnection.openSession()) {
+            return sqlSession
+                    .createQuery("select object (a) from DeviceAccess a where a.user = :user and a.device = :device and a.valid = true and a.expire > :currentDate", DeviceAccess.class)
+                    .setParameter("user", user)
+                    .setParameter("device", device)
+                    .setParameter("currentDate", LocalDateTime.now())
+                    .getResultList().size() > 0;
+        }
+    }
+
+    public static DeviceAccess grantAccessToDevice(final User user, final Device device, final Duration duration) {
+        Session sqlSession = sqlConnection.openSession();
+
+        DeviceAccess access = new DeviceAccess();
+        access.setUser(user);
+        access.setDevice(device);
+        access.setAccessGranted(LocalDateTime.now());
+        access.setValid(true);
+        access.setExpire(LocalDateTime.now().plus(duration));
+
+        sqlSession.beginTransaction();
+        sqlSession.save(access);
+        sqlSession.getTransaction().commit();
+        sqlSession.close();
+        return access;
+    }
+
+    public static List<DeviceAccess> getAccessesToDevice(final Device device) {
+        try (Session sqlSession = sqlConnection.openSession()) {
+            return sqlSession
+                    .createQuery("select object (a) from DeviceAccess a where a.device = :device and a.valid = true and a.expire > :currentDate", DeviceAccess.class)
+                    .setParameter("device", device)
+                    .setParameter("currentDate", LocalDateTime.now())
+                    .getResultList();
+        }
+    }
+
     public Device getDevice() {
         return this.device;
     }
@@ -105,44 +143,5 @@ public class DeviceAccess extends TableModelAutoId {
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getDevice(), getUser(), getAccessGranted(), getExpire(), isValid());
-    }
-
-
-    public static boolean hasUserAccessToDevice(final User user, final Device device) { // übertragen
-        try (Session sqlSession = sqlConnection.openSession()) {
-            return sqlSession
-                    .createQuery("select object (a) from DeviceAccess a where a.user = :user and a.device = :device and a.valid = true and a.expire > :currentDate", DeviceAccess.class)
-                    .setParameter("user", user)
-                    .setParameter("device", device)
-                    .setParameter("currentDate", LocalDateTime.now())
-                    .getResultList().size() > 0;
-        }
-    }
-
-    public static DeviceAccess grantAccessToDevice(final User user, final Device device, final Duration duration) {
-        Session sqlSession = sqlConnection.openSession();
-
-        DeviceAccess access = new DeviceAccess();
-        access.setUser(user);
-        access.setDevice(device);
-        access.setAccessGranted(LocalDateTime.now());
-        access.setValid(true);
-        access.setExpire(LocalDateTime.now().plus(duration));
-
-        sqlSession.beginTransaction();
-        sqlSession.save(access);
-        sqlSession.getTransaction().commit();
-        sqlSession.close();
-        return access;
-    }
-
-    public static List<DeviceAccess> getAccessesToDevice(final Device device) {
-        try (Session sqlSession = sqlConnection.openSession()) {
-            return sqlSession
-                    .createQuery("select object (a) from DeviceAccess a where a.device = :device and a.valid = true and a.expire > :currentDate", DeviceAccess.class)
-                    .setParameter("device", device)
-                    .setParameter("currentDate", LocalDateTime.now())
-                    .getResultList();
-        }
     }
 }

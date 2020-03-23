@@ -42,15 +42,20 @@ public class ApiEndpointExecutor {
             Object[] methodArgs = null;
 
             if (this.useClient) {
-                methodArgs = new Object[parameters.length + 1];
-                methodArgs[0] = client;
-                System.arraycopy(parameters, 0, methodArgs, 2, parameters.length);
-            }
-
-            if (this.useTag) {
+                if (this.useTag) {
+                    methodArgs = new Object[parameters.length + 2];
+                    methodArgs[0] = client;
+                    methodArgs[1] = tag;
+                    System.arraycopy(parameters, 0, methodArgs, 2, parameters.length);
+                } else {
+                    methodArgs = new Object[parameters.length + 1];
+                    methodArgs[0] = client;
+                    System.arraycopy(parameters, 0, methodArgs, 1, parameters.length);
+                }
+            } else if (this.useTag) {
                 methodArgs = new Object[parameters.length + 1];
                 methodArgs[0] = tag;
-                System.arraycopy(parameters, 0, methodArgs, 2, parameters.length);
+                System.arraycopy(parameters, 0, methodArgs, 1, parameters.length);
             }
 
             final Object value = this.method.invoke(this.apiCollection, methodArgs == null ? parameters : methodArgs);
