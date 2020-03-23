@@ -19,6 +19,8 @@ jobs:
         run: chmod +x gradlew
       - name: Build Docs with Gradle
         run: ./gradlew aggregateJavadoc createDocs
+      - name: Debug
+        run: ls
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
