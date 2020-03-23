@@ -40,7 +40,6 @@ public class JsonApiServerContentHandler extends NettyChannelHandler<JsonObject>
 
         ApiResponse apiResponse = null;
         JsonElement tag = null;
-//        boolean logged = false;
 
         if (request.has("tag")) tag = request.get("tag");
         else apiResponse = new ApiResponse(ApiResponseType.BAD_REQUEST, "MISSING_TAG");
@@ -50,8 +49,6 @@ public class JsonApiServerContentHandler extends NettyChannelHandler<JsonObject>
             final JsonObject data = request.has("data") ? request.get("data").getAsJsonObject() : new JsonObject();
             try {
                 apiResponse = this.executor.execute(this.clientList.get(ctx.channel()), endpoint, data);
-//                log.info("Json Server - \"" + ctx.channel().remoteAddress().toString().substring(1) + "\" requested \"" + endpoint + "\" with result \"" + apiResponse.toString() + "\".");
-//                logged = true;
             } catch (ApiException e) {
                 log.error("Error while executing JsonApi-Endpoint \"" + endpoint + "\".", e);
                 apiResponse = new ApiResponse(ApiResponseType.INTERNAL_SERVER_ERROR);
@@ -60,17 +57,18 @@ public class JsonApiServerContentHandler extends NettyChannelHandler<JsonObject>
             apiResponse = new ApiResponse(ApiResponseType.BAD_REQUEST, "MISSING_ENDPOINT");
         }
 
-//        if (!logged) {
-//            log.info("\"" + ctx.channel().remoteAddress().toString().substring(1) + "\" requested a bad request with result \"" + apiResponse.getType().toString() + "\".");
-//        }
+        if (apiResponse != null) {
+            final JsonObject response = new JsonObject();
+            response.addProperty("tag", tag == null ? "00000000-0000-0000-0000-000000000000" : tag.getAsString());
+            final JsonObject info = apiResponse.getType().serialize(true);
+            if (apiResponse.hasErrorMessage()) info.addProperty("message", apiResponse.getMessage());
+            response.add("info", info);
+            if (apiResponse.getData() != null) response.add("data", apiResponse.getData());
 
-        final JsonObject response = new JsonObject();
-        response.addProperty("tag", tag == null ? "00000000-0000-0000-0000-000000000000" : tag.getAsString());
-        final JsonObject info = apiResponse.getType().serialize(true);
-        if (apiResponse.hasErrorMessage()) info.addProperty("message", apiResponse.getMessage());
-        response.add("info", info);
-        if (apiResponse.getData() != null) response.add("data", apiResponse.getData());
+            // TODO: Write this in a Timeout with the TAG and the DAEMON and some other information,
+            //       to handle the incoming response from the daemon.
 
-        ctx.write(response);
+            ctx.write(response);
+        }
     }
 }
