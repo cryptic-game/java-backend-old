@@ -9,6 +9,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -64,6 +65,22 @@ public class NetworkMember extends TableModel {
         NetworkMember networkMember = sqlSession.find(NetworkMember.class, new NetworkMember.MemberKey(network, device));
         sqlSession.close();
         return networkMember;
+    }
+
+    /**
+     * Fetches the {@link NetworkMember} of the give {@link Device}
+     *
+     * @param device {@link Device} of the {@link NetworkMember}
+     * @return A {@link List} containing the fetched {@link NetworkMember}'s
+     */
+    public static List<NetworkMember> getMembershipsOfDevice(Device device) {
+        final Session sqlSession = sqlConnection.openSession();
+        final List<NetworkMember> networkMembers = sqlSession
+                .createQuery("select object (n) from NetworkMember as n where n.key.device = :device", NetworkMember.class)
+                .setParameter("device", device)
+                .getResultList();
+        sqlSession.close();
+        return networkMembers;
     }
 
     /**

@@ -53,8 +53,8 @@ public class User extends TableModelAutoId {
     public User(final JsonObject json) {
         this.setId(UUID.fromString(json.get("id").getAsString()));
         this.name = json.get("name").getAsString();
-        this.mail = json.get("main").getAsString();
-        this.created = LocalDateTime.ofInstant(Instant.ofEpochMilli(json.get("name").getAsLong()), ZoneOffset.UTC);
+        this.mail = json.get("mail").getAsString();
+        this.created = LocalDateTime.ofInstant(Instant.ofEpochMilli(json.get("created").getAsLong()), ZoneOffset.UTC);
         this.last = LocalDateTime.ofInstant(Instant.ofEpochMilli(json.get("last").getAsLong()), ZoneOffset.UTC);
     }
 
