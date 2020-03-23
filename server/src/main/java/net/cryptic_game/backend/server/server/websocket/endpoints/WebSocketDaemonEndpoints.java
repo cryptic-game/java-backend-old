@@ -33,11 +33,11 @@ public class WebSocketDaemonEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "FUNCTION");
         }
 
-        if (data == null || function.validateArguments(data)) {
+        if (data != null && function.validateArguments(data)) {
             return new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_PARAMETERS");
         }
 
-        this.daemonHandler.executeFunction(function, session.getUser(), data);
+        this.daemonHandler.executeFunction(function, session.getUser(), data == null ? new JsonObject() : data);
 
         return null;
     }
