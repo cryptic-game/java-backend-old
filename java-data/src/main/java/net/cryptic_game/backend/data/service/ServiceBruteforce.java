@@ -5,10 +5,7 @@ import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 
@@ -20,7 +17,7 @@ public class ServiceBruteforce extends TableModelAutoId {
     private int started;
 
     @ManyToOne
-    @Column(name = "target_service", updatable = true, nullable = true)
+    @JoinColumn(name = "target_service", updatable = true, nullable = true)
     @Type(type = "uuid-char")
     private Service targetService;
 

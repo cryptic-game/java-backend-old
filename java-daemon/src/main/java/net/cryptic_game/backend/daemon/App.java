@@ -58,7 +58,7 @@ public class App extends AppBootstrap {
         final boolean useUnixSocket = this.config.getAsBoolean(BaseConfig.USE_UNIX_SOCKET);
         this.client = this.clientHandler.addClient("daemon",
                 useUnixSocket ? new DomainSocketAddress(this.config.getAsString(BaseConfig.UNIX_SOCKET_PATH)) : new InetSocketAddress("localhost", 4012),
-                useUnixSocket, new DaemonClientCodec());
+                useUnixSocket, new DaemonClientCodec(this.daemonEndpointHandler));
     }
 
     @Override

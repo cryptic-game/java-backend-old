@@ -6,10 +6,14 @@ import net.cryptic_game.backend.base.utils.JsonBuilder;
 import net.cryptic_game.backend.data.user.User;
 import org.hibernate.annotations.Type;
 
+import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.util.Objects;
 
+@Entity
+@Table(name = "currency_access")
 public class CurrencyAccess extends TableModelAutoId {
 
     @ManyToOne

@@ -32,8 +32,8 @@ public class CurrencyTransaction extends TableModelAutoId {
     @Column(name = "send_amount", updatable = false, nullable = false)
     private int sendAmount;
 
-    @Column(name = "usage", updatable = false, nullable = true)
-    private String usage;
+    @Column(name = "purpose", updatable = false, nullable = true)
+    private String purpose;
 
     @Column(name = "origin", updatable = false, nullable = true)
     private String origin;
@@ -70,12 +70,12 @@ public class CurrencyTransaction extends TableModelAutoId {
         this.sendAmount = sendAmount;
     }
 
-    public String getUsage() {
-        return this.usage;
+    public String getPurpose() {
+        return this.purpose;
     }
 
-    public void setUsage(final String usage) {
-        this.usage = usage;
+    public void setPurpose(final String purpose) {
+        this.purpose = purpose;
     }
 
     public String getOrigin() {
@@ -94,7 +94,7 @@ public class CurrencyTransaction extends TableModelAutoId {
                 .add("source_id", this.getUserSource().getId())
                 .add("SendAmount", this.getSendAmount())
                 .add("destination_id", this.getUserDestination().getId())
-                .add("usage", this.getUsage())
+                .add("usage", this.getPurpose())
                 .add("origin", this.getOrigin())
                 .build();
     }
@@ -108,13 +108,13 @@ public class CurrencyTransaction extends TableModelAutoId {
                 Objects.equals(getTimeStamp(), that.getTimeStamp()) &&
                 Objects.equals(getUserSource().getId(), that.getUserSource().getId()) &&
                 Objects.equals(getUserDestination().getId(), that.getUserDestination().getId()) &&
-                Objects.equals(getUsage(), that.getUsage()) &&
+                Objects.equals(getPurpose(), that.getPurpose()) &&
                 Objects.equals(getOrigin(), that.getOrigin());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getTimeStamp(), getUserSource().getId(), getSendAmount(), getUserDestination().getId(), getUsage(), getOrigin());
+        return Objects.hash(getTimeStamp(), getUserSource().getId(), getSendAmount(), getUserDestination().getId(), getPurpose(), getOrigin());
     }
 
 

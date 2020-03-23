@@ -6,10 +6,7 @@ import net.cryptic_game.backend.base.utils.JsonBuilder;
 import net.cryptic_game.backend.data.service.Service;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -17,12 +14,12 @@ import java.util.Objects;
 public class DeviceServiceReq extends TableModelId {
 
     @ManyToOne
-    @Column(name = "service", updatable = true, nullable = true)
+    @JoinColumn(name = "service", updatable = true, nullable = true)
     @Type(type = "uuid-char")
     private Service service;
 
     @ManyToOne
-    @Column(name = "device", updatable = true, nullable = true) // updatable?
+    @JoinColumn(name = "device", updatable = true, nullable = true) // updatable?
     @Type(type = "uuid-char")
     private Device device;
 

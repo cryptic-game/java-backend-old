@@ -97,6 +97,22 @@ public class Network extends TableModelAutoId {
     }
 
     /**
+     * Fetches the {@link Network} owned by the give {@link Device}
+     *
+     * @param device The {@link Device}
+     * @return A {@link List} containing the fetched {@link Network}'s
+     */
+    public static List<Network> getNetworksOwnedByDevice(final Device device) {
+        final Session sqlSession = sqlConnection.openSession();
+        final List<Network> networks = sqlSession
+                .createQuery("select object (n) from Network as n where n.owner = :device", Network.class)
+                .setParameter("device", device)
+                .getResultList();
+        sqlSession.close();
+        return networks;
+    }
+
+    /**
      * Returns the name of the {@link Network}
      *
      * @return Name of the {@link Network}
