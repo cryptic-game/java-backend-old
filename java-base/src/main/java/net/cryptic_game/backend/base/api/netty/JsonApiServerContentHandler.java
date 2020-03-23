@@ -42,7 +42,7 @@ public class JsonApiServerContentHandler extends NettyChannelHandler<JsonObject>
     @Override
     protected void channelRead0(final ChannelHandlerContext ctx, final JsonObject request) {
         if (request.has("response") && request.get("response").getAsBoolean()) {
-            consumer.accept(request);
+            if (this.consumer != null) consumer.accept(request);
             return;
         }
 
@@ -56,7 +56,7 @@ public class JsonApiServerContentHandler extends NettyChannelHandler<JsonObject>
             final String endpoint = request.get("endpoint").getAsString();
             final JsonObject data = request.has("data") ? request.get("data").getAsJsonObject() : new JsonObject();
             try {
-                apiResponse = this.executor.execute(this.clientList.get(ctx.channel()), endpoint, data);
+                apiResponse = this.executor.execute(this.clientList.get(ctx.channel()), tag, endpoint, data);
             } catch (ApiException e) {
                 log.error("Error while executing JsonApi-Endpoint \"" + endpoint + "\".", e);
                 apiResponse = new ApiResponse(ApiResponseType.INTERNAL_SERVER_ERROR);

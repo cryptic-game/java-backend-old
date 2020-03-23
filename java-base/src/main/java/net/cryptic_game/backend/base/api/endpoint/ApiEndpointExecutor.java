@@ -23,26 +23,36 @@ public class ApiEndpointExecutor {
     private final List<ApiEndpointParameterData> parameters;
 
     private boolean useClient;
+    private boolean useTag;
 
     ApiEndpointExecutor(final String name, final ApiEndpointCollection apiCollection, final Method method) throws ApiEndpointParameterException {
         this.name = apiCollection.getName() + "/" + name;
         this.apiCollection = apiCollection;
         this.method = method;
         this.useClient = false;
+        this.useTag = false;
         this.parameters = this.loadParameters(this.method);
     }
 
-    ApiResponse execute(final ApiClient client, final JsonObject json) throws ApiException {
+    ApiResponse execute(final ApiClient client, final String tag, final JsonObject json) throws ApiException {
         try {
             final Object result = ApiEndpointValidator.validateParameters(this.name, this.parameters, json, true);
             if (result == null) return new ApiResponse(ApiResponseType.BAD_REQUEST, "NOT_A_NUMBER");
             final Object[] parameters = (Object[]) result;
             Object[] methodArgs = null;
-            if (this.useClient && client != null) {
+
+            if (this.useClient) {
                 methodArgs = new Object[parameters.length + 1];
                 methodArgs[0] = client;
-                System.arraycopy(parameters, 0, methodArgs, 1, parameters.length);
+                System.arraycopy(parameters, 0, methodArgs, 2, parameters.length);
             }
+
+            if (this.useTag) {
+                methodArgs = new Object[parameters.length + 1];
+                methodArgs[0] = tag;
+                System.arraycopy(parameters, 0, methodArgs, 2, parameters.length);
+            }
+
             final Object value = this.method.invoke(this.apiCollection, methodArgs == null ? parameters : methodArgs);
             if (value != null) return (ApiResponse) value;
             else return null;
@@ -57,7 +67,12 @@ public class ApiEndpointExecutor {
         for (final Parameter parameter : method.getParameters()) {
             if (!parameter.isAnnotationPresent(ApiParameter.class)) {
                 if (!parameter.isAnnotationPresent(ApiParameters.class)) {
-                    if (parameter.getType().equals(ApiClient.class)) {
+                    if (parameter.isAnnotationPresent(ApiTag.class)) {
+                        if (parameter.getType().equals(String.class)) this.useTag = true;
+                        else {
+                            throw new ApiEndpointParameterException("Api Parameter \"" + parameter.getName() + "\" of Api endpoint \"" + this.name + "\" with Annotation \"" + ApiTag.class.getName() + "\" does not have \"" + String.class.getName() + "\" as Type.");
+                        }
+                    } else if (parameter.getType().equals(ApiClient.class)) {
                         this.useClient = true;
                     } else {
                         throw new ApiEndpointParameterException("Api Parameter \"" + parameter.getName() + "\" of Api endpoint \"" + this.name + "\" does not have \"" + ApiParameter.class.getName() + "\" Annotation.");

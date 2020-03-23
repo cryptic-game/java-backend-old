@@ -12,6 +12,10 @@ public abstract class NettyCodec<Initializer extends NettyCodecInitializer<?>> {
         this.initializer = initializer;
         this.codecInitializers = new ArrayList<>();
         this.codecInitializers.add(this.initializer);
+        if (childCodecs.length > 0) this.setChildCodecs(childCodecs);
+    }
+
+    public void setChildCodecs(final NettyCodec<?>... childCodecs) {
         for (final NettyCodec<?> child : childCodecs) this.codecInitializers.addAll(child.getInitializers());
     }
 
