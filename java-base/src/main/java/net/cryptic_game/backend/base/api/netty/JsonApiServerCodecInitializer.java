@@ -15,6 +15,6 @@ public class JsonApiServerCodecInitializer extends NettyCodecInitializer<JsonApi
             pipeline.addLast(new MessageLoggerCodec());
         }
         pipeline.addLast("json-codec", new JsonMessageCodec());
-        pipeline.addLast("json-api-handler", new JsonApiServerContentHandler(this.getCodec().getFinder(), this.getCodec().getClientList()));
+        pipeline.addLast("json-api-handler", new JsonApiServerContentHandler(this.getCodec().getFinder(), this.getCodec().getClientList(), this.getCodec().getConsumer()));
     }
 }
