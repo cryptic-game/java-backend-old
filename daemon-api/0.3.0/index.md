@@ -6,10 +6,11 @@ This documentation explains how you can create your own implementation of a Daem
 
 The Java Server supports Unix sockets as well as network sockets. Therefore, we recommend implementing both variants.
 
-| Unix-Sockets | Network-Sockets |
-|--------------|-----------------| 
-| The Unix-Socket can be reached under `/run/cryptic.sock` | The Network-Socket can be reched at the port `4012`. Please note that the network socket nut listens on the hostname `localhost` or the IP address `127.0.0.1`.  |
-In both variants communication takes place via Json requests and replies.
+| Unix-Sockets                                             | Network-Sockets                                                                                                                                                  |
+|----------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
+| The Unix-Socket can be reached under `/run/cryptic.sock` | The Network-Socket can be reached at the port `4012`. Please note that the network socket nut listens on the hostname `localhost` or the IP address `127.0.0.1`. |
+
+In both variant's communication takes place via Json requests and replies.
 
 ## Api
 
@@ -53,7 +54,7 @@ Response:
 {
   "tag": "<The same tag as in the request>",
   "info": {
-    "notification": false, // Needed fpr future features
+    "notification": false, // Needed for future features
     "code": 200, // Response Status Code - See the link below
     "name": "OK", // Response Status Name - See the link below
     "error": false // // Response Status Type - See the link below
@@ -64,4 +65,4 @@ Response:
   } 
 }
 ```
-[Response Status Codes](../api/0.3.0/response-codes.html)
+[Response Status Codes](../../api/latest/response-codes.html)
