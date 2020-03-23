@@ -43,7 +43,9 @@ public class ApiEndpointExecutor {
                 methodArgs[0] = client;
                 System.arraycopy(parameters, 0, methodArgs, 1, parameters.length);
             }
-            return (ApiResponse) this.method.invoke(this.apiCollection, methodArgs == null ? parameters : methodArgs);
+            final Object value = this.method.invoke(this.apiCollection, methodArgs == null ? parameters : methodArgs);
+            if (value != null) return (ApiResponse) value;
+            else return null;
         } catch (IllegalAccessException | InvocationTargetException e) {
             throw new ApiException("Unable to execute JsonApi endpoint \"" + this.name + "\".", e);
         }
