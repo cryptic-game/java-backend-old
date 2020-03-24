@@ -20,7 +20,8 @@ jobs:
         run: chmod +x docker/docker-entrypoint.sh
       - uses: docker/build-push-action@v1
         with:
+          dockerfile: docker/Dockerfile
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
           repository: rubidiumdev/cryptic-backend
-          tags: latest
+          tags: experimental
