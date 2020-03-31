@@ -11,4 +11,4 @@
 |500 |INTERNAL_SERVER_ERROR|true |           |
 |501 |NOT_IMPLEMENTED      |true |           |
 |900 |PUSH                 |false|           |
-|901 |ALREADY_EXISTS       |false|           |
+|901 |ALREADY_EXISTS       |true |           |
