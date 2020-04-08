@@ -28,8 +28,15 @@ Then you can open it with you IDE.
 ### Running
 
 To test the things you have changed you have to execute the Gradle Task 'run'.
+
+Server:
 ````sh
-./gradlew run
+./gradlew :server:run
+````
+
+Java-Daemon:
+````sh
+./gradlew :java-daemon:run
 ````
 
 ### Deployment
