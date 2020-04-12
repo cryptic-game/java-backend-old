@@ -80,12 +80,10 @@ public class Message extends TableModelAutoId {
         this.target = target;
     }
 
-    public void send(Channel channel, User user, String text) {
-        send(channel, user, ChatAction.SEND_MESSAGE, text);
-    }
+    public Message send(Channel channel, User user, String text) { return send(channel, user, ChatAction.SEND_MESSAGE, text); }
 
-    public void send(Channel channel, User user, ChatAction type, String text) {
-        send(channel, user, null, type, text);
+    public Message send(Channel channel, User user, ChatAction type, String text) {
+        return send(channel, user, null, type, text);
     }
 
     public Message send(Channel channel, User user, User target, ChatAction type, String text) {
@@ -108,7 +106,8 @@ public class Message extends TableModelAutoId {
     public List<Message> getMessages(User user, Channel channel) {
         try (Session sqlSession = sqlConnection.openSession()) {
             return sqlSession
-                    .createQuery("select object (m) from Message m where  m.channel = :channel and (m.target is null or (m.type = :whisper and m.target = :user))", Message.class)
+                    .createQuery("select object (m) from Message m where  m.channel = :channel " +
+                            "and (m.target is null or (m.type = :whisper and m.target = :user) or (m.type = :whisper and m.user = :user))", Message.class)
                     .setParameter("user", user)
                     .setParameter("channel", channel)
                     .setParameter("whisper", ChatAction.WHISPER_MESSAGE)
