@@ -15,6 +15,9 @@ import javax.persistence.Table;
 import java.util.List;
 import java.util.Objects;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Entity
 @Table(name = "channel_access")
 public class ChannelAccess extends TableModelAutoId {
@@ -67,6 +70,8 @@ public class ChannelAccess extends TableModelAutoId {
                     .setParameter("user", user);
             return true;
         } catch (HibernateException e) {
+            final Logger log = LoggerFactory.getLogger(ChannelAccess.class);
+            log.error("The user wasn't found in the channel. Therefore he can't leave the channel" + e);
             return false;
         }
     }
@@ -87,12 +92,13 @@ public class ChannelAccess extends TableModelAutoId {
         if (o == null || getClass() != o.getClass()) return false;
         ChannelAccess that = (ChannelAccess) o;
         return Objects.equals(getUser(), that.getUser()) &&
-                Objects.equals(getChannel(), that.getChannel());
+                Objects.equals(getChannel(), that.getChannel()) &&
+                Objects.equals(getId(), that.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUser(), getChannel());
+        return Objects.hash(getId(), getUser(), getChannel());
     }
 
     public JsonObject serialize() {

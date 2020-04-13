@@ -124,12 +124,13 @@ public class Message extends TableModelAutoId {
                 Objects.equals(getChannel(), message.getChannel()) &&
                 getType() == message.getType() &&
                 Objects.equals(getText(), message.getText()) &&
-                Objects.equals(getTarget(), message.getTarget());
+                Objects.equals(getTarget(), message.getTarget()) &&
+                Objects.equals(getId(), message.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUser(), getChannel(), getType(), getText(), getTarget());
+        return Objects.hash(getId(), getUser(), getChannel(), getType(), getText(), getTarget());
     }
 
     @Override

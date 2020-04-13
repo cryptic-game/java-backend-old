@@ -60,12 +60,13 @@ public class Channel extends TableModelAutoId {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Channel channel = (Channel) o;
-        return Objects.equals(getName(), channel.getName());
+        return Objects.equals(getName(), channel.getName()) &&
+                Objects.equals(getId(), channel.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName());
+        return Objects.hash(getId(), getName());
     }
 
     @Override
