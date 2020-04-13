@@ -100,8 +100,8 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
         client.add(session);
         session.setLastActive(LocalDateTime.now());
         session.getUser().setLast(LocalDateTime.now());
-        session.getUser().update();
-        session.update();
+        session.getUser().saveOrUpdate();
+        session.saveOrUpdate();
 
         return new ApiResponse(ApiResponseType.OK);
     }
@@ -125,7 +125,7 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
         }
 
         user.setPassword(newPassword);
-        user.update();
+        user.saveOrUpdate();
 
         return new ApiResponse(ApiResponseType.OK);
     }
@@ -139,7 +139,7 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
         if (sessionId == null) {
             Session session = client.get(Session.class);
             session.setValid(false);
-            session.update();
+            session.saveOrUpdate();
             return new ApiResponse(ApiResponseType.OK);
         }
 
@@ -150,7 +150,7 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
         }
 
         session.setValid(false);
-        session.update();
+        session.saveOrUpdate();
 
         return new ApiResponse(ApiResponseType.OK);
     }
@@ -170,7 +170,7 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
         Session session = client.get(Session.class);
         session.setValid(false);
 
-        session.update();
+        session.saveOrUpdate();
         user.delete();
 
         return new ApiResponse(ApiResponseType.OK);
