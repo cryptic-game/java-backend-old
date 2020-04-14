@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.data.Chat;
+package net.cryptic_game.backend.data.chat;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "message")
+@Table(name = "chat_message")
 public class Message extends TableModelAutoId {
 
     @ManyToOne
@@ -33,8 +33,7 @@ public class Message extends TableModelAutoId {
     private String text;
 
     /**
-     * user id of the target, if it's not a whisper its null and targets consequently
-     * everyone in the channel
+     * User ID of the target, if it is not a whisper it is null and consequently targets everyone in the channel
      */
     @OneToOne
     @Column(name = "target", updatable = false, nullable = true)
@@ -44,7 +43,7 @@ public class Message extends TableModelAutoId {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(final User user) {
         this.user = user;
     }
 
@@ -52,7 +51,7 @@ public class Message extends TableModelAutoId {
         return channel;
     }
 
-    public void setChannel(Channel channel) {
+    public void setChannel(final Channel channel) {
         this.channel = channel;
     }
 
@@ -60,7 +59,7 @@ public class Message extends TableModelAutoId {
         return type;
     }
 
-    public void setType(ChatAction type) {
+    public void setType(final ChatAction type) {
         this.type = type;
     }
 
@@ -68,7 +67,7 @@ public class Message extends TableModelAutoId {
         return text;
     }
 
-    public void setText(String text) {
+    public void setText(final String text) {
         this.text = text;
     }
 
@@ -76,17 +75,19 @@ public class Message extends TableModelAutoId {
         return target;
     }
 
-    public void setTarget(User target) {
+    public void setTarget(final User target) {
         this.target = target;
     }
 
-    public Message send(Channel channel, User user, String text) { return send(channel, user, ChatAction.SEND_MESSAGE, text); }
+    public Message send(final Channel channel, final User user, final String text) {
+        return send(channel, user, ChatAction.SEND_MESSAGE, text);
+    }
 
-    public Message send(Channel channel, User user, ChatAction type, String text) {
+    public Message send(final Channel channel, final User user, final ChatAction type, final String text) {
         return send(channel, user, null, type, text);
     }
 
-    public Message send(Channel channel, User user, User target, ChatAction type, String text) {
+    public Message send(final Channel channel, final User user, final User target, final ChatAction type, final String text) {
         Session sqlSession = sqlConnection.openSession();
 
         Message message = new Message();
@@ -103,7 +104,7 @@ public class Message extends TableModelAutoId {
         return message;
     }
 
-    public List<Message> getMessages(User user, Channel channel) {
+    public List<Message> getMessages(final User user, final Channel channel) {
         try (Session sqlSession = sqlConnection.openSession()) {
             return sqlSession
                     .createQuery("select object (m) from Message m where  m.channel = :channel " +

@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.data.Chat;
+package net.cryptic_game.backend.data.chat;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "channel")
+@Table(name = "chat_channel")
 public class Channel extends TableModelAutoId {
 
     @Column(name = "name", updatable = true, nullable = false)
@@ -41,19 +41,13 @@ public class Channel extends TableModelAutoId {
     public static void removeChannel(final UUID id) {
         final Channel channel = getById(id);
         if(channel != null) {
-            final Session session = sqlConnection.openSession();
-            session.beginTransaction();
-            session.delete(channel);
-            session.getTransaction().commit();
-            session.close();
+            channel.delete();
         }
     }
 
     public static Channel getById(final UUID id) {
         return getById(Channel.class, id);
     }
-
-
 
     @Override
     public boolean equals(Object o) {

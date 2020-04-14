@@ -1,6 +1,7 @@
-package net.cryptic_game.backend.data.Chat;
+package net.cryptic_game.backend.data.chat;
 
 import com.google.gson.JsonObject;
+import net.cryptic_game.backend.base.api.client.ApiClient;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
 import net.cryptic_game.backend.data.user.User;
@@ -14,12 +15,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Entity
-@Table(name = "channel_access")
+@Table(name = "chat_channel_access")
 public class ChannelAccess extends TableModelAutoId {
 
     @ManyToOne
@@ -44,11 +46,11 @@ public class ChannelAccess extends TableModelAutoId {
         return channel;
     }
 
-    public void setChannel(Channel channel) {
+    public void setChannel(final Channel channel) {
         this.channel = channel;
     }
 
-    public static ChannelAccess join(User user, Channel channel) {
+    public static ChannelAccess join(final User user, final Channel channel, final Set<ApiClient> notifyUsers) {
         Session sqlSession = sqlConnection.openSession();
 
         ChannelAccess channelAccess = new ChannelAccess();
@@ -62,7 +64,7 @@ public class ChannelAccess extends TableModelAutoId {
         return channelAccess;
     }
 
-    public static boolean leave(User user, Channel channel) {
+    public static boolean leave(final User user, final Channel channel, Set<ApiClient> notifyUsers) {
         try (Session sqlSession = sqlConnection.openSession()) {
             sqlSession
                     .createQuery("delete from ChannelAccess ca where ca.channel = :channel and ca.user = :user")

@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.data.Chat;
+package net.cryptic_game.backend.data.chat;
 
 public enum ChatAction {
     MEMBER_JOIN("member-join"),
