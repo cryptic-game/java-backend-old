@@ -31,10 +31,10 @@ public abstract class TableModel implements JsonSerializable {
         this.version = version;
     }
 
-    public void update() {
+    public void saveOrUpdate() {
         final Session session = sqlConnection.openSession();
         session.beginTransaction();
-        session.update(this);
+        session.saveOrUpdate(this);
         session.getTransaction().commit();
         session.close();
     }

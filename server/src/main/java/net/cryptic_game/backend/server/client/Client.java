@@ -27,9 +27,9 @@ public class Client {
     public void setSession(final Session session) {
         this.session = session;
         session.setLastActive(LocalDateTime.now());
-        session.update();
+        session.saveOrUpdate();
         session.getUser().setLast(LocalDateTime.now());
-        session.getUser().update();
+        session.getUser().saveOrUpdate();
     }
 
     public User getUser() {
@@ -40,12 +40,12 @@ public class Client {
     public void setSession(final User user, final UUID token, final String deviceName) {
         this.session = Session.createSession(user, token, deviceName);
         session.getUser().setLast(LocalDateTime.now());
-        session.getUser().update();
+        session.getUser().saveOrUpdate();
     }
 
     public void logout() {
         this.session.setValid(false);
-        this.session.update();
+        this.session.saveOrUpdate();
         this.session = null;
     }
 }

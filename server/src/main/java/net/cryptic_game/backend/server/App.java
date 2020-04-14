@@ -1,6 +1,7 @@
 package net.cryptic_game.backend.server;
 
 import io.netty.channel.unix.DomainSocketAddress;
+import io.sentry.Sentry;
 import net.cryptic_game.backend.base.AppBootstrap;
 import net.cryptic_game.backend.base.config.BaseConfig;
 import net.cryptic_game.backend.base.netty.server.NettyServerHandler;
@@ -81,5 +82,6 @@ public class App extends AppBootstrap {
     @Override
     protected void start() {
         this.serverHandler.start();
+        Sentry.capture(new Exception("test123"));
     }
 }
