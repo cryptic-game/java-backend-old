@@ -97,10 +97,7 @@ public class Message extends TableModelAutoId {
         message.setType(type);
         message.setText(text);
 
-        sqlSession.beginTransaction();
-        sqlSession.save(message);
-        sqlSession.getTransaction().commit();
-        sqlSession.close();
+        message.saveOrUpdate();
         return message;
     }
 

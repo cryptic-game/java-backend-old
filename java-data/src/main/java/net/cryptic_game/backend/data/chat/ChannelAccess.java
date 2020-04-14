@@ -57,10 +57,7 @@ public class ChannelAccess extends TableModelAutoId {
         channelAccess.setUser(user);
         channelAccess.setChannel(channel);
 
-        sqlSession.beginTransaction();
-        sqlSession.save(channelAccess);
-        sqlSession.getTransaction().commit();
-        sqlSession.close();
+        channelAccess.saveOrUpdate();
         return channelAccess;
     }
 

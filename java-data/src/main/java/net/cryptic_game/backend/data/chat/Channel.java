@@ -30,11 +30,7 @@ public class Channel extends TableModelAutoId {
         final Channel channel = new Channel();
         channel.setName(name);
 
-        final Session session = sqlConnection.openSession();
-        session.beginTransaction();
-        session.save(channel);
-        session.getTransaction().commit();
-        session.close();
+        channel.saveOrUpdate();
         return channel;
     }
 
