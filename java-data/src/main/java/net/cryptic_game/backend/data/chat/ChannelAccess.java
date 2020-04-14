@@ -8,6 +8,8 @@ import net.cryptic_game.backend.data.user.User;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.annotations.Type;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -16,9 +18,6 @@ import javax.persistence.Table;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Entity
 @Table(name = "chat_channel_access")
@@ -34,25 +33,7 @@ public class ChannelAccess extends TableModelAutoId {
     @Type(type = "uuid-char")
     private Channel channel;
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Channel getChannel() {
-        return channel;
-    }
-
-    public void setChannel(final Channel channel) {
-        this.channel = channel;
-    }
-
     public static ChannelAccess join(final User user, final Channel channel, final Set<ApiClient> notifyUsers) {
-        Session sqlSession = sqlConnection.openSession();
-
         ChannelAccess channelAccess = new ChannelAccess();
         channelAccess.setUser(user);
         channelAccess.setChannel(channel);
@@ -70,7 +51,7 @@ public class ChannelAccess extends TableModelAutoId {
             return true;
         } catch (HibernateException e) {
             final Logger log = LoggerFactory.getLogger(ChannelAccess.class);
-            log.error("The user wasn't found in the channel. Therefore he can't leave the channel" + e);
+            log.error("The user wasn't found in the channel. Therefore he can't leave the channel", e);
             return false;
         }
     }
@@ -85,19 +66,35 @@ public class ChannelAccess extends TableModelAutoId {
         }
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Channel getChannel() {
+        return channel;
+    }
+
+    public void setChannel(final Channel channel) {
+        this.channel = channel;
+    }
+
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof ChannelAccess)) return false;
         ChannelAccess that = (ChannelAccess) o;
-        return Objects.equals(getUser(), that.getUser()) &&
-                Objects.equals(getChannel(), that.getChannel()) &&
-                Objects.equals(getId(), that.getId());
+        return this.getId().equals(that.getId()) &&
+                this.getUser().equals(that.getUser()) &&
+                this.getChannel().equals(that.getChannel());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getUser(), getChannel());
+        return Objects.hash(this.getId(), this.getUser(), this.getChannel());
     }
 
     public JsonObject serialize() {

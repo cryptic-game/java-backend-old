@@ -88,9 +88,7 @@ public class Message extends TableModelAutoId {
     }
 
     public Message send(final Channel channel, final User user, final User target, final ChatAction type, final String text) {
-        Session sqlSession = sqlConnection.openSession();
-
-        Message message = new Message();
+        final Message message = new Message();
         message.setUser(user);
         message.setChannel(channel);
         message.setTarget(target);
@@ -114,21 +112,21 @@ public class Message extends TableModelAutoId {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Message message = (Message) o;
-        return Objects.equals(getUser(), message.getUser()) &&
-                Objects.equals(getChannel(), message.getChannel()) &&
-                getType() == message.getType() &&
-                Objects.equals(getText(), message.getText()) &&
-                Objects.equals(getTarget(), message.getTarget()) &&
-                Objects.equals(getId(), message.getId());
+        if (!(o instanceof Message)) return false;
+        final Message message = (Message) o;
+        return this.getId().equals(message.getId()) &&
+                this.getUser().equals(message.getUser()) &&
+                this.getChannel().equals(message.getChannel()) &&
+                this.getType() == message.getType() &&
+                this.getText().equals(message.getText()) &&
+                Objects.equals(this.getTarget(), message.getTarget());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getUser(), getChannel(), getType(), getText(), getTarget());
+        return Objects.hash(this.getId(), this.getUser(), this.getChannel(), this.getType(), this.getText(), this.getTarget());
     }
 
     @Override

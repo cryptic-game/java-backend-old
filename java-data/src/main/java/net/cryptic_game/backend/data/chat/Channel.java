@@ -3,7 +3,6 @@ package net.cryptic_game.backend.data.chat;
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
-import org.hibernate.Session;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,14 +17,6 @@ public class Channel extends TableModelAutoId {
     @Column(name = "name", updatable = true, nullable = false)
     private String name;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public static Channel createChannel(final String name) {
         final Channel channel = new Channel();
         channel.setName(name);
@@ -36,13 +27,21 @@ public class Channel extends TableModelAutoId {
 
     public static void removeChannel(final UUID id) {
         final Channel channel = getById(id);
-        if(channel != null) {
+        if (channel != null) {
             channel.delete();
         }
     }
 
     public static Channel getById(final UUID id) {
         return getById(Channel.class, id);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
