@@ -33,7 +33,7 @@ public class Message extends TableModelAutoId {
     private String text;
 
     /**
-     * User ID of the target, if it is not a whisper it is null and consequently targets everyone in the channel
+     * User ID of the target, if it is not a whisper it is null and consequently targets everyone in the channel.
      */
     @OneToOne
     @Column(name = "target", updatable = false, nullable = true)

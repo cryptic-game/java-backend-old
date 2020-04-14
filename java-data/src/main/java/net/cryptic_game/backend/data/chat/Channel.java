@@ -48,7 +48,7 @@ public class Channel extends TableModelAutoId {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Channel channel = (Channel) o;
+        final Channel channel = (Channel) o;
         return Objects.equals(getName(), channel.getName()) &&
                 Objects.equals(getId(), channel.getId());
     }

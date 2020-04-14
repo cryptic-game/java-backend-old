@@ -23,6 +23,8 @@ import java.util.Set;
 @Table(name = "chat_channel_access")
 public class ChannelAccess extends TableModelAutoId {
 
+    private static final Logger log = LoggerFactory.getLogger(ChannelAccess.class);
+
     @ManyToOne
     @JoinColumn(name = "user_id", updatable = false, nullable = false)
     @Type(type = "uuid-char")
@@ -50,7 +52,6 @@ public class ChannelAccess extends TableModelAutoId {
                     .setParameter("user", user);
             return true;
         } catch (HibernateException e) {
-            final Logger log = LoggerFactory.getLogger(ChannelAccess.class);
             log.error("The user wasn't found in the channel. Therefore he can't leave the channel", e);
             return false;
         }
@@ -86,7 +87,7 @@ public class ChannelAccess extends TableModelAutoId {
     public boolean equals(final Object o) {
         if (this == o) return true;
         if (!(o instanceof ChannelAccess)) return false;
-        ChannelAccess that = (ChannelAccess) o;
+        final ChannelAccess that = (ChannelAccess) o;
         return this.getId().equals(that.getId()) &&
                 this.getUser().equals(that.getUser()) &&
                 this.getChannel().equals(that.getChannel());
