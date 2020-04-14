@@ -21,22 +21,47 @@ public class Inventory extends TableModelAutoId {
     @Type(type = "uuid-char")
     private User owner;
 
+    /**
+     * Returns the element name of the {@link Inventory}
+     *
+     * @return Element name of the {@link Inventory}
+     */
     public String getElementName() {
         return this.elementName;
     }
 
+    /**
+     * Sets a new element name for the {@link Inventory}
+     *
+     * @param elementName the new name to be set
+     */
     public void setElementName(final String elementName) {
         this.elementName = elementName;
     }
 
+    /**
+     * Returns the {@link User} who owns that {@link Inventory}
+     *
+     * @return {@link User} who owns the {@link Inventory}
+     */
     public User getOwner() {
         return this.owner;
     }
 
+    /**
+     * Sets a new owner for the {@link Inventory}
+     *
+     * @param owner the new {@link User} to be set as owner
+     */
     public void setOwner(final User owner) {
         this.owner = owner;
     }
 
+    /**
+     * Generates a {@link JsonObject} containing all relevant {@link Inventory} information
+     *
+     * @return The generated {@link JsonObject}
+     */
     @Override
     public JsonObject serialize() {
         return JsonBuilder.anJSON()
@@ -46,6 +71,12 @@ public class Inventory extends TableModelAutoId {
                 .build();
     }
 
+    /**
+     * Compares an {@link Object} if it equals the {@link Inventory}
+     *
+     * @param o {@link Object} to compare
+     * @return True if the {@link Object} equals the {@link Inventory} | False if it does not
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -56,6 +87,11 @@ public class Inventory extends TableModelAutoId {
                 Objects.equals(getId(), inventory.getId());
     }
 
+    /**
+     * Hashes the {@link Inventory} using {@link Objects} hash method
+     *
+     * @return Hash of the {@link Inventory}
+     */
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getElementName(), getOwner());
