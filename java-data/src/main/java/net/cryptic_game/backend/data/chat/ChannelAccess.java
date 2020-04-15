@@ -35,6 +35,14 @@ public class ChannelAccess extends TableModelAutoId {
     @Type(type = "uuid-char")
     private Channel channel;
 
+    /**
+     * Joins a {@link User} to a {@link} Channel and returns the {@link ChannelAccess}
+     *
+     * @param user        the {@link User} who join
+     * @param channel     the {@link Channel} where to join
+     * @param notifyUsers the {@link ApiClient}s as {@link Set} which {@link ApiClient}s to notify
+     * @return the resulting {@link ChannelAccess}
+     */
     public static ChannelAccess join(final User user, final Channel channel, final Set<ApiClient> notifyUsers) {
         ChannelAccess channelAccess = new ChannelAccess();
         channelAccess.setUser(user);
@@ -44,6 +52,14 @@ public class ChannelAccess extends TableModelAutoId {
         return channelAccess;
     }
 
+    /**
+     * The {@link User} leaves a {@link Channel}
+     *
+     * @param user        the {@link User} who leaves the {@link Channel}
+     * @param channel     the leaved {@link Channel}
+     * @param notifyUsers the {@link ApiClient}s as {@link Set} which {@link ApiClient}s to notify
+     * @return True if successful | otherwise false
+     */
     public static boolean leave(final User user, final Channel channel, Set<ApiClient> notifyUsers) {
         try (Session sqlSession = sqlConnection.openSession()) {
             sqlSession
@@ -57,6 +73,12 @@ public class ChannelAccess extends TableModelAutoId {
         }
     }
 
+    /**
+     * Returns a {@link List} of {@link User}s, who are in a {@link Channel}
+     *
+     * @param channel the {@link Channel} where to get the {@link User}s from
+     * @return the {@link List} of {@link User}s in the {@link Channel}
+     */
     public static List<User> getMembers(final Channel channel) {
 
         try (Session sqlSession = sqlConnection.openSession()) {
@@ -67,22 +89,48 @@ public class ChannelAccess extends TableModelAutoId {
         }
     }
 
+    /**
+     * Returns the {@link User} of the {@link ChannelAccess}
+     *
+     * @return the {@link User}
+     */
     public User getUser() {
         return user;
     }
 
+    /**
+     * Sets a new {@link User} for the {@link ChannelAccess}
+     *
+     * @param user the new {@link User} to be set
+     */
     public void setUser(User user) {
         this.user = user;
     }
 
+    /**
+     * Returns the {@link Channel} of the {@link ChannelAccess}
+     *
+     * @return the {@link Channel}
+     */
     public Channel getChannel() {
         return channel;
     }
 
+    /**
+     * Sets a new {@link Channel} for the {@link ChannelAccess}
+     *
+     * @param channel the new {@link Channel} to be set
+     */
     public void setChannel(final Channel channel) {
         this.channel = channel;
     }
 
+    /**
+     * Compares an {@link Object} if it equals the {@link ChannelAccess}
+     *
+     * @param o {@link Object} to compare
+     * @return True if the {@link Object} equals the {@link ChannelAccess} | False if it does not
+     */
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -93,11 +141,21 @@ public class ChannelAccess extends TableModelAutoId {
                 this.getChannel().equals(that.getChannel());
     }
 
+    /**
+     * Hashes the {@link ChannelAccess} using {@link Objects} hash method
+     *
+     * @return Hash of the {@link ChannelAccess}
+     */
     @Override
     public int hashCode() {
         return Objects.hash(this.getId(), this.getUser(), this.getChannel());
     }
 
+    /**
+     * Generates a {@link JsonObject} containing all relevant {@link ChannelAccess} information
+     *
+     * @return The generated {@link JsonObject}
+     */
     public JsonObject serialize() {
         return JsonBuilder.anJSON()
                 .add("id", this.getId())
