@@ -38,62 +38,137 @@ public class DeviceServiceReq extends TableModelAutoId {
     @Column(name = "allocated_network", updatable = true, nullable = true)
     private float allocatedNetwork;
 
+    /**
+     * Returns the {@link Service} where the {@link DeviceServiceReq} is located
+     *
+     * @return the {@link Service}
+     */
     public Service getService() {
         return this.service;
     }
 
+    /**
+     * Sets a new {@link Service} for the {@link DeviceServiceReq}
+     *
+     * @param service the new {@link Service} to be set
+     */
     public void setService(final Service service) {
         this.service = service;
     }
 
+    /**
+     * Returns the {@link Device} where the {@link Device} is located
+     *
+     * @return the {@link Device}
+     */
     public Device getDevice() {
         return this.device;
     }
 
+    /**
+     * Sets a new {@link Device} for the {@link Device}
+     *
+     * @param device the new {@link Device} to be set
+     */
     public void setDevice(final Device device) {
         this.device = device;
     }
 
+    /**
+     * Returns the allocated CPU
+     *
+     * @return the allocated CPU
+     */
     public float getAllocatedCPU() {
         return this.allocatedCPU;
     }
 
+    /**
+     * Sets the allocated CPU
+     *
+     * @param allocatedCPU the new allocated CPU to be set
+     */
     public void setAllocatedCPU(final float allocatedCPU) {
         this.allocatedCPU = allocatedCPU;
     }
 
+    /**
+     * Returns the allocated RAM
+     *
+     * @return the allocated RAM
+     */
     public float getAllocatedRAM() {
         return this.allocatedRAM;
     }
 
+    /**
+     * Sets the allocated RAM
+     *
+     * @param allocatedRAM the new allocated RAM to be set
+     */
     public void setAllocatedRAM(final float allocatedRAM) {
         this.allocatedRAM = allocatedRAM;
     }
 
+    /**
+     * Returns the allocated GPU
+     *
+     * @return the allocated GPU
+     */
     public float getAllocatedGPU() {
         return this.allocatedGPU;
     }
 
+    /**
+     * Sets the allocated GPU
+     *
+     * @param allocatedGPU the new allocated GPU to be set
+     */
     public void setAllocatedGPU(final float allocatedGPU) {
         this.allocatedGPU = allocatedGPU;
     }
 
+    /**
+     * Returns the allocated Disk
+     *
+     * @return the allocated Disk
+     */
     public float getAllocatedDisk() {
         return this.allocatedDisk;
     }
 
+    /**
+     * Sets the allocated Disk
+     *
+     * @param allocatedDisk the new allocated Disk to be set
+     */
     public void setAllocatedDisk(final float allocatedDisk) {
         this.allocatedDisk = allocatedDisk;
     }
 
+    /**
+     * Returns the allocated Network
+     *
+     * @return the allocated Network
+     */
     public float getAllocatedNetwork() {
         return this.allocatedNetwork;
     }
 
+    /**
+     * Sets the allocated Network
+     *
+     * @param allocatedNetwork the new allocated Network to be set
+     */
     public void setAllocatedNetwork(final float allocatedNetwork) {
         this.allocatedNetwork = allocatedNetwork;
     }
 
+    /**
+     * Generates a {@link JsonObject} containing all relevant {@link DeviceServiceReq} information
+     *
+     * @return The generated {@link JsonObject}
+     */
     @Override
     public JsonObject serialize() {
         return JsonBuilder.anJSON()
@@ -108,6 +183,12 @@ public class DeviceServiceReq extends TableModelAutoId {
                 .build();
     }
 
+    /**
+     * Compares an {@link Object} if it equals the {@link DeviceServiceReq}
+     *
+     * @param o {@link Object} to compare
+     * @return True if the {@link Object} equals the {@link DeviceServiceReq} | False if it does not
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -123,6 +204,11 @@ public class DeviceServiceReq extends TableModelAutoId {
                 Objects.equals(getId(), that.getId());
     }
 
+    /**
+     * Hashes the {@link DeviceServiceReq} using {@link Objects} hash method
+     *
+     * @return Hash of the {@link DeviceServiceReq}
+     */
     @Override
     public int hashCode() {
         return Objects.hash(getService(), getDevice(), getAllocatedCPU(), getAllocatedRAM(), getAllocatedGPU(), getAllocatedDisk(), getAllocatedNetwork());
