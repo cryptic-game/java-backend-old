@@ -39,54 +39,131 @@ public class Message extends TableModelAutoId {
     @Column(name = "target", updatable = false, nullable = true)
     private User target;
 
+    /**
+     * Returns the {@link User} who send the {@link Message}
+     *
+     * @return the message's sender
+     */
     public User getUser() {
         return user;
     }
 
+    /**
+     * Sets the {@link User} who sends the {@link Message}
+     *
+     * @param user the new {@link User}
+     */
     public void setUser(final User user) {
         this.user = user;
     }
 
+    /**
+     * Returns the {@link Channel} where the {@link User} is sending the {@link Message}
+     *
+     * @return the {@link Channel}
+     */
     public Channel getChannel() {
         return channel;
     }
 
+    /**
+     * Sets a new {@link Channel} where the {@link Message} will be sent
+     *
+     * @param channel the new {@link Channel} to be set
+     */
     public void setChannel(final Channel channel) {
         this.channel = channel;
     }
 
+    /**
+     * Returns the {@link ChatAction} which is triggered by the {@link Message}
+     *
+     * @return the {@link ChatAction}
+     */
     public ChatAction getType() {
         return type;
     }
 
+    /**
+     * Sets a new {@link ChatAction} triggered by the {@link Message}
+     *
+     * @param type the new {@link ChatAction} to be set
+     */
     public void setType(final ChatAction type) {
         this.type = type;
     }
 
+    /**
+     * Returns the Text of the {@link Message}
+     *
+     * @return the Text
+     */
     public String getText() {
         return text;
     }
 
+    /**
+     * Sets a new Text for the {@link Message}
+     *
+     * @param text the new Text to be set
+     */
     public void setText(final String text) {
         this.text = text;
     }
 
+    /**
+     * Returns the {@link User} who receives the {@link Message}
+     *
+     * @return the targeted {@link User}
+     */
     public User getTarget() {
         return target;
     }
 
+    /**
+     * Sets a new {@link User} as receiver for the {@link Message}
+     *
+     * @param target the new {@link User} to be set for receiving the {@link Message}
+     */
     public void setTarget(final User target) {
         this.target = target;
     }
 
+    /**
+     * Sends a {@link Message} without a target and as "SEND_MESSAGE" {@link ChatAction}
+     *
+     * @param channel the {@link} Channel where the {@link Message} will be sent
+     * @param user    the {@link User} who sends the {@link Message}
+     * @param text    the content of the {@link Message}
+     * @return the sent {@link Message}
+     */
     public Message send(final Channel channel, final User user, final String text) {
         return send(channel, user, ChatAction.SEND_MESSAGE, text);
     }
 
+    /**
+     * Sends a {@link Message} without a target
+     *
+     * @param channel the {@link} Channel where the {@link Message} will be sent
+     * @param user    the {@link User} who sends the {@link Message}
+     * @param type    the {@link ChatAction}-Type of the {@link Message}
+     * @param text    the content of the {@link Message}
+     * @return the sent {@link Message}
+     */
     public Message send(final Channel channel, final User user, final ChatAction type, final String text) {
         return send(channel, user, null, type, text);
     }
 
+    /**
+     * Sends a {@link Message}
+     *
+     * @param channel the {@link} Channel where the {@link Message} will be sent
+     * @param user    the {@link User} who sends the {@link Message}
+     * @param target  the {@link User} who receives the {@link Message}
+     * @param type    the {@link ChatAction}-Type of the {@link Message}
+     * @param text    the content of the {@link Message}
+     * @return the sent {@link Message}
+     */
     public Message send(final Channel channel, final User user, final User target, final ChatAction type, final String text) {
         final Message message = new Message();
         message.setUser(user);
@@ -99,6 +176,13 @@ public class Message extends TableModelAutoId {
         return message;
     }
 
+    /**
+     * Returns a {@link List} of {@link Message}s sent in a {@link Channel} by a {@link User}
+     *
+     * @param user    the {@link User} who sent the {@link Message}s
+     * @param channel the {@link Channel} where the {@link Message}s were sent
+     * @return the {@link List} of {@link Message}s
+     */
     public List<Message> getMessages(final User user, final Channel channel) {
         try (Session sqlSession = sqlConnection.openSession()) {
             return sqlSession
@@ -111,6 +195,12 @@ public class Message extends TableModelAutoId {
         }
     }
 
+    /**
+     * Compares an {@link Object} if it equals the {@link Message}
+     *
+     * @param o {@link Object} to compare
+     * @return True if the {@link Object} equals the {@link Message} | False if it does not
+     */
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -124,11 +214,21 @@ public class Message extends TableModelAutoId {
                 Objects.equals(this.getTarget(), message.getTarget());
     }
 
+    /**
+     * Hashes the {@link Message} using {@link Objects} hash method
+     *
+     * @return Hash of the {@link Message}
+     */
     @Override
     public int hashCode() {
         return Objects.hash(this.getId(), this.getUser(), this.getChannel(), this.getType(), this.getText(), this.getTarget());
     }
 
+    /**
+     * Generates a {@link JsonObject} containing all relevant {@link Message} information
+     *
+     * @return The generated {@link JsonObject}
+     */
     @Override
     public JsonObject serialize() {
         return JsonBuilder.anJSON()
