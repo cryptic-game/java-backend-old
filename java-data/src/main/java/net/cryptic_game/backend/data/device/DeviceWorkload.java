@@ -49,94 +49,210 @@ public class DeviceWorkload extends TableModel implements Serializable {
     @Column(name = "usage_network", updatable = true, nullable = false)
     private float usageNetwork;
 
+    /**
+     * Returns the {@link Device} of the {@link DeviceWorkload}
+     *
+     * @return the {@link Device}
+     */
     public Device getDevice() {
         return this.device;
     }
 
+    /**
+     * Sets a new {@link Device} for the {@link DeviceWorkload}
+     *
+     * @param device the new {@link Device} to be set
+     */
     public void setDevice(final Device device) {
         this.device = device;
     }
 
+    /**
+     * Returns the performance of to CPU from the {@link DeviceWorkload}
+     *
+     * @return the performance
+     */
     public float getPerformanceCPU() {
         return this.performanceCPU;
     }
 
+    /**
+     * Sets a new performance for the CPU from the {@link DeviceWorkload}
+     *
+     * @param performanceCPU the new performance to be set
+     */
     public void setPerformanceCPU(final float performanceCPU) {
         this.performanceCPU = performanceCPU;
     }
 
+    /**
+     * Returns the performance of the GPU from the {@link DeviceWorkload}
+     *
+     * @return the performance
+     */
     public float getPerformanceGPU() {
         return this.performanceGPU;
     }
 
+    /**
+     * Sets a new performance for the GPU from the {@link DeviceWorkload}
+     *
+     * @param performanceGPU the new performance to be set
+     */
     public void setPerformanceGPU(final float performanceGPU) {
         this.performanceGPU = performanceGPU;
     }
 
+    /**
+     * Returns the performance of the RAM from the {@link DeviceWorkload}
+     *
+     * @return the performance
+     */
     public float getPerformanceRAM() {
         return this.performanceRAM;
     }
 
+    /**
+     * Sets a new performance for the RAM from the {@link DeviceWorkload}
+     *
+     * @param performanceRAM the new performance to be set
+     */
     public void setPerformanceRAM(final float performanceRAM) {
         this.performanceRAM = performanceRAM;
     }
 
+    /**
+     * Returns the performance of the Disk from the {@link DeviceWorkload}
+     *
+     * @return the performance
+     */
     public float getPerformanceDisk() {
         return this.performanceDisk;
     }
 
+    /**
+     * Sets a new performance for the RAM from the {@link DeviceWorkload}
+     *
+     * @param performanceDisk the new performance to be set
+     */
     public void setPerformanceDisk(final float performanceDisk) {
         this.performanceDisk = performanceDisk;
     }
 
+    /**
+     * Returns the performance of the Network from the {@link DeviceWorkload}
+     *
+     * @return the performance
+     */
     public float getPerformanceNetwork() {
         return this.performanceNetwork;
     }
 
+    /**
+     * Sets a new performance for the Network from the {@link DeviceWorkload}
+     *
+     * @param performanceNetwork the new performance to be set
+     */
     public void setPerformanceNetwork(final float performanceNetwork) {
         this.performanceNetwork = performanceNetwork;
     }
 
+    /**
+     * Returns the usage of the CPU from the {@link DeviceWorkload}
+     *
+     * @return the usage
+     */
     public float getUsageCPU() {
         return this.usageCPU;
     }
 
+    /**
+     * Sets a new usage for the CPU from the {@link DeviceWorkload}
+     *
+     * @param usageCPU the new usage to be set
+     */
     public void setUsageCPU(final float usageCPU) {
         this.usageCPU = usageCPU;
     }
 
+    /**
+     * Returns the usage of the GPU from the {@link DeviceWorkload}
+     *
+     * @return the usage
+     */
     public float getUsageGPU() {
         return this.usageGPU;
     }
 
+    /**
+     * Sets a new usage for the GPU from the {@link DeviceWorkload}
+     *
+     * @param usageGPU the new usage to be set
+     */
     public void setUsageGPU(final float usageGPU) {
         this.usageGPU = usageGPU;
     }
 
+    /**
+     * Returns the usage of the RAM from the {@link DeviceWorkload}
+     *
+     * @return the usage
+     */
     public float getUsageRAM() {
         return this.usageRAM;
     }
 
+    /**
+     * Sets a new usage for the RAM from the {@link DeviceWorkload}
+     *
+     * @param usageRAM the new usage to be set
+     */
     public void setUsageRAM(final float usageRAM) {
         this.usageRAM = usageRAM;
     }
 
+    /**
+     * Returns the usage of the Disk from the {@link DeviceWorkload}
+     *
+     * @return the usage
+     */
     public float getUsageDisk() {
         return this.usageDisk;
     }
 
+    /**
+     * Sets a new usage for the Disk from the {@link DeviceWorkload}
+     *
+     * @param usageDisk the new usage to be set
+     */
     public void setUsageDisk(final float usageDisk) {
         this.usageDisk = usageDisk;
     }
 
+    /**
+     * Returns the usage of the Network from the {@link DeviceWorkload}
+     *
+     * @return the usage
+     */
     public float getUsageNetwork() {
         return this.usageNetwork;
     }
 
+    /**
+     * Sets a new usage for the Network from the {@link DeviceWorkload}
+     *
+     * @param usageNetwork the new usage to be set
+     */
     public void setUsageNetwork(final float usageNetwork) {
         this.usageNetwork = usageNetwork;
     }
 
+    /**
+     * Compares an {@link Object} if it equals the {@link DeviceWorkload}
+     *
+     * @param o {@link Object} to compare
+     * @return True if the {@link Object} equals the {@link DeviceWorkload} | False if it does not
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -155,11 +271,21 @@ public class DeviceWorkload extends TableModel implements Serializable {
                 Objects.equals(getDevice(), workload.getDevice());
     }
 
+    /**
+     * Hashes the {@link DeviceWorkload} using {@link Objects} hash method
+     *
+     * @return Hash of the {@link DeviceWorkload}
+     */
     @Override
     public int hashCode() {
         return Objects.hash(getDevice(), getPerformanceCPU(), getPerformanceGPU(), getPerformanceRAM(), getPerformanceDisk(), getPerformanceNetwork(), getUsageCPU(), getUsageGPU(), getUsageRAM(), getUsageDisk(), getUsageNetwork());
     }
 
+    /**
+     * Generates a {@link JsonObject} containing all relevant {@link DeviceWorkload} information
+     *
+     * @return The generated {@link JsonObject}
+     */
     @Override
     public JsonObject serialize() {
         return JsonBuilder.anJSON()
