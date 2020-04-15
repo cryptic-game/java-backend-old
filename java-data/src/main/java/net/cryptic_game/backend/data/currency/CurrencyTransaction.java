@@ -38,54 +38,119 @@ public class CurrencyTransaction extends TableModelAutoId {
     @Column(name = "origin", updatable = false, nullable = true)
     private String origin;
 
+    /**
+     * Returns the {@link LocalDateTime}, the timestamp when the {@link CurrencyTransaction} has been made
+     *
+     * @return the timestamp
+     */
     public LocalDateTime getTimeStamp() {
         return this.timeStamp;
     }
 
+    /**
+     * Sets a new timestap as {@link LocalDateTime} for the {@link CurrencyTransaction}
+     *
+     * @param timeStamp the new {@link LocalDateTime} to be set
+     */
     public void setTimeStamp(final LocalDateTime timeStamp) {
         this.timeStamp = timeStamp;
     }
 
+    /**
+     * Returns the {@link User} who sends the {@link CurrencyTransaction}
+     *
+     * @return the source {@link User}
+     */
     public User getUserSource() {
         return this.userSource;
     }
 
+    /**
+     * Sets a new {@link User} as source for the {@link CurrencyTransaction}
+     *
+     * @param userSource the new {@link User} to be set
+     */
     public void setUserSource(final User userSource) {
         this.userSource = userSource;
     }
 
+    /**
+     * Returns the {@link User} who receives the {@link CurrencyTransaction}
+     *
+     * @return the destination {@link User}
+     */
     public User getUserDestination() {
         return this.userDestination;
     }
 
+    /**
+     * Sets a new {@link User} as destination for the {@link CurrencyTransaction}
+     *
+     * @param userDestination the new {@link User} to be set
+     */
     public void setUserDestination(final User userDestination) {
         this.userDestination = userDestination;
     }
 
+    /**
+     * Returns the amount of transacted morphcoin
+     *
+     * @return the amount of money
+     */
     public int getSendAmount() {
         return this.sendAmount;
     }
 
+    /**
+     * Sets a new amount of mophcoin to be transacted
+     *
+     * @param sendAmount the new amount of money to be set
+     */
     public void setSendAmount(final int sendAmount) {
         this.sendAmount = sendAmount;
     }
 
+    /**
+     * Returns the purpose of the {@link CurrencyTransaction}
+     *
+     * @return the purpose
+     */
     public String getPurpose() {
         return this.purpose;
     }
 
+    /**
+     * Sets a new purpose for the {@link CurrencyTransaction}
+     *
+     * @param purpose
+     */
     public void setPurpose(final String purpose) {
         this.purpose = purpose;
     }
 
+    /**
+     * Returns the origin of the {@link CurrencyTransaction}
+     *
+     * @return the origin
+     */
     public String getOrigin() {
         return this.origin;
     }
 
+    /**
+     * Sets a new origin of the {@link CurrencyTransaction}
+     *
+     * @param origin
+     */
     public void setOrigin(final String origin) {
         this.origin = origin;
     }
 
+    /**
+     * Generates a {@link JsonObject} containing all relevant {@link CurrencyTransaction} information
+     *
+     * @return The generated {@link JsonObject}
+     */
     @Override
     public JsonObject serialize() {
         return JsonBuilder.anJSON()
@@ -99,6 +164,12 @@ public class CurrencyTransaction extends TableModelAutoId {
                 .build();
     }
 
+    /**
+     * Compares an {@link Object} if it equals the {@link CurrencyTransaction}
+     *
+     * @param o {@link Object} to compare
+     * @return True if the {@link Object} equals the {@link CurrencyTransaction} | False if it does not
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -112,10 +183,13 @@ public class CurrencyTransaction extends TableModelAutoId {
                 Objects.equals(getOrigin(), that.getOrigin());
     }
 
+    /**
+     * Hashes the {@link CurrencyTransaction} using {@link Objects} hash method
+     *
+     * @return Hash of the {@link CurrencyTransaction}
+     */
     @Override
     public int hashCode() {
         return Objects.hash(getTimeStamp(), getUserSource().getId(), getSendAmount(), getUserDestination().getId(), getPurpose(), getOrigin());
     }
-
-
 }
