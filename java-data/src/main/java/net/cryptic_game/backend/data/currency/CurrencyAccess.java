@@ -26,22 +26,47 @@ public class CurrencyAccess extends TableModelAutoId {
     @Type(type = "uuid-char")
     private CurrencyWallet wallet;
 
+    /**
+     * Returns the {@link User} of the {@link CurrencyAccess}
+     *
+     * @return the {@link User}
+     */
     public User getUser() {
         return this.user;
     }
 
+    /**
+     * Sets a new {@link User} for the {@link CurrencyAccess}
+     *
+     * @param user the new {@link User} to be set
+     */
     public void setUser(final User user) {
         this.user = user;
     }
 
+    /**
+     * Returns the {@link CurrencyWallet} of the {@link CurrencyAccess}
+     *
+     * @return the {@link CurrencyAccess}
+     */
     public CurrencyWallet getWallet() {
         return this.wallet;
     }
 
+    /**
+     * Sets a new {@link CurrencyAccess}
+     *
+     * @param wallet the new {@link CurrencyAccess} to be set
+     */
     public void setWallet(final CurrencyWallet wallet) {
         this.wallet = wallet;
     }
 
+    /**
+     * Generates a {@link JsonObject} containing all relevant {@link CurrencyTransaction} information
+     *
+     * @return The generated {@link JsonObject}
+     */
     @Override
     public JsonObject serialize() {
         return JsonBuilder.anJSON()
@@ -51,6 +76,12 @@ public class CurrencyAccess extends TableModelAutoId {
                 .build();
     }
 
+    /**
+     * Compares an {@link Object} if it equals the {@link CurrencyAccess}
+     *
+     * @param o {@link Object} to compare
+     * @return True if the {@link Object} equals the {@link CurrencyAccess} | False if it does not
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -60,6 +91,11 @@ public class CurrencyAccess extends TableModelAutoId {
                 Objects.equals(getWallet(), that.getWallet());
     }
 
+    /**
+     * Hashes the {@link CurrencyAccess} using {@link Objects} hash method
+     *
+     * @return Hash of the {@link CurrencyAccess}
+     */
     @Override
     public int hashCode() {
         return Objects.hash(getUser(), getWallet());
