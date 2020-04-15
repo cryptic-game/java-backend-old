@@ -37,6 +37,13 @@ public class DeviceAccess extends TableModelAutoId {
     @Column(name = "valid", nullable = false, updatable = true)
     private boolean valid;
 
+    /**
+     * Checks if a {@link User} has got access to the {@link Device}
+     *
+     * @param user   the {@link User}
+     * @param device the {@link Device}
+     * @return true if the {@link User} has got access | otherwise false
+     */
     public static boolean hasUserAccessToDevice(final User user, final Device device) {
         try (Session sqlSession = sqlConnection.openSession()) {
             return sqlSession
@@ -48,6 +55,14 @@ public class DeviceAccess extends TableModelAutoId {
         }
     }
 
+    /**
+     * Grants access for a {@link User} to a {@link Device}
+     *
+     * @param user     the {@link User}
+     * @param device   the {@link Device}
+     * @param duration the {@link Duration} how long the {@link User} has got access
+     * @return the resulting {@link DeviceAccess}
+     */
     public static DeviceAccess grantAccessToDevice(final User user, final Device device, final Duration duration) {
         Session sqlSession = sqlConnection.openSession();
 
@@ -65,6 +80,12 @@ public class DeviceAccess extends TableModelAutoId {
         return access;
     }
 
+    /**
+     * Returns a {@link List} of {@link DeviceAccess}es, so accesses for a {@link Device}
+     *
+     * @param device the {@link Device}
+     * @return the {@link List} of {@link DeviceAccess}
+     */
     public static List<DeviceAccess> getAccessesToDevice(final Device device) {
         try (Session sqlSession = sqlConnection.openSession()) {
             return sqlSession
@@ -75,46 +96,101 @@ public class DeviceAccess extends TableModelAutoId {
         }
     }
 
+    /**
+     * Returns the {@link Device} of the {@link DeviceAccess}
+     *
+     * @return the {@link Device}
+     */
     public Device getDevice() {
         return this.device;
     }
 
+    /**
+     * Sets a new {@link Device} for the {@link DeviceAccess}
+     *
+     * @param device the new {@link Device} to be set
+     */
     public void setDevice(final Device device) {
         this.device = device;
     }
 
+    /**
+     * Returns the {@link User} of the {@link DeviceAccess}
+     *
+     * @return the {@link User}
+     */
     public User getUser() {
         return this.user;
     }
 
+    /**
+     * Sets a new {@link User} for the {@link DeviceAccess}
+     *
+     * @param user the new {@link DeviceAccess}
+     */
     public void setUser(final User user) {
         this.user = user;
     }
 
+    /**
+     * Returns the {@link LocalDateTime} when the {@link DeviceAccess} has been granted
+     *
+     * @return the time accessed
+     */
     public LocalDateTime getAccessGranted() {
         return this.accessGranted;
     }
 
+    /**
+     * Sets a new {@link LocalDateTime} as time accessed
+     *
+     * @param accessGranted the new {@link LocalDateTime} to be set
+     */
     public void setAccessGranted(final LocalDateTime accessGranted) {
         this.accessGranted = accessGranted;
     }
 
+    /**
+     * Returns the {@link LocalDateTime}
+     *
+     * @return the time the access will expire
+     */
     public LocalDateTime getExpire() {
         return this.expire;
     }
 
+    /**
+     * Sets a new {@link LocalDateTime}
+     *
+     * @param expire the new {@link LocalDateTime} to be set
+     */
     public void setExpire(final LocalDateTime expire) {
         this.expire = expire;
     }
 
+    /**
+     * Returns whether the {@link DeviceAccess} is valid or not
+     *
+     * @return true if it is otherwise false
+     */
     public boolean isValid() {
         return this.valid;
     }
 
+    /**
+     * Sets a new boolean if the {@link DeviceAccess} is valid
+     *
+     * @param valid the new boolean to be set
+     */
     public void setValid(final boolean valid) {
         this.valid = valid;
     }
 
+    /**
+     * Generates a {@link JsonObject} containing all relevant {@link DeviceAccess} information
+     *
+     * @return The generated {@link JsonObject}
+     */
     @Override
     public JsonObject serialize() {
         return JsonBuilder.anJSON()
@@ -127,6 +203,12 @@ public class DeviceAccess extends TableModelAutoId {
                 .build();
     }
 
+    /**
+     * Compares an {@link Object} if it equals the {@link DeviceAccess}
+     *
+     * @param o {@link Object} to compare
+     * @return True if the {@link Object} equals the {@link DeviceAccess} | False if it does not
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -140,6 +222,11 @@ public class DeviceAccess extends TableModelAutoId {
                 Objects.equals(getId(), that.getId());
     }
 
+    /**
+     * Hashes the {@link DeviceAccess} using {@link Objects} hash method
+     *
+     * @return Hash of the {@link DeviceAccess}
+     */
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getDevice(), getUser(), getAccessGranted(), getExpire(), isValid());
