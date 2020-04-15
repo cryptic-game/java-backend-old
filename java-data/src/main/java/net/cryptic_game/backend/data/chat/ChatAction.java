@@ -15,6 +15,11 @@ public enum ChatAction {
         this.value = value;
     }
 
+    /**
+     * Returns the {@link ChatAction} value
+     *
+     * @return the Value
+     */
     public String getValue() {
         return this.value;
     }
