@@ -1,9 +1,8 @@
 name: Cryptic Backend Sentry
 on:
-  push:
-    branches:
-      - master
-      - experimental
+  push: #Todo: After fixing Sentry reactivate this action
+    branches-ignore:
+      - '**'
 
 jobs:
   build:
