@@ -211,7 +211,9 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createDirectory(net.cryptic_game.backend.data.device.Device,java.lang.String,net.cryptic_game.backend.data.device.DeviceFile)">createDirectory</a></span>&#8203;(<a href="Device.html" title="class in net.cryptic_game.backend.data.device">Device</a>&nbsp;device,
                java.lang.String&nbsp;name,
                <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device">DeviceFile</a>&nbsp;parentDir)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Creates a <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a> and returns itself as directory</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>static <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device">DeviceFile</a></code></td>
@@ -219,77 +221,107 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
           java.lang.String&nbsp;name,
           java.lang.String&nbsp;contents,
           <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device">DeviceFile</a>&nbsp;parentDir)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Creates a <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a> and returns itself as file, not directory</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Compares an <code>Object</code> if it equals the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a></div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getContent()">getContent</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Returns the Content of the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a></div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="Device.html" title="class in net.cryptic_game.backend.data.device">Device</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDevice()">getDevice</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Returns the <a href="Device.html" title="class in net.cryptic_game.backend.data.device"><code>Device</code></a> where the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a> is located</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>static java.util.List&lt;<a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device">DeviceFile</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFilesByDevice(net.cryptic_game.backend.data.device.Device)">getFilesByDevice</a></span>&#8203;(<a href="Device.html" title="class in net.cryptic_game.backend.data.device">Device</a>&nbsp;device)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Returns a list of all <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a> of a <a href="Device.html" title="class in net.cryptic_game.backend.data.device"><code>Device</code></a></div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getName()">getName</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Returns the Name of the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a></div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device">DeviceFile</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getParentDirectory()">getParentDirectory</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Returns the parentdirectory of the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a></div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Hashes the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a> using <code>Objects</code> hash method</div>
+</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isDirectory()">isDirectory</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Returns whether the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a> is a directory (true) or not (false)</div>
+</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>com.google.gson.JsonObject</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#serialize()">serialize</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Generates a <code>JsonObject</code> containing all relevant <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a> information</div>
+</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setContent(java.lang.String)">setContent</a></span>&#8203;(java.lang.String&nbsp;content)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Sets the content of the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a></div>
+</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDevice(net.cryptic_game.backend.data.device.Device)">setDevice</a></span>&#8203;(<a href="Device.html" title="class in net.cryptic_game.backend.data.device">Device</a>&nbsp;device)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Sets the <a href="Device.html" title="class in net.cryptic_game.backend.data.device"><code>Device</code></a> where the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a> is located</div>
+</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsDirectory(boolean)">setIsDirectory</a></span>&#8203;(boolean&nbsp;isDirectory)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Sets whether the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a> is a directory (true) or not (false)</div>
+</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setName(java.lang.String)">setName</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Sets the name of the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a></div>
+</td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setParentDirectory(net.cryptic_game.backend.data.device.DeviceFile)">setParentDirectory</a></span>&#8203;(<a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device">DeviceFile</a>&nbsp;parentDirectory)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Sets the parentdirectory of the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a></div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -358,6 +390,16 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
                                     java.lang.String&nbsp;name,
                                     java.lang.String&nbsp;contents,
                                     <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device">DeviceFile</a>&nbsp;parentDir)</pre>
+<div class="block">Creates a <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a> and returns itself as file, not directory</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>device</code> - the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a>  where the file will be added</dd>
+<dd><code>name</code> - the name of the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a></dd>
+<dd><code>contents</code> - the content of the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a></dd>
+<dd><code>parentDir</code> - the parent-directory as <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the created <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a></dd>
+</dl>
 </li>
 </ul>
 <a id="createDirectory(net.cryptic_game.backend.data.device.Device,java.lang.String,net.cryptic_game.backend.data.device.DeviceFile)">
@@ -369,6 +411,15 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <pre class="methodSignature">public static&nbsp;<a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device">DeviceFile</a>&nbsp;createDirectory&#8203;(<a href="Device.html" title="class in net.cryptic_game.backend.data.device">Device</a>&nbsp;device,
                                          java.lang.String&nbsp;name,
                                          <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device">DeviceFile</a>&nbsp;parentDir)</pre>
+<div class="block">Creates a <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a> and returns itself as directory</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>device</code> - the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a>  where the file will be added</dd>
+<dd><code>name</code> - the name of the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a></dd>
+<dd><code>parentDir</code> - the parent-directory as <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the created <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a></dd>
+</dl>
 </li>
 </ul>
 <a id="getFilesByDevice(net.cryptic_game.backend.data.device.Device)">
@@ -378,6 +429,13 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <li class="blockList">
 <h4>getFilesByDevice</h4>
 <pre class="methodSignature">public static&nbsp;java.util.List&lt;<a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device">DeviceFile</a>&gt;&nbsp;getFilesByDevice&#8203;(<a href="Device.html" title="class in net.cryptic_game.backend.data.device">Device</a>&nbsp;device)</pre>
+<div class="block">Returns a list of all <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a> of a <a href="Device.html" title="class in net.cryptic_game.backend.data.device"><code>Device</code></a></div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>device</code> - the <a href="Device.html" title="class in net.cryptic_game.backend.data.device"><code>Device</code></a> where you want all <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the <code>List</code> of all <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a> of a <a href="Device.html" title="class in net.cryptic_game.backend.data.device"><code>Device</code></a></dd>
+</dl>
 </li>
 </ul>
 <a id="getDevice()">
@@ -387,6 +445,11 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <li class="blockList">
 <h4>getDevice</h4>
 <pre class="methodSignature">public&nbsp;<a href="Device.html" title="class in net.cryptic_game.backend.data.device">Device</a>&nbsp;getDevice()</pre>
+<div class="block">Returns the <a href="Device.html" title="class in net.cryptic_game.backend.data.device"><code>Device</code></a> where the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a> is located</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the <a href="Device.html" title="class in net.cryptic_game.backend.data.device"><code>Device</code></a></dd>
+</dl>
 </li>
 </ul>
 <a id="setDevice(net.cryptic_game.backend.data.device.Device)">
@@ -396,6 +459,11 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <li class="blockList">
 <h4>setDevice</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setDevice&#8203;(<a href="Device.html" title="class in net.cryptic_game.backend.data.device">Device</a>&nbsp;device)</pre>
+<div class="block">Sets the <a href="Device.html" title="class in net.cryptic_game.backend.data.device"><code>Device</code></a> where the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a> is located</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>device</code> - </dd>
+</dl>
 </li>
 </ul>
 <a id="getName()">
@@ -405,6 +473,11 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <li class="blockList">
 <h4>getName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getName()</pre>
+<div class="block">Returns the Name of the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a></div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the Name</dd>
+</dl>
 </li>
 </ul>
 <a id="setName(java.lang.String)">
@@ -414,6 +487,11 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <li class="blockList">
 <h4>setName</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setName&#8203;(java.lang.String&nbsp;name)</pre>
+<div class="block">Sets the name of the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a></div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - the new name</dd>
+</dl>
 </li>
 </ul>
 <a id="getContent()">
@@ -423,6 +501,11 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <li class="blockList">
 <h4>getContent</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getContent()</pre>
+<div class="block">Returns the Content of the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a></div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the content</dd>
+</dl>
 </li>
 </ul>
 <a id="setContent(java.lang.String)">
@@ -432,6 +515,11 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <li class="blockList">
 <h4>setContent</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setContent&#8203;(java.lang.String&nbsp;content)</pre>
+<div class="block">Sets the content of the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a></div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>content</code> - the new content</dd>
+</dl>
 </li>
 </ul>
 <a id="isDirectory()">
@@ -441,6 +529,11 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <li class="blockList">
 <h4>isDirectory</h4>
 <pre class="methodSignature">public&nbsp;boolean&nbsp;isDirectory()</pre>
+<div class="block">Returns whether the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a> is a directory (true) or not (false)</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>whether the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a> is a directory</dd>
+</dl>
 </li>
 </ul>
 <a id="setIsDirectory(boolean)">
@@ -450,6 +543,11 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <li class="blockList">
 <h4>setIsDirectory</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setIsDirectory&#8203;(boolean&nbsp;isDirectory)</pre>
+<div class="block">Sets whether the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a> is a directory (true) or not (false)</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>isDirectory</code> - depends whether the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a> is a direcory or not</dd>
+</dl>
 </li>
 </ul>
 <a id="getParentDirectory()">
@@ -459,6 +557,11 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <li class="blockList">
 <h4>getParentDirectory</h4>
 <pre class="methodSignature">public&nbsp;<a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device">DeviceFile</a>&nbsp;getParentDirectory()</pre>
+<div class="block">Returns the parentdirectory of the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a></div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the parentdirectory of the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a></dd>
+</dl>
 </li>
 </ul>
 <a id="setParentDirectory(net.cryptic_game.backend.data.device.DeviceFile)">
@@ -468,6 +571,11 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <li class="blockList">
 <h4>setParentDirectory</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setParentDirectory&#8203;(<a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device">DeviceFile</a>&nbsp;parentDirectory)</pre>
+<div class="block">Sets the parentdirectory of the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a></div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>parentDirectory</code> - the new parentdirectory</dd>
+</dl>
 </li>
 </ul>
 <a id="serialize()">
@@ -477,6 +585,11 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <li class="blockList">
 <h4>serialize</h4>
 <pre class="methodSignature">public&nbsp;com.google.gson.JsonObject&nbsp;serialize()</pre>
+<div class="block">Generates a <code>JsonObject</code> containing all relevant <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a> information</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The generated <code>JsonObject</code></dd>
+</dl>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">
@@ -486,9 +599,14 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <li class="blockList">
 <h4>equals</h4>
 <pre class="methodSignature">public&nbsp;boolean&nbsp;equals&#8203;(java.lang.Object&nbsp;o)</pre>
+<div class="block">Compares an <code>Object</code> if it equals the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>equals</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>o</code> - <code>Object</code> to compare</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>True if the <code>Object</code> equals the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a> | False if it does not</dd>
 </dl>
 </li>
 </ul>
@@ -499,9 +617,12 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <li class="blockList">
 <h4>hashCode</h4>
 <pre class="methodSignature">public&nbsp;int&nbsp;hashCode()</pre>
+<div class="block">Hashes the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a> using <code>Objects</code> hash method</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>hashCode</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Hash of the <a href="DeviceFile.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceFile</code></a></dd>
 </dl>
 </li>
 </ul>
