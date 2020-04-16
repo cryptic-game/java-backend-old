@@ -22,7 +22,7 @@ public class DeviceHardwareElement extends TableModelAutoId {
     /**
      * Returns the name of the {@link DeviceHardwareElement}
      *
-     * @returnthe name of the {@link DeviceHardwareElement}
+     * @return the name of the {@link DeviceHardwareElement}
      */
     public String getName() {
         return this.name;
