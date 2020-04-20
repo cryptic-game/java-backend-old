@@ -25,6 +25,10 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "ALREADY_LOGGED_IN");
         }
 
+        if (name.length() > 256) {
+            return new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_NAME");
+        }
+
         final User user = User.getByName(name);
 
         if (user == null) {
@@ -52,6 +56,10 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
                                 @ApiParameter("device_name") final String deviceName) {
         if (client.get(Session.class) != null || client.get(User.class) != null) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "ALREADY_LOGGED_IN");
+        }
+
+        if (name.length() > 256) {
+            return new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_NAME");
         }
 
         if (!ValidationUtils.checkPassword(password)) {
