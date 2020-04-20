@@ -5,11 +5,15 @@ import io.netty.channel.Channel;
 import net.cryptic_game.backend.base.daemon.Daemon;
 import net.cryptic_game.backend.base.daemon.Function;
 import net.cryptic_game.backend.base.utils.ApiUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class DaemonHandler {
+
+    private final static Logger logger = LoggerFactory.getLogger(DaemonHandler.class);
 
     private final Map<String, Function> functions;
     private final HashMap<UUID, ClientRespond> channel;
@@ -26,7 +30,13 @@ public class DaemonHandler {
     }
 
     public void removeDaemon(final Channel channel) {
-        this.daemons = this.daemons.stream().filter(daemon -> !daemon.getChannel().equals(channel)).collect(Collectors.toSet());
+        final Daemon daemon = this.daemons.stream().filter(d -> d.getChannel().equals(channel)).findFirst().orElse(null);
+        if (daemon != null) {
+            this.daemons.remove(daemon);
+            this.functions.values().stream().filter(function -> function.getDaemon().equals(daemon)).collect(Collectors.toSet())
+                    .forEach(function -> functions.remove(function.getName()));
+            logger.info("Removed daemon \"" + daemon.getName() + "\"");
+        }
     }
 
     public Set<Daemon> getDaemons() {

@@ -4,23 +4,31 @@ import io.netty.channel.Channel;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class ApiClientList {
 
     private final Set<ApiClient> clients;
+    private final Set<Consumer<ApiClient>> clientAddedCallbacks;
+    private final Set<Consumer<ApiClient>> clientRemovedCallbacks;
 
     public ApiClientList() {
         this.clients = new HashSet<>();
+        this.clientAddedCallbacks = new HashSet<>();
+        this.clientRemovedCallbacks = new HashSet<>();
     }
 
     public void add(final Channel channel) {
-        this.clients.add(new ApiClient(channel));
+        final ApiClient client = new ApiClient(channel);
+        this.clients.add(client);
+        this.clientAddedCallbacks.forEach((consumer -> consumer.accept(client)));
     }
 
     public void remove(final ApiClient client) {
         this.clients.remove(client);
+        this.clientRemovedCallbacks.forEach(consumer -> consumer.accept(client));
     }
 
     public ApiClient get(final Channel channel) {
@@ -36,5 +44,13 @@ public class ApiClientList {
 
     public Set<ApiClient> getApiClients() {
         return this.clients;
+    }
+
+    public void registerClientAddedCallback(Consumer<ApiClient> consumer) {
+        this.clientAddedCallbacks.add(consumer);
+    }
+
+    public void registerClientRemovedCallback(Consumer<ApiClient> consumer) {
+        this.clientRemovedCallbacks.add(consumer);
     }
 }
