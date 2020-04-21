@@ -2,7 +2,6 @@ package net.cryptic_game.backend.base.api.client;
 
 import com.google.gson.JsonObject;
 import io.netty.channel.Channel;
-import net.cryptic_game.backend.base.api.notification.NotificationTopic;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -35,24 +34,12 @@ public class ApiClient {
         return null;
     }
 
-    public void subscribe(final NotificationTopic topic) {
-        this.subscribe(topic.getName());
-    }
-
     public void subscribe(final String topic) {
         this.topics.add(topic);
     }
 
-    public void unsubscribe(final NotificationTopic topic) {
-        this.unsubscribe(topic.getName());
-    }
-
     public void unsubscribe(final String topic) {
         this.topics.remove(topic);
-    }
-
-    public boolean hasSubscribed(final NotificationTopic topic) {
-        return this.hasSubscribed(topic.getName());
     }
 
     public boolean hasSubscribed(final String topic) {

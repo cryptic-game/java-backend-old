@@ -1,23 +1,25 @@
 package net.cryptic_game.backend.base.api.netty;
 
 import com.google.gson.JsonObject;
+import net.cryptic_game.backend.base.api.client.ApiClient;
 import net.cryptic_game.backend.base.api.client.ApiClientList;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointFinder;
+import net.cryptic_game.backend.base.daemon.Daemon;
 import net.cryptic_game.backend.base.netty.NettyCodec;
 
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 public class JsonApiServerCodec extends NettyCodec<JsonApiServerCodecInitializer> {
 
     private final ApiEndpointFinder finder;
     private final ApiClientList clientList;
-    private final Consumer<JsonObject> consumer;
+    private final BiConsumer<JsonObject, ApiClient> consumer;
 
     public JsonApiServerCodec(final ApiEndpointFinder finder, final ApiClientList clientList) {
         this(finder, clientList, null);
     }
 
-    public JsonApiServerCodec(final ApiEndpointFinder finder, final ApiClientList clientList, final Consumer<JsonObject> consumer) {
+    public JsonApiServerCodec(final ApiEndpointFinder finder, final ApiClientList clientList, final BiConsumer<JsonObject, ApiClient> consumer) {
         super(new JsonApiServerCodecInitializer());
         this.initializer.setCodec(this);
         this.finder = finder;
@@ -33,7 +35,7 @@ public class JsonApiServerCodec extends NettyCodec<JsonApiServerCodecInitializer
         return this.clientList;
     }
 
-    Consumer<JsonObject> getConsumer() {
+    BiConsumer<JsonObject, ApiClient> getConsumer() {
         return this.consumer;
     }
 }

@@ -16,8 +16,8 @@ public class JsonBuilder implements JsonSerializable {
 
     private final JsonObject json;
 
-    private JsonBuilder() {
-        this.json = new JsonObject();
+    private JsonBuilder(JsonObject json) {
+        this.json = json;
     }
 
     /**
@@ -26,7 +26,17 @@ public class JsonBuilder implements JsonSerializable {
      * @return the {@link JsonBuilder} that has been created.
      */
     public static JsonBuilder anJSON() {
-        return new JsonBuilder();
+        return new JsonBuilder(new JsonObject());
+    }
+
+    /**
+     * Creates a new object of {@link JsonBuilder} with an existing {@link JsonObject}.
+     *
+     * @param json The existing {@link JsonObject}
+     * @return the {@link JsonBuilder} that has been created.
+     */
+    public static JsonBuilder anJSON(JsonObject json) {
+        return new JsonBuilder(json);
     }
 
     /**

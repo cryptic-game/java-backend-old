@@ -51,13 +51,19 @@ public class DaemonHandler {
         return this.functions.get(name.strip().toLowerCase());
     }
 
-    public void executeFunction(final String tag, final Channel client, final Function function, final UUID userId, final JsonObject data) {
+    public UUID executeFunction(final String tag, final Channel client, final Function function, final UUID userId, final JsonObject data) {
         data.addProperty("user_id", userId.toString());
-        this.channel.put(ApiUtils.request(function.getDaemon().getChannel(), function.getName(), data), new ClientRespond(tag, client));
+        final UUID requestTag = ApiUtils.request(function.getDaemon().getChannel(), function.getName(), data);
+        this.channel.put(requestTag, new ClientRespond(tag, client));
+        return requestTag;
     }
 
     public void respondToClient(final JsonObject json) {
-        final ClientRespond respond = this.channel.get(UUID.fromString(json.get("tag").getAsString()));
+        final ClientRespond respond = this.channel.remove(UUID.fromString(json.get("tag").getAsString()));
         ApiUtils.response(respond.getChannel(), respond.getTag(), json.get("info").getAsJsonObject(), json.get("data"));
+    }
+
+    public boolean isRequstOpen(final UUID tag) {
+        return this.channel.containsKey(tag);
     }
 }

@@ -4,10 +4,12 @@ import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.api.client.ApiClient;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointFinder;
 import net.cryptic_game.backend.base.api.netty.JsonApiServerCodec;
+import net.cryptic_game.backend.base.daemon.Daemon;
 import net.cryptic_game.backend.base.netty.NettyCodec;
+import net.cryptic_game.backend.base.utils.JsonUtils;
 import net.cryptic_game.backend.server.daemon.DaemonHandler;
 
-import java.util.function.Consumer;
+import java.util.UUID;
 
 public class DaemonServerCodec extends NettyCodec<DaemonCodecServerInitializer> {
 
@@ -20,7 +22,11 @@ public class DaemonServerCodec extends NettyCodec<DaemonCodecServerInitializer> 
         this.setChildCodecs(new JsonApiServerCodec(new ApiEndpointFinder(daemonEndpointHandler.getApiList()), daemonEndpointHandler.getApiList().getClientList(), this::handleResponse));
     }
 
-    private void handleResponse(final JsonObject jsonObject) {
-        this.daemonHandler.respondToClient(jsonObject);
+    private void handleResponse(final JsonObject jsonObject, final ApiClient client) {
+        UUID tag = JsonUtils.getUUID(jsonObject, "tag");
+        if (this.daemonHandler.isRequstOpen(tag))
+            this.daemonHandler.respondToClient(jsonObject);
+        //else
+        // TODO Notify daemon
     }
 }

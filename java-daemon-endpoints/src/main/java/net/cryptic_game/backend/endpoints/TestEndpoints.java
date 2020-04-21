@@ -13,6 +13,11 @@ public class TestEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("test")
     public ApiResponse test() {
+        try {
+            Thread.sleep(1000 * 25);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return new ApiResponse(ApiResponseType.NOT_IMPLEMENTED);
     }
 

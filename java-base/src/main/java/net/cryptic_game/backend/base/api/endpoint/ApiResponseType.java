@@ -22,6 +22,7 @@ public enum ApiResponseType implements JsonSerializable {
     // Server error responses
     INTERNAL_SERVER_ERROR(500, "INTERNAL_SERVER_ERROR", true),
     NOT_IMPLEMENTED(501, "NOT_IMPLEMENTED", true),
+    BAD_GATEWAY(502, "BAD_GATEWAY", true),
 
     // Custom
     PUSH(900, "PUSH", false),

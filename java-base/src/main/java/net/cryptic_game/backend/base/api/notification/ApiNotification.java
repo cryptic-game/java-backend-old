@@ -12,14 +12,14 @@ public class ApiNotification implements JsonSerializable {
 
     private final String id;
     private final Set<ApiClient> clients;
-    private final NotificationTopic topic;
+    private final String topic;
     private final JsonElement data;
 
-    public ApiNotification(final String id, final Set<ApiClient> clients, final NotificationTopic topic, final JsonSerializable serializable) {
+    public ApiNotification(final String id, final Set<ApiClient> clients, final String topic, final JsonSerializable serializable) {
         this(id, clients, topic, serializable.serialize());
     }
 
-    public ApiNotification(final String id, final Set<ApiClient> clients, final NotificationTopic topic, final JsonElement data) {
+    public ApiNotification(final String id, final Set<ApiClient> clients, final String topic, final JsonElement data) {
         this.id = id;
         this.clients = clients;
         this.topic = topic;

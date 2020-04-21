@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class TimeoutHandler implements Runnable {
 
-    private final static long tick = 10 * 1000;
+    private final static long tick = 1000; // milliseconds
 
     private final Set<Timeout> timeouts;
     private boolean running;

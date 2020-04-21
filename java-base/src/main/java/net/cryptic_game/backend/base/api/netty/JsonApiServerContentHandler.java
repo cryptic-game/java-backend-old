@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import io.netty.channel.ChannelHandlerContext;
 import net.cryptic_game.backend.base.api.ApiException;
+import net.cryptic_game.backend.base.api.client.ApiClient;
 import net.cryptic_game.backend.base.api.client.ApiClientList;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointFinder;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
@@ -13,16 +14,16 @@ import net.cryptic_game.backend.base.netty.NettyChannelHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 public class JsonApiServerContentHandler extends NettyChannelHandler<JsonObject> {
 
     private static final Logger log = LoggerFactory.getLogger(JsonApiServerContentHandler.class);
     private final ApiEndpointFinder executor;
     private final ApiClientList clientList;
-    private final Consumer<JsonObject> consumer;
+    private final BiConsumer<JsonObject, ApiClient> consumer;
 
-    public JsonApiServerContentHandler(final ApiEndpointFinder executor, final ApiClientList clientList, final Consumer<JsonObject> consumer) {
+    public JsonApiServerContentHandler(final ApiEndpointFinder executor, final ApiClientList clientList, final BiConsumer<JsonObject, ApiClient> consumer) {
         this.executor = executor;
         this.clientList = clientList;
         this.consumer = consumer;
@@ -50,7 +51,7 @@ public class JsonApiServerContentHandler extends NettyChannelHandler<JsonObject>
 
         if (apiResponse == null) {
             if (request.has("response") && request.get("response").getAsBoolean()) {
-                if (this.consumer != null) consumer.accept(request);
+                if (this.consumer != null) consumer.accept(request, clientList.get(ctx.channel()));
                 return;
             }
 

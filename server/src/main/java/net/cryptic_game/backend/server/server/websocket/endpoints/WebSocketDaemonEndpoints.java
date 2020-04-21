@@ -3,9 +3,14 @@ package net.cryptic_game.backend.server.server.websocket.endpoints;
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.api.client.ApiClient;
 import net.cryptic_game.backend.base.api.endpoint.*;
+import net.cryptic_game.backend.base.config.BaseConfig;
 import net.cryptic_game.backend.base.daemon.Function;
+import net.cryptic_game.backend.base.utils.JsonBuilder;
 import net.cryptic_game.backend.data.user.Session;
+import net.cryptic_game.backend.server.App;
 import net.cryptic_game.backend.server.daemon.DaemonHandler;
+
+import java.util.UUID;
 
 public class WebSocketDaemonEndpoints extends ApiEndpointCollection {
 
@@ -38,7 +43,19 @@ public class WebSocketDaemonEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_PARAMETERS");
         }
 
-        this.daemonHandler.executeFunction(tag, client.getChannel(), function, session.getUser().getId(), data == null ? new JsonObject() : data);
+        UUID requestTag = this.daemonHandler.executeFunction(tag, client.getChannel(), function, session.getUser().getId(), data == null ? new JsonObject() : data);
+
+        App.addTimeout(App.getInstance().getConfig().getAsInt(BaseConfig.RESPONSE_TIMEOUT) * 1000, () -> {
+            if (daemonHandler.isRequstOpen(requestTag)) {
+                daemonHandler.respondToClient(JsonBuilder.anJSON()
+                        .add("tag", requestTag)
+                        .add("info", JsonBuilder.anJSON(ApiResponseType.BAD_GATEWAY.serialize())
+                                .add("notification", false)
+                                .add("message", "DAEMON_TIMEOUT")
+                                .build())
+                        .build());
+            }
+        });
 
         return null;
     }
