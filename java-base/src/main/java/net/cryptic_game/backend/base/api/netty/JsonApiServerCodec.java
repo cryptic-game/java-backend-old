@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.api.client.ApiClient;
 import net.cryptic_game.backend.base.api.client.ApiClientList;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointFinder;
-import net.cryptic_game.backend.base.daemon.Daemon;
 import net.cryptic_game.backend.base.netty.NettyCodec;
 
 import java.util.function.BiConsumer;

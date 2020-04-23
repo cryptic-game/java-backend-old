@@ -28,6 +28,8 @@ public class DaemonInfoEndpoints extends ApiEndpointCollection {
         this.daemonHandler.addDaemon(drp.getDaemon());
         this.daemonHandler.addFunctions(drp.getFunctions());
 
+        client.add(drp.getDaemon());
+
         log.info("Daemon \"" + name + "\" registered.");
 
         return new ApiResponse(ApiResponseType.OK);
