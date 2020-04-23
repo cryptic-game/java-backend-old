@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":9,"i8":10,"i9":9,"i10":42,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":9,"i8":9,"i9":10,"i10":9,"i11":42,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -222,20 +222,27 @@ implements <a href="../interfaces/JsonSerializable.html" title="interface in net
 </td>
 </tr>
 <tr id="i8" class="altColor">
+<td class="colFirst"><code>static <a href="JsonBuilder.html" title="class in net.cryptic_game.backend.base.utils">JsonBuilder</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#anJSON(com.google.gson.JsonObject)">anJSON</a></span>&#8203;(com.google.gson.JsonObject&nbsp;json)</code></th>
+<td class="colLast">
+<div class="block">Creates a new object of <a href="JsonBuilder.html" title="class in net.cryptic_game.backend.base.utils"><code>JsonBuilder</code></a> with an existing <code>JsonObject</code>.</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>com.google.gson.JsonObject</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#build()">build</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Creates a <code>JsonObject</code> containing all previously to the object of <a href="JsonBuilder.html" title="class in net.cryptic_game.backend.base.utils"><code>JsonBuilder</code></a> added properties.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>static com.google.gson.JsonObject</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#error(java.lang.String)">error</a></span>&#8203;(java.lang.String&nbsp;message)</code></th>
 <td class="colLast">
 <div class="block">Convenience method to create a new <code>JsonObject</code>.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>com.google.gson.JsonObject</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#serialize()">serialize</a></span>()</code></th>
 <td class="colLast">
@@ -244,7 +251,7 @@ implements <a href="../interfaces/JsonSerializable.html" title="interface in net
 </div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>static com.google.gson.JsonObject</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#simple(java.lang.String,com.google.gson.JsonElement)">simple</a></span>&#8203;(java.lang.String&nbsp;key,
       com.google.gson.JsonElement&nbsp;value)</code></th>
@@ -252,7 +259,7 @@ implements <a href="../interfaces/JsonSerializable.html" title="interface in net
 <div class="block">Convenience method to create a new <code>JsonObject</code>.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>static com.google.gson.JsonObject</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#simple(java.lang.String,java.lang.Boolean)">simple</a></span>&#8203;(java.lang.String&nbsp;key,
       java.lang.Boolean&nbsp;value)</code></th>
@@ -260,7 +267,7 @@ implements <a href="../interfaces/JsonSerializable.html" title="interface in net
 <div class="block">Convenience method to create a new <code>JsonObject</code>.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>static com.google.gson.JsonObject</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#simple(java.lang.String,java.lang.Character)">simple</a></span>&#8203;(java.lang.String&nbsp;key,
       java.lang.Character&nbsp;value)</code></th>
@@ -268,7 +275,7 @@ implements <a href="../interfaces/JsonSerializable.html" title="interface in net
 <div class="block">Convenience method to create a new <code>JsonObject</code>.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>static com.google.gson.JsonObject</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#simple(java.lang.String,java.lang.Number)">simple</a></span>&#8203;(java.lang.String&nbsp;key,
       java.lang.Number&nbsp;value)</code></th>
@@ -276,7 +283,7 @@ implements <a href="../interfaces/JsonSerializable.html" title="interface in net
 <div class="block">Convenience method to create a new <code>JsonObject</code>.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>static com.google.gson.JsonObject</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#simple(java.lang.String,java.lang.String)">simple</a></span>&#8203;(java.lang.String&nbsp;key,
       java.lang.String&nbsp;value)</code></th>
@@ -317,6 +324,22 @@ implements <a href="../interfaces/JsonSerializable.html" title="interface in net
 <pre class="methodSignature">public static&nbsp;<a href="JsonBuilder.html" title="class in net.cryptic_game.backend.base.utils">JsonBuilder</a>&nbsp;anJSON()</pre>
 <div class="block">Creates a new object of <a href="JsonBuilder.html" title="class in net.cryptic_game.backend.base.utils"><code>JsonBuilder</code></a>.</div>
 <dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the <a href="JsonBuilder.html" title="class in net.cryptic_game.backend.base.utils"><code>JsonBuilder</code></a> that has been created.</dd>
+</dl>
+</li>
+</ul>
+<a id="anJSON(com.google.gson.JsonObject)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>anJSON</h4>
+<pre class="methodSignature">public static&nbsp;<a href="JsonBuilder.html" title="class in net.cryptic_game.backend.base.utils">JsonBuilder</a>&nbsp;anJSON&#8203;(com.google.gson.JsonObject&nbsp;json)</pre>
+<div class="block">Creates a new object of <a href="JsonBuilder.html" title="class in net.cryptic_game.backend.base.utils"><code>JsonBuilder</code></a> with an existing <code>JsonObject</code>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>json</code> - The existing <code>JsonObject</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the <a href="JsonBuilder.html" title="class in net.cryptic_game.backend.base.utils"><code>JsonBuilder</code></a> that has been created.</dd>
 </dl>
