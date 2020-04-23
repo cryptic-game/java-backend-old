@@ -15,4 +15,14 @@ public class TestEndpoints extends ApiEndpointCollection {
     public ApiResponse test() {
         return new ApiResponse(ApiResponseType.NOT_IMPLEMENTED);
     }
+
+    @ApiEndpoint("timeout")
+    public ApiResponse timeout() {
+        try {
+            Thread.sleep(1000 * 25);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return new ApiResponse(ApiResponseType.NOT_IMPLEMENTED);
+    }
 }
