@@ -197,6 +197,7 @@ public class JsonBuilder implements JsonSerializable {
      *
      * @param key    name of the property.
      * @param values {@link List} value of associated with the property.
+     * @param <T> Type of the objects inside the list.
      * @return the current object of {@link JsonBuilder}.
      * @throws InvalidPropertiesFormatException Type is not supported by {@link JsonArray}
      */

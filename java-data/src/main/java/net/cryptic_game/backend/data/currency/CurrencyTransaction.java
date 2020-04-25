@@ -122,7 +122,7 @@ public class CurrencyTransaction extends TableModelAutoId {
     /**
      * Sets a new purpose for the {@link CurrencyTransaction}
      *
-     * @param purpose
+     * @param purpose New purpose to be set.
      */
     public void setPurpose(final String purpose) {
         this.purpose = purpose;
@@ -140,7 +140,7 @@ public class CurrencyTransaction extends TableModelAutoId {
     /**
      * Sets a new origin of the {@link CurrencyTransaction}
      *
-     * @param origin
+     * @param origin New origin to be set.
      */
     public void setOrigin(final String origin) {
         this.origin = origin;

@@ -112,7 +112,7 @@ public class DeviceFile extends TableModelAutoId {
     /**
      * Sets the {@link Device} where the {@link DeviceFile} is located
      *
-     * @param device
+     * @param device New {@link Device} to be set.
      */
     public void setDevice(final Device device) {
         this.device = device;
