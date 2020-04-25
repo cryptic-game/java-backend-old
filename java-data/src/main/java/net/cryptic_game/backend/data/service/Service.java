@@ -10,6 +10,11 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.util.Objects;
 
+/**
+ * Entity representing a service entry in the database
+ *
+ * @since 0.3.0
+ */
 @Entity
 @Table(name = "service_service")
 public class Service extends TableModelAutoId {

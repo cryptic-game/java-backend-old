@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Entity representing an network member entry in the database
+ * Entity representing a network member entry in the database
  *
  * @since 0.3.0
  */

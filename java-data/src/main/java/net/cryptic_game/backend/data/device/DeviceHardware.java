@@ -8,6 +8,11 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.util.Objects;
 
+/**
+ * Entity representing a device hardware entry in the database
+ *
+ * @since 0.3.0
+ */
 @Entity
 @Table(name = "device_hardware")
 public class DeviceHardware extends TableModelAutoId {

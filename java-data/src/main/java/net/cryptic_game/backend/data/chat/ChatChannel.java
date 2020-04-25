@@ -10,21 +10,26 @@ import javax.persistence.Table;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * Entity representing a chat channel entry in the database
+ *
+ * @since 0.3.0
+ */
 @Entity
 @Table(name = "chat_channel")
-public class Channel extends TableModelAutoId {
+public class ChatChannel extends TableModelAutoId {
 
     @Column(name = "name", updatable = true, nullable = false)
     private String name;
 
     /**
-     * Creates a new {@link Channel} with a given name
+     * Creates a new {@link ChatChannel} with a given name
      *
      * @param name the name of the channel
      * @return the newly generated channel
      */
-    public static Channel createChannel(final String name) {
-        final Channel channel = new Channel();
+    public static ChatChannel createChannel(final String name) {
+        final ChatChannel channel = new ChatChannel();
         channel.setName(name);
 
         channel.saveOrUpdate();
@@ -32,38 +37,38 @@ public class Channel extends TableModelAutoId {
     }
 
     /**
-     * Deletes a {@link Channel}
+     * Deletes a {@link ChatChannel}
      *
-     * @param id the {@link UUID} of the {@link Channel}
+     * @param id the {@link UUID} of the {@link ChatChannel}
      */
     public static void removeChannel(final UUID id) {
-        final Channel channel = getById(id);
+        final ChatChannel channel = getById(id);
         if (channel != null) {
             channel.delete();
         }
     }
 
     /**
-     * Returns a {@link Channel} by it's UUID
+     * Returns a {@link ChatChannel} by it's UUID
      *
      * @param id the {@link UUID} of the Channel
-     * @return the {@link Channel} which got the {@link UUID}
+     * @return the {@link ChatChannel} which got the {@link UUID}
      */
-    public static Channel getById(final UUID id) {
-        return getById(Channel.class, id);
+    public static ChatChannel getById(final UUID id) {
+        return getById(ChatChannel.class, id);
     }
 
     /**
-     * Returns the name of the {@link Channel}
+     * Returns the name of the {@link ChatChannel}
      *
-     * @return the name of the {@link Channel}
+     * @return the name of the {@link ChatChannel}
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Sets a new name for the {@link Channel}
+     * Sets a new name for the {@link ChatChannel}
      *
      * @param name new Name to be set
      */
@@ -72,24 +77,24 @@ public class Channel extends TableModelAutoId {
     }
 
     /**
-     * Compares an {@link Object} if it equals the {@link Channel}
+     * Compares an {@link Object} if it equals the {@link ChatChannel}
      *
      * @param o {@link Object} to compare
-     * @return True if the {@link Object} equals the {@link Channel} | False if it does not
+     * @return True if the {@link Object} equals the {@link ChatChannel} | False if it does not
      */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        final Channel channel = (Channel) o;
+        final ChatChannel channel = (ChatChannel) o;
         return Objects.equals(getName(), channel.getName()) &&
                 Objects.equals(getId(), channel.getId());
     }
 
     /**
-     * Hashes the {@link Channel} using {@link Objects} hash method
+     * Hashes the {@link ChatChannel} using {@link Objects} hash method
      *
-     * @return Hash of the {@link Channel}
+     * @return Hash of the {@link ChatChannel}
      */
     @Override
     public int hashCode() {
@@ -97,7 +102,7 @@ public class Channel extends TableModelAutoId {
     }
 
     /**
-     * Generates a {@link JsonObject} containing all relevant {@link Channel} information
+     * Generates a {@link JsonObject} containing all relevant {@link ChatChannel} information
      *
      * @return The generated {@link JsonObject}
      */

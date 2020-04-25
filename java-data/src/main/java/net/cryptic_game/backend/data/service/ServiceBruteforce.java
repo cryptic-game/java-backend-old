@@ -9,6 +9,11 @@ import javax.persistence.*;
 import java.util.Objects;
 
 
+/**
+ * Entity representing a bruteforce service entry in the database
+ *
+ * @since 0.3.0
+ */
 @Entity
 @Table(name = "service_bruteforce")
 public class ServiceBruteforce extends TableModelAutoId {

@@ -14,6 +14,11 @@ import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Entity representing a device access entry in the database
+ *
+ * @since 0.3.0
+ */
 @Entity
 @Table(name = "device_access")
 public class DeviceAccess extends TableModelAutoId {

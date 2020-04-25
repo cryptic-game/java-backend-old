@@ -11,9 +11,14 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Entity representing a chat message entry in the database
+ *
+ * @since 0.3.0
+ */
 @Entity
 @Table(name = "chat_message")
-public class Message extends TableModelAutoId {
+public class ChatMessage extends TableModelAutoId {
 
     @ManyToOne
     @JoinColumn(name = "user_id", updatable = false, nullable = false)
@@ -23,7 +28,7 @@ public class Message extends TableModelAutoId {
     @ManyToOne
     @JoinColumn(name = "channel_id", nullable = false, updatable = false)
     @Type(type = "uuid-char")
-    private Channel channel;
+    private ChatChannel channel;
 
     @Enumerated(EnumType.STRING)
     @Column(updatable = false)
@@ -40,7 +45,7 @@ public class Message extends TableModelAutoId {
     private User target;
 
     /**
-     * Returns the {@link User} who send the {@link Message}
+     * Returns the {@link User} who send the {@link ChatMessage}
      *
      * @return the message's sender
      */
@@ -49,7 +54,7 @@ public class Message extends TableModelAutoId {
     }
 
     /**
-     * Sets the {@link User} who sends the {@link Message}
+     * Sets the {@link User} who sends the {@link ChatMessage}
      *
      * @param user the new {@link User}
      */
@@ -58,25 +63,25 @@ public class Message extends TableModelAutoId {
     }
 
     /**
-     * Returns the {@link Channel} where the {@link User} is sending the {@link Message}
+     * Returns the {@link ChatChannel} where the {@link User} is sending the {@link ChatMessage}
      *
-     * @return the {@link Channel}
+     * @return the {@link ChatChannel}
      */
-    public Channel getChannel() {
+    public ChatChannel getChannel() {
         return channel;
     }
 
     /**
-     * Sets a new {@link Channel} where the {@link Message} will be sent
+     * Sets a new {@link ChatChannel} where the {@link ChatMessage} will be sent
      *
-     * @param channel the new {@link Channel} to be set
+     * @param channel the new {@link ChatChannel} to be set
      */
-    public void setChannel(final Channel channel) {
+    public void setChannel(final ChatChannel channel) {
         this.channel = channel;
     }
 
     /**
-     * Returns the {@link ChatAction} which is triggered by the {@link Message}
+     * Returns the {@link ChatAction} which is triggered by the {@link ChatMessage}
      *
      * @return the {@link ChatAction}
      */
@@ -85,7 +90,7 @@ public class Message extends TableModelAutoId {
     }
 
     /**
-     * Sets a new {@link ChatAction} triggered by the {@link Message}
+     * Sets a new {@link ChatAction} triggered by the {@link ChatMessage}
      *
      * @param type the new {@link ChatAction} to be set
      */
@@ -94,7 +99,7 @@ public class Message extends TableModelAutoId {
     }
 
     /**
-     * Returns the Text of the {@link Message}
+     * Returns the Text of the {@link ChatMessage}
      *
      * @return the Text
      */
@@ -103,7 +108,7 @@ public class Message extends TableModelAutoId {
     }
 
     /**
-     * Sets a new Text for the {@link Message}
+     * Sets a new Text for the {@link ChatMessage}
      *
      * @param text the new Text to be set
      */
@@ -112,7 +117,7 @@ public class Message extends TableModelAutoId {
     }
 
     /**
-     * Returns the {@link User} who receives the {@link Message}
+     * Returns the {@link User} who receives the {@link ChatMessage}
      *
      * @return the targeted {@link User}
      */
@@ -121,51 +126,51 @@ public class Message extends TableModelAutoId {
     }
 
     /**
-     * Sets a new {@link User} as receiver for the {@link Message}
+     * Sets a new {@link User} as receiver for the {@link ChatMessage}
      *
-     * @param target the new {@link User} to be set for receiving the {@link Message}
+     * @param target the new {@link User} to be set for receiving the {@link ChatMessage}
      */
     public void setTarget(final User target) {
         this.target = target;
     }
 
     /**
-     * Sends a {@link Message} without a target and as "SEND_MESSAGE" {@link ChatAction}
+     * Sends a {@link ChatMessage} without a target and as "SEND_MESSAGE" {@link ChatAction}
      *
-     * @param channel the {@link} Channel where the {@link Message} will be sent
-     * @param user    the {@link User} who sends the {@link Message}
-     * @param text    the content of the {@link Message}
-     * @return the sent {@link Message}
+     * @param channel the {@link} Channel where the {@link ChatMessage} will be sent
+     * @param user    the {@link User} who sends the {@link ChatMessage}
+     * @param text    the content of the {@link ChatMessage}
+     * @return the sent {@link ChatMessage}
      */
-    public Message send(final Channel channel, final User user, final String text) {
+    public ChatMessage send(final ChatChannel channel, final User user, final String text) {
         return send(channel, user, ChatAction.SEND_MESSAGE, text);
     }
 
     /**
-     * Sends a {@link Message} without a target
+     * Sends a {@link ChatMessage} without a target
      *
-     * @param channel the {@link} Channel where the {@link Message} will be sent
-     * @param user    the {@link User} who sends the {@link Message}
-     * @param type    the {@link ChatAction}-Type of the {@link Message}
-     * @param text    the content of the {@link Message}
-     * @return the sent {@link Message}
+     * @param channel the {@link} Channel where the {@link ChatMessage} will be sent
+     * @param user    the {@link User} who sends the {@link ChatMessage}
+     * @param type    the {@link ChatAction}-Type of the {@link ChatMessage}
+     * @param text    the content of the {@link ChatMessage}
+     * @return the sent {@link ChatMessage}
      */
-    public Message send(final Channel channel, final User user, final ChatAction type, final String text) {
+    public ChatMessage send(final ChatChannel channel, final User user, final ChatAction type, final String text) {
         return send(channel, user, null, type, text);
     }
 
     /**
-     * Sends a {@link Message}
+     * Sends a {@link ChatMessage}
      *
-     * @param channel the {@link} Channel where the {@link Message} will be sent
-     * @param user    the {@link User} who sends the {@link Message}
-     * @param target  the {@link User} who receives the {@link Message}
-     * @param type    the {@link ChatAction}-Type of the {@link Message}
-     * @param text    the content of the {@link Message}
-     * @return the sent {@link Message}
+     * @param channel the {@link} Channel where the {@link ChatMessage} will be sent
+     * @param user    the {@link User} who sends the {@link ChatMessage}
+     * @param target  the {@link User} who receives the {@link ChatMessage}
+     * @param type    the {@link ChatAction}-Type of the {@link ChatMessage}
+     * @param text    the content of the {@link ChatMessage}
+     * @return the sent {@link ChatMessage}
      */
-    public Message send(final Channel channel, final User user, final User target, final ChatAction type, final String text) {
-        final Message message = new Message();
+    public ChatMessage send(final ChatChannel channel, final User user, final User target, final ChatAction type, final String text) {
+        final ChatMessage message = new ChatMessage();
         message.setUser(user);
         message.setChannel(channel);
         message.setTarget(target);
@@ -177,17 +182,17 @@ public class Message extends TableModelAutoId {
     }
 
     /**
-     * Returns a {@link List} of {@link Message}s sent in a {@link Channel} by a {@link User}
+     * Returns a {@link List} of {@link ChatMessage}s sent in a {@link ChatChannel} by a {@link User}
      *
-     * @param user    the {@link User} who sent the {@link Message}s
-     * @param channel the {@link Channel} where the {@link Message}s were sent
-     * @return the {@link List} of {@link Message}s
+     * @param user    the {@link User} who sent the {@link ChatMessage}s
+     * @param channel the {@link ChatChannel} where the {@link ChatMessage}s were sent
+     * @return the {@link List} of {@link ChatMessage}s
      */
-    public List<Message> getMessages(final User user, final Channel channel) {
+    public List<ChatMessage> getMessages(final User user, final ChatChannel channel) {
         try (Session sqlSession = sqlConnection.openSession()) {
             return sqlSession
                     .createQuery("select object (m) from Message m where  m.channel = :channel " +
-                            "and (m.target is null or (m.type = :whisper and m.target = :user) or (m.type = :whisper and m.user = :user))", Message.class)
+                            "and (m.target is null or (m.type = :whisper and m.target = :user) or (m.type = :whisper and m.user = :user))", ChatMessage.class)
                     .setParameter("user", user)
                     .setParameter("channel", channel)
                     .setParameter("whisper", ChatAction.WHISPER_MESSAGE)
@@ -196,16 +201,16 @@ public class Message extends TableModelAutoId {
     }
 
     /**
-     * Compares an {@link Object} if it equals the {@link Message}
+     * Compares an {@link Object} if it equals the {@link ChatMessage}
      *
      * @param o {@link Object} to compare
-     * @return True if the {@link Object} equals the {@link Message} | False if it does not
+     * @return True if the {@link Object} equals the {@link ChatMessage} | False if it does not
      */
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
-        if (!(o instanceof Message)) return false;
-        final Message message = (Message) o;
+        if (!(o instanceof ChatMessage)) return false;
+        final ChatMessage message = (ChatMessage) o;
         return this.getId().equals(message.getId()) &&
                 this.getUser().equals(message.getUser()) &&
                 this.getChannel().equals(message.getChannel()) &&
@@ -215,9 +220,9 @@ public class Message extends TableModelAutoId {
     }
 
     /**
-     * Hashes the {@link Message} using {@link Objects} hash method
+     * Hashes the {@link ChatMessage} using {@link Objects} hash method
      *
-     * @return Hash of the {@link Message}
+     * @return Hash of the {@link ChatMessage}
      */
     @Override
     public int hashCode() {
@@ -225,7 +230,7 @@ public class Message extends TableModelAutoId {
     }
 
     /**
-     * Generates a {@link JsonObject} containing all relevant {@link Message} information
+     * Generates a {@link JsonObject} containing all relevant {@link ChatMessage} information
      *
      * @return The generated {@link JsonObject}
      */

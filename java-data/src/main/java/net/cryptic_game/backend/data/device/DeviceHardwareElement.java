@@ -9,6 +9,11 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.Objects;
 
+/**
+ * Entity representing a device hardware element entry in the database
+ *
+ * @since 0.3.0
+ */
 @Entity
 @Table(name = "device_hardware_element")
 public class DeviceHardwareElement extends TableModelAutoId {

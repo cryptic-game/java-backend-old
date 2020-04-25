@@ -10,6 +10,11 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Entity representing a device file entry in the database
+ *
+ * @since 0.3.0
+ */
 @Entity
 @Table(name = "device_file")
 public class DeviceFile extends TableModelAutoId {

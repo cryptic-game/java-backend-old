@@ -19,11 +19,16 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Entity representing a chat channel access entry in the database
+ *
+ * @since 0.3.0
+ */
 @Entity
 @Table(name = "chat_channel_access")
-public class ChannelAccess extends TableModelAutoId {
+public class ChatChannelAccess extends TableModelAutoId {
 
-    private static final Logger log = LoggerFactory.getLogger(ChannelAccess.class);
+    private static final Logger log = LoggerFactory.getLogger(ChatChannelAccess.class);
 
     @ManyToOne
     @JoinColumn(name = "user_id", updatable = false, nullable = false)
@@ -33,18 +38,18 @@ public class ChannelAccess extends TableModelAutoId {
     @ManyToOne
     @JoinColumn(name = "channel_id", nullable = false, updatable = false)
     @Type(type = "uuid-char")
-    private Channel channel;
+    private ChatChannel channel;
 
     /**
-     * Joins a {@link User} to a {@link} Channel and returns the {@link ChannelAccess}
+     * Joins a {@link User} to a {@link} Channel and returns the {@link ChatChannelAccess}
      *
      * @param user        the {@link User} who join
-     * @param channel     the {@link Channel} where to join
+     * @param channel     the {@link ChatChannel} where to join
      * @param notifyUsers the {@link ApiClient}s as {@link Set} which {@link ApiClient}s to notify
-     * @return the resulting {@link ChannelAccess}
+     * @return the resulting {@link ChatChannelAccess}
      */
-    public static ChannelAccess join(final User user, final Channel channel, final Set<ApiClient> notifyUsers) {
-        ChannelAccess channelAccess = new ChannelAccess();
+    public static ChatChannelAccess join(final User user, final ChatChannel channel, final Set<ApiClient> notifyUsers) {
+        ChatChannelAccess channelAccess = new ChatChannelAccess();
         channelAccess.setUser(user);
         channelAccess.setChannel(channel);
 
@@ -53,14 +58,14 @@ public class ChannelAccess extends TableModelAutoId {
     }
 
     /**
-     * The {@link User} leaves a {@link Channel}
+     * The {@link User} leaves a {@link ChatChannel}
      *
-     * @param user        the {@link User} who leaves the {@link Channel}
-     * @param channel     the leaved {@link Channel}
+     * @param user        the {@link User} who leaves the {@link ChatChannel}
+     * @param channel     the leaved {@link ChatChannel}
      * @param notifyUsers the {@link ApiClient}s as {@link Set} which {@link ApiClient}s to notify
      * @return True if successful | otherwise false
      */
-    public static boolean leave(final User user, final Channel channel, Set<ApiClient> notifyUsers) {
+    public static boolean leave(final User user, final ChatChannel channel, Set<ApiClient> notifyUsers) {
         try (Session sqlSession = sqlConnection.openSession()) {
             sqlSession
                     .createQuery("delete from ChannelAccess ca where ca.channel = :channel and ca.user = :user")
@@ -74,12 +79,12 @@ public class ChannelAccess extends TableModelAutoId {
     }
 
     /**
-     * Returns a {@link List} of {@link User}s, who are in a {@link Channel}
+     * Returns a {@link List} of {@link User}s, who are in a {@link ChatChannel}
      *
-     * @param channel the {@link Channel} where to get the {@link User}s from
-     * @return the {@link List} of {@link User}s in the {@link Channel}
+     * @param channel the {@link ChatChannel} where to get the {@link User}s from
+     * @return the {@link List} of {@link User}s in the {@link ChatChannel}
      */
-    public static List<User> getMembers(final Channel channel) {
+    public static List<User> getMembers(final ChatChannel channel) {
 
         try (Session sqlSession = sqlConnection.openSession()) {
             return sqlSession
@@ -90,7 +95,7 @@ public class ChannelAccess extends TableModelAutoId {
     }
 
     /**
-     * Returns the {@link User} of the {@link ChannelAccess}
+     * Returns the {@link User} of the {@link ChatChannelAccess}
      *
      * @return the {@link User}
      */
@@ -99,7 +104,7 @@ public class ChannelAccess extends TableModelAutoId {
     }
 
     /**
-     * Sets a new {@link User} for the {@link ChannelAccess}
+     * Sets a new {@link User} for the {@link ChatChannelAccess}
      *
      * @param user the new {@link User} to be set
      */
@@ -108,43 +113,43 @@ public class ChannelAccess extends TableModelAutoId {
     }
 
     /**
-     * Returns the {@link Channel} of the {@link ChannelAccess}
+     * Returns the {@link ChatChannel} of the {@link ChatChannelAccess}
      *
-     * @return the {@link Channel}
+     * @return the {@link ChatChannel}
      */
-    public Channel getChannel() {
+    public ChatChannel getChannel() {
         return channel;
     }
 
     /**
-     * Sets a new {@link Channel} for the {@link ChannelAccess}
+     * Sets a new {@link ChatChannel} for the {@link ChatChannelAccess}
      *
-     * @param channel the new {@link Channel} to be set
+     * @param channel the new {@link ChatChannel} to be set
      */
-    public void setChannel(final Channel channel) {
+    public void setChannel(final ChatChannel channel) {
         this.channel = channel;
     }
 
     /**
-     * Compares an {@link Object} if it equals the {@link ChannelAccess}
+     * Compares an {@link Object} if it equals the {@link ChatChannelAccess}
      *
      * @param o {@link Object} to compare
-     * @return True if the {@link Object} equals the {@link ChannelAccess} | False if it does not
+     * @return True if the {@link Object} equals the {@link ChatChannelAccess} | False if it does not
      */
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
-        if (!(o instanceof ChannelAccess)) return false;
-        final ChannelAccess that = (ChannelAccess) o;
+        if (!(o instanceof ChatChannelAccess)) return false;
+        final ChatChannelAccess that = (ChatChannelAccess) o;
         return this.getId().equals(that.getId()) &&
                 this.getUser().equals(that.getUser()) &&
                 this.getChannel().equals(that.getChannel());
     }
 
     /**
-     * Hashes the {@link ChannelAccess} using {@link Objects} hash method
+     * Hashes the {@link ChatChannelAccess} using {@link Objects} hash method
      *
-     * @return Hash of the {@link ChannelAccess}
+     * @return Hash of the {@link ChatChannelAccess}
      */
     @Override
     public int hashCode() {
@@ -152,7 +157,7 @@ public class ChannelAccess extends TableModelAutoId {
     }
 
     /**
-     * Generates a {@link JsonObject} containing all relevant {@link ChannelAccess} information
+     * Generates a {@link JsonObject} containing all relevant {@link ChatChannelAccess} information
      *
      * @return The generated {@link JsonObject}
      */

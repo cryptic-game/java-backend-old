@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * Entity representing an network invitation entry in the database
+ * Entity representing a network invitation entry in the database
  *
  * @since 0.3.0
  */

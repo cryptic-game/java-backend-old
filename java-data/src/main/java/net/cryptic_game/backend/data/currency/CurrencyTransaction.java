@@ -12,6 +12,11 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Objects;
 
+/**
+ * Entity representing a currency transaction entry in the database
+ *
+ * @since 0.3.0
+ */
 @Entity
 @Table(name = "currency_transaction")
 public class CurrencyTransaction extends TableModelAutoId {

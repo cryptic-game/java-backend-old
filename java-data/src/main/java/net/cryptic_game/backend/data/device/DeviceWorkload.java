@@ -9,6 +9,11 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Entity representing a device workload entry in the database
+ *
+ * @since 0.3.0
+ */
 @Entity
 @Table(name = "device_workload")
 public class DeviceWorkload extends TableModel implements Serializable {

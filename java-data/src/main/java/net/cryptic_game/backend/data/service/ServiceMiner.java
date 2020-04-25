@@ -9,6 +9,11 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.util.Objects;
 
+/**
+ * Entity representing a miner service entry in the database
+ *
+ * @since 0.3.0
+ */
 @Entity
 @Table(name = "service_miner")
 public class ServiceMiner extends TableModelAutoId {
