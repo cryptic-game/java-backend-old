@@ -50,10 +50,6 @@ final class ApiEndpointValidator {
             if (parameter.getParameters() == null) {
                 if (array) {
                     try {
-//                    TODO Handle Null Json Values
-//                    if (json.get(parameter.getKey()).isJsonNull()) {
-//                        parameterValues[i] = null;
-//                    } else
                         if (parameter.getType() == String.class || parameter.getType() == null) {
                             parameterValues[i] = json.get(parameter.getKey()).getAsString();
                         } else if (parameter.getType() == int.class || parameter.getType() == Integer.class) {
@@ -78,7 +74,6 @@ final class ApiEndpointValidator {
                             parameterValues[i] = json.get(parameter.getKey()).getAsJsonArray();
                         } else if (parameter.getType() == UUID.class) {
                             parameterValues[i] = UUID.fromString(json.get(parameter.getKey()).getAsString());
-                            //TODO Add Exception
                         } else {
                             throw new ApiException("Not supported parameter. (\"" + name + ":" + parameter.getKey() + "\") type \"" + parameter.getType().getName() + "\"");
                         }

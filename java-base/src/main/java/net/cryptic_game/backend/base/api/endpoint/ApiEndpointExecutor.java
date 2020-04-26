@@ -3,6 +3,7 @@ package net.cryptic_game.backend.base.api.endpoint;
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.api.ApiException;
 import net.cryptic_game.backend.base.api.client.ApiClient;
+import net.cryptic_game.backend.base.utils.JsonBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,6 +64,8 @@ public class ApiEndpointExecutor {
             else return null;
         } catch (IllegalAccessException | InvocationTargetException e) {
             throw new ApiException("Unable to execute JsonApi endpoint \"" + this.name + "\".", e);
+        } catch (IllegalArgumentException e) {
+            return new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_PARAMETERS");
         }
     }
 
