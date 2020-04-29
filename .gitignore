@@ -174,3 +174,6 @@ gradle-app.setting
 **/build/
 
 # End of https://www.gitignore.io/api/java,linux,gradle,windows,intellij+all
+
+### Custom ###
+config.yaml

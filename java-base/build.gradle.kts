@@ -20,6 +20,9 @@ dependencies {
     // Json
     api("com.google.code.gson:gson:2.8.6")
 
+    // Yaml
+    api("org.yaml:snakeyaml:1.26")
+
     // BCrypt
     api("at.favre.lib:bcrypt:0.9.0")
 

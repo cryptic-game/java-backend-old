@@ -2,8 +2,6 @@ package net.cryptic_game.backend.data.user;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.AppBootstrap;
-import net.cryptic_game.backend.base.config.BaseConfig;
-import net.cryptic_game.backend.base.config.Config;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
 import org.hibernate.annotations.Type;
@@ -25,13 +23,7 @@ import java.util.UUID;
 @Table(name = "session")
 public class Session extends TableModelAutoId {
 
-    private static final Duration EXPIRE;
-
-    static {
-        final AppBootstrap app = AppBootstrap.getInstance();
-        final Config config = app.getConfig();
-        EXPIRE = Duration.of(config.getAsInt(BaseConfig.SESSION_EXPIRE), ChronoUnit.DAYS);
-    }
+    private static final Duration EXPIRE = Duration.of(AppBootstrap.getInstance().getConfig().getSessionExpire(), ChronoUnit.DAYS);
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, updatable = false)

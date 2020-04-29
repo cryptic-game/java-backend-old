@@ -2,7 +2,6 @@ package net.cryptic_game.backend.base.api.netty;
 
 import io.netty.channel.ChannelPipeline;
 import net.cryptic_game.backend.base.AppBootstrap;
-import net.cryptic_game.backend.base.config.BaseConfig;
 import net.cryptic_game.backend.base.netty.NettyCodecInitializer;
 import net.cryptic_game.backend.base.netty.codec.JsonMessageCodec;
 import net.cryptic_game.backend.base.netty.codec.MessageLoggerCodec;
@@ -11,7 +10,7 @@ public class JsonApiServerCodecInitializer extends NettyCodecInitializer<JsonApi
 
     @Override
     public void configure(final ChannelPipeline pipeline) {
-        if (!AppBootstrap.getInstance().getConfig().getAsBoolean(BaseConfig.PRODUCTIVE)) {
+        if (!AppBootstrap.getInstance().getConfig().isProductive()) {
             pipeline.addLast(new MessageLoggerCodec());
         }
         pipeline.addLast("json-codec", new JsonMessageCodec());

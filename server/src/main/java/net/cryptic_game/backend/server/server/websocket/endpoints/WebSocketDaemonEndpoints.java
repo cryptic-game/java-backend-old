@@ -3,7 +3,6 @@ package net.cryptic_game.backend.server.server.websocket.endpoints;
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.api.client.ApiClient;
 import net.cryptic_game.backend.base.api.endpoint.*;
-import net.cryptic_game.backend.base.config.BaseConfig;
 import net.cryptic_game.backend.base.daemon.Function;
 import net.cryptic_game.backend.base.utils.JsonBuilder;
 import net.cryptic_game.backend.data.user.Session;
@@ -45,7 +44,7 @@ public class WebSocketDaemonEndpoints extends ApiEndpointCollection {
 
         UUID requestTag = this.daemonHandler.executeFunction(tag, client.getChannel(), function, session.getUser().getId(), data == null ? new JsonObject() : data);
 
-        App.addTimeout(App.getInstance().getConfig().getAsInt(BaseConfig.RESPONSE_TIMEOUT) * 1000, () -> {
+        App.addTimeout(App.getInstance().getConfig().getResponseTimeout() * 1000, () -> {
             if (daemonHandler.isRequstOpen(requestTag)) {
                 daemonHandler.respondToClient(JsonBuilder.anJSON()
                         .add("tag", requestTag)

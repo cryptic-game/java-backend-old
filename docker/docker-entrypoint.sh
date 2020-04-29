@@ -1,14 +1,14 @@
 #!/usr/bin/env sh
 
-echo 'Bootstrapping Java-Server...'
-./server/bin/server &
+echo 'Starting Java-Server...'
+./server/bin/server --env &
 
 sleep 20
 
-echo 'Bootstrapping Java-Daemon...'
-./java-daemon/bin/java-daemon &
+echo 'Starting Java-Daemon...'
+./java-daemon/bin/java-daemon --env &
 
-echo 'Bootstrapping Python-Daemon...'
+echo 'Starting Python-Daemon...'
 # Add Python Daemon start script
 
 # wait forever not to exit the container

@@ -2,9 +2,7 @@ package net.cryptic_game.backend.base;
 
 import io.sentry.Sentry;
 import io.sentry.SentryClient;
-import net.cryptic_game.backend.base.config.BaseConfig;
-import net.cryptic_game.backend.base.config.Config;
-import net.cryptic_game.backend.base.config.DefaultConfig;
+import net.cryptic_game.backend.base.config.ConfigHandler;
 import net.cryptic_game.backend.base.sql.SQLConnection;
 import net.cryptic_game.backend.base.sql.SQLServer;
 import net.cryptic_game.backend.base.sql.SQLServerType;
@@ -25,18 +23,33 @@ public abstract class AppBootstrap {
     private static final Logger log = LoggerFactory.getLogger(AppBootstrap.class);
     private static AppBootstrap instance;
     private static TimeoutHandler timeoutHandler;
-    protected final Config config;
+    protected final BaseConfig config;
     protected final SQLConnection sqlConnection;
     private final String dist;
 
-    public AppBootstrap(final DefaultConfig config, final String dist) {
+    public AppBootstrap(final String[] args, final Object config, final String dist) {
         AppBootstrap.instance = this;
-        this.config = new Config(config);
+
+        ConfigHandler configHandler = null;
+        for (final String arg : args) {
+            final String currentArg = arg.toLowerCase();
+
+            if (currentArg.equals("--env") || currentArg.equals("-e")) {
+                configHandler = new ConfigHandler(true);
+                break;
+            }
+        }
+        if (configHandler == null) configHandler = new ConfigHandler(false);
+
+        this.config = configHandler.addConfig(new BaseConfig());
+        configHandler.addConfig(config);
+        configHandler.loadConfig();
+
         timeoutHandler = new TimeoutHandler();
         this.dist = dist;
-        this.setLoglevel(Level.valueOf(this.config.getAsString(BaseConfig.LOG_LEVEL)));
+        this.setLoglevel(Level.valueOf(this.config.getLogLevel().toUpperCase()));
 
-        log.info("Starting " + dist + "...");
+        log.info("Starting {}...", dist);
 
         this.initSentry();
 
@@ -77,28 +90,27 @@ public abstract class AppBootstrap {
     protected abstract void start();
 
     private void initSentry() {
-        final String dsn = this.config.getAsString(BaseConfig.SENTRY_DSN);
+        final String dsn = this.config.getSentryDsn();
 
         if (!dsn.isBlank()) {
             final SentryClient client = Sentry.init(dsn + "?stacktrace.app.packages=net.cryptic_game");
 
             final String version = AppBootstrap.class.getPackage().getImplementationVersion();
             client.setRelease(version == null ? "debug" : version);
-            client.setEnvironment(this.config.getAsBoolean(BaseConfig.PRODUCTIVE) ? "production" : "development");
+            client.setEnvironment(this.config.isProductive() ? "production" : "development");
             client.setDist(this.dist);
-//            client.addExtra();
         }
     }
 
     protected void setUpSQL() {
         this.sqlConnection.init(new SQLServer(
-                this.config.getAsString(BaseConfig.SQL_SERVER_HOSTNAME),
-                this.config.getAsInt(BaseConfig.SQL_SERVER_PORT),
-                this.config.getAsString(BaseConfig.SQL_SERVER_DATABASE),
-                this.config.getAsString(BaseConfig.SQL_SERVER_USERNAME),
-                this.config.getAsString(BaseConfig.SQL_SERVER_PASSWORD),
-                SQLServerType.getServer(this.config.getAsString(BaseConfig.SQL_SERVER_TYPE))
-        ), !this.config.getAsBoolean(BaseConfig.PRODUCTIVE));
+                this.config.getSqlServerHostname(),
+                this.config.getSqlServerPort(),
+                this.config.getSqlServerDatabase(),
+                this.config.getSqlServerUsername(),
+                this.config.getSqlServerUsername(),
+                SQLServerType.valueOf(this.config.getSqlServerType().toUpperCase())
+        ), !this.config.isProductive());
     }
 
     private void setLoglevel(final Level level) {
@@ -108,7 +120,7 @@ public abstract class AppBootstrap {
         ctx.updateLoggers();
     }
 
-    public Config getConfig() {
+    public BaseConfig getConfig() {
         return this.config;
     }
 

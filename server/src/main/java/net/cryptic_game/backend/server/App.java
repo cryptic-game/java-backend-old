@@ -1,11 +1,8 @@
 package net.cryptic_game.backend.server;
 
 import io.netty.channel.unix.DomainSocketAddress;
-import io.sentry.Sentry;
 import net.cryptic_game.backend.base.AppBootstrap;
-import net.cryptic_game.backend.base.config.BaseConfig;
 import net.cryptic_game.backend.base.netty.server.NettyServerHandler;
-import net.cryptic_game.backend.server.config.ServerConfig;
 import net.cryptic_game.backend.server.daemon.DaemonHandler;
 import net.cryptic_game.backend.server.server.daemon.DaemonEndpointHandler;
 import net.cryptic_game.backend.server.server.daemon.DaemonServerCodec;
@@ -18,10 +15,15 @@ import net.cryptic_game.backend.server.server.websocket.WebSocketServerCodec;
 import net.cryptic_game.backend.server.server.websocket.endpoints.WebSocketDaemonEndpoints;
 import net.cryptic_game.backend.server.server.websocket.endpoints.WebSocketInfoEndpoints;
 import net.cryptic_game.backend.server.server.websocket.endpoints.WebSocketUserEndpoints;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.InetSocketAddress;
 
 public class App extends AppBootstrap {
+
+    private static final Logger log = LoggerFactory.getLogger(App.class);
+    private static final ServerConfig serverConfig = new ServerConfig();
 
     private DaemonHandler daemonHandler;
     private NettyServerHandler serverHandler;
@@ -30,12 +32,13 @@ public class App extends AppBootstrap {
     private WebSocketEndpointHandler webSocketEndpointHandler;
     private HttpEndpointHandler httpEndpointHandler;
 
-    public App() {
-        super(ServerConfig.CONFIG, "Java-Server");
+    public App(final String[] args) {
+        super(args, serverConfig, "Java-Server");
     }
 
     public static void main(String[] args) {
-        new App();
+        log.info("Bootstrapping Java Server...");
+        new App(args);
     }
 
     @Override
@@ -65,23 +68,22 @@ public class App extends AppBootstrap {
 
     @Override
     protected void init() {
-        final boolean useUnixSocket = this.config.getAsBoolean(BaseConfig.USE_UNIX_SOCKET);
+        final boolean useUnixSocket = this.getConfig().isUseUnixSocket();
         this.serverHandler.addServer("daemon",
-                useUnixSocket ? new DomainSocketAddress(this.config.getAsString(BaseConfig.UNIX_SOCKET_PATH)) : new InetSocketAddress("localhost", 4012),
+                useUnixSocket ? new DomainSocketAddress(this.getConfig().getUnixSocketPath()) : new InetSocketAddress("localhost", 4012),
                 useUnixSocket, new DaemonServerCodec(this.daemonHandler, this.daemonEndpointHandler));
 
         this.serverHandler.addServer("websocket",
-                new InetSocketAddress(this.config.getAsString(ServerConfig.WEBSOCKET_HOST), this.config.getAsInt(ServerConfig.WEBSOCKET_PORT)),
+                new InetSocketAddress(serverConfig.getWebsocketHost(), serverConfig.getWebsocketPort()),
                 false, new WebSocketServerCodec(this.webSocketEndpointHandler));
 
         this.serverHandler.addServer("http",
-                new InetSocketAddress(this.config.getAsString(ServerConfig.HTTP_HOST), this.config.getAsInt(ServerConfig.HTTP_PORT)),
+                new InetSocketAddress(serverConfig.getHttpHost(), serverConfig.getWebsocketPort()),
                 false, new HttpServerCodec(this.httpEndpointHandler));
     }
 
     @Override
     protected void start() {
         this.serverHandler.start();
-        Sentry.capture(new Exception("test123"));
     }
 }
