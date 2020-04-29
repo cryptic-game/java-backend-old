@@ -27,12 +27,6 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
-var altColor = "altColor";
-var rowColor = "rowColor";
-var tableTab = "tableTab";
-var activeTableTab = "activeTableTab";
 var pathtoroot = "../../../../../";
 var useModuleDirectories = true;
 loadScripts(document, 'script');</script>
@@ -88,16 +82,14 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method.summary">Method</a></li>
+<li>Required&nbsp;|&nbsp;</li>
+<li><a href="#annotation.type.optional.element.summary">Optional</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
+<li><a href="#annotation.type.element.detail">Element</a></li>
 </ul>
 </div>
 <a id="skip.navbar.top">
@@ -116,110 +108,47 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <main role="main">
 <div class="header">
 <div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">net.cryptic_game.backend.base.config</a></div>
-<h2 title="Class Config" class="title">Class Config</h2>
+<h2 title="Annotation Type Config" class="title">Annotation Type Config</h2>
 </div>
 <div class="contentContainer">
-<ul class="inheritance">
-<li>java.lang.Object</li>
-<li>
-<ul class="inheritance">
-<li>net.cryptic_game.backend.base.config.Config</li>
-</ul>
-</li>
-</ul>
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <span class="typeNameLabel">Config</span>
-extends java.lang.Object</pre>
+<pre>@Retention(RUNTIME)
+@Target(TYPE)
+public @interface <span class="memberNameLabel">Config</span></pre>
 </li>
 </ul>
 </div>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
-<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<!-- =========== ANNOTATION TYPE OPTIONAL MEMBER SUMMARY =========== -->
 <section role="region">
 <ul class="blockList">
-<li class="blockList"><a id="constructor.summary">
+<li class="blockList"><a id="annotation.type.optional.element.summary">
 <!--   -->
 </a>
-<h3>Constructor Summary</h3>
+<h3>Optional Element Summary</h3>
 <table class="memberSummary">
-<caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
+<caption><span>Optional Elements</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colFirst" scope="col">Constructor</th>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Optional Element</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(net.cryptic_game.backend.base.config.DefaultConfig)">Config</a></span>&#8203;(<a href="DefaultConfig.html" title="interface in net.cryptic_game.backend.base.config">DefaultConfig</a>&nbsp;defaultConfig)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-</table>
-</li>
-</ul>
-</section>
-<!-- ========== METHOD SUMMARY =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="method.summary">
-<!--   -->
-</a>
-<h3>Method Summary</h3>
-<table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Method</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr id="i0" class="altColor">
-<td class="colFirst"><code>java.lang.Object</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get(net.cryptic_game.backend.base.config.DefaultConfig)">get</a></span>&#8203;(<a href="DefaultConfig.html" title="interface in net.cryptic_game.backend.base.config">DefaultConfig</a>&nbsp;key)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAsBoolean(net.cryptic_game.backend.base.config.DefaultConfig)">getAsBoolean</a></span>&#8203;(<a href="DefaultConfig.html" title="interface in net.cryptic_game.backend.base.config">DefaultConfig</a>&nbsp;key)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAsInt(net.cryptic_game.backend.base.config.DefaultConfig)">getAsInt</a></span>&#8203;(<a href="DefaultConfig.html" title="interface in net.cryptic_game.backend.base.config">DefaultConfig</a>&nbsp;key)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAsString(net.cryptic_game.backend.base.config.DefaultConfig)">getAsString</a></span>&#8203;(<a href="DefaultConfig.html" title="interface in net.cryptic_game.backend.base.config">DefaultConfig</a>&nbsp;key)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#comment()">comment</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set(net.cryptic_game.backend.base.config.DefaultConfig,boolean)">set</a></span>&#8203;(<a href="DefaultConfig.html" title="interface in net.cryptic_game.backend.base.config">DefaultConfig</a>&nbsp;key,
-   boolean&nbsp;value)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set(net.cryptic_game.backend.base.config.DefaultConfig,int)">set</a></span>&#8203;(<a href="DefaultConfig.html" title="interface in net.cryptic_game.backend.base.config">DefaultConfig</a>&nbsp;key,
-   int&nbsp;value)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set(net.cryptic_game.backend.base.config.DefaultConfig,java.lang.String)">set</a></span>&#8203;(<a href="DefaultConfig.html" title="interface in net.cryptic_game.backend.base.config">DefaultConfig</a>&nbsp;key,
-   java.lang.String&nbsp;value)</code></th>
+<tr class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#value()">value</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
-<!--   -->
-</a>
-<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
-</ul>
 </li>
 </ul>
 </section>
@@ -229,96 +158,42 @@ extends java.lang.Object</pre>
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
-<!-- ========= CONSTRUCTOR DETAIL ======== -->
+<!-- ============ ANNOTATION TYPE MEMBER DETAIL =========== -->
 <section role="region">
 <ul class="blockList">
-<li class="blockList"><a id="constructor.detail">
+<li class="blockList"><a id="annotation.type.element.detail">
 <!--   -->
 </a>
-<h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(net.cryptic_game.backend.base.config.DefaultConfig)">
+<h3>Element Detail</h3>
+<a id="value()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
-<h4>Config</h4>
-<pre>public&nbsp;Config&#8203;(<a href="DefaultConfig.html" title="interface in net.cryptic_game.backend.base.config">DefaultConfig</a>&nbsp;defaultConfig)</pre>
+<h4>value</h4>
+<pre>java.lang.String&nbsp;value</pre>
+<dl>
+<dt>Default:</dt>
+<dd>""</dd>
+</dl>
 </li>
 </ul>
 </li>
 </ul>
 </section>
-<!-- ============ METHOD DETAIL ========== -->
 <section role="region">
 <ul class="blockList">
-<li class="blockList"><a id="method.detail">
-<!--   -->
-</a>
-<h3>Method Detail</h3>
-<a id="set(net.cryptic_game.backend.base.config.DefaultConfig,java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>set</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;set&#8203;(<a href="DefaultConfig.html" title="interface in net.cryptic_game.backend.base.config">DefaultConfig</a>&nbsp;key,
-                java.lang.String&nbsp;value)</pre>
-</li>
-</ul>
-<a id="set(net.cryptic_game.backend.base.config.DefaultConfig,int)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>set</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;set&#8203;(<a href="DefaultConfig.html" title="interface in net.cryptic_game.backend.base.config">DefaultConfig</a>&nbsp;key,
-                int&nbsp;value)</pre>
-</li>
-</ul>
-<a id="set(net.cryptic_game.backend.base.config.DefaultConfig,boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>set</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;set&#8203;(<a href="DefaultConfig.html" title="interface in net.cryptic_game.backend.base.config">DefaultConfig</a>&nbsp;key,
-                boolean&nbsp;value)</pre>
-</li>
-</ul>
-<a id="get(net.cryptic_game.backend.base.config.DefaultConfig)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>get</h4>
-<pre class="methodSignature">public&nbsp;java.lang.Object&nbsp;get&#8203;(<a href="DefaultConfig.html" title="interface in net.cryptic_game.backend.base.config">DefaultConfig</a>&nbsp;key)</pre>
-</li>
-</ul>
-<a id="getAsString(net.cryptic_game.backend.base.config.DefaultConfig)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getAsString</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getAsString&#8203;(<a href="DefaultConfig.html" title="interface in net.cryptic_game.backend.base.config">DefaultConfig</a>&nbsp;key)</pre>
-</li>
-</ul>
-<a id="getAsInt(net.cryptic_game.backend.base.config.DefaultConfig)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getAsInt</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;getAsInt&#8203;(<a href="DefaultConfig.html" title="interface in net.cryptic_game.backend.base.config">DefaultConfig</a>&nbsp;key)</pre>
-</li>
-</ul>
-<a id="getAsBoolean(net.cryptic_game.backend.base.config.DefaultConfig)">
+<li class="blockList"><a id="comment()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>getAsBoolean</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;getAsBoolean&#8203;(<a href="DefaultConfig.html" title="interface in net.cryptic_game.backend.base.config">DefaultConfig</a>&nbsp;key)</pre>
+<h4>comment</h4>
+<pre>java.lang.String&nbsp;comment</pre>
+<dl>
+<dt>Default:</dt>
+<dd>""</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -372,16 +247,14 @@ extends java.lang.Object</pre>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method.summary">Method</a></li>
+<li>Required&nbsp;|&nbsp;</li>
+<li><a href="#annotation.type.optional.element.summary">Optional</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
+<li><a href="#annotation.type.element.detail">Element</a></li>
 </ul>
 </div>
 <a id="skip.navbar.bottom">
