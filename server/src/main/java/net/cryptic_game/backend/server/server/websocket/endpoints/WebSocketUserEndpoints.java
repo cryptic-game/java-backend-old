@@ -21,7 +21,8 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
                              @ApiParameter("name") final String name,
                              @ApiParameter("password") final String password,
                              @ApiParameter("device_name") final String deviceName) {
-        if (client.get(Session.class) != null || client.get(User.class) != null) {
+        Session session = client.get(Session.class);
+        if (session != null && session.isValid()) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "ALREADY_LOGGED_IN");
         }
 
@@ -39,7 +40,7 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
         }
 
         final UUID token = UUID.randomUUID();
-        final Session session = Session.createSession(user, token, deviceName);
+        session = Session.createSession(user, token, deviceName);
 
         client.add(session);
 
@@ -56,7 +57,8 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
                                 @ApiParameter("password") final String password,
                                 @ApiParameter("mail") final String mail,
                                 @ApiParameter("device_name") final String deviceName) {
-        if (client.get(Session.class) != null || client.get(User.class) != null) {
+        Session session = client.get(Session.class);
+        if (session != null && session.isValid()) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "ALREADY_LOGGED_IN");
         }
 
@@ -78,7 +80,7 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
 
         final UUID token = UUID.randomUUID();
         final User user = User.createUser(name, mail, password);
-        final Session session = Session.createSession(user, token, deviceName);
+        session = Session.createSession(user, token, deviceName);
         client.add(session);
 
         return new ApiResponse(ApiResponseType.OK, JsonBuilder.anJSON()
@@ -91,12 +93,12 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
     public ApiResponse session(final ApiClient client,
                                @ApiParameter("session") final UUID sessionId,
                                @ApiParameter("token") final UUID token) {
-
-        if (client.get(Session.class) != null || client.get(User.class) != null) {
+        Session session = client.get(Session.class);
+        if (session != null && session.isValid()) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "ALREADY_LOGGED_IN");
         }
 
-        Session session = Session.getById(sessionId);
+        session = Session.getById(sessionId);
         if (session == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "INVALID_SESSION");
         }
@@ -120,7 +122,8 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
     public ApiResponse changePassword(final ApiClient client,
                                       @ApiParameter("password") final String password,
                                       @ApiParameter("new") final String newPassword) {
-        if (client.get(Session.class) != null || client.get(User.class) != null) {
+        Session session = client.get(Session.class);
+        if (session == null || !session.isValid()) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "NOT_LOGGED_IN");
         }
 
@@ -128,7 +131,7 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_PASSWORD");
         }
 
-        final User user = client.get(User.class);
+        final User user = session.getUser();
 
         if (!user.verifyPassword(password)) {
             return new ApiResponse(ApiResponseType.UNAUTHORIZED, "INVALID_PASSWORD");
@@ -142,17 +145,18 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("logout")
     public ApiResponse logout(final ApiClient client, @ApiParameter(value = "session", optional = true) final UUID sessionId) {
-        if (client.get(Session.class) != null || client.get(User.class) != null) {
+        Session session = client.get(Session.class);
+        if (session == null || !session.isValid()) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "NOT_LOGGED_IN");
         }
 
         if (sessionId == null) {
-            Session session = client.get(Session.class);
             session.delete();
+            client.remove(Session.class);
             return new ApiResponse(ApiResponseType.OK);
         }
 
-        Session session = Session.getById(sessionId);
+        session = Session.getById(sessionId);
 
         if (session == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "SESSION_NOT_FOUND");
@@ -165,19 +169,18 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("delete")
     public ApiResponse delete(final ApiClient client, @ApiParameter("password") final String password) {
-        if (client.get(Session.class) != null || client.get(User.class) != null) {
+        Session session = client.get(Session.class);
+        if (session == null || !session.isValid()) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "NOT_LOGGED_IN");
         }
 
-        final User user = client.get(User.class);
+        final User user = client.get(Session.class).getUser();
 
         if (!user.verifyPassword(password)) {
             return new ApiResponse(ApiResponseType.UNAUTHORIZED, "INVALID_PASSWORD");
         }
 
-        Session session = client.get(Session.class);
-        session.delete();
-
+        client.remove(Session.class);
         user.delete();
 
         return new ApiResponse(ApiResponseType.OK);

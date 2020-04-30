@@ -1,6 +1,7 @@
 package net.cryptic_game.backend.data.user;
 
 import com.google.gson.JsonObject;
+import net.cryptic_game.backend.base.sql.models.TableModel;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.base.utils.SecurityUtils;
 import org.hibernate.Session;
@@ -226,7 +227,7 @@ public class User extends TableModelAutoId {
      */
     @Override
     public void delete() {
-        // TODO Delete Sessions related to the user
+        net.cryptic_game.backend.data.user.Session.getByUser(this).forEach(TableModel::delete);
         super.delete();
     }
 

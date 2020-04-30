@@ -27,6 +27,10 @@ public class ApiClient {
         this.objects.add(object);
     }
 
+    public boolean remove(final Class<?> type) {
+        return this.objects.removeIf((o) -> o.getClass().equals(type));
+    }
+
     public <T> T get(final Class<? extends T> type) {
         for (final Object object : this.objects) {
             if (object.getClass().equals(type)) return type.cast(object);

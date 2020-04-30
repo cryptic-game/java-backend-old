@@ -11,6 +11,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -82,6 +83,20 @@ public class Session extends TableModelAutoId {
      */
     public static Session getById(final UUID id) {
         return getById(Session.class, id);
+    }
+
+    /**
+     * Fetches all {@link Session}s of a specific {@link User}
+     *
+     * @param user The user whose {@link Session}s are to be fetched
+     * @return {@link List} containing {@link Session}s
+     */
+    public static List<Session> getByUser(User user) {
+        try (org.hibernate.Session sqlSession = sqlConnection.openSession()) {
+            return sqlSession.createQuery("select object (s) from Session as s where s.user.id = :userId", Session.class)
+                    .setParameter("userId", user.getId())
+                    .getResultList();
+        }
     }
 
     /**
