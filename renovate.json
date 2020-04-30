@@ -1,7 +1,12 @@
 {
   "extends": [
-    "config:base",
-    ":labels(dependencies)",
-    ":reviewers(JannikEmmerich,MarcelCoding)"
+    "config:base"
+  ],
+  "reviewers": [
+    "JannikEmmerich",
+    "MarcelCoding"
+  ],
+  "lables": [
+    "dependencies"
   ]
 }
