@@ -6,7 +6,7 @@ dependencies {
     // Database
     api("org.hibernate:hibernate-core:5.4.12.Final")
     api("org.hibernate:hibernate-c3p0:5.4.12.Final")
-    api("mysql:mysql-connector-java:8.0.19")
+    api("mysql:mysql-connector-java:8.0.20")
     api("org.mariadb.jdbc:mariadb-java-client:2.6.0")
     api("org.postgresql:postgresql:42.2.11")
 
