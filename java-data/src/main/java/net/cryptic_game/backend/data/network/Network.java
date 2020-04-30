@@ -209,7 +209,7 @@ public class Network extends TableModelAutoId {
                 .add("id", this.getId())
                 .add("name", this.getName())
                 .add("owner", this.getOwner().getId())
-                .add("_public", this.isPublic())
+                .add("public", this.isPublic())
                 .add("created", this.getCreated().toInstant(ZoneOffset.UTC).toEpochMilli())
                 .build();
     }

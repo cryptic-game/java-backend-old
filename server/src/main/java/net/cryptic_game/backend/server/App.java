@@ -78,7 +78,7 @@ public class App extends AppBootstrap {
                 false, new WebSocketServerCodec(this.webSocketEndpointHandler));
 
         this.serverHandler.addServer("http",
-                new InetSocketAddress(serverConfig.getHttpHost(), serverConfig.getWebsocketPort()),
+                new InetSocketAddress(serverConfig.getHttpHost(), serverConfig.getHttpPort()),
                 false, new HttpServerCodec(this.httpEndpointHandler));
     }
 

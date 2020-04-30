@@ -40,9 +40,6 @@ public class Session extends TableModelAutoId {
     @Column(name = "expire", nullable = false, updatable = false)
     private LocalDateTime expire;
 
-    @Column(name = "valid", nullable = false, updatable = true)
-    private boolean valid;
-
     @Column(name = "last_active", nullable = false, updatable = true)
     private LocalDateTime lastActive;
 
@@ -67,7 +64,6 @@ public class Session extends TableModelAutoId {
         session.setDeviceName(deviceName);
         session.setExpire(LocalDateTime.now().plus(EXPIRE));
         session.setLastActive(LocalDateTime.now());
-        session.setValid(true);
 
         final org.hibernate.Session sqlSession = sqlConnection.openSession();
         sqlSession.beginTransaction();
@@ -86,6 +82,21 @@ public class Session extends TableModelAutoId {
      */
     public static Session getById(final UUID id) {
         return getById(Session.class, id);
+    }
+
+    /**
+     * Deletes all expired and invalid {@link Session}s of a {@link User}
+     *
+     * @param user The {@link User} whose {@link Session}s are to be deleted.
+     */
+    public static void deleteExpiredSessions(final User user) {
+        final org.hibernate.Session sqlSession = sqlConnection.openSession();
+        sqlSession.beginTransaction();
+        sqlSession.createQuery("delete from Session as s where s.expire < :date")
+                .setParameter("date", LocalDateTime.now())
+                .executeUpdate();
+        sqlSession.getTransaction().commit();
+        sqlSession.close();
     }
 
     /**
@@ -148,16 +159,7 @@ public class Session extends TableModelAutoId {
      * @return True if the {@link Session} is valid | false if it is not
      */
     public boolean isValid() {
-        return this.valid && LocalDateTime.now().isBefore(this.getExpire());
-    }
-
-    /**
-     * Sets a valid boolean name of the {@link Session}
-     *
-     * @param valid New valid boolean name to be set
-     */
-    public void setValid(final boolean valid) {
-        this.valid = valid;
+        return LocalDateTime.now().isBefore(this.getExpire());
     }
 
     /**
@@ -224,8 +226,7 @@ public class Session extends TableModelAutoId {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Session that = (Session) o;
-        return valid == that.isValid() &&
-                Objects.equals(this.getId(), that.getId()) &&
+        return Objects.equals(this.getId(), that.getId()) &&
                 Objects.equals(this.getVersion(), that.getVersion()) &&
                 Objects.equals(this.getDeviceName(), that.getDeviceName()) &&
                 Objects.equals(this.getExpire(), that.getExpire()) &&

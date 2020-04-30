@@ -44,8 +44,7 @@ public class Client {
     }
 
     public void logout() {
-        this.session.setValid(false);
-        this.session.saveOrUpdate();
+        this.session.delete();
         this.session = null;
     }
 }

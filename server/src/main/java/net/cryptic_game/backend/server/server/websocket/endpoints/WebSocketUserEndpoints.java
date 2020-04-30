@@ -43,6 +43,8 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
 
         client.add(session);
 
+        Session.deleteExpiredSessions(user);
+
         return new ApiResponse(ApiResponseType.OK, JsonBuilder.anJSON()
                 .add("session", session.getId())
                 .add("token", token));
@@ -114,10 +116,10 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
         return new ApiResponse(ApiResponseType.OK);
     }
 
-    @ApiEndpoint("change-password")
-    public ApiResponse password(final ApiClient client,
-                                @ApiParameter("password") final String password,
-                                @ApiParameter("new") final String newPassword) {
+    @ApiEndpoint("change_password")
+    public ApiResponse changePassword(final ApiClient client,
+                                      @ApiParameter("password") final String password,
+                                      @ApiParameter("new") final String newPassword) {
         if (client.get(Session.class) != null || client.get(User.class) != null) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "NOT_LOGGED_IN");
         }
@@ -146,8 +148,7 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
 
         if (sessionId == null) {
             Session session = client.get(Session.class);
-            session.setValid(false);
-            session.saveOrUpdate();
+            session.delete();
             return new ApiResponse(ApiResponseType.OK);
         }
 
@@ -157,8 +158,7 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "SESSION_NOT_FOUND");
         }
 
-        session.setValid(false);
-        session.saveOrUpdate();
+        session.delete();
 
         return new ApiResponse(ApiResponseType.OK);
     }
@@ -176,9 +176,8 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
         }
 
         Session session = client.get(Session.class);
-        session.setValid(false);
+        session.delete();
 
-        session.saveOrUpdate();
         user.delete();
 
         return new ApiResponse(ApiResponseType.OK);
