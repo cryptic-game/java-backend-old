@@ -1,8 +1,7 @@
 ---
 name: Bug Report
 about: Create a bug report to help us improve the backend.
-labels:
-  - bug
+labels: bug
 
 ---
 
