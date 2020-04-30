@@ -105,6 +105,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li><a href="net/cryptic_game/backend/base/config/package-tree.html">net.cryptic_game.backend.base.config</a>, </li>
 <li><a href="net/cryptic_game/backend/base/daemon/package-tree.html">net.cryptic_game.backend.base.daemon</a>, </li>
 <li><a href="net/cryptic_game/backend/base/interfaces/package-tree.html">net.cryptic_game.backend.base.interfaces</a>, </li>
+<li><a href="net/cryptic_game/backend/base/json/package-tree.html">net.cryptic_game.backend.base.json</a>, </li>
+<li><a href="net/cryptic_game/backend/base/json/types/package-tree.html">net.cryptic_game.backend.base.json.types</a>, </li>
 <li><a href="net/cryptic_game/backend/base/netty/package-tree.html">net.cryptic_game.backend.base.netty</a>, </li>
 <li><a href="net/cryptic_game/backend/base/netty/client/package-tree.html">net.cryptic_game.backend.base.netty.client</a>, </li>
 <li><a href="net/cryptic_game/backend/base/netty/codec/package-tree.html">net.cryptic_game.backend.base.netty.codec</a>, </li>
@@ -223,8 +225,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="circle">net.cryptic_game.backend.base.daemon.<a href="net/cryptic_game/backend/base/daemon/Function.html" title="class in net.cryptic_game.backend.base.daemon"><span class="typeNameLink">Function</span></a> (implements net.cryptic_game.backend.base.interfaces.<a href="net/cryptic_game/backend/base/interfaces/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.interfaces">JsonSerializable</a>)</li>
 <li class="circle">net.cryptic_game.backend.base.daemon.<a href="net/cryptic_game/backend/base/daemon/FunctionArgument.html" title="class in net.cryptic_game.backend.base.daemon"><span class="typeNameLink">FunctionArgument</span></a> (implements net.cryptic_game.backend.base.interfaces.<a href="net/cryptic_game/backend/base/interfaces/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.interfaces">JsonSerializable</a>)</li>
 <li class="circle">net.cryptic_game.backend.server.server.http.<a href="net/cryptic_game/backend/server/server/http/HttpEndpointHandler.html" title="class in net.cryptic_game.backend.server.server.http"><span class="typeNameLink">HttpEndpointHandler</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.json.types.<a href="net/cryptic_game/backend/base/json/types/InstantTypeAdapter.html" title="class in net.cryptic_game.backend.base.json.types"><span class="typeNameLink">InstantTypeAdapter</span></a> (implements com.google.gson.JsonDeserializer&lt;T&gt;, com.google.gson.JsonSerializer&lt;T&gt;)</li>
+<li class="circle">net.cryptic_game.backend.base.json.<a href="net/cryptic_game/backend/base/json/JsonBuilder.html" title="class in net.cryptic_game.backend.base.json"><span class="typeNameLink">JsonBuilder</span></a> (implements net.cryptic_game.backend.base.json.<a href="net/cryptic_game/backend/base/json/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.json">JsonSerializable</a>)</li>
 <li class="circle">net.cryptic_game.backend.base.utils.<a href="net/cryptic_game/backend/base/utils/JsonBuilder.html" title="class in net.cryptic_game.backend.base.utils"><span class="typeNameLink">JsonBuilder</span></a> (implements net.cryptic_game.backend.base.interfaces.<a href="net/cryptic_game/backend/base/interfaces/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.interfaces">JsonSerializable</a>)</li>
-<li class="circle">net.cryptic_game.backend.base.utils.<a href="net/cryptic_game/backend/base/utils/JsonSocketUtils.html" title="class in net.cryptic_game.backend.base.utils"><span class="typeNameLink">JsonSocketUtils</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.json.<a href="net/cryptic_game/backend/base/json/JsonExclusionStrategy.html" title="class in net.cryptic_game.backend.base.json"><span class="typeNameLink">JsonExclusionStrategy</span></a> (implements com.google.gson.ExclusionStrategy)</li>
+<li class="circle">net.cryptic_game.backend.base.json.<a href="net/cryptic_game/backend/base/json/JsonSerializableSerializer.html" title="class in net.cryptic_game.backend.base.json"><span class="typeNameLink">JsonSerializableSerializer</span></a> (implements com.google.gson.JsonSerializer&lt;T&gt;)</li>
+<li class="circle">net.cryptic_game.backend.base.json.<a href="net/cryptic_game/backend/base/json/JsonUtils.html" title="class in net.cryptic_game.backend.base.json"><span class="typeNameLink">JsonUtils</span></a></li>
 <li class="circle">net.cryptic_game.backend.base.utils.<a href="net/cryptic_game/backend/base/utils/JsonUtils.html" title="class in net.cryptic_game.backend.base.utils"><span class="typeNameLink">JsonUtils</span></a></li>
 <li class="circle">net.cryptic_game.backend.base.netty.client.<a href="net/cryptic_game/backend/base/netty/client/NettyClient.html" title="class in net.cryptic_game.backend.base.netty.client"><span class="typeNameLink">NettyClient</span></a></li>
 <li class="circle">net.cryptic_game.backend.base.netty.client.<a href="net/cryptic_game/backend/base/netty/client/NettyClientHandler.html" title="class in net.cryptic_game.backend.base.netty.client"><span class="typeNameLink">NettyClientHandler</span></a></li>
@@ -301,6 +307,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </li>
 <li class="circle">java.lang.RuntimeException
 <ul>
+<li class="circle">java.lang.IllegalArgumentException
+<ul>
+<li class="circle">net.cryptic_game.backend.base.json.<a href="net/cryptic_game/backend/base/json/JsonTypeMappingException.html" title="class in net.cryptic_game.backend.base.json"><span class="typeNameLink">JsonTypeMappingException</span></a></li>
+</ul>
+</li>
 <li class="circle">java.lang.IllegalStateException
 <ul>
 <li class="circle">net.cryptic_game.backend.base.api.notification.<a href="net/cryptic_game/backend/base/api/notification/ApiNotificationException.html" title="class in net.cryptic_game.backend.base.api.notification"><span class="typeNameLink">ApiNotificationException</span></a></li>
@@ -315,6 +326,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="circle">net.cryptic_game.backend.base.timeout.<a href="net/cryptic_game/backend/base/timeout/TimeoutHandler.html" title="class in net.cryptic_game.backend.base.timeout"><span class="typeNameLink">TimeoutHandler</span></a> (implements java.lang.Runnable)</li>
 <li class="circle">net.cryptic_game.backend.base.utils.<a href="net/cryptic_game/backend/base/utils/ValidationUtils.html" title="class in net.cryptic_game.backend.base.utils"><span class="typeNameLink">ValidationUtils</span></a></li>
 <li class="circle">net.cryptic_game.backend.server.server.websocket.<a href="net/cryptic_game/backend/server/server/websocket/WebSocketEndpointHandler.html" title="class in net.cryptic_game.backend.server.server.websocket"><span class="typeNameLink">WebSocketEndpointHandler</span></a></li>
+<li class="circle">net.cryptic_game.backend.base.json.types.<a href="net/cryptic_game/backend/base/json/types/ZonedDateTimeAdapter.html" title="class in net.cryptic_game.backend.base.json.types"><span class="typeNameLink">ZonedDateTimeAdapter</span></a> (implements com.google.gson.JsonDeserializer&lt;T&gt;, com.google.gson.JsonSerializer&lt;T&gt;)</li>
 </ul>
 </li>
 </ul>
@@ -327,6 +339,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="circle">net.cryptic_game.backend.base.interfaces.<a href="net/cryptic_game/backend/base/interfaces/ResponseType.html" title="interface in net.cryptic_game.backend.base.interfaces"><span class="typeNameLink">ResponseType</span></a></li>
 </ul>
 </li>
+<li class="circle">net.cryptic_game.backend.base.json.<a href="net/cryptic_game/backend/base/json/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.json"><span class="typeNameLink">JsonSerializable</span></a></li>
 </ul>
 </section>
 <section role="region">
@@ -338,6 +351,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="circle">net.cryptic_game.backend.base.api.endpoint.<a href="net/cryptic_game/backend/base/api/endpoint/ApiTag.html" title="annotation in net.cryptic_game.backend.base.api.endpoint"><span class="typeNameLink">ApiTag</span></a> (implements java.lang.annotation.Annotation)</li>
 <li class="circle">net.cryptic_game.backend.base.config.<a href="net/cryptic_game/backend/base/config/Config.html" title="annotation in net.cryptic_game.backend.base.config"><span class="typeNameLink">Config</span></a> (implements java.lang.annotation.Annotation)</li>
 <li class="circle">net.cryptic_game.backend.base.config.<a href="net/cryptic_game/backend/base/config/ConfigValue.html" title="annotation in net.cryptic_game.backend.base.config"><span class="typeNameLink">ConfigValue</span></a> (implements java.lang.annotation.Annotation)</li>
+<li class="circle">net.cryptic_game.backend.base.json.<a href="net/cryptic_game/backend/base/json/JsonTransient.html" title="annotation in net.cryptic_game.backend.base.json"><span class="typeNameLink">JsonTransient</span></a> (implements java.lang.annotation.Annotation)</li>
 </ul>
 </section>
 <section role="region">

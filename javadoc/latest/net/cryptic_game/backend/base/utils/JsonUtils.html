@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":41,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9};
+var data = {"i0":41,"i1":41,"i2":41,"i3":41,"i4":41,"i5":41,"i6":41,"i7":41,"i8":41,"i9":41,"i10":41,"i11":41,"i12":41,"i13":41};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -131,8 +131,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <span class="typeNameLabel">JsonUtils</span>
+<pre>@Deprecated
+public class <span class="typeNameLabel">JsonUtils</span>
 extends java.lang.Object</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">this will be removed in <code>v0.4.0-pre-alpha</code>.</div>
+</div>
 </li>
 </ul>
 </div>
@@ -154,7 +158,9 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">JsonUtils</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -179,6 +185,7 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBoolean(com.google.gson.JsonObject,java.lang.String)">getBoolean</a></span>&#8203;(com.google.gson.JsonObject&nbsp;jsonObject,
           java.lang.String&nbsp;key)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the associated <code>Boolean</code> value of a specific property.</div>
 </td>
 </tr>
@@ -197,6 +204,7 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInt(com.google.gson.JsonObject,java.lang.String)">getInt</a></span>&#8203;(com.google.gson.JsonObject&nbsp;jsonObject,
       java.lang.String&nbsp;key)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the associated <code>Integer</code> value of a specific property.</div>
 </td>
 </tr>
@@ -205,6 +213,7 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getJsonArray(com.google.gson.JsonObject,java.lang.String)">getJsonArray</a></span>&#8203;(com.google.gson.JsonObject&nbsp;jsonObject,
             java.lang.String&nbsp;key)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the associated <code>JsonArray</code> value of a specific property.</div>
 </td>
 </tr>
@@ -213,6 +222,7 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getJsonObject(com.google.gson.JsonObject,java.lang.String)">getJsonObject</a></span>&#8203;(com.google.gson.JsonObject&nbsp;jsonObject,
              java.lang.String&nbsp;key)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the associated <code>JsonObject</code> value of a specific property.</div>
 </td>
 </tr>
@@ -221,6 +231,7 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLocalDate(com.google.gson.JsonObject,java.lang.String)">getLocalDate</a></span>&#8203;(com.google.gson.JsonObject&nbsp;jsonObject,
             java.lang.String&nbsp;key)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the associated <code>LocalDate</code> value of a specific property.</div>
 </td>
 </tr>
@@ -229,6 +240,7 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLocalDateTime(com.google.gson.JsonObject,java.lang.String)">getLocalDateTime</a></span>&#8203;(com.google.gson.JsonObject&nbsp;jsonObject,
                 java.lang.String&nbsp;key)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the associated <code>LocalDateTime</code> value of a specific property.</div>
 </td>
 </tr>
@@ -237,6 +249,7 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLong(com.google.gson.JsonObject,java.lang.String)">getLong</a></span>&#8203;(com.google.gson.JsonObject&nbsp;jsonObject,
        java.lang.String&nbsp;key)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the associated <code>Long</code> value of a specific property.</div>
 </td>
 </tr>
@@ -245,6 +258,7 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getString(com.google.gson.JsonObject,java.lang.String)">getString</a></span>&#8203;(com.google.gson.JsonObject&nbsp;jsonObject,
          java.lang.String&nbsp;key)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the associated <code>String</code> value of a specific property.</div>
 </td>
 </tr>
@@ -253,30 +267,39 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUUID(com.google.gson.JsonObject,java.lang.String)">getUUID</a></span>&#8203;(com.google.gson.JsonObject&nbsp;jsonObject,
        java.lang.String&nbsp;key)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the associated <code>UUID</code> value of a specific property.</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>static &lt;T extends <a href="../interfaces/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.interfaces">JsonSerializable</a>&gt;<br>com.google.gson.JsonArray</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toArray(java.util.List)">toArray</a></span>&#8203;(java.util.List&lt;T&gt;&nbsp;items)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;com.google.gson.JsonArray</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toArray(java.util.List,java.util.function.Function)">toArray</a></span>&#8203;(java.util.List&lt;T&gt;&nbsp;items,
        java.util.function.Function&lt;T,&#8203;com.google.gson.JsonElement&gt;&nbsp;function)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>static &lt;T extends <a href="../interfaces/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.interfaces">JsonSerializable</a>&gt;<br>com.google.gson.JsonArray</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toArray(java.util.Set)">toArray</a></span>&#8203;(java.util.Set&lt;T&gt;&nbsp;items)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;com.google.gson.JsonArray</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toArray(java.util.Set,java.util.function.Function)">toArray</a></span>&#8203;(java.util.Set&lt;T&gt;&nbsp;items,
        java.util.function.Function&lt;T,&#8203;com.google.gson.JsonElement&gt;&nbsp;function)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -309,6 +332,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>JsonUtils</h4>
 <pre>public&nbsp;JsonUtils()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 </li>
 </ul>
 </li>
@@ -329,6 +353,7 @@ extends java.lang.Object</pre>
 <h4>getString</h4>
 <pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;getString&#8203;(com.google.gson.JsonObject&nbsp;jsonObject,
                                          java.lang.String&nbsp;key)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the associated <code>String</code> value of a specific property.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -347,6 +372,7 @@ extends java.lang.Object</pre>
 <h4>getInt</h4>
 <pre class="methodSignature">public static&nbsp;int&nbsp;getInt&#8203;(com.google.gson.JsonObject&nbsp;jsonObject,
                          java.lang.String&nbsp;key)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the associated <code>Integer</code> value of a specific property.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -365,6 +391,7 @@ extends java.lang.Object</pre>
 <h4>getLong</h4>
 <pre class="methodSignature">public static&nbsp;long&nbsp;getLong&#8203;(com.google.gson.JsonObject&nbsp;jsonObject,
                            java.lang.String&nbsp;key)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the associated <code>Long</code> value of a specific property.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -383,6 +410,7 @@ extends java.lang.Object</pre>
 <h4>getBoolean</h4>
 <pre class="methodSignature">public static&nbsp;boolean&nbsp;getBoolean&#8203;(com.google.gson.JsonObject&nbsp;jsonObject,
                                  java.lang.String&nbsp;key)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the associated <code>Boolean</code> value of a specific property.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -401,6 +429,7 @@ extends java.lang.Object</pre>
 <h4>getUUID</h4>
 <pre class="methodSignature">public static&nbsp;java.util.UUID&nbsp;getUUID&#8203;(com.google.gson.JsonObject&nbsp;jsonObject,
                                      java.lang.String&nbsp;key)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the associated <code>UUID</code> value of a specific property.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -442,6 +471,7 @@ public static&nbsp;java.util.Date&nbsp;getDate&#8203;(com.google.gson.JsonObject
 <h4>getLocalDate</h4>
 <pre class="methodSignature">public static&nbsp;java.time.LocalDate&nbsp;getLocalDate&#8203;(com.google.gson.JsonObject&nbsp;jsonObject,
                                                java.lang.String&nbsp;key)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the associated <code>LocalDate</code> value of a specific property.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -460,6 +490,7 @@ public static&nbsp;java.util.Date&nbsp;getDate&#8203;(com.google.gson.JsonObject
 <h4>getLocalDateTime</h4>
 <pre class="methodSignature">public static&nbsp;java.time.LocalDateTime&nbsp;getLocalDateTime&#8203;(com.google.gson.JsonObject&nbsp;jsonObject,
                                                        java.lang.String&nbsp;key)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the associated <code>LocalDateTime</code> value of a specific property.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -478,6 +509,7 @@ public static&nbsp;java.util.Date&nbsp;getDate&#8203;(com.google.gson.JsonObject
 <h4>getJsonObject</h4>
 <pre class="methodSignature">public static&nbsp;com.google.gson.JsonObject&nbsp;getJsonObject&#8203;(com.google.gson.JsonObject&nbsp;jsonObject,
                                                        java.lang.String&nbsp;key)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the associated <code>JsonObject</code> value of a specific property.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -496,6 +528,7 @@ public static&nbsp;java.util.Date&nbsp;getDate&#8203;(com.google.gson.JsonObject
 <h4>getJsonArray</h4>
 <pre class="methodSignature">public static&nbsp;com.google.gson.JsonArray&nbsp;getJsonArray&#8203;(com.google.gson.JsonObject&nbsp;jsonObject,
                                                      java.lang.String&nbsp;key)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the associated <code>JsonArray</code> value of a specific property.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -513,6 +546,7 @@ public static&nbsp;java.util.Date&nbsp;getDate&#8203;(com.google.gson.JsonObject
 <li class="blockList">
 <h4>toArray</h4>
 <pre class="methodSignature">public static&nbsp;&lt;T extends <a href="../interfaces/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.interfaces">JsonSerializable</a>&gt;&nbsp;com.google.gson.JsonArray&nbsp;toArray&#8203;(java.util.List&lt;T&gt;&nbsp;items)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 </li>
 </ul>
 <a id="toArray(java.util.List,java.util.function.Function)">
@@ -523,6 +557,7 @@ public static&nbsp;java.util.Date&nbsp;getDate&#8203;(com.google.gson.JsonObject
 <h4>toArray</h4>
 <pre class="methodSignature">public static&nbsp;&lt;T&gt;&nbsp;com.google.gson.JsonArray&nbsp;toArray&#8203;(java.util.List&lt;T&gt;&nbsp;items,
                                                     java.util.function.Function&lt;T,&#8203;com.google.gson.JsonElement&gt;&nbsp;function)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 </li>
 </ul>
 <a id="toArray(java.util.Set)">
@@ -532,6 +567,7 @@ public static&nbsp;java.util.Date&nbsp;getDate&#8203;(com.google.gson.JsonObject
 <li class="blockList">
 <h4>toArray</h4>
 <pre class="methodSignature">public static&nbsp;&lt;T extends <a href="../interfaces/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.interfaces">JsonSerializable</a>&gt;&nbsp;com.google.gson.JsonArray&nbsp;toArray&#8203;(java.util.Set&lt;T&gt;&nbsp;items)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 </li>
 </ul>
 <a id="toArray(java.util.Set,java.util.function.Function)">
@@ -542,6 +578,7 @@ public static&nbsp;java.util.Date&nbsp;getDate&#8203;(com.google.gson.JsonObject
 <h4>toArray</h4>
 <pre class="methodSignature">public static&nbsp;&lt;T&gt;&nbsp;com.google.gson.JsonArray&nbsp;toArray&#8203;(java.util.Set&lt;T&gt;&nbsp;items,
                                                     java.util.function.Function&lt;T,&#8203;com.google.gson.JsonElement&gt;&nbsp;function)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 </li>
 </ul>
 </li>

@@ -7,6 +7,8 @@ net.cryptic_game.backend.base.api.notification
 net.cryptic_game.backend.base.config
 net.cryptic_game.backend.base.daemon
 net.cryptic_game.backend.base.interfaces
+net.cryptic_game.backend.base.json
+net.cryptic_game.backend.base.json.types
 net.cryptic_game.backend.base.netty
 net.cryptic_game.backend.base.netty.client
 net.cryptic_game.backend.base.netty.codec
