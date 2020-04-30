@@ -1,12 +1,10 @@
 {
   "extends": [
-    "config:base"
+    "config:base",
+    ":labels(dependencies)"
   ],
   "reviewers": [
     "JannikEmmerich",
     "MarcelCoding"
-  ],
-  "lables": [
-    "dependencies"
   ]
 }
