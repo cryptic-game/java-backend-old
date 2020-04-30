@@ -1,7 +1,7 @@
 plugins {
     java
     application
-    id("io.freefair.aggregate-javadoc") version "5.0.1"
+    id("io.freefair.aggregate-javadoc") version "5.0.0"
 //    kotlin("jvm") version "1.3.70"
 }
 
