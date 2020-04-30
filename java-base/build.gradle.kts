@@ -15,7 +15,7 @@ dependencies {
     api("org.apache.logging.log4j:log4j-slf4j-impl:2.13.1")
 
     // Network
-    api("io.netty:netty-all:4.1.48.Final")
+    api("io.netty:netty-all:4.1.49.Final")
 
     // Json
     api("com.google.code.gson:gson:2.8.6")
