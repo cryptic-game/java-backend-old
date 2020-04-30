@@ -293,6 +293,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dl>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/device/DeviceHardware.HardwareType.html#CASE">CASE</a></span> - net.cryptic_game.backend.data.device.<a href="net/cryptic_game/backend/data/device/DeviceHardware.HardwareType.html" title="enum in net.cryptic_game.backend.data.device">DeviceHardware.HardwareType</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/server/server/websocket/endpoints/WebSocketUserEndpoints.html#changePassword(net.cryptic_game.backend.base.api.client.ApiClient,java.lang.String,java.lang.String)">changePassword(ApiClient, String, String)</a></span> - Method in class net.cryptic_game.backend.server.server.websocket.endpoints.<a href="net/cryptic_game/backend/server/server/websocket/endpoints/WebSocketUserEndpoints.html" title="class in net.cryptic_game.backend.server.server.websocket.endpoints">WebSocketUserEndpoints</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/chat/ChatAction.html#CHANNEL_DELETE">CHANNEL_DELETE</a></span> - net.cryptic_game.backend.data.chat.<a href="net/cryptic_game/backend/data/chat/ChatAction.html" title="enum in net.cryptic_game.backend.data.chat">ChatAction</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/base/api/netty/JsonApiServerContentHandler.html#channelRead0(io.netty.channel.ChannelHandlerContext,com.google.gson.JsonObject)">channelRead0(ChannelHandlerContext, JsonObject)</a></span> - Method in class net.cryptic_game.backend.base.api.netty.<a href="net/cryptic_game/backend/base/api/netty/JsonApiServerContentHandler.html" title="class in net.cryptic_game.backend.base.api.netty">JsonApiServerContentHandler</a></dt>
@@ -503,6 +505,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/server/server/websocket/endpoints/WebSocketUserEndpoints.html#delete(net.cryptic_game.backend.base.api.client.ApiClient,java.lang.String)">delete(ApiClient, String)</a></span> - Method in class net.cryptic_game.backend.server.server.websocket.endpoints.<a href="net/cryptic_game/backend/server/server/websocket/endpoints/WebSocketUserEndpoints.html" title="class in net.cryptic_game.backend.server.server.websocket.endpoints">WebSocketUserEndpoints</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/user/Session.html#deleteExpiredSessions(net.cryptic_game.backend.data.user.User)">deleteExpiredSessions(User)</a></span> - Static method in class net.cryptic_game.backend.data.user.<a href="net/cryptic_game/backend/data/user/Session.html" title="class in net.cryptic_game.backend.data.user">Session</a></dt>
+<dd>
+<div class="block">Deletes all expired and invalid <a href="net/cryptic_game/backend/data/user/Session.html" title="class in net.cryptic_game.backend.data.user"><code>Session</code></a>s of a <a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
+</dd>
 <dt><a href="net/cryptic_game/backend/data/device/Device.html" title="class in net.cryptic_game.backend.data.device"><span class="typeNameLink">Device</span></a> - Class in <a href="net/cryptic_game/backend/data/device/package-summary.html">net.cryptic_game.backend.data.device</a></dt>
 <dd>
 <div class="block">Entity representing a device entry in the database</div>
@@ -1892,8 +1898,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dl>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/base/api/endpoint/ApiParameters.html#parameters()">parameters()</a></span> - Method in annotation type net.cryptic_game.backend.base.api.endpoint.<a href="net/cryptic_game/backend/base/api/endpoint/ApiParameters.html" title="annotation in net.cryptic_game.backend.base.api.endpoint">ApiParameters</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/server/server/websocket/endpoints/WebSocketUserEndpoints.html#password(net.cryptic_game.backend.base.api.client.ApiClient,java.lang.String,java.lang.String)">password(ApiClient, String, String)</a></span> - Method in class net.cryptic_game.backend.server.server.websocket.endpoints.<a href="net/cryptic_game/backend/server/server/websocket/endpoints/WebSocketUserEndpoints.html" title="class in net.cryptic_game.backend.server.server.websocket.endpoints">WebSocketUserEndpoints</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/base/sql/SQLServerType.html#POSTGRE_SQL_08_1">POSTGRE_SQL_08_1</a></span> - net.cryptic_game.backend.base.sql.<a href="net/cryptic_game/backend/base/sql/SQLServerType.html" title="enum in net.cryptic_game.backend.base.sql">SQLServerType</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/base/sql/SQLServerType.html#POSTGRE_SQL_08_2">POSTGRE_SQL_08_2</a></span> - net.cryptic_game.backend.base.sql.<a href="net/cryptic_game/backend/base/sql/SQLServerType.html" title="enum in net.cryptic_game.backend.base.sql">SQLServerType</a></dt>
@@ -2563,10 +2567,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/device/DeviceAccess.html#setValid(boolean)">setValid(boolean)</a></span> - Method in class net.cryptic_game.backend.data.device.<a href="net/cryptic_game/backend/data/device/DeviceAccess.html" title="class in net.cryptic_game.backend.data.device">DeviceAccess</a></dt>
 <dd>
 <div class="block">Sets a new boolean if the <a href="net/cryptic_game/backend/data/device/DeviceAccess.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceAccess</code></a> is valid</div>
-</dd>
-<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/user/Session.html#setValid(boolean)">setValid(boolean)</a></span> - Method in class net.cryptic_game.backend.data.user.<a href="net/cryptic_game/backend/data/user/Session.html" title="class in net.cryptic_game.backend.data.user">Session</a></dt>
-<dd>
-<div class="block">Sets a valid boolean name of the <a href="net/cryptic_game/backend/data/user/Session.html" title="class in net.cryptic_game.backend.data.user"><code>Session</code></a></div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/base/sql/models/TableModel.html#setVersion(int)">setVersion(int)</a></span> - Method in class net.cryptic_game.backend.base.sql.models.<a href="net/cryptic_game/backend/base/sql/models/TableModel.html" title="class in net.cryptic_game.backend.base.sql.models">TableModel</a></dt>
 <dd>&nbsp;</dd>
