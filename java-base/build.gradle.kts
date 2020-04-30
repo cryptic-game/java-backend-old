@@ -11,7 +11,7 @@ dependencies {
     api("org.postgresql:postgresql:42.2.11")
 
     // Logger
-    api("org.apache.logging.log4j:log4j-core:2.13.1")
+    api("org.apache.logging.log4j:log4j-core:2.13.2")
     api("org.apache.logging.log4j:log4j-slf4j-impl:2.13.1")
 
     // Network
