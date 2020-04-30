@@ -13,6 +13,10 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.function.Function;
 
+/**
+ * @deprecated this will be removed in {@code v0.4.0-pre-alpha}.
+ */
+@Deprecated
 public class JsonUtils {
 
     /**
@@ -23,11 +27,7 @@ public class JsonUtils {
      * @return The {@link String} value of the property.
      */
     public static String getString(JsonObject jsonObject, String key) {
-        if (jsonObject.get(key) != null) {
-            return jsonObject.get(key).getAsString();
-        } else {
-            return null;
-        }
+        return net.cryptic_game.backend.base.json.JsonUtils.fromJson(jsonObject.get(key), String.class);
     }
 
     /**
@@ -38,11 +38,7 @@ public class JsonUtils {
      * @return The {@link Integer} value of the property.
      */
     public static int getInt(JsonObject jsonObject, String key) {
-        if (jsonObject.get(key) != null) {
-            return jsonObject.get(key).getAsInt();
-        } else {
-            return -1;
-        }
+        return net.cryptic_game.backend.base.json.JsonUtils.fromJson(jsonObject.get(key), Integer.class);
     }
 
     /**
@@ -53,11 +49,7 @@ public class JsonUtils {
      * @return The {@link Long} value of the property.
      */
     public static long getLong(JsonObject jsonObject, String key) {
-        if (jsonObject.get(key) != null) {
-            return jsonObject.get(key).getAsLong();
-        } else {
-            return -1L;
-        }
+        return net.cryptic_game.backend.base.json.JsonUtils.fromJson(jsonObject.get(key), Long.class);
     }
 
     /**
@@ -68,11 +60,7 @@ public class JsonUtils {
      * @return The {@link Boolean} value of the property.
      */
     public static boolean getBoolean(JsonObject jsonObject, String key) {
-        if (jsonObject.get(key) != null) {
-            return jsonObject.get(key).getAsBoolean();
-        } else {
-            return false;
-        }
+        return net.cryptic_game.backend.base.json.JsonUtils.fromJson(jsonObject.get(key), Boolean.class);
     }
 
     /**
@@ -83,15 +71,7 @@ public class JsonUtils {
      * @return The {@link UUID} value of the property.
      */
     public static UUID getUUID(JsonObject jsonObject, String key) {
-        if (jsonObject.get(key) != null) {
-            try {
-                return UUID.fromString(jsonObject.get(key).getAsString());
-            } catch (IllegalArgumentException ignored) {
-                return null;
-            }
-        } else {
-            return null;
-        }
+        return net.cryptic_game.backend.base.json.JsonUtils.fromJson(jsonObject.get(key), UUID.class);
     }
 
     /**
@@ -106,7 +86,7 @@ public class JsonUtils {
     @Deprecated
     public static Date getDate(JsonObject jsonObject, String key) {
         if (jsonObject.get(key) != null) {
-            return new Date(jsonObject.get(key).getAsLong());
+            return new Date(getLong(jsonObject, key));
         } else {
             return null;
         }
@@ -150,11 +130,7 @@ public class JsonUtils {
      * @return The {@link JsonObject} value of the property.
      */
     public static JsonObject getJsonObject(JsonObject jsonObject, String key) {
-        if (jsonObject.get(key) != null) {
-            return jsonObject.get(key).getAsJsonObject();
-        } else {
-            return null;
-        }
+        return net.cryptic_game.backend.base.json.JsonUtils.fromJson(jsonObject.get(key), JsonObject.class);
     }
 
     /**
@@ -165,15 +141,11 @@ public class JsonUtils {
      * @return The {@link JsonArray} value of the property.
      */
     public static JsonArray getJsonArray(JsonObject jsonObject, String key) {
-        if (jsonObject.get(key) != null) {
-            return jsonObject.get(key).getAsJsonArray();
-        } else {
-            return null;
-        }
+        return net.cryptic_game.backend.base.json.JsonUtils.fromJson(jsonObject.get(key), JsonArray.class);
     }
 
     public static <T extends JsonSerializable> JsonArray toArray(final List<T> items) {
-        return toArray(items, JsonSerializable::serialize);
+        return net.cryptic_game.backend.base.json.JsonUtils.toArray(items, JsonSerializable::serialize);
     }
 
     public static <T> JsonArray toArray(final List<T> items, final Function<T, JsonElement> function) {
@@ -183,7 +155,7 @@ public class JsonUtils {
     }
 
     public static <T extends JsonSerializable> JsonArray toArray(final Set<T> items) {
-        return toArray(items, JsonSerializable::serialize);
+        return net.cryptic_game.backend.base.json.JsonUtils.toArray(items, JsonSerializable::serialize);
     }
 
     public static <T> JsonArray toArray(final Set<T> items, final Function<T, JsonElement> function) {

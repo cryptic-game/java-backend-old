@@ -12,6 +12,10 @@ import java.util.InvalidPropertiesFormatException;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * @deprecated this will be removed in {@code v0.4.0-pre-alpha}.
+ */
+@Deprecated(forRemoval = true)
 public class JsonBuilder implements JsonSerializable {
 
     private final JsonObject json;
@@ -197,7 +201,7 @@ public class JsonBuilder implements JsonSerializable {
      *
      * @param key    name of the property.
      * @param values {@link List} value of associated with the property.
-     * @param <T> Type of the objects inside the list.
+     * @param <T>    Type of the objects inside the list.
      * @return the current object of {@link JsonBuilder}.
      * @throws InvalidPropertiesFormatException Type is not supported by {@link JsonArray}
      */

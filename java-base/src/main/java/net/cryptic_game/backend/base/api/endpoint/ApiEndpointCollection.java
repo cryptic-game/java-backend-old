@@ -27,25 +27,23 @@ public abstract class ApiEndpointCollection {
 
     Set<ApiEndpointExecutor> load() {
         final Set<ApiEndpointExecutor> executors = new HashSet<>();
-
-        // Load all Methods
         for (final Method method : this.getClass().getDeclaredMethods()) {
+            if (!method.isAnnotationPresent(ApiEndpoint.class)) continue;
 
-            // Filter for API Methods
-            if (method.isAnnotationPresent(ApiEndpoint.class)) {
-                final String name = method.getAnnotation(ApiEndpoint.class).value();
+            final String name = method.getAnnotation(ApiEndpoint.class).value();
 
-                // Validate Method
-                if (ApiEndpointValidator.validateMethod(this, name, method)) try {
+            if (method.getReturnType() != ApiResponse.class) {
+                log.error("Api Endpoint \"{}/{}\" has not the return type \"{}\".", this.name, name, ApiResponse.class.getName());
+                continue;
+            }
 
-                    // Save Method to API List
-                    executors.add(new ApiEndpointExecutor(name, this, method));
-                } catch (ApiEndpointParameterException e) {
-                    log.error("Error while loading Api endpoint.", e);
-                }
+            try {
+                executors.add(new ApiEndpointExecutor(name, this, method));
+            } catch (ApiEndpointParameterException e) {
+                log.error("Error while loading Api endpoint.", e);
             }
         }
-        if (executors.size() == 0) log.warn("Api Collection \"" + this.name + "\" has no Apis.");
+        if (executors.isEmpty()) log.warn("Api Collection \"{}\" has no Apis.", this.name);
         return executors;
     }
 

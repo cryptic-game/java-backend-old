@@ -76,7 +76,7 @@ public class JsonApiServerContentHandler extends NettyChannelHandler<JsonObject>
             final JsonObject response = new JsonObject();
             response.addProperty("tag", tag == null ? "00000000-0000-0000-0000-000000000000" : tag.getAsString());
             final JsonObject info = apiResponse.getType().serialize(true);
-            if (apiResponse.hasErrorMessage()) info.addProperty("message", apiResponse.getMessage());
+            if (apiResponse.hasMessage()) info.addProperty("message", apiResponse.getMessage());
             response.add("info", info);
             response.addProperty("response", true);
             if (apiResponse.getData() != null) response.add("data", apiResponse.getData());

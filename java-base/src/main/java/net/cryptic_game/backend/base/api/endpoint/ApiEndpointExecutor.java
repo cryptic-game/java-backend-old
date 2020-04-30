@@ -3,7 +3,8 @@ package net.cryptic_game.backend.base.api.endpoint;
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.api.ApiException;
 import net.cryptic_game.backend.base.api.client.ApiClient;
-import net.cryptic_game.backend.base.utils.JsonBuilder;
+import net.cryptic_game.backend.base.json.JsonTypeMappingException;
+import net.cryptic_game.backend.base.json.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +38,7 @@ public class ApiEndpointExecutor {
 
     ApiResponse execute(final ApiClient client, final String tag, final JsonObject json) throws ApiException {
         try {
-            final Object result = ApiEndpointValidator.validateParameters(this.name, this.parameters, json, true);
+            final Object result = this.validateParameters(this.parameters, json, true);
             if (result == null) return new ApiResponse(ApiResponseType.BAD_REQUEST, "NOT_A_NUMBER");
             final Object[] parameters = (Object[]) result;
             Object[] methodArgs = null;
@@ -94,6 +95,36 @@ public class ApiEndpointExecutor {
             }
         }
         return parameters;
+    }
+
+    private Object validateParameters(final List<ApiEndpointParameterData> parameters, final JsonObject json, final boolean array) throws ApiException {
+        Object[] parameterValues = new Object[0];
+        if (array) parameterValues = new Object[parameters.size()];
+
+        for (int i = 0; i < parameters.size(); i++) {
+            final ApiEndpointParameterData parameter = parameters.get(i);
+
+            if (!json.has(parameter.getKey())) {
+                if (parameter.isOptional()) {
+                    continue;
+                } else {
+                    throw new ApiEndpointParameterException("Can't find parameter \"" + parameter.getKey() + "\".");
+                }
+            }
+
+            if (parameter.getParameters() == null) {
+                if (array) try {
+                    parameterValues[i] = JsonUtils.fromJson(json.get(parameter.getKey()), parameter.getType());
+                } catch (JsonTypeMappingException e) {
+                    throw new ApiException("Not supported parameter. (\"" + this.name + ":" + parameter.getKey() + "\") type \"" + parameter.getType().getName() + "\"", e);
+                }
+                else return json;
+            } else {
+                parameterValues[i] = this.validateParameters(parameter.getParameters(), json.get(parameter.getKey()).getAsJsonObject(), false);
+            }
+        }
+
+        return parameterValues;
     }
 
     private ApiEndpointParameterData loadParameters(final ApiParameters apiParameters) {
