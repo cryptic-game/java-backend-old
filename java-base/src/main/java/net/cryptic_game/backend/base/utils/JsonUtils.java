@@ -16,7 +16,7 @@ import java.util.function.Function;
 /**
  * @deprecated this will be removed in {@code v0.4.0-pre-alpha}.
  */
-@Deprecated
+@Deprecated(forRemoval = true)
 public class JsonUtils {
 
     /**
