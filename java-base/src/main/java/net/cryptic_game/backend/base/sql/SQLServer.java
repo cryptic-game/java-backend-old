@@ -2,29 +2,23 @@ package net.cryptic_game.backend.base.sql;
 
 public class SQLServer {
 
-    private final String host;
-    private final int port;
+    private final String location;
     private final String database;
     private final String username;
     private final String password;
 
     private final SQLServerType sqlServerType;
 
-    public SQLServer(final String host, final int port, final String database, final String username, final String password, final SQLServerType sqlServerType) {
-        this.host = host;
-        this.port = port;
+    public SQLServer(final String location, final String database, final String username, final String password, final SQLServerType sqlServerType) {
+        this.location = location;
         this.database = database;
         this.username = username;
         this.password = password;
         this.sqlServerType = sqlServerType;
     }
 
-    public String getHost() {
-        return this.host;
-    }
-
-    public int getPort() {
-        return this.port;
+    public String getLocation() {
+        return this.location;
     }
 
     public String getDatabase() {

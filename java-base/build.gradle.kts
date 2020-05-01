@@ -9,6 +9,7 @@ dependencies {
     api("mysql:mysql-connector-java:8.0.20")
     api("org.mariadb.jdbc:mariadb-java-client:2.6.0")
     api("org.postgresql:postgresql:42.2.12")
+    api("com.h2database:h2:1.4.200")
 
     // Logger
     api("org.apache.logging.log4j:log4j-core:2.13.2")

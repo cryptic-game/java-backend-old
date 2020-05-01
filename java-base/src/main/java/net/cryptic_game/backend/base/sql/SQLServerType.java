@@ -8,35 +8,38 @@ import java.sql.Driver;
  * All available Drivers:
  * <ul>
  *     <li>
+ *         {@code h2}: H2 (Embedded Database, only for developing / testing)
+ *     </li>
+ *     <li>
  *         PostgreSQL
  *         <ul>
- *             <li>pg_08_1: 8.1</li>
- *             <li>pg_08_2: 8.2</li>
- *             <li>pg_09_0: 8.2</li>
- *             <li>pg_09_1: 8.2</li>
- *             <li>pg_09_2: 8.2</li>
- *             <li>pg_09_3: 8.2</li>
- *             <li>pg_09_4: 8.2</li>
- *             <li>pg_09_5: 8.2</li>
- *             <li>pg_10_0: 8.2</li>
+ *             <li>{@code pg_08_1}: 8.1</li>
+ *             <li>{@code pg_08_2}: 8.2</li>
+ *             <li>{@code pg_09_0}: 8.2</li>
+ *             <li>{@code pg_09_1}: 8.2</li>
+ *             <li>{@code pg_09_2}: 8.2</li>
+ *             <li>{@code pg_09_3}: 8.2</li>
+ *             <li>{@code pg_09_4}: 8.2</li>
+ *             <li>{@code pg_09_5}: 8.2</li>
+ *             <li>{@code pg_10_0}: 8.2</li>
  *         </ul>
  *     </li>
  *     <li>
  *         MariaDB
  *         <ul>
- *             <li>mariadb_05_3: 05.3</li>
- *             <li>mariadb_10_0: 10.0</li>
- *             <li>mariadb_10_2: 10.2</li>
- *             <li>mariadb_10_3: 10.3</li>
+ *             <li>{@code myriadb_05_3}: 05.3</li>
+ *             <li>{@code myriadb_10_0}: 10.0</li>
+ *             <li>{@code myriadb_10_2}: 10.2</li>
+ *             <li>{@code myriadb_10_3}: 10.3</li>
  *         </ul>
  *     </li>
  *     <li>
  *          MySQL
  *          <ul>
- *              <li>mysql_5_0: 5.0</li>
- *              <li>mysql_5_5: 5.5</li>
- *              <li>mysql_5_7: 5.7</li>
- *              <li>mysql_8_0: 8.0</li>
+ *              <li>{@code mysql_5_0}: 5.0</li>
+ *              <li>{@code mysql_5_5}: 5.5</li>
+ *              <li>{@code mysql_5_7}: 5.7</li>
+ *              <li>{@code mysql_8_0}: 8.0</li>
  *          </ul>
  *      </li>
  * </ul>
@@ -62,6 +65,8 @@ public enum SQLServerType {
     MYSQL_5_5("mysql_5_5", "mysql", com.mysql.cj.jdbc.Driver.class, MySQL55Dialect.class),
     MYSQL_5_7("mysql_5_7", "mysql", com.mysql.cj.jdbc.Driver.class, MySQL57Dialect.class),
     MYSQL_8_0("mysql_8_0", "mysql", com.mysql.cj.jdbc.Driver.class, MySQL8Dialect.class),
+
+    H2("h2", "h2", org.h2.Driver.class, H2Dialect.class),
 
     NONE("none", "none", Driver.class, Dialect.class);
 

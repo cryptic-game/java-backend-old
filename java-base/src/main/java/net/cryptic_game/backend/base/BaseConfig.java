@@ -10,11 +10,8 @@ import java.util.Objects;
 @Config
 public class BaseConfig {
 
-    @ConfigValue("sql_server_hostname")
-    private String sqlServerHostname = "127.0.0.1";
-
-    @ConfigValue("sql_server_port")
-    private int sqlServerPort = 3306;
+    @ConfigValue(value = "sql_server_location", comment = "TCP MySQL, MariaDB,...: \"//<hostname>:<port>\"\nIf you are testing right now use \"../tmp\"\nand for IntelliJ: \"jdbc:h2:<absoluteProjectPath>\\tmp\\cryptic;AUTO_SERVER=TRUE\"")
+    private String sqlServerLocation = "//127.0.0.1:3306";
 
     @ConfigValue(value = "sql_server_type", comment = "List of all available types: https://cryptic-game.github.io/java-backend-dev/javadoc/latest/net/cryptic_game/backend/base/sql/SQLServerType.html")
     private String sqlServerType = SQLServerType.MARIADB_10_3.toString();
@@ -52,20 +49,12 @@ public class BaseConfig {
     @ConfigValue("unix_socket_path")
     private String unixSocketPath = "/var/run/cryptic.sock";
 
-    public String getSqlServerHostname() {
-        return sqlServerHostname;
+    public String getSqlServerLocation() {
+        return this.sqlServerLocation;
     }
 
-    public void setSqlServerHostname(String sqlServerHostname) {
-        this.sqlServerHostname = sqlServerHostname;
-    }
-
-    public int getSqlServerPort() {
-        return sqlServerPort;
-    }
-
-    public void setSqlServerPort(int sqlServerPort) {
-        this.sqlServerPort = sqlServerPort;
+    public void setSqlServerLocation(final String sqlServerLocation) {
+        this.sqlServerLocation = sqlServerLocation;
     }
 
     public String getSqlServerType() {
@@ -169,13 +158,12 @@ public class BaseConfig {
         if (this == o) return true;
         if (!(o instanceof BaseConfig)) return false;
         BaseConfig that = (BaseConfig) o;
-        return getSqlServerPort() == that.getSqlServerPort() &&
-                isProductive() == that.isProductive() &&
+        return isProductive() == that.isProductive() &&
                 getSessionExpire() == that.getSessionExpire() &&
                 getResponseTimeout() == that.getResponseTimeout() &&
                 isUseUnixSocket() == that.isUseUnixSocket() &&
-                getSqlServerHostname().equals(that.getSqlServerHostname()) &&
-                getSqlServerType() == that.getSqlServerType() &&
+                getSqlServerLocation().equals(that.getSqlServerLocation()) &&
+                getSqlServerType().equals(that.getSqlServerType()) &&
                 getSqlServerUsername().equals(that.getSqlServerUsername()) &&
                 getSqlServerPassword().equals(that.getSqlServerPassword()) &&
                 getSqlServerDatabase().equals(that.getSqlServerDatabase()) &&
@@ -187,15 +175,14 @@ public class BaseConfig {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getSqlServerHostname(), getSqlServerPort(), getSqlServerType(), getSqlServerUsername(), getSqlServerPassword(), getSqlServerDatabase(), getStorageLocation(), isProductive(), getSessionExpire(), getResponseTimeout(), getLogLevel(), getSentryDsn(), isUseUnixSocket(), getUnixSocketPath());
+        return Objects.hash(getSqlServerLocation(), getSqlServerType(), getSqlServerUsername(), getSqlServerPassword(), getSqlServerDatabase(), getStorageLocation(), isProductive(), getSessionExpire(), getResponseTimeout(), getLogLevel(), getSentryDsn(), isUseUnixSocket(), getUnixSocketPath());
     }
 
     @Override
     public String toString() {
         return "BaseConfig{" +
-                "sqlServerHostname='" + sqlServerHostname + '\'' +
-                ", sqlServerPort=" + sqlServerPort +
-                ", sqlServerType=" + sqlServerType +
+                "sqlServerLocation='" + sqlServerLocation + '\'' +
+                ", sqlServerType='" + sqlServerType + '\'' +
                 ", sqlServerUsername='" + sqlServerUsername + '\'' +
                 ", sqlServerPassword='" + sqlServerPassword + '\'' +
                 ", sqlServerDatabase='" + sqlServerDatabase + '\'' +
@@ -203,7 +190,7 @@ public class BaseConfig {
                 ", productive=" + productive +
                 ", sessionExpire=" + sessionExpire +
                 ", responseTimeout=" + responseTimeout +
-                ", logLevel=" + logLevel +
+                ", logLevel='" + logLevel + '\'' +
                 ", sentryDsn='" + sentryDsn + '\'' +
                 ", useUnixSocket=" + useUnixSocket +
                 ", unixSocketPath='" + unixSocketPath + '\'' +

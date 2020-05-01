@@ -104,8 +104,7 @@ public abstract class AppBootstrap {
 
     protected void setUpSQL() {
         this.sqlConnection.init(new SQLServer(
-                this.config.getSqlServerHostname(),
-                this.config.getSqlServerPort(),
+                this.config.getSqlServerLocation(),
                 this.config.getSqlServerDatabase(),
                 this.config.getSqlServerUsername(),
                 this.config.getSqlServerUsername(),

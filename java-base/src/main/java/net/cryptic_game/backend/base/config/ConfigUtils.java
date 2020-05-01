@@ -106,7 +106,7 @@ final class ConfigUtils {
                         if (!configValue.comment().isBlank()) {
                             writer.newLine();
                             if (!lowLevelConfig) writer.write(SPACING);
-                            writer.write("# " + configValue.comment().replaceAll(System.lineSeparator(), System.lineSeparator() + "# "));
+                            writer.write("# " + configValue.comment().replaceAll("\n", System.lineSeparator() + "# "));
                             writer.newLine();
                         }
                         try {
