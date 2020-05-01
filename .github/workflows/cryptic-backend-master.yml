@@ -23,5 +23,5 @@ jobs:
           dockerfile: docker/Dockerfile
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          repository: rubidiumdev/cryptic-backend
+          repository: crypticcp/cryptic-backend
           tags: latest
