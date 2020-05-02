@@ -1,8 +1,8 @@
 package net.cryptic_game.backend.data.device;
 
 import com.google.gson.JsonObject;
+import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.sql.models.TableModel;
-import net.cryptic_game.backend.base.utils.JsonBuilder;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -293,8 +293,7 @@ public class DeviceWorkload extends TableModel implements Serializable {
      */
     @Override
     public JsonObject serialize() {
-        return JsonBuilder.anJSON()
-                .add("device", this.getDevice().getId())
+        return JsonBuilder.create("device", this.getDevice().getId())
                 .add("performance_cpu", this.getPerformanceCPU())
                 .add("performance_gpu", this.getPerformanceGPU())
                 .add("performance_ram", this.getPerformanceRAM())

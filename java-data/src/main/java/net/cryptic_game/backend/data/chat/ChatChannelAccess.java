@@ -2,8 +2,8 @@ package net.cryptic_game.backend.data.chat;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.api.client.ApiClient;
+import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
-import net.cryptic_game.backend.base.utils.JsonBuilder;
 import net.cryptic_game.backend.data.user.User;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -162,8 +162,7 @@ public class ChatChannelAccess extends TableModelAutoId {
      * @return The generated {@link JsonObject}
      */
     public JsonObject serialize() {
-        return JsonBuilder.anJSON()
-                .add("id", this.getId())
+        return JsonBuilder.create("id", this.getId())
                 .add("user_id", this.getUser().getId())
                 .add("channel_id", this.getChannel().getId())
                 .build();

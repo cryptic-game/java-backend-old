@@ -5,8 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import io.netty.channel.Channel;
 import net.cryptic_game.backend.base.interfaces.JsonSerializable;
-import net.cryptic_game.backend.base.utils.JsonBuilder;
-import net.cryptic_game.backend.base.utils.JsonUtils;
+import net.cryptic_game.backend.base.json.JsonBuilder;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -43,9 +42,8 @@ public class DaemonRegisterPacket implements JsonSerializable {
 
     @Override
     public JsonObject serialize() {
-        return JsonBuilder.anJSON()
-                .add("name", this.getName())
-                .add("functions", JsonUtils.toArray(this.functions))
+        return JsonBuilder.create("name", this.getName())
+                .add("functions", this.functions)
                 .build();
     }
 

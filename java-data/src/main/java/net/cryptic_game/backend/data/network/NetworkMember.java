@@ -1,8 +1,8 @@
 package net.cryptic_game.backend.data.network;
 
 import com.google.gson.JsonObject;
+import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.sql.models.TableModel;
-import net.cryptic_game.backend.base.utils.JsonBuilder;
 import net.cryptic_game.backend.data.device.Device;
 import org.hibernate.Session;
 import org.hibernate.annotations.Type;
@@ -148,8 +148,7 @@ public class NetworkMember extends TableModel {
      */
     @Override
     public JsonObject serialize() {
-        return JsonBuilder.anJSON()
-                .add("network", this.getNetwork().getId())
+        return JsonBuilder.create("network", this.getNetwork().getId())
                 .add("device", this.getDevice().getId())
                 .build();
     }

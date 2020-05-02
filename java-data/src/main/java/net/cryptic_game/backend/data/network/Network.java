@@ -1,8 +1,8 @@
 package net.cryptic_game.backend.data.network;
 
 import com.google.gson.JsonObject;
+import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
-import net.cryptic_game.backend.base.utils.JsonBuilder;
 import net.cryptic_game.backend.data.device.Device;
 import org.hibernate.Session;
 import org.hibernate.annotations.Type;
@@ -205,8 +205,7 @@ public class Network extends TableModelAutoId {
      */
     @Override
     public JsonObject serialize() {
-        return JsonBuilder.anJSON()
-                .add("id", this.getId())
+        return JsonBuilder.create("id", this.getId())
                 .add("name", this.getName())
                 .add("owner", this.getOwner().getId())
                 .add("public", this.isPublic())

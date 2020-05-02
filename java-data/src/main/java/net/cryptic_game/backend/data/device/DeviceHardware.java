@@ -1,8 +1,8 @@
 package net.cryptic_game.backend.data.device;
 
 import com.google.gson.JsonObject;
+import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
-import net.cryptic_game.backend.base.utils.JsonBuilder;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -119,8 +119,7 @@ public class DeviceHardware extends TableModelAutoId {
      */
     @Override
     public JsonObject serialize() {
-        return JsonBuilder.anJSON()
-                .add("id", this.getId())
+        return JsonBuilder.create("id", this.getId())
                 .add("device", this.getDevice().getId())
                 .add("element", this.getElement().getId())
                 .add("type", this.getType().toString())

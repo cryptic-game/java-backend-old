@@ -2,7 +2,7 @@ package net.cryptic_game.backend.server.server.websocket.endpoints;
 
 import net.cryptic_game.backend.base.api.client.ApiClient;
 import net.cryptic_game.backend.base.api.endpoint.*;
-import net.cryptic_game.backend.base.utils.JsonBuilder;
+import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.utils.ValidationUtils;
 import net.cryptic_game.backend.data.user.Session;
 import net.cryptic_game.backend.data.user.User;
@@ -46,8 +46,7 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
 
         Session.deleteExpiredSessions(user);
 
-        return new ApiResponse(ApiResponseType.OK, JsonBuilder.anJSON()
-                .add("session", session.getId())
+        return new ApiResponse(ApiResponseType.OK, JsonBuilder.create("session", session.getId())
                 .add("token", token));
     }
 
@@ -83,8 +82,7 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
         session = Session.createSession(user, token, deviceName);
         client.add(session);
 
-        return new ApiResponse(ApiResponseType.OK, JsonBuilder.anJSON()
-                .add("session", session.getId())
+        return new ApiResponse(ApiResponseType.OK, JsonBuilder.create("session", session.getId())
                 .add("token", token));
 
     }

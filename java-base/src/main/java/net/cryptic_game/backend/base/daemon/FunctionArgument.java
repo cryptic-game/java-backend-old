@@ -2,7 +2,7 @@ package net.cryptic_game.backend.base.daemon;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.interfaces.JsonSerializable;
-import net.cryptic_game.backend.base.utils.JsonBuilder;
+import net.cryptic_game.backend.base.json.JsonBuilder;
 
 public class FunctionArgument implements JsonSerializable {
 
@@ -25,8 +25,7 @@ public class FunctionArgument implements JsonSerializable {
 
     @Override
     public JsonObject serialize() {
-        return JsonBuilder.anJSON()
-                .add("name", this.getName())
+        return JsonBuilder.create("name", this.getName())
                 .add("required", this.isRequired())
                 .build();
     }

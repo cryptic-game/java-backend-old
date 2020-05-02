@@ -1,8 +1,8 @@
 package net.cryptic_game.backend.data.currency;
 
 import com.google.gson.JsonObject;
+import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
-import net.cryptic_game.backend.base.utils.JsonBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,7 +20,7 @@ import java.util.Objects;
 @Table(name = "currency_wallet")
 public class CurrencyWallet extends TableModelAutoId {
 
-    @Column(name = "time_stamp", updatable = false, nullable = false)
+    @Column(name = "timestamp", updatable = false, nullable = false)
     private LocalDateTime timeStamp;
 
     @Column(name = "password", updatable = true, nullable = true)
@@ -116,9 +116,8 @@ public class CurrencyWallet extends TableModelAutoId {
      */
     @Override
     public JsonObject serialize() {
-        return JsonBuilder.anJSON()
-                .add("id", this.getId())
-                .add("time_stamp", this.getTimeStamp().toInstant(ZoneOffset.UTC).toEpochMilli())
+        return JsonBuilder.create("id", this.getId())
+                .add("timestamp", this.getTimeStamp().toInstant(ZoneOffset.UTC))
                 .add("send_amount", this.getPassword())
                 .add("destination_uuid", this.getAmount())
                 .build();

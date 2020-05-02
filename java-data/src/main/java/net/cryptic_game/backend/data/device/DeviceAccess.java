@@ -1,8 +1,8 @@
 package net.cryptic_game.backend.data.device;
 
 import com.google.gson.JsonObject;
+import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
-import net.cryptic_game.backend.base.utils.JsonBuilder;
 import net.cryptic_game.backend.data.user.User;
 import org.hibernate.Session;
 import org.hibernate.annotations.Type;
@@ -198,11 +198,10 @@ public class DeviceAccess extends TableModelAutoId {
      */
     @Override
     public JsonObject serialize() {
-        return JsonBuilder.anJSON()
-                .add("id", this.getId())
+        return JsonBuilder.create("id", this.getId())
                 .add("target_device", getDevice().getId())
                 .add("device", getUser().getId())
-                .add("granted", getAccessGranted().toInstant(ZoneOffset.UTC).toEpochMilli())
+                .add("granted", getAccessGranted().toInstant(ZoneOffset.UTC))
                 .add("expire", getExpire().toInstant(ZoneOffset.UTC).toEpochMilli())
                 .add("valid", isValid())
                 .build();

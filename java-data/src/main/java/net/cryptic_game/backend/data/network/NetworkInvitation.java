@@ -1,8 +1,8 @@
 package net.cryptic_game.backend.data.network;
 
 import com.google.gson.JsonObject;
+import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.sql.models.TableModel;
-import net.cryptic_game.backend.base.utils.JsonBuilder;
 import net.cryptic_game.backend.data.device.Device;
 import org.hibernate.Session;
 import org.hibernate.annotations.Type;
@@ -189,12 +189,11 @@ public class NetworkInvitation extends TableModel {
      */
     @Override
     public JsonObject serialize() {
-        JsonBuilder builder = JsonBuilder.anJSON()
-                .add("network", this.getNetwork().getId())
+        return JsonBuilder.create("network", this.getNetwork().getId())
                 .add("device", this.getDevice().getId())
-                .add("request", this.isRequest());
-        if (this.getInviter() != null) builder.add("inviter", this.getInviter().getId());
-        return builder.build();
+                .add("request", this.isRequest())
+                .add("inviter", this.getInviter() != null, () -> this.getInviter().getId())
+                .build();
     }
 
 

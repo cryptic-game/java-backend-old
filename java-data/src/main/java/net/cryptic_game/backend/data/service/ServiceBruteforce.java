@@ -1,8 +1,8 @@
 package net.cryptic_game.backend.data.service;
 
 import com.google.gson.JsonObject;
+import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
-import net.cryptic_game.backend.base.utils.JsonBuilder;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -90,8 +90,7 @@ public class ServiceBruteforce extends TableModelAutoId {
      */
     @Override
     public JsonObject serialize() {
-        return JsonBuilder.anJSON()
-                .add("id", this.getId())
+        return JsonBuilder.create("id", this.getId())
                 .add("started", this.getStarted())
                 .add("targetService", this.getTargetService().getId())
                 .add("progress", this.getProgress())

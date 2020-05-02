@@ -4,7 +4,6 @@ import net.cryptic_game.backend.base.api.endpoint.ApiEndpoint;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
-import net.cryptic_game.backend.base.utils.JsonUtils;
 import net.cryptic_game.backend.server.daemon.DaemonHandler;
 
 public class HttpInfoEndpoint extends ApiEndpointCollection {
@@ -18,7 +17,7 @@ public class HttpInfoEndpoint extends ApiEndpointCollection {
 
     @ApiEndpoint("status")
     public ApiResponse status() {
-        return new ApiResponse(ApiResponseType.OK, JsonUtils.toArray(this.daemonHandler.getDaemons()));
+        return new ApiResponse(ApiResponseType.OK, this.daemonHandler.getDaemons());
     }
 
     @ApiEndpoint("online")

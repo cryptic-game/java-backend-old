@@ -60,12 +60,12 @@ public class JsonBuilder implements JsonSerializable {
     /**
      * Creates a {@link JsonBuilder} without any data.
      *
-     * @param json the existing {@link JsonObject}
+     * @param object the existing {@link JsonObject} ore any {@link JsonSerializable}, e.g.
      * @return the JsonBuilder
      * @see JsonBuilder#create(String, Object)
      */
-    public static JsonBuilder create(final JsonObject json) {
-        return new JsonBuilder(json);
+    public static JsonBuilder create(final Object object) {
+        return new JsonBuilder(JsonUtils.toJson(object).getAsJsonObject());
     }
 
     /**

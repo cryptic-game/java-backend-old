@@ -6,9 +6,9 @@ import net.cryptic_game.backend.base.api.endpoint.ApiEndpointFinder;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
 import net.cryptic_game.backend.base.api.netty.JsonApiServerCodec;
 import net.cryptic_game.backend.base.daemon.Daemon;
+import net.cryptic_game.backend.base.json.JsonBuilder;
+import net.cryptic_game.backend.base.json.JsonUtils;
 import net.cryptic_game.backend.base.netty.NettyCodec;
-import net.cryptic_game.backend.base.utils.JsonBuilder;
-import net.cryptic_game.backend.base.utils.JsonUtils;
 import net.cryptic_game.backend.server.daemon.DaemonHandler;
 
 import java.util.UUID;
@@ -25,14 +25,13 @@ public class DaemonServerCodec extends NettyCodec<DaemonCodecServerInitializer> 
     }
 
     private void handleResponse(final JsonObject jsonObject, final ApiClient client) {
-        UUID tag = JsonUtils.getUUID(jsonObject, "tag");
+        UUID tag = JsonUtils.fromJson(jsonObject.get("tag"), UUID.class);
         if (this.daemonHandler.isRequstOpen(tag))
             this.daemonHandler.respondToClient(jsonObject);
         else
             client.get(Daemon.class).getChannel()
-                    .writeAndFlush(JsonBuilder.anJSON()
-                            .add("tag", tag)
-                            .add("info", JsonBuilder.anJSON(ApiResponseType.BAD_REQUEST.serialize()).add("message", "TOO_LATE").build())
+                    .writeAndFlush(JsonBuilder.create("tag", tag)
+                            .add("info", JsonBuilder.create(ApiResponseType.BAD_REQUEST).add("message", "TOO_LATE"))
                             .add("response", true)
                             .build());
     }

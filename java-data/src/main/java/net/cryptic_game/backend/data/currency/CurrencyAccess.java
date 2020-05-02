@@ -1,8 +1,8 @@
 package net.cryptic_game.backend.data.currency;
 
 import com.google.gson.JsonObject;
+import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
-import net.cryptic_game.backend.base.utils.JsonBuilder;
 import net.cryptic_game.backend.data.user.User;
 import org.hibernate.annotations.Type;
 
@@ -74,8 +74,7 @@ public class CurrencyAccess extends TableModelAutoId {
      */
     @Override
     public JsonObject serialize() {
-        return JsonBuilder.anJSON()
-                .add("id", this.getId())
+        return JsonBuilder.create("id", this.getId())
                 .add("user_id", this.getUser().getId())
                 .add("wallet_id", this.getWallet().getId())
                 .build();

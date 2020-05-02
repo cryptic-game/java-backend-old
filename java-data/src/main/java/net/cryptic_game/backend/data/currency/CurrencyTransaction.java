@@ -2,8 +2,8 @@ package net.cryptic_game.backend.data.currency;
 
 
 import com.google.gson.JsonObject;
+import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
-import net.cryptic_game.backend.base.utils.JsonBuilder;
 import net.cryptic_game.backend.data.user.User;
 import org.hibernate.annotations.Type;
 
@@ -21,7 +21,7 @@ import java.util.Objects;
 @Table(name = "currency_transaction")
 public class CurrencyTransaction extends TableModelAutoId {
 
-    @Column(name = "time_stamp", updatable = false, nullable = false)
+    @Column(name = "timestamp", updatable = false, nullable = false)
     private LocalDateTime timeStamp;
 
     @ManyToOne
@@ -158,9 +158,8 @@ public class CurrencyTransaction extends TableModelAutoId {
      */
     @Override
     public JsonObject serialize() {
-        return JsonBuilder.anJSON()
-                .add("id", this.getId())
-                .add("time_stamp", this.getTimeStamp().toInstant(ZoneOffset.UTC).toEpochMilli())
+        return JsonBuilder.create("id", this.getId())
+                .add("timestamp", this.getTimeStamp().toInstant(ZoneOffset.UTC))
                 .add("source_id", this.getUserSource().getId())
                 .add("SendAmount", this.getSendAmount())
                 .add("destination_id", this.getUserDestination().getId())

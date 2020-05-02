@@ -2,7 +2,7 @@ package net.cryptic_game.backend.base.api.notification;
 
 import net.cryptic_game.backend.base.api.client.ApiClient;
 import net.cryptic_game.backend.base.api.endpoint.*;
-import net.cryptic_game.backend.base.utils.JsonBuilder;
+import net.cryptic_game.backend.base.json.JsonBuilder;
 
 public class NotificationEndpointCollection extends ApiEndpointCollection {
 
@@ -16,7 +16,7 @@ public class NotificationEndpointCollection extends ApiEndpointCollection {
             @ApiParameter("topic") final String topic) {
 
         client.subscribe(topic);
-        return new ApiResponse(ApiResponseType.OK, JsonBuilder.simple("success", true));
+        return new ApiResponse(ApiResponseType.OK, JsonBuilder.create("success", true));
     }
 
     @ApiEndpoint("unsubscribe")
@@ -25,6 +25,6 @@ public class NotificationEndpointCollection extends ApiEndpointCollection {
             @ApiParameter("topic") final String topic) {
 
         client.unsubscribe(topic);
-        return new ApiResponse(ApiResponseType.OK, JsonBuilder.simple("success", true));
+        return new ApiResponse(ApiResponseType.OK, JsonBuilder.create("success", true));
     }
 }

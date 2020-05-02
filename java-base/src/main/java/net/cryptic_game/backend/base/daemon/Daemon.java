@@ -3,7 +3,7 @@ package net.cryptic_game.backend.base.daemon;
 import com.google.gson.JsonObject;
 import io.netty.channel.Channel;
 import net.cryptic_game.backend.base.interfaces.JsonSerializable;
-import net.cryptic_game.backend.base.utils.JsonBuilder;
+import net.cryptic_game.backend.base.json.JsonBuilder;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -22,9 +22,8 @@ public class Daemon implements JsonSerializable {
 
     @Override
     public JsonObject serialize() {
-        return JsonBuilder.anJSON()
-                .add("name", this.getName())
-                .add("connected_since", this.getConnectedSince().toInstant(ZoneOffset.UTC).toEpochMilli())
+        return JsonBuilder.create("name", this.getName())
+                .add("connected_since", this.getConnectedSince().toInstant(ZoneOffset.UTC))
                 .build();
     }
 

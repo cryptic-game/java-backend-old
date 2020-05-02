@@ -8,7 +8,7 @@ import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
 import net.cryptic_game.backend.data.user.Session;
 import net.cryptic_game.backend.server.client.ClientWrapper;
 
-import static net.cryptic_game.backend.base.utils.JsonBuilder.simple;
+import static net.cryptic_game.backend.base.json.JsonBuilder.create;
 
 public class WebSocketInfoEndpoints extends ApiEndpointCollection {
 
@@ -18,7 +18,7 @@ public class WebSocketInfoEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("online")
     public ApiResponse online() {
-        return new ApiResponse(ApiResponseType.OK, simple("online", ClientWrapper.getOnlineCount()));
+        return new ApiResponse(ApiResponseType.OK, create("online", ClientWrapper.getOnlineCount()));
     }
 
     @ApiEndpoint("info")
