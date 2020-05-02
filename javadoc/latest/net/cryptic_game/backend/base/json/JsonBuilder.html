@@ -231,7 +231,7 @@ implements <a href="JsonSerializable.html" title="interface in net.cryptic_game.
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>static <a href="JsonBuilder.html" title="class in net.cryptic_game.backend.base.json">JsonBuilder</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#create(com.google.gson.JsonObject)">create</a></span>&#8203;(com.google.gson.JsonObject&nbsp;json)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#create(java.lang.Object)">create</a></span>&#8203;(java.lang.Object&nbsp;object)</code></th>
 <td class="colLast">
 <div class="block">Creates a <a href="JsonBuilder.html" title="class in net.cryptic_game.backend.base.json"><code>JsonBuilder</code></a> without any data.</div>
 </td>
@@ -329,17 +329,17 @@ public static&nbsp;<a href="JsonBuilder.html" title="class in net.cryptic_game.b
 </dl>
 </li>
 </ul>
-<a id="create(com.google.gson.JsonObject)">
+<a id="create(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>create</h4>
-<pre class="methodSignature">public static&nbsp;<a href="JsonBuilder.html" title="class in net.cryptic_game.backend.base.json">JsonBuilder</a>&nbsp;create&#8203;(com.google.gson.JsonObject&nbsp;json)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="JsonBuilder.html" title="class in net.cryptic_game.backend.base.json">JsonBuilder</a>&nbsp;create&#8203;(java.lang.Object&nbsp;object)</pre>
 <div class="block">Creates a <a href="JsonBuilder.html" title="class in net.cryptic_game.backend.base.json"><code>JsonBuilder</code></a> without any data.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>json</code> - the existing <code>JsonObject</code></dd>
+<dd><code>object</code> - the existing <code>JsonObject</code> ore any <a href="JsonSerializable.html" title="interface in net.cryptic_game.backend.base.json"><code>JsonSerializable</code></a>, e.g.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the JsonBuilder</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
