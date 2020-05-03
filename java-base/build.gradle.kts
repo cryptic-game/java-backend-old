@@ -35,4 +35,7 @@ dependencies {
 
     // Reflections
     api("org.reflections:reflections:0.9.12")
+
+    api("com.sun.activation:javax.activation:1.2.0")
+
 }
