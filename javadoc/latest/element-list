@@ -38,3 +38,4 @@ net.cryptic_game.backend.server.server.http
 net.cryptic_game.backend.server.server.http.endpoints
 net.cryptic_game.backend.server.server.websocket
 net.cryptic_game.backend.server.server.websocket.endpoints
+net.cryptic_game.backend.server.server.websocket.playground
