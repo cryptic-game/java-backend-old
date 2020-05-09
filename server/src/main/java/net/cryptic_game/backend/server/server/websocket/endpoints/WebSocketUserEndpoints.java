@@ -8,6 +8,7 @@ import net.cryptic_game.backend.data.user.Session;
 import net.cryptic_game.backend.data.user.User;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.UUID;
 
 public class WebSocketUserEndpoints extends ApiEndpointCollection {
@@ -182,5 +183,23 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
         user.delete();
 
         return new ApiResponse(ApiResponseType.OK);
+    }
+
+    @ApiEndpoint("get")
+    public ApiResponse get(final ApiClient client, @ApiParameter("id") final UUID userId) {
+        final Session session = client.get(Session.class);
+        if (session == null || !session.isValid()) {
+            return new ApiResponse(ApiResponseType.FORBIDDEN, "NOT_LOGGED_IN");
+        }
+
+        final User user = User.getById(userId);
+
+        if (user == null) {
+            return new ApiResponse(ApiResponseType.NOT_FOUND, "USER_NOT_FOUND");
+        }
+
+        return new ApiResponse(ApiResponseType.OK, JsonBuilder.create("name", user.getName())
+                .add("last", user.getLast().toInstant(ZoneOffset.UTC).toEpochMilli())
+                .add("id", user.getId()));
     }
 }
