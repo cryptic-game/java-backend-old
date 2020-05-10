@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -211,19 +211,25 @@ extends <a href="../../../../base/api/endpoint/ApiEndpointCollection.html" title
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="../../../../base/api/endpoint/ApiResponse.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiResponse</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get(net.cryptic_game.backend.base.api.client.ApiClient,java.util.UUID)">get</a></span>&#8203;(<a href="../../../../base/api/client/ApiClient.html" title="class in net.cryptic_game.backend.base.api.client">ApiClient</a>&nbsp;client,
+   java.util.UUID&nbsp;userId)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code><a href="../../../../base/api/endpoint/ApiResponse.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#login(net.cryptic_game.backend.base.api.client.ApiClient,java.lang.String,java.lang.String,java.lang.String)">login</a></span>&#8203;(<a href="../../../../base/api/client/ApiClient.html" title="class in net.cryptic_game.backend.base.api.client">ApiClient</a>&nbsp;client,
      java.lang.String&nbsp;name,
      java.lang.String&nbsp;password,
      java.lang.String&nbsp;deviceName)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="../../../../base/api/endpoint/ApiResponse.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#logout(net.cryptic_game.backend.base.api.client.ApiClient,java.util.UUID)">logout</a></span>&#8203;(<a href="../../../../base/api/client/ApiClient.html" title="class in net.cryptic_game.backend.base.api.client">ApiClient</a>&nbsp;client,
       java.util.UUID&nbsp;sessionId)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../../base/api/endpoint/ApiResponse.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#register(net.cryptic_game.backend.base.api.client.ApiClient,java.lang.String,java.lang.String,java.lang.String,java.lang.String)">register</a></span>&#8203;(<a href="../../../../base/api/client/ApiClient.html" title="class in net.cryptic_game.backend.base.api.client">ApiClient</a>&nbsp;client,
         java.lang.String&nbsp;name,
@@ -232,7 +238,7 @@ extends <a href="../../../../base/api/endpoint/ApiEndpointCollection.html" title
         java.lang.String&nbsp;deviceName)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../../../../base/api/endpoint/ApiResponse.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#session(net.cryptic_game.backend.base.api.client.ApiClient,java.util.UUID,java.util.UUID)">session</a></span>&#8203;(<a href="../../../../base/api/client/ApiClient.html" title="class in net.cryptic_game.backend.base.api.client">ApiClient</a>&nbsp;client,
        java.util.UUID&nbsp;sessionId,
@@ -349,11 +355,21 @@ extends <a href="../../../../base/api/endpoint/ApiEndpointCollection.html" title
 <a id="delete(net.cryptic_game.backend.base.api.client.ApiClient,java.lang.String)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>delete</h4>
 <pre class="methodSignature">public&nbsp;<a href="../../../../base/api/endpoint/ApiResponse.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiResponse</a>&nbsp;delete&#8203;(<a href="../../../../base/api/client/ApiClient.html" title="class in net.cryptic_game.backend.base.api.client">ApiClient</a>&nbsp;client,
                           java.lang.String&nbsp;password)</pre>
+</li>
+</ul>
+<a id="get(net.cryptic_game.backend.base.api.client.ApiClient,java.util.UUID)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>get</h4>
+<pre class="methodSignature">public&nbsp;<a href="../../../../base/api/endpoint/ApiResponse.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiResponse</a>&nbsp;get&#8203;(<a href="../../../../base/api/client/ApiClient.html" title="class in net.cryptic_game.backend.base.api.client">ApiClient</a>&nbsp;client,
+                       java.util.UUID&nbsp;userId)</pre>
 </li>
 </ul>
 </li>
