@@ -226,9 +226,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/base/api/notification/ApiNotification.html#%3Cinit%3E(java.lang.String,java.util.Set,java.lang.String,com.google.gson.JsonElement)">ApiNotification(String, Set&lt;ApiClient&gt;, String, JsonElement)</a></span> - Constructor for class net.cryptic_game.backend.base.api.notification.<a href="net/cryptic_game/backend/base/api/notification/ApiNotification.html" title="class in net.cryptic_game.backend.base.api.notification">ApiNotification</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/base/api/notification/ApiNotification.html#%3Cinit%3E(java.lang.String,java.util.Set,java.lang.String,net.cryptic_game.backend.base.interfaces.JsonSerializable)">ApiNotification(String, Set&lt;ApiClient&gt;, String, JsonSerializable)</a></span> - Constructor for class net.cryptic_game.backend.base.api.notification.<a href="net/cryptic_game/backend/base/api/notification/ApiNotification.html" title="class in net.cryptic_game.backend.base.api.notification">ApiNotification</a></dt>
+<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/base/api/notification/ApiNotification.html#%3Cinit%3E(java.lang.String,java.util.Set,java.lang.String,net.cryptic_game.backend.base.json.JsonSerializable)">ApiNotification(String, Set&lt;ApiClient&gt;, String, JsonSerializable)</a></span> - Constructor for class net.cryptic_game.backend.base.api.notification.<a href="net/cryptic_game/backend/base/api/notification/ApiNotification.html" title="class in net.cryptic_game.backend.base.api.notification">ApiNotification</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/base/api/notification/ApiNotification.html#%3Cinit%3E(java.lang.String,net.cryptic_game.backend.base.interfaces.JsonSerializable)">ApiNotification(String, JsonSerializable)</a></span> - Constructor for class net.cryptic_game.backend.base.api.notification.<a href="net/cryptic_game/backend/base/api/notification/ApiNotification.html" title="class in net.cryptic_game.backend.base.api.notification">ApiNotification</a></dt>
+<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/base/api/notification/ApiNotification.html#%3Cinit%3E(java.lang.String,net.cryptic_game.backend.base.json.JsonSerializable)">ApiNotification(String, JsonSerializable)</a></span> - Constructor for class net.cryptic_game.backend.base.api.notification.<a href="net/cryptic_game/backend/base/api/notification/ApiNotification.html" title="class in net.cryptic_game.backend.base.api.notification">ApiNotification</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/cryptic_game/backend/base/api/notification/ApiNotificationException.html" title="class in net.cryptic_game.backend.base.api.notification"><span class="typeNameLink">ApiNotificationException</span></a> - Exception in <a href="net/cryptic_game/backend/base/api/notification/package-summary.html">net.cryptic_game.backend.base.api.notification</a></dt>
 <dd>&nbsp;</dd>
@@ -778,7 +778,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/device/DeviceAccess.html#getAccessGranted()">getAccessGranted()</a></span> - Method in class net.cryptic_game.backend.data.device.<a href="net/cryptic_game/backend/data/device/DeviceAccess.html" title="class in net.cryptic_game.backend.data.device">DeviceAccess</a></dt>
 <dd>
-<div class="block">Returns the <code>LocalDateTime</code> when the <a href="net/cryptic_game/backend/data/device/DeviceAccess.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceAccess</code></a> has been granted</div>
+<div class="block">Returns the <code>ZonedDateTime</code> when the <a href="net/cryptic_game/backend/data/device/DeviceAccess.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceAccess</code></a> has been granted</div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/device/DeviceServiceReq.html#getAllocatedCPU()">getAllocatedCPU()</a></span> - Method in class net.cryptic_game.backend.data.device.<a href="net/cryptic_game/backend/data/device/DeviceServiceReq.html" title="class in net.cryptic_game.backend.data.device">DeviceServiceReq</a></dt>
 <dd>
@@ -916,8 +916,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/base/utils/JsonUtils.html#getDate(com.google.gson.JsonObject,java.lang.String)">getDate(JsonObject, String)</a></span> - Static method in class net.cryptic_game.backend.base.utils.<a href="net/cryptic_game/backend/base/utils/JsonUtils.html" title="class in net.cryptic_game.backend.base.utils">JsonUtils</a></dt>
 <dd>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">Usage of <code>LocalDate</code> and <code>LocalDateTime</code> is preferred.
- Use <a href="net/cryptic_game/backend/base/utils/JsonUtils.html#getLocalDate(com.google.gson.JsonObject,java.lang.String)"><code>JsonUtils.getLocalDate(JsonObject, String)</code></a> and <a href="net/cryptic_game/backend/base/utils/JsonUtils.html#getLocalDateTime(com.google.gson.JsonObject,java.lang.String)"><code>JsonUtils.getLocalDateTime(JsonObject, String)</code></a> instead.</div>
+<div class="deprecationComment">Usage of <code>LocalDate</code> and <code>ZonedDateTime</code> is preferred.
+ Use <a href="net/cryptic_game/backend/base/utils/JsonUtils.html#getLocalDate(com.google.gson.JsonObject,java.lang.String)"><code>JsonUtils.getLocalDate(JsonObject, String)</code></a> and <a href="net/cryptic_game/backend/base/utils/JsonUtils.html#getZonedDateTime(com.google.gson.JsonObject,java.lang.String)"><code>JsonUtils.getZonedDateTime(JsonObject, String)</code></a> instead.</div>
 </div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/device/DeviceAccess.html#getDevice()">getDevice()</a></span> - Method in class net.cryptic_game.backend.data.device.<a href="net/cryptic_game/backend/data/device/DeviceAccess.html" title="class in net.cryptic_game.backend.data.device">DeviceAccess</a></dt>
@@ -970,7 +970,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/device/DeviceAccess.html#getExpire()">getExpire()</a></span> - Method in class net.cryptic_game.backend.data.device.<a href="net/cryptic_game/backend/data/device/DeviceAccess.html" title="class in net.cryptic_game.backend.data.device">DeviceAccess</a></dt>
 <dd>
-<div class="block">Returns the <code>LocalDateTime</code></div>
+<div class="block">Returns the <code>ZonedDateTime</code></div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/user/Session.html#getExpire()">getExpire()</a></span> - Method in class net.cryptic_game.backend.data.user.<a href="net/cryptic_game/backend/data/user/Session.html" title="class in net.cryptic_game.backend.data.user">Session</a></dt>
 <dd>
@@ -1043,11 +1043,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the associated <code>LocalDate</code> value of a specific property.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/base/utils/JsonUtils.html#getLocalDateTime(com.google.gson.JsonObject,java.lang.String)">getLocalDateTime(JsonObject, String)</a></span> - Static method in class net.cryptic_game.backend.base.utils.<a href="net/cryptic_game/backend/base/utils/JsonUtils.html" title="class in net.cryptic_game.backend.base.utils">JsonUtils</a></dt>
-<dd>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
-<div class="block">Returns the associated <code>LocalDateTime</code> value of a specific property.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/base/sql/SQLServer.html#getLocation()">getLocation()</a></span> - Method in class net.cryptic_game.backend.base.sql.<a href="net/cryptic_game/backend/base/sql/SQLServer.html" title="class in net.cryptic_game.backend.base.sql">SQLServer</a></dt>
 <dd>&nbsp;</dd>
@@ -1285,11 +1280,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/currency/CurrencyTransaction.html#getTimeStamp()">getTimeStamp()</a></span> - Method in class net.cryptic_game.backend.data.currency.<a href="net/cryptic_game/backend/data/currency/CurrencyTransaction.html" title="class in net.cryptic_game.backend.data.currency">CurrencyTransaction</a></dt>
 <dd>
-<div class="block">Returns the <code>LocalDateTime</code>, the timestamp when the <a href="net/cryptic_game/backend/data/currency/CurrencyTransaction.html" title="class in net.cryptic_game.backend.data.currency"><code>CurrencyTransaction</code></a> has been made</div>
+<div class="block">Returns the <code>ZonedDateTime</code>, the timestamp when the <a href="net/cryptic_game/backend/data/currency/CurrencyTransaction.html" title="class in net.cryptic_game.backend.data.currency"><code>CurrencyTransaction</code></a> has been made</div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/currency/CurrencyWallet.html#getTimeStamp()">getTimeStamp()</a></span> - Method in class net.cryptic_game.backend.data.currency.<a href="net/cryptic_game/backend/data/currency/CurrencyWallet.html" title="class in net.cryptic_game.backend.data.currency">CurrencyWallet</a></dt>
 <dd>
-<div class="block">Returns the <code>LocalDateTime</code> of the <a href="net/cryptic_game/backend/data/currency/CurrencyWallet.html" title="class in net.cryptic_game.backend.data.currency"><code>CurrencyWallet</code></a></div>
+<div class="block">Returns the <code>ZonedDateTime</code> of the <a href="net/cryptic_game/backend/data/currency/CurrencyWallet.html" title="class in net.cryptic_game.backend.data.currency"><code>CurrencyWallet</code></a></div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/user/Session.html#getToken()">getToken()</a></span> - Method in class net.cryptic_game.backend.data.user.<a href="net/cryptic_game/backend/data/user/Session.html" title="class in net.cryptic_game.backend.data.user">Session</a></dt>
 <dd>
@@ -1396,6 +1391,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/base/netty/EventLoopGroupHandler.html#getWorkGroup()">getWorkGroup()</a></span> - Method in class net.cryptic_game.backend.base.netty.<a href="net/cryptic_game/backend/base/netty/EventLoopGroupHandler.html" title="class in net.cryptic_game.backend.base.netty">EventLoopGroupHandler</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/base/utils/JsonUtils.html#getZonedDateTime(com.google.gson.JsonObject,java.lang.String)">getZonedDateTime(JsonObject, String)</a></span> - Static method in class net.cryptic_game.backend.base.utils.<a href="net/cryptic_game/backend/base/utils/JsonUtils.html" title="class in net.cryptic_game.backend.base.utils">JsonUtils</a></dt>
+<dd>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
+<div class="block">Returns the associated <code>ZonedDateTime</code> value of a specific property.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/device/DeviceAccess.html#grantAccessToDevice(net.cryptic_game.backend.data.user.User,net.cryptic_game.backend.data.device.Device,java.time.Duration)">grantAccessToDevice(User, Device, Duration)</a></span> - Static method in class net.cryptic_game.backend.data.device.<a href="net/cryptic_game/backend/data/device/DeviceAccess.html" title="class in net.cryptic_game.backend.data.device">DeviceAccess</a></dt>
 <dd>
 <div class="block">Grants access for a <a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a> to a <a href="net/cryptic_game/backend/data/device/Device.html" title="class in net.cryptic_game.backend.data.device"><code>Device</code></a></div>
@@ -1694,8 +1694,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><a href="net/cryptic_game/backend/base/netty/codec/JsonMessageCodec.html" title="class in net.cryptic_game.backend.base.netty.codec"><span class="typeNameLink">JsonMessageCodec</span></a> - Class in <a href="net/cryptic_game/backend/base/netty/codec/package-summary.html">net.cryptic_game.backend.base.netty.codec</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/base/netty/codec/JsonMessageCodec.html#%3Cinit%3E()">JsonMessageCodec()</a></span> - Constructor for class net.cryptic_game.backend.base.netty.codec.<a href="net/cryptic_game/backend/base/netty/codec/JsonMessageCodec.html" title="class in net.cryptic_game.backend.base.netty.codec">JsonMessageCodec</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="net/cryptic_game/backend/base/interfaces/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.interfaces"><span class="typeNameLink">JsonSerializable</span></a> - Interface in <a href="net/cryptic_game/backend/base/interfaces/package-summary.html">net.cryptic_game.backend.base.interfaces</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/cryptic_game/backend/base/json/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.json"><span class="typeNameLink">JsonSerializable</span></a> - Interface in <a href="net/cryptic_game/backend/base/json/package-summary.html">net.cryptic_game.backend.base.json</a></dt>
 <dd>
@@ -2143,8 +2141,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/base/daemon/FunctionArgument.html#serialize()">serialize()</a></span> - Method in class net.cryptic_game.backend.base.daemon.<a href="net/cryptic_game/backend/base/daemon/FunctionArgument.html" title="class in net.cryptic_game.backend.base.daemon">FunctionArgument</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/base/interfaces/JsonSerializable.html#serialize()">serialize()</a></span> - Method in interface net.cryptic_game.backend.base.interfaces.<a href="net/cryptic_game/backend/base/interfaces/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.interfaces">JsonSerializable</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/base/json/JsonBuilder.html#serialize()">serialize()</a></span> - Method in class net.cryptic_game.backend.base.json.<a href="net/cryptic_game/backend/base/json/JsonBuilder.html" title="class in net.cryptic_game.backend.base.json">JsonBuilder</a></dt>
 <dd>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
@@ -2245,10 +2241,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Generates a <code>JsonObject</code> containing all relevant <a href="net/cryptic_game/backend/data/user/Session.html" title="class in net.cryptic_game.backend.data.user"><code>Session</code></a> information</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/user/User.html#serialize()">serialize()</a></span> - Method in class net.cryptic_game.backend.data.user.<a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user">User</a></dt>
-<dd>
-<div class="block">Generates a <code>JsonObject</code> containing all relevant <a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a> information</div>
-</dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/user/UserSettings.html#serialize()">serialize()</a></span> - Method in class net.cryptic_game.backend.data.user.<a href="net/cryptic_game/backend/data/user/UserSettings.html" title="class in net.cryptic_game.backend.data.user">UserSettings</a></dt>
 <dd>
 <div class="block">Generates a <code>JsonObject</code> containing all relevant <a href="net/cryptic_game/backend/data/user/UserSettings.html" title="class in net.cryptic_game.backend.data.user"><code>UserSettings</code></a> information</div>
@@ -2293,9 +2285,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Empty constructor to create a new <a href="net/cryptic_game/backend/data/user/Session.html" title="class in net.cryptic_game.backend.data.user"><code>Session</code></a></div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/device/DeviceAccess.html#setAccessGranted(java.time.LocalDateTime)">setAccessGranted(LocalDateTime)</a></span> - Method in class net.cryptic_game.backend.data.device.<a href="net/cryptic_game/backend/data/device/DeviceAccess.html" title="class in net.cryptic_game.backend.data.device">DeviceAccess</a></dt>
+<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/device/DeviceAccess.html#setAccessGranted(java.time.ZonedDateTime)">setAccessGranted(ZonedDateTime)</a></span> - Method in class net.cryptic_game.backend.data.device.<a href="net/cryptic_game/backend/data/device/DeviceAccess.html" title="class in net.cryptic_game.backend.data.device">DeviceAccess</a></dt>
 <dd>
-<div class="block">Sets a new <code>LocalDateTime</code> as time accessed</div>
+<div class="block">Sets a new <code>ZonedDateTime</code> as time accessed</div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/device/DeviceServiceReq.html#setAllocatedCPU(float)">setAllocatedCPU(float)</a></span> - Method in class net.cryptic_game.backend.data.device.<a href="net/cryptic_game/backend/data/device/DeviceServiceReq.html" title="class in net.cryptic_game.backend.data.device">DeviceServiceReq</a></dt>
 <dd>
@@ -2341,11 +2333,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/server/server/websocket/playground/PlaygroundUtils.html#setContentTypeHeader(io.netty.handler.codec.http.HttpResponse,java.io.File)">setContentTypeHeader(HttpResponse, File)</a></span> - Static method in class net.cryptic_game.backend.server.server.websocket.playground.<a href="net/cryptic_game/backend/server/server/websocket/playground/PlaygroundUtils.html" title="class in net.cryptic_game.backend.server.server.websocket.playground">PlaygroundUtils</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/network/Network.html#setCreated(java.time.LocalDateTime)">setCreated(LocalDateTime)</a></span> - Method in class net.cryptic_game.backend.data.network.<a href="net/cryptic_game/backend/data/network/Network.html" title="class in net.cryptic_game.backend.data.network">Network</a></dt>
+<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/network/Network.html#setCreated(java.time.ZonedDateTime)">setCreated(ZonedDateTime)</a></span> - Method in class net.cryptic_game.backend.data.network.<a href="net/cryptic_game/backend/data/network/Network.html" title="class in net.cryptic_game.backend.data.network">Network</a></dt>
 <dd>
 <div class="block">Sets a new creation date of the <a href="net/cryptic_game/backend/data/network/Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a></div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/user/User.html#setCreated(java.time.LocalDateTime)">setCreated(LocalDateTime)</a></span> - Method in class net.cryptic_game.backend.data.user.<a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user">User</a></dt>
+<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/user/User.html#setCreated(java.time.ZonedDateTime)">setCreated(ZonedDateTime)</a></span> - Method in class net.cryptic_game.backend.data.user.<a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user">User</a></dt>
 <dd>
 <div class="block">Sets a new creation date of the <a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
 </dd>
@@ -2397,11 +2389,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Sets a new element name for the <a href="net/cryptic_game/backend/data/Inventory.html" title="class in net.cryptic_game.backend.data"><code>Inventory</code></a></div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/device/DeviceAccess.html#setExpire(java.time.LocalDateTime)">setExpire(LocalDateTime)</a></span> - Method in class net.cryptic_game.backend.data.device.<a href="net/cryptic_game/backend/data/device/DeviceAccess.html" title="class in net.cryptic_game.backend.data.device">DeviceAccess</a></dt>
+<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/device/DeviceAccess.html#setExpire(java.time.ZonedDateTime)">setExpire(ZonedDateTime)</a></span> - Method in class net.cryptic_game.backend.data.device.<a href="net/cryptic_game/backend/data/device/DeviceAccess.html" title="class in net.cryptic_game.backend.data.device">DeviceAccess</a></dt>
 <dd>
-<div class="block">Sets a new <code>LocalDateTime</code></div>
+<div class="block">Sets a new <code>ZonedDateTime</code></div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/user/Session.html#setExpire(java.time.LocalDateTime)">setExpire(LocalDateTime)</a></span> - Method in class net.cryptic_game.backend.data.user.<a href="net/cryptic_game/backend/data/user/Session.html" title="class in net.cryptic_game.backend.data.user">Session</a></dt>
+<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/user/Session.html#setExpire(java.time.ZonedDateTime)">setExpire(ZonedDateTime)</a></span> - Method in class net.cryptic_game.backend.data.user.<a href="net/cryptic_game/backend/data/user/Session.html" title="class in net.cryptic_game.backend.data.user">Session</a></dt>
 <dd>
 <div class="block">Sets a new expire date of the <a href="net/cryptic_game/backend/data/user/Session.html" title="class in net.cryptic_game.backend.data.user"><code>Session</code></a></div>
 </dd>
@@ -2429,11 +2421,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Sets a new <a href="net/cryptic_game/backend/data/network/NetworkMember.MemberKey.html" title="class in net.cryptic_game.backend.data.network"><code>NetworkMember.MemberKey</code></a> of the <a href="net/cryptic_game/backend/data/network/NetworkMember.html" title="class in net.cryptic_game.backend.data.network"><code>NetworkMember</code></a></div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/user/User.html#setLast(java.time.LocalDateTime)">setLast(LocalDateTime)</a></span> - Method in class net.cryptic_game.backend.data.user.<a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user">User</a></dt>
+<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/user/User.html#setLast(java.time.ZonedDateTime)">setLast(ZonedDateTime)</a></span> - Method in class net.cryptic_game.backend.data.user.<a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user">User</a></dt>
 <dd>
 <div class="block">Sets a new last-seen date of the <a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/user/Session.html#setLastActive(java.time.LocalDateTime)">setLastActive(LocalDateTime)</a></span> - Method in class net.cryptic_game.backend.data.user.<a href="net/cryptic_game/backend/data/user/Session.html" title="class in net.cryptic_game.backend.data.user">Session</a></dt>
+<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/user/Session.html#setLastActive(java.time.ZonedDateTime)">setLastActive(ZonedDateTime)</a></span> - Method in class net.cryptic_game.backend.data.user.<a href="net/cryptic_game/backend/data/user/Session.html" title="class in net.cryptic_game.backend.data.user">Session</a></dt>
 <dd>
 <div class="block">Sets a new last-active date of the <a href="net/cryptic_game/backend/data/user/Session.html" title="class in net.cryptic_game.backend.data.user"><code>Session</code></a></div>
 </dd>
@@ -2619,13 +2611,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Sets a new Text for the <a href="net/cryptic_game/backend/data/chat/ChatMessage.html" title="class in net.cryptic_game.backend.data.chat"><code>ChatMessage</code></a></div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/currency/CurrencyTransaction.html#setTimeStamp(java.time.LocalDateTime)">setTimeStamp(LocalDateTime)</a></span> - Method in class net.cryptic_game.backend.data.currency.<a href="net/cryptic_game/backend/data/currency/CurrencyTransaction.html" title="class in net.cryptic_game.backend.data.currency">CurrencyTransaction</a></dt>
+<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/currency/CurrencyTransaction.html#setTimeStamp(java.time.ZonedDateTime)">setTimeStamp(ZonedDateTime)</a></span> - Method in class net.cryptic_game.backend.data.currency.<a href="net/cryptic_game/backend/data/currency/CurrencyTransaction.html" title="class in net.cryptic_game.backend.data.currency">CurrencyTransaction</a></dt>
 <dd>
-<div class="block">Sets a new timestap as <code>LocalDateTime</code> for the <a href="net/cryptic_game/backend/data/currency/CurrencyTransaction.html" title="class in net.cryptic_game.backend.data.currency"><code>CurrencyTransaction</code></a></div>
+<div class="block">Sets a new timestap as <code>ZonedDateTime</code> for the <a href="net/cryptic_game/backend/data/currency/CurrencyTransaction.html" title="class in net.cryptic_game.backend.data.currency"><code>CurrencyTransaction</code></a></div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/currency/CurrencyWallet.html#setTimeStamp(java.time.LocalDateTime)">setTimeStamp(LocalDateTime)</a></span> - Method in class net.cryptic_game.backend.data.currency.<a href="net/cryptic_game/backend/data/currency/CurrencyWallet.html" title="class in net.cryptic_game.backend.data.currency">CurrencyWallet</a></dt>
+<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/currency/CurrencyWallet.html#setTimeStamp(java.time.ZonedDateTime)">setTimeStamp(ZonedDateTime)</a></span> - Method in class net.cryptic_game.backend.data.currency.<a href="net/cryptic_game/backend/data/currency/CurrencyWallet.html" title="class in net.cryptic_game.backend.data.currency">CurrencyWallet</a></dt>
 <dd>
-<div class="block">Sets a new <code>LocalDateTime</code> as timestamp for the <a href="net/cryptic_game/backend/data/currency/CurrencyWallet.html" title="class in net.cryptic_game.backend.data.currency"><code>CurrencyWallet</code></a></div>
+<div class="block">Sets a new <code>ZonedDateTime</code> as timestamp for the <a href="net/cryptic_game/backend/data/currency/CurrencyWallet.html" title="class in net.cryptic_game.backend.data.currency"><code>CurrencyWallet</code></a></div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/user/Session.html#setToken(java.util.UUID)">setToken(UUID)</a></span> - Method in class net.cryptic_game.backend.data.user.<a href="net/cryptic_game/backend/data/user/Session.html" title="class in net.cryptic_game.backend.data.user">Session</a></dt>
 <dd>

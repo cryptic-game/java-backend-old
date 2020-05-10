@@ -142,12 +142,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="../../base/interfaces/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.interfaces">JsonSerializable</a></code></dd>
+<dd><code><a href="../../base/json/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.json">JsonSerializable</a></code></dd>
 </dl>
 <hr>
 <pre>@Entity
 public class <span class="typeNameLabel">DeviceAccess</span>
-extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in net.cryptic_game.backend.base.sql.models">TableModelAutoId</a></pre>
+extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in net.cryptic_game.backend.base.sql.models">TableModelAutoId</a>
+implements <a href="../../base/json/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.json">JsonSerializable</a></pre>
 <div class="block">Entity representing a device access entry in the database</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -226,10 +227,10 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 </td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>java.time.LocalDateTime</code></td>
+<td class="colFirst"><code>java.time.ZonedDateTime</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAccessGranted()">getAccessGranted</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Returns the <code>LocalDateTime</code> when the <a href="DeviceAccess.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceAccess</code></a> has been granted</div>
+<div class="block">Returns the <code>ZonedDateTime</code> when the <a href="DeviceAccess.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceAccess</code></a> has been granted</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
@@ -240,10 +241,10 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>java.time.LocalDateTime</code></td>
+<td class="colFirst"><code>java.time.ZonedDateTime</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getExpire()">getExpire</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Returns the <code>LocalDateTime</code></div>
+<div class="block">Returns the <code>ZonedDateTime</code></div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
@@ -293,9 +294,9 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAccessGranted(java.time.LocalDateTime)">setAccessGranted</a></span>&#8203;(java.time.LocalDateTime&nbsp;accessGranted)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAccessGranted(java.time.ZonedDateTime)">setAccessGranted</a></span>&#8203;(java.time.ZonedDateTime&nbsp;accessGranted)</code></th>
 <td class="colLast">
-<div class="block">Sets a new <code>LocalDateTime</code> as time accessed</div>
+<div class="block">Sets a new <code>ZonedDateTime</code> as time accessed</div>
 </td>
 </tr>
 <tr id="i12" class="altColor">
@@ -307,9 +308,9 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setExpire(java.time.LocalDateTime)">setExpire</a></span>&#8203;(java.time.LocalDateTime&nbsp;expire)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setExpire(java.time.ZonedDateTime)">setExpire</a></span>&#8203;(java.time.ZonedDateTime&nbsp;expire)</code></th>
 <td class="colLast">
-<div class="block">Sets a new <code>LocalDateTime</code></div>
+<div class="block">Sets a new <code>ZonedDateTime</code></div>
 </td>
 </tr>
 <tr id="i14" class="altColor">
@@ -499,25 +500,25 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <ul class="blockList">
 <li class="blockList">
 <h4>getAccessGranted</h4>
-<pre class="methodSignature">public&nbsp;java.time.LocalDateTime&nbsp;getAccessGranted()</pre>
-<div class="block">Returns the <code>LocalDateTime</code> when the <a href="DeviceAccess.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceAccess</code></a> has been granted</div>
+<pre class="methodSignature">public&nbsp;java.time.ZonedDateTime&nbsp;getAccessGranted()</pre>
+<div class="block">Returns the <code>ZonedDateTime</code> when the <a href="DeviceAccess.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceAccess</code></a> has been granted</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the time accessed</dd>
 </dl>
 </li>
 </ul>
-<a id="setAccessGranted(java.time.LocalDateTime)">
+<a id="setAccessGranted(java.time.ZonedDateTime)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setAccessGranted</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setAccessGranted&#8203;(java.time.LocalDateTime&nbsp;accessGranted)</pre>
-<div class="block">Sets a new <code>LocalDateTime</code> as time accessed</div>
+<pre class="methodSignature">public&nbsp;void&nbsp;setAccessGranted&#8203;(java.time.ZonedDateTime&nbsp;accessGranted)</pre>
+<div class="block">Sets a new <code>ZonedDateTime</code> as time accessed</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>accessGranted</code> - the new <code>LocalDateTime</code> to be set</dd>
+<dd><code>accessGranted</code> - the new <code>ZonedDateTime</code> to be set</dd>
 </dl>
 </li>
 </ul>
@@ -527,25 +528,25 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <ul class="blockList">
 <li class="blockList">
 <h4>getExpire</h4>
-<pre class="methodSignature">public&nbsp;java.time.LocalDateTime&nbsp;getExpire()</pre>
-<div class="block">Returns the <code>LocalDateTime</code></div>
+<pre class="methodSignature">public&nbsp;java.time.ZonedDateTime&nbsp;getExpire()</pre>
+<div class="block">Returns the <code>ZonedDateTime</code></div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the time the access will expire</dd>
 </dl>
 </li>
 </ul>
-<a id="setExpire(java.time.LocalDateTime)">
+<a id="setExpire(java.time.ZonedDateTime)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setExpire</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setExpire&#8203;(java.time.LocalDateTime&nbsp;expire)</pre>
-<div class="block">Sets a new <code>LocalDateTime</code></div>
+<pre class="methodSignature">public&nbsp;void&nbsp;setExpire&#8203;(java.time.ZonedDateTime&nbsp;expire)</pre>
+<div class="block">Sets a new <code>ZonedDateTime</code></div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>expire</code> - the new <code>LocalDateTime</code> to be set</dd>
+<dd><code>expire</code> - the new <code>ZonedDateTime</code> to be set</dd>
 </dl>
 </li>
 </ul>
@@ -586,8 +587,13 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <pre class="methodSignature">public&nbsp;com.google.gson.JsonObject&nbsp;serialize()</pre>
 <div class="block">Generates a <code>JsonObject</code> containing all relevant <a href="DeviceAccess.html" title="class in net.cryptic_game.backend.data.device"><code>DeviceAccess</code></a> information</div>
 <dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../base/json/JsonSerializable.html#serialize()">serialize</a></code>&nbsp;in interface&nbsp;<code><a href="../../base/json/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.json">JsonSerializable</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The generated <code>JsonObject</code></dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../base/json/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.json"><code>JsonSerializable</code></a>, 
+<code>JsonElement</code></dd>
 </dl>
 </li>
 </ul>

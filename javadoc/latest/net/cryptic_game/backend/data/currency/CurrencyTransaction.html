@@ -142,12 +142,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="../../base/interfaces/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.interfaces">JsonSerializable</a></code></dd>
+<dd><code><a href="../../base/json/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.json">JsonSerializable</a></code></dd>
 </dl>
 <hr>
 <pre>@Entity
 public class <span class="typeNameLabel">CurrencyTransaction</span>
-extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in net.cryptic_game.backend.base.sql.models">TableModelAutoId</a></pre>
+extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in net.cryptic_game.backend.base.sql.models">TableModelAutoId</a>
+implements <a href="../../base/json/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.json">JsonSerializable</a></pre>
 <div class="block">Entity representing a currency transaction entry in the database</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -240,10 +241,10 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>java.time.LocalDateTime</code></td>
+<td class="colFirst"><code>java.time.ZonedDateTime</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTimeStamp()">getTimeStamp</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Returns the <code>LocalDateTime</code>, the timestamp when the <a href="CurrencyTransaction.html" title="class in net.cryptic_game.backend.data.currency"><code>CurrencyTransaction</code></a> has been made</div>
+<div class="block">Returns the <code>ZonedDateTime</code>, the timestamp when the <a href="CurrencyTransaction.html" title="class in net.cryptic_game.backend.data.currency"><code>CurrencyTransaction</code></a> has been made</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
@@ -297,9 +298,9 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTimeStamp(java.time.LocalDateTime)">setTimeStamp</a></span>&#8203;(java.time.LocalDateTime&nbsp;timeStamp)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTimeStamp(java.time.ZonedDateTime)">setTimeStamp</a></span>&#8203;(java.time.ZonedDateTime&nbsp;timeStamp)</code></th>
 <td class="colLast">
-<div class="block">Sets a new timestap as <code>LocalDateTime</code> for the <a href="CurrencyTransaction.html" title="class in net.cryptic_game.backend.data.currency"><code>CurrencyTransaction</code></a></div>
+<div class="block">Sets a new timestap as <code>ZonedDateTime</code> for the <a href="CurrencyTransaction.html" title="class in net.cryptic_game.backend.data.currency"><code>CurrencyTransaction</code></a></div>
 </td>
 </tr>
 <tr id="i13" class="rowColor">
@@ -379,25 +380,25 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <ul class="blockList">
 <li class="blockList">
 <h4>getTimeStamp</h4>
-<pre class="methodSignature">public&nbsp;java.time.LocalDateTime&nbsp;getTimeStamp()</pre>
-<div class="block">Returns the <code>LocalDateTime</code>, the timestamp when the <a href="CurrencyTransaction.html" title="class in net.cryptic_game.backend.data.currency"><code>CurrencyTransaction</code></a> has been made</div>
+<pre class="methodSignature">public&nbsp;java.time.ZonedDateTime&nbsp;getTimeStamp()</pre>
+<div class="block">Returns the <code>ZonedDateTime</code>, the timestamp when the <a href="CurrencyTransaction.html" title="class in net.cryptic_game.backend.data.currency"><code>CurrencyTransaction</code></a> has been made</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the timestamp</dd>
 </dl>
 </li>
 </ul>
-<a id="setTimeStamp(java.time.LocalDateTime)">
+<a id="setTimeStamp(java.time.ZonedDateTime)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setTimeStamp</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setTimeStamp&#8203;(java.time.LocalDateTime&nbsp;timeStamp)</pre>
-<div class="block">Sets a new timestap as <code>LocalDateTime</code> for the <a href="CurrencyTransaction.html" title="class in net.cryptic_game.backend.data.currency"><code>CurrencyTransaction</code></a></div>
+<pre class="methodSignature">public&nbsp;void&nbsp;setTimeStamp&#8203;(java.time.ZonedDateTime&nbsp;timeStamp)</pre>
+<div class="block">Sets a new timestap as <code>ZonedDateTime</code> for the <a href="CurrencyTransaction.html" title="class in net.cryptic_game.backend.data.currency"><code>CurrencyTransaction</code></a></div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>timeStamp</code> - the new <code>LocalDateTime</code> to be set</dd>
+<dd><code>timeStamp</code> - the new <code>ZonedDateTime</code> to be set</dd>
 </dl>
 </li>
 </ul>
@@ -550,8 +551,13 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <pre class="methodSignature">public&nbsp;com.google.gson.JsonObject&nbsp;serialize()</pre>
 <div class="block">Generates a <code>JsonObject</code> containing all relevant <a href="CurrencyTransaction.html" title="class in net.cryptic_game.backend.data.currency"><code>CurrencyTransaction</code></a> information</div>
 <dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../base/json/JsonSerializable.html#serialize()">serialize</a></code>&nbsp;in interface&nbsp;<code><a href="../../base/json/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.json">JsonSerializable</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The generated <code>JsonObject</code></dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../base/json/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.json"><code>JsonSerializable</code></a>, 
+<code>JsonElement</code></dd>
 </dl>
 </li>
 </ul>

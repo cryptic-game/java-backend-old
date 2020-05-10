@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":9,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10};
+var data = {"i0":9,"i1":10,"i2":10,"i3":9,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -140,10 +140,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
-<dl>
-<dt>All Implemented Interfaces:</dt>
-<dd><code><a href="../../base/interfaces/JsonSerializable.html" title="interface in net.cryptic_game.backend.base.interfaces">JsonSerializable</a></code></dd>
-</dl>
 <hr>
 <pre>@Entity
 public class <span class="typeNameLabel">User</span>
@@ -257,14 +253,14 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>java.time.LocalDateTime</code></td>
+<td class="colFirst"><code>java.time.ZonedDateTime</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCreated()">getCreated</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the creation date of the <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>java.time.LocalDateTime</code></td>
+<td class="colFirst"><code>java.time.ZonedDateTime</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLast()">getLast</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the last-seen date of the <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
@@ -299,55 +295,48 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 </td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code>com.google.gson.JsonObject</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#serialize()">serialize</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Generates a <code>JsonObject</code> containing all relevant <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a> information</div>
-</td>
-</tr>
-<tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCreated(java.time.LocalDateTime)">setCreated</a></span>&#8203;(java.time.LocalDateTime&nbsp;created)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCreated(java.time.ZonedDateTime)">setCreated</a></span>&#8203;(java.time.ZonedDateTime&nbsp;created)</code></th>
 <td class="colLast">
 <div class="block">Sets a new creation date of the <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setLast(java.time.LocalDateTime)">setLast</a></span>&#8203;(java.time.LocalDateTime&nbsp;last)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setLast(java.time.ZonedDateTime)">setLast</a></span>&#8203;(java.time.ZonedDateTime&nbsp;last)</code></th>
 <td class="colLast">
 <div class="block">Sets a new last-seen date of the <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMail(java.lang.String)">setMail</a></span>&#8203;(java.lang.String&nbsp;mail)</code></th>
 <td class="colLast">
 <div class="block">Sets a new mail of the <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setName(java.lang.String)">setName</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
 <div class="block">Sets a new name of the <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPassword(java.lang.String)">setPassword</a></span>&#8203;(java.lang.String&nbsp;newPassword)</code></th>
 <td class="colLast">
 <div class="block">Set a new password for the given <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPasswordHash(java.lang.String)">setPasswordHash</a></span>&#8203;(java.lang.String&nbsp;passwordHash)</code></th>
 <td class="colLast">
 <div class="block">Sets a new password hash of the <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#verifyPassword(java.lang.String)">verifyPassword</a></span>&#8203;(java.lang.String&nbsp;input)</code></th>
 <td class="colLast">
@@ -598,7 +587,7 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <ul class="blockList">
 <li class="blockList">
 <h4>getCreated</h4>
-<pre class="methodSignature">public&nbsp;java.time.LocalDateTime&nbsp;getCreated()</pre>
+<pre class="methodSignature">public&nbsp;java.time.ZonedDateTime&nbsp;getCreated()</pre>
 <div class="block">Returns the creation date of the <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -606,13 +595,13 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 </dl>
 </li>
 </ul>
-<a id="setCreated(java.time.LocalDateTime)">
+<a id="setCreated(java.time.ZonedDateTime)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setCreated</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setCreated&#8203;(java.time.LocalDateTime&nbsp;created)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setCreated&#8203;(java.time.ZonedDateTime&nbsp;created)</pre>
 <div class="block">Sets a new creation date of the <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -626,7 +615,7 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <ul class="blockList">
 <li class="blockList">
 <h4>getLast</h4>
-<pre class="methodSignature">public&nbsp;java.time.LocalDateTime&nbsp;getLast()</pre>
+<pre class="methodSignature">public&nbsp;java.time.ZonedDateTime&nbsp;getLast()</pre>
 <div class="block">Returns the last-seen date of the <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -634,13 +623,13 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 </dl>
 </li>
 </ul>
-<a id="setLast(java.time.LocalDateTime)">
+<a id="setLast(java.time.ZonedDateTime)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setLast</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setLast&#8203;(java.time.LocalDateTime&nbsp;last)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setLast&#8203;(java.time.ZonedDateTime&nbsp;last)</pre>
 <div class="block">Sets a new last-seen date of the <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -659,20 +648,6 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../../base/sql/models/TableModel.html#delete()">delete</a></code>&nbsp;in class&nbsp;<code><a href="../../base/sql/models/TableModel.html" title="class in net.cryptic_game.backend.base.sql.models">TableModel</a></code></dd>
-</dl>
-</li>
-</ul>
-<a id="serialize()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>serialize</h4>
-<pre class="methodSignature">public&nbsp;com.google.gson.JsonObject&nbsp;serialize()</pre>
-<div class="block">Generates a <code>JsonObject</code> containing all relevant <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a> information</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The generated <code>JsonObject</code></dd>
 </dl>
 </li>
 </ul>
