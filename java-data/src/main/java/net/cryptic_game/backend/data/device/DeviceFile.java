@@ -2,6 +2,7 @@ package net.cryptic_game.backend.data.device;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.json.JsonBuilder;
+import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import org.hibernate.Session;
 import org.hibernate.annotations.Type;
@@ -17,7 +18,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "device_file")
-public class DeviceFile extends TableModelAutoId {
+public class DeviceFile extends TableModelAutoId implements JsonSerializable {
 
     @ManyToOne
     @JoinColumn(name = "device_id", nullable = false, updatable = false)

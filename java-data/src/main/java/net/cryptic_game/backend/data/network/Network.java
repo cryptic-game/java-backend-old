@@ -2,14 +2,14 @@ package net.cryptic_game.backend.data.network;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.json.JsonBuilder;
+import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.data.device.Device;
 import org.hibernate.Session;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -21,7 +21,7 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "network_network")
-public class Network extends TableModelAutoId {
+public class Network extends TableModelAutoId implements JsonSerializable {
 
     @Column(name = "name", updatable = true, nullable = false, unique = true)
     private String name;
@@ -35,7 +35,7 @@ public class Network extends TableModelAutoId {
     private boolean _public;
 
     @Column(name = "created", updatable = false, nullable = false)
-    private LocalDateTime created;
+    private ZonedDateTime created;
 
     /**
      * Empty constructor to create a new {@link Network}
@@ -52,7 +52,7 @@ public class Network extends TableModelAutoId {
      * @return The instance of the created {@link Network}
      */
     public static Network createNetwork(final String name, final Device owner, final boolean _public) {
-        final LocalDateTime now = LocalDateTime.now();
+        final ZonedDateTime now = ZonedDateTime.now();
 
         final Network network = new Network();
         network.setName(name);
@@ -185,7 +185,7 @@ public class Network extends TableModelAutoId {
      *
      * @return Creation date of the {@link Network}
      */
-    public LocalDateTime getCreated() {
+    public ZonedDateTime getCreated() {
         return this.created;
     }
 
@@ -194,7 +194,7 @@ public class Network extends TableModelAutoId {
      *
      * @param created New creation date to be set
      */
-    public void setCreated(final LocalDateTime created) {
+    public void setCreated(final ZonedDateTime created) {
         this.created = created;
     }
 
@@ -209,7 +209,7 @@ public class Network extends TableModelAutoId {
                 .add("name", this.getName())
                 .add("owner", this.getOwner().getId())
                 .add("public", this.isPublic())
-                .add("created", this.getCreated().toInstant(ZoneOffset.UTC).toEpochMilli())
+                .add("created", this.getCreated())
                 .build();
     }
 

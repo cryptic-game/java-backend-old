@@ -2,6 +2,7 @@ package net.cryptic_game.backend.data;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.json.JsonBuilder;
+import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.data.user.User;
 import org.hibernate.annotations.Type;
@@ -16,7 +17,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "inventory")
-public class Inventory extends TableModelAutoId {
+public class Inventory extends TableModelAutoId implements JsonSerializable {
 
     @Column(name = "element_name", updatable = true, nullable = true) // updatable?
     private String elementName;

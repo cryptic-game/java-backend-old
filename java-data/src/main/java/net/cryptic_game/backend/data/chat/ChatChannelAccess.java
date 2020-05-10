@@ -3,6 +3,7 @@ package net.cryptic_game.backend.data.chat;
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.api.client.ApiClient;
 import net.cryptic_game.backend.base.json.JsonBuilder;
+import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.data.user.User;
 import org.hibernate.HibernateException;
@@ -26,7 +27,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "chat_channel_access")
-public class ChatChannelAccess extends TableModelAutoId {
+public class ChatChannelAccess extends TableModelAutoId implements JsonSerializable {
 
     private static final Logger log = LoggerFactory.getLogger(ChatChannelAccess.class);
 

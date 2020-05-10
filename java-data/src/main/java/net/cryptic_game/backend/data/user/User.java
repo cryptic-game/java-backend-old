@@ -1,6 +1,8 @@
 package net.cryptic_game.backend.data.user;
 
 import com.google.gson.JsonObject;
+import net.cryptic_game.backend.base.json.JsonTransient;
+import net.cryptic_game.backend.base.json.JsonUtils;
 import net.cryptic_game.backend.base.sql.models.TableModel;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.base.utils.SecurityUtils;
@@ -9,9 +11,7 @@ import org.hibernate.Session;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -31,14 +31,15 @@ public class User extends TableModelAutoId {
     @Column(name = "mail", updatable = true, nullable = false, unique = true)
     private String mail;
 
+    @JsonTransient
     @Column(name = "password", updatable = true, nullable = false)
     private String passwordHash;
 
     @Column(name = "created", updatable = false, nullable = false)
-    private LocalDateTime created;
+    private ZonedDateTime created;
 
     @Column(name = "last", updatable = true, nullable = false)
-    private LocalDateTime last;
+    private ZonedDateTime last;
 
     /**
      * Empty constructor to create a new {@link User}
@@ -55,8 +56,8 @@ public class User extends TableModelAutoId {
         this.setId(UUID.fromString(json.get("id").getAsString()));
         this.name = json.get("name").getAsString();
         this.mail = json.get("mail").getAsString();
-        this.created = LocalDateTime.ofInstant(Instant.ofEpochMilli(json.get("created").getAsLong()), ZoneOffset.UTC);
-        this.last = LocalDateTime.ofInstant(Instant.ofEpochMilli(json.get("last").getAsLong()), ZoneOffset.UTC);
+        this.created = JsonUtils.fromJson(json.get("created"), ZonedDateTime.class);
+        this.last = JsonUtils.fromJson(json.get("last"), ZonedDateTime.class);
     }
 
     /**
@@ -68,7 +69,7 @@ public class User extends TableModelAutoId {
      * @return The instance of the created {@link User}
      */
     public static User createUser(final String name, final String mail, final String password) {
-        final LocalDateTime now = LocalDateTime.now();
+        final ZonedDateTime now = ZonedDateTime.now();
 
         final User user = new User();
         user.setName(name);
@@ -191,7 +192,7 @@ public class User extends TableModelAutoId {
      *
      * @return Creation date of the {@link User}
      */
-    public LocalDateTime getCreated() {
+    public ZonedDateTime getCreated() {
         return this.created;
     }
 
@@ -200,7 +201,7 @@ public class User extends TableModelAutoId {
      *
      * @param created New creation date to be set
      */
-    public void setCreated(final LocalDateTime created) {
+    public void setCreated(final ZonedDateTime created) {
         this.created = created;
     }
 
@@ -209,7 +210,7 @@ public class User extends TableModelAutoId {
      *
      * @return Last-seen date of the {@link User}
      */
-    public LocalDateTime getLast() {
+    public ZonedDateTime getLast() {
         return this.last;
     }
 
@@ -218,7 +219,7 @@ public class User extends TableModelAutoId {
      *
      * @param last New last-seen date to be set
      */
-    public void setLast(final LocalDateTime last) {
+    public void setLast(final ZonedDateTime last) {
         this.last = last;
     }
 
@@ -229,22 +230,6 @@ public class User extends TableModelAutoId {
     public void delete() {
         net.cryptic_game.backend.data.user.Session.getByUser(this).forEach(TableModel::delete);
         super.delete();
-    }
-
-    /**
-     * Generates a {@link JsonObject} containing all relevant {@link User} information
-     *
-     * @return The generated {@link JsonObject}
-     */
-    @Override
-    public JsonObject serialize() {
-        final JsonObject json = new JsonObject();
-        json.addProperty("id", this.getId().toString());
-        json.addProperty("name", this.getName());
-        json.addProperty("mail", this.getMail());
-        json.addProperty("created", this.getCreated().toInstant(ZoneOffset.UTC).toEpochMilli());
-        json.addProperty("last", this.getLast().toInstant(ZoneOffset.UTC).toEpochMilli());
-        return json;
     }
 
     /**

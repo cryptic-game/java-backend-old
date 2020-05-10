@@ -3,11 +3,11 @@ package net.cryptic_game.backend.base.utils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.cryptic_game.backend.base.interfaces.JsonSerializable;
+import net.cryptic_game.backend.base.json.JsonSerializable;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.InvalidPropertiesFormatException;
 import java.util.List;
 import java.util.UUID;
@@ -220,8 +220,8 @@ public class JsonBuilder implements JsonSerializable {
                 array.add((Character) value);
             } else if (value instanceof JsonElement) {
                 array.add((JsonElement) value);
-            } else if (value instanceof LocalDateTime) {
-                array.add(((LocalDateTime) value).toInstant(ZoneOffset.UTC).toEpochMilli());
+            } else if (value instanceof ZonedDateTime) {
+                array.add(((ZonedDateTime) value).toInstant().toEpochMilli());
             } else if (value instanceof LocalDate) {
                 array.add(((LocalDate) value).atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli());
             } else if (value instanceof JsonSerializable) {

@@ -3,13 +3,13 @@ package net.cryptic_game.backend.data.user;
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.AppBootstrap;
 import net.cryptic_game.backend.base.json.JsonBuilder;
+import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Objects;
@@ -22,7 +22,7 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "session")
-public class Session extends TableModelAutoId {
+public class Session extends TableModelAutoId implements JsonSerializable {
 
     private static final Duration EXPIRE = Duration.of(AppBootstrap.getInstance().getConfig().getSessionExpire(), ChronoUnit.DAYS);
 
@@ -39,10 +39,10 @@ public class Session extends TableModelAutoId {
     private String deviceName;
 
     @Column(name = "expire", nullable = false, updatable = false)
-    private LocalDateTime expire;
+    private ZonedDateTime expire;
 
     @Column(name = "last_active", nullable = false, updatable = true)
-    private LocalDateTime lastActive;
+    private ZonedDateTime lastActive;
 
     /**
      * Empty constructor to create a new {@link Session}
@@ -63,8 +63,8 @@ public class Session extends TableModelAutoId {
         session.setUser(user);
         session.setToken(token);
         session.setDeviceName(deviceName);
-        session.setExpire(LocalDateTime.now().plus(EXPIRE));
-        session.setLastActive(LocalDateTime.now());
+        session.setExpire(ZonedDateTime.now().plus(EXPIRE));
+        session.setLastActive(ZonedDateTime.now());
 
         final org.hibernate.Session sqlSession = sqlConnection.openSession();
         sqlSession.beginTransaction();
@@ -108,7 +108,7 @@ public class Session extends TableModelAutoId {
         final org.hibernate.Session sqlSession = sqlConnection.openSession();
         sqlSession.beginTransaction();
         sqlSession.createQuery("delete from Session as s where s.expire < :date")
-                .setParameter("date", LocalDateTime.now())
+                .setParameter("date", ZonedDateTime.now())
                 .executeUpdate();
         sqlSession.getTransaction().commit();
         sqlSession.close();
@@ -155,7 +155,7 @@ public class Session extends TableModelAutoId {
      *
      * @return Expire date of the {@link Session}
      */
-    public LocalDateTime getExpire() {
+    public ZonedDateTime getExpire() {
         return this.expire;
     }
 
@@ -164,7 +164,7 @@ public class Session extends TableModelAutoId {
      *
      * @param expire New expire date to be set
      */
-    public void setExpire(final LocalDateTime expire) {
+    public void setExpire(final ZonedDateTime expire) {
         this.expire = expire;
     }
 
@@ -174,7 +174,7 @@ public class Session extends TableModelAutoId {
      * @return True if the {@link Session} is valid | false if it is not
      */
     public boolean isValid() {
-        return LocalDateTime.now().isBefore(this.getExpire());
+        return ZonedDateTime.now().isBefore(this.getExpire());
     }
 
     /**
@@ -182,7 +182,7 @@ public class Session extends TableModelAutoId {
      *
      * @return Last-active date of the {@link Session}
      */
-    public LocalDateTime getLastActive() {
+    public ZonedDateTime getLastActive() {
         return this.lastActive;
     }
 
@@ -191,7 +191,7 @@ public class Session extends TableModelAutoId {
      *
      * @param lastActive New last-active date name to be set
      */
-    public void setLastActive(final LocalDateTime lastActive) {
+    public void setLastActive(final ZonedDateTime lastActive) {
         this.lastActive = lastActive;
     }
 
@@ -224,8 +224,8 @@ public class Session extends TableModelAutoId {
                 .add("user", this.getId())
                 .add("device_name", this.getDeviceName())
                 .add("valid", this.isValid())
-                .add("expire", this.getExpire().toInstant(ZoneOffset.UTC).toEpochMilli())
-                .add("last_active", this.getLastActive().toInstant(ZoneOffset.UTC).toEpochMilli())
+                .add("expire", this.getExpire())
+                .add("last_active", this.getLastActive())
                 .build();
     }
 

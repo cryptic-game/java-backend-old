@@ -3,13 +3,13 @@ package net.cryptic_game.backend.data.currency;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.json.JsonBuilder;
+import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.data.user.User;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
@@ -19,10 +19,10 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "currency_transaction")
-public class CurrencyTransaction extends TableModelAutoId {
+public class CurrencyTransaction extends TableModelAutoId implements JsonSerializable {
 
     @Column(name = "timestamp", updatable = false, nullable = false)
-    private LocalDateTime timeStamp;
+    private ZonedDateTime timeStamp;
 
     @ManyToOne
     @JoinColumn(name = "source_id", updatable = false, nullable = false)
@@ -44,20 +44,20 @@ public class CurrencyTransaction extends TableModelAutoId {
     private String origin;
 
     /**
-     * Returns the {@link LocalDateTime}, the timestamp when the {@link CurrencyTransaction} has been made
+     * Returns the {@link ZonedDateTime}, the timestamp when the {@link CurrencyTransaction} has been made
      *
      * @return the timestamp
      */
-    public LocalDateTime getTimeStamp() {
+    public ZonedDateTime getTimeStamp() {
         return this.timeStamp;
     }
 
     /**
-     * Sets a new timestap as {@link LocalDateTime} for the {@link CurrencyTransaction}
+     * Sets a new timestap as {@link ZonedDateTime} for the {@link CurrencyTransaction}
      *
-     * @param timeStamp the new {@link LocalDateTime} to be set
+     * @param timeStamp the new {@link ZonedDateTime} to be set
      */
-    public void setTimeStamp(final LocalDateTime timeStamp) {
+    public void setTimeStamp(final ZonedDateTime timeStamp) {
         this.timeStamp = timeStamp;
     }
 
@@ -159,7 +159,7 @@ public class CurrencyTransaction extends TableModelAutoId {
     @Override
     public JsonObject serialize() {
         return JsonBuilder.create("id", this.getId())
-                .add("timestamp", this.getTimeStamp().toInstant(ZoneOffset.UTC))
+                .add("timestamp", this.getTimeStamp())
                 .add("source_id", this.getUserSource().getId())
                 .add("SendAmount", this.getSendAmount())
                 .add("destination_id", this.getUserDestination().getId())

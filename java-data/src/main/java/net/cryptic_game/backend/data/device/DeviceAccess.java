@@ -2,6 +2,7 @@ package net.cryptic_game.backend.data.device;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.json.JsonBuilder;
+import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.data.user.User;
 import org.hibernate.Session;
@@ -9,8 +10,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,7 +21,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "device_access")
-public class DeviceAccess extends TableModelAutoId {
+public class DeviceAccess extends TableModelAutoId implements JsonSerializable {
 
     @ManyToOne
     @JoinColumn(name = "device_id", nullable = false, updatable = false)
@@ -34,10 +34,10 @@ public class DeviceAccess extends TableModelAutoId {
     private User user;
 
     @Column(name = "granted", nullable = false, updatable = false)
-    private LocalDateTime accessGranted;
+    private ZonedDateTime accessGranted;
 
     @Column(name = "expire", nullable = false, updatable = false)
-    private LocalDateTime expire;
+    private ZonedDateTime expire;
 
     @Column(name = "valid", nullable = false, updatable = true)
     private boolean valid;
@@ -55,7 +55,7 @@ public class DeviceAccess extends TableModelAutoId {
                     .createQuery("select object (a) from DeviceAccess a where a.user = :user and a.device = :device and a.valid = true and a.expire > :currentDate", DeviceAccess.class)
                     .setParameter("user", user)
                     .setParameter("device", device)
-                    .setParameter("currentDate", LocalDateTime.now())
+                    .setParameter("currentDate", ZonedDateTime.now())
                     .getResultList().size() > 0;
         }
     }
@@ -74,9 +74,9 @@ public class DeviceAccess extends TableModelAutoId {
         DeviceAccess access = new DeviceAccess();
         access.setUser(user);
         access.setDevice(device);
-        access.setAccessGranted(LocalDateTime.now());
+        access.setAccessGranted(ZonedDateTime.now());
         access.setValid(true);
-        access.setExpire(LocalDateTime.now().plus(duration));
+        access.setExpire(ZonedDateTime.now().plus(duration));
 
         sqlSession.beginTransaction();
         sqlSession.save(access);
@@ -96,7 +96,7 @@ public class DeviceAccess extends TableModelAutoId {
             return sqlSession
                     .createQuery("select object (a) from DeviceAccess a where a.device = :device and a.valid = true and a.expire > :currentDate", DeviceAccess.class)
                     .setParameter("device", device)
-                    .setParameter("currentDate", LocalDateTime.now())
+                    .setParameter("currentDate", ZonedDateTime.now())
                     .getResultList();
         }
     }
@@ -138,38 +138,38 @@ public class DeviceAccess extends TableModelAutoId {
     }
 
     /**
-     * Returns the {@link LocalDateTime} when the {@link DeviceAccess} has been granted
+     * Returns the {@link ZonedDateTime} when the {@link DeviceAccess} has been granted
      *
      * @return the time accessed
      */
-    public LocalDateTime getAccessGranted() {
+    public ZonedDateTime getAccessGranted() {
         return this.accessGranted;
     }
 
     /**
-     * Sets a new {@link LocalDateTime} as time accessed
+     * Sets a new {@link ZonedDateTime} as time accessed
      *
-     * @param accessGranted the new {@link LocalDateTime} to be set
+     * @param accessGranted the new {@link ZonedDateTime} to be set
      */
-    public void setAccessGranted(final LocalDateTime accessGranted) {
+    public void setAccessGranted(final ZonedDateTime accessGranted) {
         this.accessGranted = accessGranted;
     }
 
     /**
-     * Returns the {@link LocalDateTime}
+     * Returns the {@link ZonedDateTime}
      *
      * @return the time the access will expire
      */
-    public LocalDateTime getExpire() {
+    public ZonedDateTime getExpire() {
         return this.expire;
     }
 
     /**
-     * Sets a new {@link LocalDateTime}
+     * Sets a new {@link ZonedDateTime}
      *
-     * @param expire the new {@link LocalDateTime} to be set
+     * @param expire the new {@link ZonedDateTime} to be set
      */
-    public void setExpire(final LocalDateTime expire) {
+    public void setExpire(final ZonedDateTime expire) {
         this.expire = expire;
     }
 
@@ -201,8 +201,8 @@ public class DeviceAccess extends TableModelAutoId {
         return JsonBuilder.create("id", this.getId())
                 .add("target_device", getDevice().getId())
                 .add("device", getUser().getId())
-                .add("granted", getAccessGranted().toInstant(ZoneOffset.UTC))
-                .add("expire", getExpire().toInstant(ZoneOffset.UTC).toEpochMilli())
+                .add("granted", getAccessGranted())
+                .add("expire", getExpire())
                 .add("valid", isValid())
                 .build();
     }

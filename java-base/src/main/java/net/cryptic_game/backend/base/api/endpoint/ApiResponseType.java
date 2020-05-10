@@ -1,7 +1,7 @@
 package net.cryptic_game.backend.base.api.endpoint;
 
 import com.google.gson.JsonObject;
-import net.cryptic_game.backend.base.interfaces.JsonSerializable;
+import net.cryptic_game.backend.base.json.JsonSerializable;
 
 public enum ApiResponseType implements JsonSerializable {
 

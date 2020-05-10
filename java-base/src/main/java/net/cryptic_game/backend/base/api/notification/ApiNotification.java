@@ -3,7 +3,7 @@ package net.cryptic_game.backend.base.api.notification;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.api.client.ApiClient;
-import net.cryptic_game.backend.base.interfaces.JsonSerializable;
+import net.cryptic_game.backend.base.json.JsonSerializable;
 
 import java.util.Set;
 import java.util.stream.Collectors;

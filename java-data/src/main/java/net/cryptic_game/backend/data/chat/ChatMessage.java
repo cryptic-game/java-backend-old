@@ -2,6 +2,7 @@ package net.cryptic_game.backend.data.chat;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.json.JsonBuilder;
+import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.data.user.User;
 import org.hibernate.Session;
@@ -18,7 +19,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "chat_message")
-public class ChatMessage extends TableModelAutoId {
+public class ChatMessage extends TableModelAutoId implements JsonSerializable {
 
     @ManyToOne
     @JoinColumn(name = "user_id", updatable = false, nullable = false)

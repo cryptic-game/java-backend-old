@@ -2,6 +2,7 @@ package net.cryptic_game.backend.data.network;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.json.JsonBuilder;
+import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModel;
 import net.cryptic_game.backend.data.device.Device;
 import org.hibernate.Session;
@@ -19,7 +20,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "network_member")
-public class NetworkMember extends TableModel {
+public class NetworkMember extends TableModel implements JsonSerializable {
 
     @EmbeddedId
     private MemberKey key;

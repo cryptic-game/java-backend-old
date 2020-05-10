@@ -2,6 +2,7 @@ package net.cryptic_game.backend.data.device;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.json.JsonBuilder;
+import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModel;
 import org.hibernate.annotations.Type;
 
@@ -16,7 +17,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "device_workload")
-public class DeviceWorkload extends TableModel implements Serializable {
+public class DeviceWorkload extends TableModel implements JsonSerializable, Serializable {
 
     @Id
     @ManyToOne

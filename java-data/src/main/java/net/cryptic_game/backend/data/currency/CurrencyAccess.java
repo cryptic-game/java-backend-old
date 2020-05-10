@@ -2,6 +2,7 @@ package net.cryptic_game.backend.data.currency;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.json.JsonBuilder;
+import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.data.user.User;
 import org.hibernate.annotations.Type;
@@ -19,7 +20,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "currency_access")
-public class CurrencyAccess extends TableModelAutoId {
+public class CurrencyAccess extends TableModelAutoId implements JsonSerializable {
 
     @ManyToOne
     @JoinColumn(name = "user_id", updatable = false, nullable = false)

@@ -2,13 +2,13 @@ package net.cryptic_game.backend.data.currency;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.json.JsonBuilder;
+import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
@@ -18,10 +18,10 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "currency_wallet")
-public class CurrencyWallet extends TableModelAutoId {
+public class CurrencyWallet extends TableModelAutoId implements JsonSerializable {
 
     @Column(name = "timestamp", updatable = false, nullable = false)
-    private LocalDateTime timeStamp;
+    private ZonedDateTime timeStamp;
 
     @Column(name = "password", updatable = true, nullable = true)
     private String password;
@@ -30,20 +30,20 @@ public class CurrencyWallet extends TableModelAutoId {
     private int amount;
 
     /**
-     * Returns the {@link LocalDateTime} of the {@link CurrencyWallet}
+     * Returns the {@link ZonedDateTime} of the {@link CurrencyWallet}
      *
-     * @return the {@link LocalDateTime}
+     * @return the {@link ZonedDateTime}
      */
-    public LocalDateTime getTimeStamp() {
+    public ZonedDateTime getTimeStamp() {
         return this.timeStamp;
     }
 
     /**
-     * Sets a new {@link LocalDateTime} as timestamp for the {@link CurrencyWallet}
+     * Sets a new {@link ZonedDateTime} as timestamp for the {@link CurrencyWallet}
      *
-     * @param timeStamp the new {@link LocalDateTime} to be set
+     * @param timeStamp the new {@link ZonedDateTime} to be set
      */
-    public void setTimeStamp(final LocalDateTime timeStamp) {
+    public void setTimeStamp(final ZonedDateTime timeStamp) {
         this.timeStamp = timeStamp;
     }
 
@@ -117,7 +117,7 @@ public class CurrencyWallet extends TableModelAutoId {
     @Override
     public JsonObject serialize() {
         return JsonBuilder.create("id", this.getId())
-                .add("timestamp", this.getTimeStamp().toInstant(ZoneOffset.UTC))
+                .add("timestamp", this.getTimeStamp())
                 .add("send_amount", this.getPassword())
                 .add("destination_uuid", this.getAmount())
                 .build();

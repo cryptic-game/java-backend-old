@@ -4,7 +4,7 @@ import io.netty.channel.ChannelHandlerContext;
 import net.cryptic_game.backend.data.user.Session;
 import net.cryptic_game.backend.data.user.User;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 public class Client {
@@ -26,9 +26,9 @@ public class Client {
 
     public void setSession(final Session session) {
         this.session = session;
-        session.setLastActive(LocalDateTime.now());
+        session.setLastActive(ZonedDateTime.now());
         session.saveOrUpdate();
-        session.getUser().setLast(LocalDateTime.now());
+        session.getUser().setLast(ZonedDateTime.now());
         session.getUser().saveOrUpdate();
     }
 
@@ -39,7 +39,7 @@ public class Client {
 
     public void setSession(final User user, final UUID token, final String deviceName) {
         this.session = Session.createSession(user, token, deviceName);
-        session.getUser().setLast(LocalDateTime.now());
+        session.getUser().setLast(ZonedDateTime.now());
         session.getUser().saveOrUpdate();
     }
 

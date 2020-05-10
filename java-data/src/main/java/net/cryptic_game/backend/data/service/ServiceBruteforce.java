@@ -2,6 +2,7 @@ package net.cryptic_game.backend.data.service;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.json.JsonBuilder;
+import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import org.hibernate.annotations.Type;
 
@@ -16,7 +17,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "service_bruteforce")
-public class ServiceBruteforce extends TableModelAutoId {
+public class ServiceBruteforce extends TableModelAutoId implements JsonSerializable {
 
     @Column(name = "started", updatable = false, nullable = true) // updatable?
     private int started;

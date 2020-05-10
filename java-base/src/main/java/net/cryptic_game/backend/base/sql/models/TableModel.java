@@ -1,7 +1,7 @@
 package net.cryptic_game.backend.base.sql.models;
 
 import net.cryptic_game.backend.base.AppBootstrap;
-import net.cryptic_game.backend.base.interfaces.JsonSerializable;
+import net.cryptic_game.backend.base.json.JsonTransient;
 import net.cryptic_game.backend.base.sql.SQLConnection;
 import org.hibernate.Session;
 
@@ -10,7 +10,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
 @MappedSuperclass
-public abstract class TableModel implements JsonSerializable {
+public abstract class TableModel {
 
     protected static final SQLConnection sqlConnection;
 
@@ -19,6 +19,7 @@ public abstract class TableModel implements JsonSerializable {
         sqlConnection = app.getSqlConnection();
     }
 
+    @JsonTransient
     @Version
     @Column(name = "version")
     private int version;

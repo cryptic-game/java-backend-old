@@ -7,8 +7,7 @@ import net.cryptic_game.backend.base.utils.ValidationUtils;
 import net.cryptic_game.backend.data.user.Session;
 import net.cryptic_game.backend.data.user.User;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 public class WebSocketUserEndpoints extends ApiEndpointCollection {
@@ -109,8 +108,8 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
         }
 
         client.add(session);
-        session.setLastActive(LocalDateTime.now());
-        session.getUser().setLast(LocalDateTime.now());
+        session.setLastActive(ZonedDateTime.now());
+        session.getUser().setLast(ZonedDateTime.now());
         session.getUser().saveOrUpdate();
         session.saveOrUpdate();
 
@@ -198,8 +197,9 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "USER_NOT_FOUND");
         }
 
-        return new ApiResponse(ApiResponseType.OK, JsonBuilder.create("name", user.getName())
-                .add("last", user.getLast().toInstant(ZoneOffset.UTC).toEpochMilli())
-                .add("id", user.getId()));
+        return new ApiResponse(ApiResponseType.OK, JsonBuilder.create("id", user.getId())
+                .add("name", user.getName())
+                .add("created", user.getCreated())
+                .add("last", user.getLast()));
     }
 }

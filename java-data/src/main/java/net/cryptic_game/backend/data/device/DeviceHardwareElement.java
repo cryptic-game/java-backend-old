@@ -2,6 +2,7 @@ package net.cryptic_game.backend.data.device;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.json.JsonBuilder;
+import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 
 import javax.persistence.Column;
@@ -16,7 +17,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "device_hardware_element")
-public class DeviceHardwareElement extends TableModelAutoId {
+public class DeviceHardwareElement extends TableModelAutoId implements JsonSerializable {
 
     @Column(name = "name", updatable = true, nullable = false)
     private String name;

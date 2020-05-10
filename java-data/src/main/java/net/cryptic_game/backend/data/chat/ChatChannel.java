@@ -2,6 +2,7 @@ package net.cryptic_game.backend.data.chat;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.json.JsonBuilder;
+import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 
 import javax.persistence.Column;
@@ -17,7 +18,7 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "chat_channel")
-public class ChatChannel extends TableModelAutoId {
+public class ChatChannel extends TableModelAutoId implements JsonSerializable {
 
     @Column(name = "name", updatable = true, nullable = false)
     private String name;

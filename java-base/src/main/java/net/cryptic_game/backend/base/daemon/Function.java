@@ -3,8 +3,8 @@ package net.cryptic_game.backend.base.daemon;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.cryptic_game.backend.base.interfaces.JsonSerializable;
 import net.cryptic_game.backend.base.json.JsonBuilder;
+import net.cryptic_game.backend.base.json.JsonSerializable;
 
 import java.util.HashSet;
 import java.util.Set;

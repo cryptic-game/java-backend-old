@@ -1,8 +1,8 @@
 package net.cryptic_game.backend.base.daemon;
 
 import com.google.gson.JsonObject;
-import net.cryptic_game.backend.base.interfaces.JsonSerializable;
 import net.cryptic_game.backend.base.json.JsonBuilder;
+import net.cryptic_game.backend.base.json.JsonSerializable;
 
 public class FunctionArgument implements JsonSerializable {
 

@@ -3,10 +3,10 @@ package net.cryptic_game.backend.base.utils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.cryptic_game.backend.base.interfaces.JsonSerializable;
+import net.cryptic_game.backend.base.json.JsonSerializable;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -80,8 +80,8 @@ public class JsonUtils {
      * @param jsonObject The {@link JsonObject} where the value should be fetched.
      * @param key        The property name.
      * @return The {@link Date} value of the property.
-     * @deprecated Usage of {@link LocalDate} and {@link LocalDateTime} is preferred.
-     * Use {@link JsonUtils#getLocalDate(JsonObject, String)} and {@link JsonUtils#getLocalDateTime(JsonObject, String)} instead.
+     * @deprecated Usage of {@link LocalDate} and {@link ZonedDateTime} is preferred.
+     * Use {@link JsonUtils#getLocalDate(JsonObject, String)} and {@link JsonUtils#getZonedDateTime(JsonObject, String)} instead.
      */
     @Deprecated
     public static Date getDate(JsonObject jsonObject, String key) {
@@ -108,15 +108,15 @@ public class JsonUtils {
     }
 
     /**
-     * Returns the associated {@link LocalDateTime} value of a specific property.
+     * Returns the associated {@link ZonedDateTime} value of a specific property.
      *
      * @param jsonObject The {@link JsonObject} where the value should be fetched.
      * @param key        The property name.
-     * @return The {@link LocalDateTime} value of the property.
+     * @return The {@link ZonedDateTime} value of the property.
      */
-    public static LocalDateTime getLocalDateTime(JsonObject jsonObject, String key) {
+    public static ZonedDateTime getZonedDateTime(JsonObject jsonObject, String key) {
         if (jsonObject.get(key) != null) {
-            return LocalDateTime.parse(jsonObject.get(key).getAsString());
+            return ZonedDateTime.parse(jsonObject.get(key).getAsString());
         } else {
             return null;
         }
