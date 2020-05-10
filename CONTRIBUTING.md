@@ -25,8 +25,6 @@ Commit messages must correspond to the following template: `MESSAGE (#ISSUE-ID)`
 - If the commit is made without an issue, the issue id may be omitted.
 - Exceptions are hotfixes. More about this in *hotfixes*.
 
-For merges, the commit message must be `merge from SOURCE to DESTINATION (#PULLREQUEST-ID)`
-
 ## Pull Requests
 
 ### Title
