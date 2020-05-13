@@ -35,7 +35,7 @@ public class WebSocketEndpointHandler {
         return apiCollection;
     }
 
-    ApiEndpointList getApiList() {
+    public ApiEndpointList getApiList() {
         return this.apiList;
     }
 }

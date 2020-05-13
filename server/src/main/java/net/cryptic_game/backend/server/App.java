@@ -86,4 +86,8 @@ public class App extends AppBootstrap {
     protected void start() {
         this.serverHandler.start();
     }
+
+    public WebSocketEndpointHandler getWebSocketEndpointHandler() {
+        return webSocketEndpointHandler;
+    }
 }

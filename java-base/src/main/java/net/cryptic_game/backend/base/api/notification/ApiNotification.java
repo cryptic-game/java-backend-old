@@ -2,67 +2,34 @@ package net.cryptic_game.backend.base.api.notification;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.cryptic_game.backend.base.api.client.ApiClient;
+import io.netty.channel.Channel;
+import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
+import net.cryptic_game.backend.base.json.JsonUtils;
 
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.Collection;
 
 public class ApiNotification implements JsonSerializable {
 
-    private final String id;
-    private final Set<ApiClient> clients;
     private final String topic;
     private final JsonElement data;
 
-    public ApiNotification(final String id, final Set<ApiClient> clients, final String topic, final JsonSerializable serializable) {
-        this(id, clients, topic, serializable.serialize());
-    }
-
-    public ApiNotification(final String id, final Set<ApiClient> clients, final String topic, final JsonElement data) {
-        this.id = id;
-        this.clients = clients;
+    public ApiNotification(final String topic, final Object object) {
         this.topic = topic;
-        this.data = data;
+        this.data = JsonUtils.toJson(object);
     }
 
-    public ApiNotification(final String id, final JsonSerializable serializable) {
-        this(id, serializable.serialize());
+    public void send(final Channel channel) {
+        channel.writeAndFlush(this.serialize());
     }
 
-    public ApiNotification(final String id, final JsonElement data) {
-        this.id = id;
-        this.data = data;
-        this.clients = null;
-        this.topic = null;
-    }
-
-    public void send(final ApiClient client) {
-        client.writeAndFlush(this.serialize());
-    }
-
-    public void send(final Set<ApiClient> clients) {
-        clients.forEach(this::send);
-    }
-
-    public void send() {
-        if (this.topic == null || this.clients == null) {
-            throw new ApiNotificationException("Topic or clients haven't been specified.");
-        } else {
-            this.send(this.clients.stream().filter(client -> client.hasSubscribed(this.topic)).collect(Collectors.toUnmodifiableSet()));
-        }
-    }
-
-    String getId() {
-        return id;
-    }
-
-    JsonElement getData() {
-        return this.data;
+    public void send(final Collection<Channel> channels) {
+        channels.forEach((channel -> channel.writeAndFlush(this.serialize())));
     }
 
     @Override
     public JsonObject serialize() {
-        return ApiNotificationBuilder.toJson(this);
+        return JsonBuilder.create("info", JsonBuilder.create("notification", true).add("topic", this.topic))
+                .add("data", this.data).build();
     }
 }

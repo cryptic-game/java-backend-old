@@ -2,7 +2,6 @@ package net.cryptic_game.backend.base.api.endpoint;
 
 import net.cryptic_game.backend.base.api.ApiException;
 import net.cryptic_game.backend.base.api.client.ApiClientList;
-import net.cryptic_game.backend.base.api.notification.NotificationEndpointCollection;
 
 import java.util.HashMap;
 import java.util.Set;
@@ -18,11 +17,6 @@ public class ApiEndpointList {
         this.collections = new HashMap<>();
         this.apiExecutors = new HashMap<>();
         this.clientList = clientList;
-        if (this.clientList != null) {
-            final ApiEndpointCollection collection = new NotificationEndpointCollection();
-            collection.setClients(this.clientList);
-            this.collections.put(collection.getName(), collection);
-        }
     }
 
     private void add(final ApiEndpointExecutor api) {

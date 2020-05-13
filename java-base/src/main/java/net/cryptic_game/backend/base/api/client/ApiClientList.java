@@ -27,7 +27,7 @@ public class ApiClientList {
     }
 
     public void remove(final ApiClient client) {
-        this.clients.remove(client);
+        this.clients.removeIf((c) -> c.getChannel().equals(client.getChannel()));
         this.clientRemovedCallbacks.forEach(consumer -> consumer.accept(client));
     }
 
