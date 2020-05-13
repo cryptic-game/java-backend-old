@@ -26,6 +26,9 @@
                   <Item>
                     <option name="path" value=".github/workflows/cryptic-backend-sentry.yml" />
                   </Item>
+                  <Item>
+                    <option name="path" value=".github/workflows/cryptic-backend-docker.yaml" />
+                  </Item>
                 </list>
               </option>
             </SchemaInfo>

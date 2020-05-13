@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - master
-      - experimental
 
 jobs:
   build:
@@ -24,10 +23,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           BRANCH: gh-pages
           FOLDER: build/docs/javadoc
-          DEBUG: true
+          DEBUG: false
           TARGET_FOLDER: javadoc/latest
           CLEAN: true
-          CLEAN_EXCLUDE: '["LICENSE", "daemon-api", "api", "README.md", "_config.yml", "deployment.md", "getting-startet.md", "index.md", "license.md"]'
+          CLEAN_EXCLUDE: '["LICENSE", "daemon-api", "api", "README.md", "_config.yml", "deployment.md", "getting-started.md", "index.md", "license.md"]'
           GIT_CONFIG_NAME: GitHub Actions
           GIT_CONFIG_EMAIL: actions@github.com
 

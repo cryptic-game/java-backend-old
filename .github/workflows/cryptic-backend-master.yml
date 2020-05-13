@@ -3,6 +3,9 @@ on:
   push:
     branches: [master]
 
+env:
+  IMAGE_NAME: crypticcp/cryptic-backend
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,5 +26,5 @@ jobs:
           dockerfile: docker/Dockerfile
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          repository: crypticcp/cryptic-backend
+          repository: ${{ env.IMAGE_NAME }}
           tags: latest
