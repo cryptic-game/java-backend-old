@@ -1,10 +1,9 @@
 package net.cryptic_game.backend.endpoints;
 
-import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.api.client.ApiClient;
 import net.cryptic_game.backend.base.api.endpoint.*;
 import net.cryptic_game.backend.base.json.JsonBuilder;
-import net.cryptic_game.backend.base.utils.ApiUtils;
+import net.cryptic_game.backend.base.utils.DaemonUtils;
 
 import java.util.UUID;
 
@@ -25,8 +24,8 @@ public class TestEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("notification")
-    public ApiResponse notification(ApiClient client, @ApiParameter("user_id") UUID userId) {
-        ApiUtils.request(client.getChannel(), "user/send", JsonBuilder.create("user_id", userId).add("topic", "test").add("data", new JsonObject()).build());
+    public ApiResponse notification(final ApiClient client, @ApiParameter("user_id") final UUID userId) {
+        DaemonUtils.notifyUser(client.getChannel(), userId, "test", JsonBuilder.create("foo", "bar"));
         return new ApiResponse(ApiResponseType.OK);
     }
 }
