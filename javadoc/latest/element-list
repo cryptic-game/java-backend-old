@@ -30,7 +30,6 @@ net.cryptic_game.backend.data.user
 net.cryptic_game.backend.endpoints
 net.cryptic_game.backend.endpoints.network
 net.cryptic_game.backend.server
-net.cryptic_game.backend.server.client
 net.cryptic_game.backend.server.daemon
 net.cryptic_game.backend.server.server.daemon
 net.cryptic_game.backend.server.server.daemon.endpoints

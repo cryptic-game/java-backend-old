@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10};
+var data = {"i0":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -198,12 +198,9 @@ extends <a href="../../../../base/api/endpoint/ApiEndpointCollection.html" title
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="../../../../base/api/endpoint/ApiResponse.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiResponse</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#respond()">respond</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="../../../../base/api/endpoint/ApiResponse.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiResponse</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#send()">send</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#send(java.util.UUID,java.lang.String,com.google.gson.JsonObject)">send</a></span>&#8203;(java.util.UUID&nbsp;userId,
+    java.lang.String&nbsp;topic,
+    com.google.gson.JsonObject&nbsp;data)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -256,22 +253,15 @@ extends <a href="../../../../base/api/endpoint/ApiEndpointCollection.html" title
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="send()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>send</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../../base/api/endpoint/ApiResponse.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiResponse</a>&nbsp;send()</pre>
-</li>
-</ul>
-<a id="respond()">
+<a id="send(java.util.UUID,java.lang.String,com.google.gson.JsonObject)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>respond</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../../base/api/endpoint/ApiResponse.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiResponse</a>&nbsp;respond()</pre>
+<h4>send</h4>
+<pre class="methodSignature">public&nbsp;<a href="../../../../base/api/endpoint/ApiResponse.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiResponse</a>&nbsp;send&#8203;(java.util.UUID&nbsp;userId,
+                        java.lang.String&nbsp;topic,
+                        com.google.gson.JsonObject&nbsp;data)</pre>
 </li>
 </ul>
 </li>
