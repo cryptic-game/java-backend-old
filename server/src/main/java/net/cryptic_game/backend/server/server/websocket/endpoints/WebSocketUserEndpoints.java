@@ -18,7 +18,7 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("login")
     public ApiResponse login(final ApiClient client,
-                             @ApiParameter("name") final String name,
+                             @ApiParameter("username") final String username,
                              @ApiParameter("password") final String password,
                              @ApiParameter("device_name") final String deviceName) {
         Session session = client.get(Session.class);
@@ -26,14 +26,14 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "ALREADY_LOGGED_IN");
         }
 
-        if (name.length() > 256) {
-            return new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_NAME");
+        if (username.length() > 256) {
+            return new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_USERNAME");
         }
 
-        final User user = User.getByName(name);
+        final User user = User.getByUsername(username);
 
         if (user == null) {
-            return new ApiResponse(ApiResponseType.UNAUTHORIZED, "INVALID_NAME");
+            return new ApiResponse(ApiResponseType.UNAUTHORIZED, "INVALID_USERNAME");
         }
         if (!user.verifyPassword(password)) {
             return new ApiResponse(ApiResponseType.UNAUTHORIZED, "INVALID_PASSWORD");
@@ -52,7 +52,7 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("register")
     public ApiResponse register(final ApiClient client,
-                                @ApiParameter("name") final String name,
+                                @ApiParameter("username") final String username,
                                 @ApiParameter("password") final String password,
                                 @ApiParameter("mail") final String mail,
                                 @ApiParameter("device_name") final String deviceName) {
@@ -61,8 +61,8 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "ALREADY_LOGGED_IN");
         }
 
-        if (name.length() > 256) {
-            return new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_NAME");
+        if (username.length() > 256) {
+            return new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_USERNAME");
         }
 
         if (!ValidationUtils.checkPassword(password)) {
@@ -73,12 +73,12 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_MAIL");
         }
 
-        if (User.getByName(name) != null) {
+        if (User.getByUsername(username) != null) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "USER_ALREADY_EXISTS");
         }
 
         final UUID token = UUID.randomUUID();
-        final User user = User.createUser(name, mail, password);
+        final User user = User.createUser(username, mail, password);
         session = Session.createSession(user, token, deviceName);
         client.add(session);
 
@@ -198,7 +198,7 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
         }
 
         return new ApiResponse(ApiResponseType.OK, JsonBuilder.create("id", user.getId())
-                .add("name", user.getName())
+                .add("name", user.getUsername())
                 .add("created", user.getCreated())
                 .add("last", user.getLast()));
     }

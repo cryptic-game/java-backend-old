@@ -1,8 +1,6 @@
 package net.cryptic_game.backend.data.user;
 
-import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.json.JsonTransient;
-import net.cryptic_game.backend.base.json.JsonUtils;
 import net.cryptic_game.backend.base.sql.models.TableModel;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.base.utils.SecurityUtils;
@@ -25,8 +23,8 @@ import java.util.UUID;
 @Table(name = "user")
 public class User extends TableModelAutoId {
 
-    @Column(name = "name", updatable = true, nullable = false, unique = true)
-    private String name;
+    @Column(name = "username", updatable = true, nullable = false, unique = true)
+    private String username;
 
     @Column(name = "mail", updatable = true, nullable = false, unique = true)
     private String mail;
@@ -48,31 +46,18 @@ public class User extends TableModelAutoId {
     }
 
     /**
-     * Create a {@link User} instance from a {@link JsonObject}.
-     *
-     * @param json is the {@link JsonObject} representation of the {@link User}.
-     */
-    public User(final JsonObject json) {
-        this.setId(UUID.fromString(json.get("id").getAsString()));
-        this.name = json.get("name").getAsString();
-        this.mail = json.get("mail").getAsString();
-        this.created = JsonUtils.fromJson(json.get("created"), ZonedDateTime.class);
-        this.last = JsonUtils.fromJson(json.get("last"), ZonedDateTime.class);
-    }
-
-    /**
      * Create a {@link User} with the given user data
      *
-     * @param name     The name of the new user
+     * @param username The username of the new user
      * @param mail     The mail address of the new user
      * @param password The password of the new user
      * @return The instance of the created {@link User}
      */
-    public static User createUser(final String name, final String mail, final String password) {
+    public static User createUser(final String username, final String mail, final String password) {
         final ZonedDateTime now = ZonedDateTime.now();
 
         final User user = new User();
-        user.setName(name);
+        user.setUsername(username);
         user.setMail(mail);
         user.setCreated(now);
         user.setLast(now);
@@ -102,7 +87,7 @@ public class User extends TableModelAutoId {
      * @param name The name of the user
      * @return The instance of the fetched {@link User} if it exists | null if the {@link User} does not exist
      */
-    public static User getByName(final String name) {
+    public static User getByUsername(final String name) {
         final Session session = sqlConnection.openSession();
         final List<User> users = session
                 .createQuery("select object (u) from User as u where u.name = :name", User.class)
@@ -115,21 +100,21 @@ public class User extends TableModelAutoId {
     }
 
     /**
-     * Returns the name of the {@link User}
+     * Returns the username of the {@link User}
      *
-     * @return Name of the {@link User}
+     * @return Username of the {@link User}
      */
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
     /**
-     * Sets a new name of the {@link User}
+     * Sets a new username of the {@link User}
      *
-     * @param name New name to be set
+     * @param username New username to be set
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     /**
@@ -248,7 +233,7 @@ public class User extends TableModelAutoId {
                 Objects.equals(this.getCreated(), that.getCreated()) &&
                 Objects.equals(this.getLast(), that.getLast()) &&
                 Objects.equals(this.getMail(), that.getMail()) &&
-                Objects.equals(this.getName(), that.getName()) &&
+                Objects.equals(this.getUsername(), that.getUsername()) &&
                 Objects.equals(this.getPasswordHash(), that.getPasswordHash());
     }
 
@@ -260,6 +245,6 @@ public class User extends TableModelAutoId {
     @Override
     public int hashCode() {
         return Objects.hash(this.getId(), this.getVersion(), this.getCreated(), this.getLast(),
-                this.getMail(), this.getName(), this.getPasswordHash());
+                this.getMail(), this.getUsername(), this.getPasswordHash());
     }
 }
