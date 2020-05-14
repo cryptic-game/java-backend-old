@@ -837,13 +837,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Fetches the <a href="net/cryptic_game/backend/data/network/Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a> with the given name</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/user/User.html#getByName(java.lang.String)">getByName(String)</a></span> - Static method in class net.cryptic_game.backend.data.user.<a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user">User</a></dt>
-<dd>
-<div class="block">Fetches the <a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a> with the give name</div>
-</dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/user/Session.html#getByUser(net.cryptic_game.backend.data.user.User)">getByUser(User)</a></span> - Static method in class net.cryptic_game.backend.data.user.<a href="net/cryptic_game/backend/data/user/Session.html" title="class in net.cryptic_game.backend.data.user">Session</a></dt>
 <dd>
 <div class="block">Fetches all <a href="net/cryptic_game/backend/data/user/Session.html" title="class in net.cryptic_game.backend.data.user"><code>Session</code></a>s of a specific <a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
+</dd>
+<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/user/User.html#getByUsername(java.lang.String)">getByUsername(String)</a></span> - Static method in class net.cryptic_game.backend.data.user.<a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user">User</a></dt>
+<dd>
+<div class="block">Fetches the <a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a> with the give name</div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/base/api/client/ApiClient.html#getChannel()">getChannel()</a></span> - Method in class net.cryptic_game.backend.base.api.client.<a href="net/cryptic_game/backend/base/api/client/ApiClient.html" title="class in net.cryptic_game.backend.base.api.client">ApiClient</a></dt>
 <dd>&nbsp;</dd>
@@ -1105,10 +1105,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Returns the name of the <a href="net/cryptic_game/backend/data/service/Service.html" title="class in net.cryptic_game.backend.data.service"><code>Service</code></a></div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/user/User.html#getName()">getName()</a></span> - Method in class net.cryptic_game.backend.data.user.<a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user">User</a></dt>
-<dd>
-<div class="block">Returns the name of the <a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
-</dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/network/NetworkInvitation.html#getNetwork()">getNetwork()</a></span> - Method in class net.cryptic_game.backend.data.network.<a href="net/cryptic_game/backend/data/network/NetworkInvitation.html" title="class in net.cryptic_game.backend.data.network">NetworkInvitation</a></dt>
 <dd>
 <div class="block">Returns the <a href="net/cryptic_game/backend/data/network/Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a> of the <a href="net/cryptic_game/backend/data/network/NetworkInvitation.html" title="class in net.cryptic_game.backend.data.network"><code>NetworkInvitation</code></a></div>
@@ -1338,6 +1334,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/base/sql/SQLServer.html#getUsername()">getUsername()</a></span> - Method in class net.cryptic_game.backend.base.sql.<a href="net/cryptic_game/backend/base/sql/SQLServer.html" title="class in net.cryptic_game.backend.base.sql">SQLServer</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/user/User.html#getUsername()">getUsername()</a></span> - Method in class net.cryptic_game.backend.data.user.<a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user">User</a></dt>
+<dd>
+<div class="block">Returns the username of the <a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
+</dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/currency/CurrencyTransaction.html#getUserSource()">getUserSource()</a></span> - Method in class net.cryptic_game.backend.data.currency.<a href="net/cryptic_game/backend/data/currency/CurrencyTransaction.html" title="class in net.cryptic_game.backend.data.currency">CurrencyTransaction</a></dt>
 <dd>
 <div class="block">Returns the <a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a> who sends the <a href="net/cryptic_game/backend/data/currency/CurrencyTransaction.html" title="class in net.cryptic_game.backend.data.currency"><code>CurrencyTransaction</code></a></div>
@@ -2431,10 +2431,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Sets the name of the <a href="net/cryptic_game/backend/data/service/Service.html" title="class in net.cryptic_game.backend.data.service"><code>Service</code></a></div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/user/User.html#setName(java.lang.String)">setName(String)</a></span> - Method in class net.cryptic_game.backend.data.user.<a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user">User</a></dt>
-<dd>
-<div class="block">Sets a new name of the <a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
-</dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/network/NetworkInvitation.html#setNetwork(net.cryptic_game.backend.data.network.Network)">setNetwork(Network)</a></span> - Method in class net.cryptic_game.backend.data.network.<a href="net/cryptic_game/backend/data/network/NetworkInvitation.html" title="class in net.cryptic_game.backend.data.network">NetworkInvitation</a></dt>
 <dd>
 <div class="block">Sets a new <a href="net/cryptic_game/backend/data/network/Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a> of the <a href="net/cryptic_game/backend/data/network/NetworkInvitation.html" title="class in net.cryptic_game.backend.data.network"><code>NetworkInvitation</code></a></div>
@@ -2651,6 +2647,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Sets a new <a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a> as destination for the <a href="net/cryptic_game/backend/data/currency/CurrencyTransaction.html" title="class in net.cryptic_game.backend.data.currency"><code>CurrencyTransaction</code></a></div>
 </dd>
+<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/user/User.html#setUsername(java.lang.String)">setUsername(String)</a></span> - Method in class net.cryptic_game.backend.data.user.<a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user">User</a></dt>
+<dd>
+<div class="block">Sets a new username of the <a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
+</dd>
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/currency/CurrencyTransaction.html#setUserSource(net.cryptic_game.backend.data.user.User)">setUserSource(User)</a></span> - Method in class net.cryptic_game.backend.data.currency.<a href="net/cryptic_game/backend/data/currency/CurrencyTransaction.html" title="class in net.cryptic_game.backend.data.currency">CurrencyTransaction</a></dt>
 <dd>
 <div class="block">Sets a new <a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a> as source for the <a href="net/cryptic_game/backend/data/currency/CurrencyTransaction.html" title="class in net.cryptic_game.backend.data.currency"><code>CurrencyTransaction</code></a></div>
@@ -2856,10 +2856,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/user/User.html#%3Cinit%3E()">User()</a></span> - Constructor for class net.cryptic_game.backend.data.user.<a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user">User</a></dt>
 <dd>
 <div class="block">Empty constructor to create a new <a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
-</dd>
-<dt><span class="memberNameLink"><a href="net/cryptic_game/backend/data/user/User.html#%3Cinit%3E(com.google.gson.JsonObject)">User(JsonObject)</a></span> - Constructor for class net.cryptic_game.backend.data.user.<a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user">User</a></dt>
-<dd>
-<div class="block">Create a <a href="net/cryptic_game/backend/data/user/User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a> instance from a <code>JsonObject</code>.</div>
 </dd>
 <dt><a href="net/cryptic_game/backend/data/user/UserSettings.html" title="class in net.cryptic_game.backend.data.user"><span class="typeNameLink">UserSettings</span></a> - Class in <a href="net/cryptic_game/backend/data/user/package-summary.html">net.cryptic_game.backend.data.user</a></dt>
 <dd>
