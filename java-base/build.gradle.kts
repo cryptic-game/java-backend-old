@@ -13,7 +13,7 @@ dependencies {
 
     // Logger
     api("org.apache.logging.log4j:log4j-core:2.13.3")
-    api("org.apache.logging.log4j:log4j-slf4j-impl:2.13.2")
+    api("org.apache.logging.log4j:log4j-slf4j-impl:2.13.3")
 
     // Network
     api("io.netty:netty-all:4.1.50.Final")
