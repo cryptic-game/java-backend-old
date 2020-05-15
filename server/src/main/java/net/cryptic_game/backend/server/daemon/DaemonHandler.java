@@ -64,8 +64,6 @@ public class DaemonHandler {
 
             log.info("Removed daemon \"" + daemon.getName() + "\"");
         }
-
-        System.out.println(this.endpointList);
     }
 
     public void addEndpointCollections(final Set<ApiEndpointCollectionData> endpointCollections) {
