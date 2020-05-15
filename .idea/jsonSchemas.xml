@@ -29,6 +29,25 @@
                   <Item>
                     <option name="path" value=".github/workflows/cryptic-backend-docker.yaml" />
                   </Item>
+                  <Item>
+                    <option name="path" value=".github/workflows/cryptic-backend-docker-tag.yaml" />
+                  </Item>
+                </list>
+              </option>
+            </SchemaInfo>
+          </value>
+        </entry>
+        <entry key="renovate">
+          <value>
+            <SchemaInfo>
+              <option name="name" value="renovate" />
+              <option name="relativePathToSchema" value="https://docs.renovatebot.com/renovate-schema.json" />
+              <option name="applicationDefined" value="true" />
+              <option name="patterns">
+                <list>
+                  <Item>
+                    <option name="path" value="renovate.json" />
+                  </Item>
                 </list>
               </option>
             </SchemaInfo>
