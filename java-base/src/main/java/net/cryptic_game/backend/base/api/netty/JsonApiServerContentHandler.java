@@ -96,9 +96,9 @@ public class JsonApiServerContentHandler extends NettyChannelHandler<JsonObject>
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        if (cause.getCause() instanceof JsonSyntaxException)
+        if (cause.getCause() instanceof JsonSyntaxException) {
             this.channelRead0(ctx, new JsonObject(), new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_JSON"));
-        else {
+        } else {
             super.exceptionCaught(ctx, cause);
             this.channelRead0(ctx, new JsonObject(), new ApiResponse(ApiResponseType.INTERNAL_SERVER_ERROR));
         }
