@@ -16,8 +16,8 @@ public abstract class NettyChannelHandler<T> extends SimpleChannelInboundHandler
 
     @Override
     public void exceptionCaught(final ChannelHandlerContext ctx, final Throwable cause) throws Exception {
-        if (cause.getMessage().equals("An existing connection was forcibly closed by the remote host"))
+        if (cause.getMessage().equals("An existing connection was forcibly closed by the remote host")) {
             log.error(cause.getMessage() + " (" + ctx.channel() + ")");
-        else log.error("Failed to progress channel. \"" + ctx.channel() + "\"", cause);
+        } else log.error("Failed to progress channel. \"" + ctx.channel() + "\"", cause);
     }
 }
