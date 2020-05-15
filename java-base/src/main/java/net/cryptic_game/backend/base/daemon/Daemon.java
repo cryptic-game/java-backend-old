@@ -1,14 +1,13 @@
 package net.cryptic_game.backend.base.daemon;
 
-import com.google.gson.JsonObject;
 import io.netty.channel.Channel;
-import net.cryptic_game.backend.base.json.JsonBuilder;
-import net.cryptic_game.backend.base.json.JsonSerializable;
+import net.cryptic_game.backend.base.json.JsonTransient;
 
 import java.time.ZonedDateTime;
 
-public class Daemon implements JsonSerializable {
+public class Daemon {
 
+    @JsonTransient
     private final Channel channel;
     private final ZonedDateTime connectedSince;
     private final String name;
@@ -17,13 +16,6 @@ public class Daemon implements JsonSerializable {
         this.channel = channel;
         this.name = name;
         this.connectedSince = ZonedDateTime.now();
-    }
-
-    @Override
-    public JsonObject serialize() {
-        return JsonBuilder.create("name", this.getName())
-                .add("connected_since", this.getConnectedSince().toInstant())
-                .build();
     }
 
     public String getName() {

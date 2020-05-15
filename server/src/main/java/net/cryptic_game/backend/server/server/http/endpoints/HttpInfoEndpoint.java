@@ -11,7 +11,7 @@ public class HttpInfoEndpoint extends ApiEndpointCollection {
     private final DaemonHandler daemonHandler;
 
     public HttpInfoEndpoint(final DaemonHandler daemonHandler) {
-        super("info");
+        super("info", "todo");
         this.daemonHandler = daemonHandler;
     }
 

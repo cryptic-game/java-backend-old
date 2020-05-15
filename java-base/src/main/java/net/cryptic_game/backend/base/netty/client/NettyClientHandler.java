@@ -1,11 +1,13 @@
 package net.cryptic_game.backend.base.netty.client;
 
+import io.netty.channel.Channel;
 import net.cryptic_game.backend.base.netty.EventLoopGroupHandler;
 import net.cryptic_game.backend.base.netty.NettyCodec;
 
 import java.net.SocketAddress;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Consumer;
 
 public class NettyClientHandler {
 
@@ -17,8 +19,8 @@ public class NettyClientHandler {
         this.eventLoopGroupHandler = new EventLoopGroupHandler();
     }
 
-    public NettyClient addClient(final String name, final SocketAddress address, final boolean unixSocket, final NettyCodec<?> nettyCodec) {
-        final NettyClient client = new NettyClient(name, address, unixSocket, this.eventLoopGroupHandler, nettyCodec);
+    public NettyClient addClient(final String name, final SocketAddress address, final boolean unixSocket, final NettyCodec<?> nettyCodec, final Consumer<Channel> connectCallback) {
+        final NettyClient client = new NettyClient(name, address, unixSocket, this.eventLoopGroupHandler, nettyCodec, connectCallback);
         this.clients.add(client);
         return client;
     }

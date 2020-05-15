@@ -1,6 +1,7 @@
 package net.cryptic_game.backend.base.api.endpoint;
 
 import com.google.gson.JsonObject;
+import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 
 public enum ApiResponseType implements JsonSerializable {
@@ -23,10 +24,10 @@ public enum ApiResponseType implements JsonSerializable {
     INTERNAL_SERVER_ERROR(500, "INTERNAL_SERVER_ERROR", true),
     NOT_IMPLEMENTED(501, "NOT_IMPLEMENTED", true),
     BAD_GATEWAY(502, "BAD_GATEWAY", true),
+    GATEWAY_TIMEOUT(504, "GATEWAY_TIMEOUT", true),
 
-    // Custom
-    PUSH(900, "PUSH", false),
-    ALREADY_EXISTS(901, "ALREADY_EXISTS", true);
+    // Self made
+    ALREADY_EXISTS(905, "ALREADY_EXIST", true);
 
     final int code;
     final String name;
@@ -44,24 +45,31 @@ public enum ApiResponseType implements JsonSerializable {
     }
 
     public JsonObject serialize(final boolean showNotification) {
-        final JsonObject json = new JsonObject();
-        if (showNotification) json.addProperty("notification", false);
-        json.addProperty("code", this.code);
-        json.addProperty("name", this.name);
-        json.addProperty("error", this.error);
-        return json;
+        final JsonBuilder json = JsonBuilder.create("code", this.getCode())
+                .add("name", this.getName())
+                .add("error", this.isError());
+        if (showNotification) json.add("notification", false);
+        return json.build();
     }
 
-    @Override
-    public String toString() {
-        return this.code + " " + this.name;
+    public int getCode() {
+        return this.code;
+    }
+
+    public String getName() {
+        return this.name;
     }
 
     public boolean isError() {
         return this.error;
     }
 
-    public int getCode() {
-        return this.code;
+    @Override
+    public String toString() {
+        return "ApiResponseType{" +
+                "code=" + code +
+                ", name='" + name + '\'' +
+                ", error=" + error +
+                '}';
     }
 }

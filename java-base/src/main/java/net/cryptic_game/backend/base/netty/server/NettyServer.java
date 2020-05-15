@@ -63,7 +63,7 @@ public class NettyServer {
 
                     this.channel.closeFuture().sync();
                 } catch (Exception e) {
-                    log.error("The server \"" + this.getName() + "\" was unexpectedly closed.", e);
+                    log.error("The server \"{}\" was unexpectedly closed. {}", this.getName(), e.toString());
                 }
                 log.info("Restarting in 20 seconds.");
                 try {

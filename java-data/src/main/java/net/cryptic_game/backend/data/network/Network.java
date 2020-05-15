@@ -8,7 +8,11 @@ import net.cryptic_game.backend.data.device.Device;
 import org.hibernate.Session;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;

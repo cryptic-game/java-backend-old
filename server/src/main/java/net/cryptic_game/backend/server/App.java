@@ -1,7 +1,10 @@
 package net.cryptic_game.backend.server;
 
+import com.google.gson.JsonObject;
 import io.netty.channel.unix.DomainSocketAddress;
 import net.cryptic_game.backend.base.AppBootstrap;
+import net.cryptic_game.backend.base.api.client.ApiClient;
+import net.cryptic_game.backend.base.api.endpoint.ApiEndpointData;
 import net.cryptic_game.backend.base.netty.server.NettyServerHandler;
 import net.cryptic_game.backend.server.daemon.DaemonHandler;
 import net.cryptic_game.backend.server.server.daemon.DaemonEndpointHandler;
@@ -25,12 +28,12 @@ public class App extends AppBootstrap {
     private static final Logger log = LoggerFactory.getLogger(App.class);
     private static final ServerConfig serverConfig = new ServerConfig();
 
-    private DaemonHandler daemonHandler;
-    private NettyServerHandler serverHandler;
-
     private DaemonEndpointHandler daemonEndpointHandler;
     private WebSocketEndpointHandler webSocketEndpointHandler;
     private HttpEndpointHandler httpEndpointHandler;
+
+    private DaemonHandler daemonHandler;
+    private NettyServerHandler serverHandler;
 
     public App(final String[] args) {
         super(args, serverConfig, "Java-Server");
@@ -43,12 +46,24 @@ public class App extends AppBootstrap {
 
     @Override
     protected void preInit() {
-        this.daemonHandler = new DaemonHandler();
-        this.serverHandler = new NettyServerHandler();
-
         this.daemonEndpointHandler = new DaemonEndpointHandler();
         this.webSocketEndpointHandler = new WebSocketEndpointHandler();
         this.httpEndpointHandler = new HttpEndpointHandler();
+
+        this.daemonHandler = new DaemonHandler(this.webSocketEndpointHandler.getApiList());
+        try {
+            this.daemonHandler.setSend(
+                    new WebSocketDaemonEndpoints(this.daemonHandler),
+                    WebSocketDaemonEndpoints.class.getDeclaredMethod("send",
+                            ApiClient.class,
+                            String.class,
+                            ApiEndpointData.class,
+                            JsonObject.class)
+            );
+        } catch (NoSuchMethodException e) {
+            log.error("Unable to load method send from " + WebSocketDaemonEndpoints.class.getName() + ".", e);
+        }
+        this.serverHandler = new NettyServerHandler();
     }
 
     @Override
@@ -59,7 +74,6 @@ public class App extends AppBootstrap {
 
         this.webSocketEndpointHandler.addApiCollection(new WebSocketUserEndpoints());
         this.webSocketEndpointHandler.addApiCollection(new WebSocketInfoEndpoints());
-        this.webSocketEndpointHandler.addApiCollection(new WebSocketDaemonEndpoints(this.daemonHandler));
         this.webSocketEndpointHandler.postInit();
 
         this.httpEndpointHandler.addApiCollection(new WebSocketInfoEndpoints());

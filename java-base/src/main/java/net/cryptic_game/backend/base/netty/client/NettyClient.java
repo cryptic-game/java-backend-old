@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import java.net.SocketAddress;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class NettyClient {
 
@@ -29,15 +30,19 @@ public class NettyClient {
     private final EventLoopGroupHandler eventLoopGroupHandler;
     private final List<NettyCodecInitializer<?>> nettyInitializers;
 
+    private final Consumer<Channel> connectCallback;
+
     private Channel channel;
 
-    public NettyClient(final String name, final SocketAddress address, final boolean unixSocket, final EventLoopGroupHandler eventLoopGroupHandler, final NettyCodec<?> nettyCodec) {
+    public NettyClient(final String name, final SocketAddress address, final boolean unixSocket, final EventLoopGroupHandler eventLoopGroupHandler, final NettyCodec<?> nettyCodec, final Consumer<Channel> connectCallback) {
         this.name = name;
         this.address = address;
         this.unixSocket = unixSocket;
 
         this.eventLoopGroupHandler = eventLoopGroupHandler;
         this.nettyInitializers = nettyCodec.getInitializers();
+
+        this.connectCallback = connectCallback;
     }
 
     protected void stop() {
@@ -58,10 +63,11 @@ public class NettyClient {
                             .channel();
 
                     log.info("The client \"" + this.getName() + "\" is now connected to " + this.address + ".");
+                    this.connectCallback.accept(this.channel);
 
                     this.channel.closeFuture().sync();
                 } catch (Exception e) {
-                    log.error("The client \"" + this.getName() + "\" was unexpectedly closed.", e);
+                    log.error("The client \"{}\" was unexpectedly closed. {}", this.getName(), e.toString());
                 }
                 log.info("Reconnecting in 20 seconds.");
                 try {

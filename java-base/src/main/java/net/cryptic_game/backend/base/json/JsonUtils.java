@@ -1,6 +1,10 @@
 package net.cryptic_game.backend.base.json;
 
-import com.google.gson.*;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import net.cryptic_game.backend.base.json.types.InstantTypeAdapter;
 import net.cryptic_game.backend.base.json.types.ZonedDateTimeAdapter;
 import org.slf4j.Logger;
@@ -60,6 +64,15 @@ public final class JsonUtils {
         final JsonArray array = new JsonArray();
         collection.forEach(item -> array.add(JsonUtils.toJson(function.apply(item))));
         return array;
+    }
+
+    public static <C extends Collection<T>, T> C fromArray(final JsonArray array, final C collection, final Class<T> type) {
+        return JsonUtils.fromArray(array, collection, element -> JsonUtils.fromJson(element, type));
+    }
+
+    public static <C extends Collection<T>, T> C fromArray(final JsonArray array, final C collection, final Function<JsonElement, T> function) {
+        array.forEach(item -> collection.add(function.apply(item)));
+        return collection;
     }
 
     public static Gson getGson() {

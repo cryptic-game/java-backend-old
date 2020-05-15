@@ -84,14 +84,14 @@ public class User extends TableModelAutoId {
     /**
      * Fetches the {@link User} with the give name
      *
-     * @param name The name of the user
+     * @param username The username of the user
      * @return The instance of the fetched {@link User} if it exists | null if the {@link User} does not exist
      */
-    public static User getByUsername(final String name) {
+    public static User getByUsername(final String username) {
         final Session session = sqlConnection.openSession();
         final List<User> users = session
-                .createQuery("select object (u) from User as u where u.name = :name", User.class)
-                .setParameter("name", name)
+                .createQuery("select object (u) from User as u where u.username = :username", User.class)
+                .setParameter("username", username)
                 .getResultList();
         session.close();
 

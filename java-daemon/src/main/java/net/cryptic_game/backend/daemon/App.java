@@ -1,5 +1,6 @@
 package net.cryptic_game.backend.daemon;
 
+import io.netty.channel.Channel;
 import io.netty.channel.unix.DomainSocketAddress;
 import net.cryptic_game.backend.base.AppBootstrap;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
@@ -59,23 +60,16 @@ public class App extends AppBootstrap {
         final boolean useUnixSocket = this.getConfig().isUseUnixSocket();
         this.client = this.clientHandler.addClient("daemon",
                 useUnixSocket ? new DomainSocketAddress(this.getConfig().getUnixSocketPath()) : new InetSocketAddress("localhost", 4012),
-                useUnixSocket, new DaemonClientCodec(this.daemonEndpointHandler));
+                useUnixSocket, new DaemonClientCodec(this.daemonEndpointHandler), this::onConnect);
     }
 
     @Override
     protected void start() {
         this.clientHandler.start();
+    }
 
-        new Thread(() -> {
-            log.info("Waiting ten seconds to connect to the server.");
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {
-                log.error("", e);
-            }
-
-            log.info("Sending request for registering on the server.");
-            this.daemonBootstrapper.sendRegisterPackage(this.client.getChannel());
-        }).start();
+    public void onConnect(final Channel channel) {
+        log.info("Sending request for registering on the server.");
+        this.daemonBootstrapper.sendRegisterPackage(channel);
     }
 }

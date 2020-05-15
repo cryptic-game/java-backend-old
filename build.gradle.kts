@@ -24,6 +24,18 @@ subprojects {
 
     configure<JavaPluginConvention> {
         sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    dependencies {
+        testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")
+        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.2")
+        testImplementation("org.mockito:mockito-junit-jupiter:3.3.3")
+    }
+
+    tasks.test {
+        useJUnitPlatform()
+        maxHeapSize = "1G"
     }
 
 //    tasks {

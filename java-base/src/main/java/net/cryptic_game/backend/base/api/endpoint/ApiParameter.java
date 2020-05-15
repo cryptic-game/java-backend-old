@@ -11,5 +11,9 @@ public @interface ApiParameter {
 
     String value();
 
+    ApiParameterSpecialType special() default ApiParameterSpecialType.NORMAL;
+
+    String description() default "";
+
     boolean optional() default false;
 }

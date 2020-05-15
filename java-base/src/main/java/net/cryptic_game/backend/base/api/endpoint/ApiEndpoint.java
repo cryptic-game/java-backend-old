@@ -10,4 +10,6 @@ import java.lang.annotation.Target;
 public @interface ApiEndpoint {
 
     String value();
+
+    String description() default "";
 }
