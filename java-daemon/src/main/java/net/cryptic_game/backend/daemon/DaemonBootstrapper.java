@@ -1,16 +1,9 @@
 package net.cryptic_game.backend.daemon;
 
 import io.netty.channel.Channel;
-import net.cryptic_game.backend.base.api.endpoint.ApiEndpointExecutor;
 import net.cryptic_game.backend.base.daemon.DaemonRegisterPacket;
-import net.cryptic_game.backend.base.daemon.Function;
-import net.cryptic_game.backend.base.daemon.FunctionArgument;
 import net.cryptic_game.backend.base.utils.ApiUtils;
 import net.cryptic_game.backend.daemon.api.DaemonEndpointHandler;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 public class DaemonBootstrapper {
 
@@ -23,16 +16,8 @@ public class DaemonBootstrapper {
     }
 
     void sendRegisterPackage(final Channel channel) {
-        this.loadFunctions();
-        ApiUtils.request(channel, "daemon/register", this.drp.serialize());
-    }
-
-    private void loadFunctions() {
-        final HashMap<String, ApiEndpointExecutor> apiExecutors = this.daemonEndpointHandler.getApiList().getApiExecutors();
-        apiExecutors.forEach((name, executor) -> {
-            final Set<FunctionArgument> arguments = new HashSet<>();
-            executor.getParameters().forEach(parameter -> arguments.add(new FunctionArgument(parameter.getKey(), !parameter.isOptional())));
-            this.drp.addFunction(new Function(name, arguments));
-        });
+        this.drp.getEndpointCollections().clear();
+        this.drp.addEndpointCollections(this.daemonEndpointHandler.getApiList().getCollections().values());
+        ApiUtils.request(channel, "daemon/register", this.drp);
     }
 }

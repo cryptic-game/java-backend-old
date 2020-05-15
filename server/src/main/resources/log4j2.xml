@@ -3,15 +3,17 @@
     <Appenders>
         <Console name="console" target="SYSTEM_OUT">
             <PatternLayout
-                    pattern="%highlight{[%d{yyyy-MM-dd] [HH:mm:ss}] [Server] [%t] [%level]: %msg}{FATAL=red, ERROR=red, WARN=yellow, INFO=reset, DEBUG=green, TRACE=blue}%n"/>
+                    pattern="[%style{%d{yyyy-MM-dd HH:mm:ss}}{cyan}] [%style{%highlight{%5p}{FATAL=red, ERROR=red, WARN=yellow, INFO=blue, DEBUG=reset, TRACE=reset}}{Bright}] [%style{       Server}{cyan}] [%style{%15.15t}{cyan}]: %style{%highlight{%m%n%ex}{FATAL=red, ERROR=red, WARN=yellow, INFO=blue, DEBUG=reset, TRACE=reset}}{Bright}">
+            </PatternLayout>
         </Console>
-
         <Sentry name="Sentry"/>
     </Appenders>
     <Loggers>
         <Root level="info" additivity="false">
             <AppenderRef ref="console"/>
-            <appender-ref ref="Sentry" level="WARN"/>
+            <AppenderRef ref="Sentry" level="WARN"/>
         </Root>
+        <Logger name="SysOut" level="trace"/>
+        <Logger name="SysErr" level="error"/>
     </Loggers>
 </Configuration>

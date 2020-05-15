@@ -1,7 +1,12 @@
 package net.cryptic_game.backend.endpoints.network;
 
 import com.google.gson.JsonArray;
-import net.cryptic_game.backend.base.api.endpoint.*;
+import net.cryptic_game.backend.base.api.endpoint.ApiEndpoint;
+import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
+import net.cryptic_game.backend.base.api.endpoint.ApiParameter;
+import net.cryptic_game.backend.base.api.endpoint.ApiParameterSpecialType;
+import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
+import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
 import net.cryptic_game.backend.data.device.Device;
 import net.cryptic_game.backend.data.network.Network;
 import net.cryptic_game.backend.data.network.NetworkMember;
@@ -12,16 +17,19 @@ import java.util.UUID;
 public class NetworkEndpoints extends ApiEndpointCollection {
 
     public NetworkEndpoints() {
-        super("network");
+        super("network", "todo");
     }
 
     @ApiEndpoint("create")
-    public ApiResponse create(@ApiParameter("user_id") UUID userId,
+    public ApiResponse create(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) UUID userId,
                               @ApiParameter("name") String name,
                               @ApiParameter("hidden") boolean hidden,
                               @ApiParameter("device") UUID deviceId) {
         User user = User.getById(userId);
         Device device = Device.getById(deviceId);
+
+        if (device == null)
+            return new ApiResponse(ApiResponseType.NOT_FOUND, "DEVICE");
 
         if (!device.hasUserAccess(user))
             return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_ACCESS_DENIED");
@@ -42,7 +50,7 @@ public class NetworkEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("list")
-    public ApiResponse list(@ApiParameter("user_id") UUID userId,
+    public ApiResponse list(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) UUID userId,
                             @ApiParameter(value = "device", optional = true) UUID deviceId) {
         if (deviceId == null) {
             JsonArray networks = new JsonArray();

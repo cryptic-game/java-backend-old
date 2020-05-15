@@ -7,7 +7,11 @@ import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.time.Duration;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;

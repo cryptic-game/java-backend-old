@@ -12,7 +12,7 @@ class Timeout {
         this.runnable = runnable;
     }
 
-    boolean toTick(final long currentTime) {
+    boolean doTick(final long currentTime) {
         if (this.isReached(currentTime)) {
             this.runnable.run();
             return true;

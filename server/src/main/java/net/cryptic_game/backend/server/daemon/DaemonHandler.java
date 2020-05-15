@@ -2,26 +2,43 @@ package net.cryptic_game.backend.server.daemon;
 
 import com.google.gson.JsonObject;
 import io.netty.channel.Channel;
+import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollectionData;
+import net.cryptic_game.backend.base.api.endpoint.ApiEndpointList;
+import net.cryptic_game.backend.base.api.endpoint.ApiParameterData;
+import net.cryptic_game.backend.base.api.endpoint.ApiParser;
+import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
 import net.cryptic_game.backend.base.daemon.Daemon;
-import net.cryptic_game.backend.base.daemon.Function;
+import net.cryptic_game.backend.base.daemon.DaemonEndpointCollectionData;
+import net.cryptic_game.backend.base.json.JsonBuilder;
+import net.cryptic_game.backend.base.json.JsonUtils;
 import net.cryptic_game.backend.base.utils.ApiUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class DaemonHandler {
 
-    private final static Logger logger = LoggerFactory.getLogger(DaemonHandler.class);
+    private final static Logger log = LoggerFactory.getLogger(DaemonHandler.class);
 
-    private final Map<String, Function> functions;
-    private final HashMap<UUID, ClientRespond> channel;
-    private Set<Daemon> daemons;
+    private final ApiEndpointList endpointList;
+    private final HashMap<String, ClientRespond> channel;
+    private final Set<Daemon> daemons;
+    private Object daemonSendObject;
+    private Method daemonSendMethod;
+    private List<ApiParameterData> daemonSendMethodParameters;
 
-    public DaemonHandler() {
+    public DaemonHandler(final ApiEndpointList endpointList) {
+        this.endpointList = endpointList;
         this.daemons = new HashSet<>();
-        this.functions = new HashMap<>();
         this.channel = new HashMap<>();
     }
 
@@ -33,37 +50,63 @@ public class DaemonHandler {
         final Daemon daemon = this.daemons.stream().filter(d -> d.getChannel().equals(channel)).findFirst().orElse(null);
         if (daemon != null) {
             this.daemons.remove(daemon);
-            this.functions.values().stream().filter(function -> function.getDaemon().equals(daemon)).collect(Collectors.toSet())
-                    .forEach(function -> functions.remove(function.getName()));
-            logger.info("Removed daemon \"" + daemon.getName() + "\"");
+
+            final Iterator<Map.Entry<String, ApiEndpointCollectionData>> iterator = this.endpointList.getCollections().entrySet().iterator();
+            iterator.forEachRemaining(entry -> {
+                if (entry.getValue() instanceof DaemonEndpointCollectionData) {
+                    final DaemonEndpointCollectionData endpointCollection = (DaemonEndpointCollectionData) entry.getValue();
+                    if (endpointCollection.getDaemon().equals(daemon)) {
+                        iterator.remove();
+                        endpointCollection.getEndpoints().forEach((name, endpoint) -> this.endpointList.getEndpoints().remove(name));
+                    }
+                }
+            });
+
+            log.info("Removed daemon \"" + daemon.getName() + "\"");
         }
+
+        System.out.println(this.endpointList);
+    }
+
+    public void addEndpointCollections(final Set<ApiEndpointCollectionData> endpointCollections) {
+        this.endpointList.addCollections(endpointCollections.stream()
+                .peek(collection -> collection.getEndpoints().forEach((name, endpoint) -> {
+                    endpoint.setMethod(this.daemonSendMethod);
+                    endpoint.setObject(this.daemonSendObject);
+                    endpoint.setNormalParameters(false);
+                    final List<ApiParameterData> parameters = new ArrayList<>(this.daemonSendMethodParameters);
+                    parameters.addAll(endpoint.getParameters());
+                    endpoint.setParameters(parameters);
+                }))
+                .collect(Collectors.toSet()));
     }
 
     public Set<Daemon> getDaemons() {
         return this.daemons;
     }
 
-    public void addFunctions(final Set<Function> functions) {
-        functions.forEach(func -> this.functions.put(func.getName(), func));
-    }
-
-    public Function getFunction(final String name) {
-        return this.functions.get(name.strip().toLowerCase());
-    }
-
-    public UUID executeFunction(final String tag, final Channel client, final Function function, final UUID userId, final JsonObject data) {
-        data.addProperty("user_id", userId.toString());
-        final UUID requestTag = ApiUtils.request(function.getDaemon().getChannel(), function.getName(), data);
-        this.channel.put(requestTag, new ClientRespond(tag, client));
-        return requestTag;
-    }
-
     public void respondToClient(final JsonObject json) {
-        final ClientRespond respond = this.channel.remove(UUID.fromString(json.get("tag").getAsString()));
-        ApiUtils.response(respond.getChannel(), respond.getTag(), json.get("info").getAsJsonObject(), json.get("data"));
+        final ClientRespond respond = this.channel.remove(json.get("tag").getAsString());
+        final JsonBuilder info = JsonBuilder.create(json.get("info").getAsJsonObject());
+        if (JsonUtils.fromJson(JsonUtils.fromJson(json.get("info"), JsonObject.class).get("code"), int.class) == ApiResponseType.INTERNAL_SERVER_ERROR.getCode()) {
+            final ApiResponseType type = ApiResponseType.BAD_GATEWAY;
+            info.add("code", type.getCode());
+            info.add("name", type.getName());
+        }
+        ApiUtils.response(respond.getChannel(), respond.getTag(), info.build(), json.get("data"));
     }
 
-    public boolean isRequstOpen(final UUID tag) {
+    public void addWebSocketRespond(final String tag, final String userTag, final Channel channel) {
+        this.channel.put(tag, new ClientRespond(userTag, channel));
+    }
+
+    public boolean isRequestOpen(final String tag) {
         return this.channel.containsKey(tag);
+    }
+
+    public void setSend(final Object sendObject, final Method sendMethod) {
+        this.daemonSendObject = sendObject;
+        this.daemonSendMethod = sendMethod;
+        this.daemonSendMethodParameters = ApiParser.parseParameters(daemonSendMethod.getParameters());
     }
 }

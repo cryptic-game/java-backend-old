@@ -2,7 +2,12 @@ package net.cryptic_game.backend.server.server.daemon.endpoints;
 
 import com.google.gson.JsonArray;
 import net.cryptic_game.backend.base.api.client.ApiClient;
-import net.cryptic_game.backend.base.api.endpoint.*;
+import net.cryptic_game.backend.base.api.endpoint.ApiEndpoint;
+import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
+import net.cryptic_game.backend.base.api.endpoint.ApiParameter;
+import net.cryptic_game.backend.base.api.endpoint.ApiParameterSpecialType;
+import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
+import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
 import net.cryptic_game.backend.base.daemon.DaemonRegisterPacket;
 import net.cryptic_game.backend.server.daemon.DaemonHandler;
 import org.slf4j.Logger;
@@ -14,19 +19,19 @@ public class DaemonInfoEndpoints extends ApiEndpointCollection {
     private final DaemonHandler daemonHandler;
 
     public DaemonInfoEndpoints(final DaemonHandler daemonHandler) {
-        super("daemon");
+        super("daemon", "todo");
         this.daemonHandler = daemonHandler;
     }
 
     @ApiEndpoint("register")
     public ApiResponse register(
-            final ApiClient client,
+            @ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client,
             @ApiParameter("name") final String name,
-            @ApiParameter("functions") final JsonArray functions) {
+            @ApiParameter("collections") final JsonArray collections) {
 
-        final DaemonRegisterPacket drp = new DaemonRegisterPacket(client.getChannel(), name, functions);
+        final DaemonRegisterPacket drp = new DaemonRegisterPacket(client.getChannel(), name, collections);
         this.daemonHandler.addDaemon(drp.getDaemon());
-        this.daemonHandler.addFunctions(drp.getFunctions());
+        this.daemonHandler.addEndpointCollections(drp.getEndpointCollections());
 
         client.add(drp.getDaemon());
 

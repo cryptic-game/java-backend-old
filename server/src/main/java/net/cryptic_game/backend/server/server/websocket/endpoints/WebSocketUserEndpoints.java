@@ -1,7 +1,12 @@
 package net.cryptic_game.backend.server.server.websocket.endpoints;
 
 import net.cryptic_game.backend.base.api.client.ApiClient;
-import net.cryptic_game.backend.base.api.endpoint.*;
+import net.cryptic_game.backend.base.api.endpoint.ApiEndpoint;
+import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
+import net.cryptic_game.backend.base.api.endpoint.ApiParameter;
+import net.cryptic_game.backend.base.api.endpoint.ApiParameterSpecialType;
+import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
+import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.utils.ValidationUtils;
 import net.cryptic_game.backend.data.user.Session;
@@ -13,11 +18,11 @@ import java.util.UUID;
 public class WebSocketUserEndpoints extends ApiEndpointCollection {
 
     public WebSocketUserEndpoints() {
-        super("user");
+        super("user", "todo");
     }
 
     @ApiEndpoint("login")
-    public ApiResponse login(final ApiClient client,
+    public ApiResponse login(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client,
                              @ApiParameter("username") final String username,
                              @ApiParameter("password") final String password,
                              @ApiParameter("device_name") final String deviceName) {
@@ -51,7 +56,7 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("register")
-    public ApiResponse register(final ApiClient client,
+    public ApiResponse register(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client,
                                 @ApiParameter("username") final String username,
                                 @ApiParameter("password") final String password,
                                 @ApiParameter("mail") final String mail,
@@ -88,7 +93,7 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("session")
-    public ApiResponse session(final ApiClient client,
+    public ApiResponse session(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client,
                                @ApiParameter("session") final UUID sessionId,
                                @ApiParameter("token") final UUID token) {
         Session session = client.get(Session.class);
@@ -117,7 +122,7 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("change_password")
-    public ApiResponse changePassword(final ApiClient client,
+    public ApiResponse changePassword(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client,
                                       @ApiParameter("password") final String password,
                                       @ApiParameter("new") final String newPassword) {
         Session session = client.get(Session.class);
@@ -142,7 +147,7 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("logout")
-    public ApiResponse logout(final ApiClient client, @ApiParameter(value = "session", optional = true) final UUID sessionId) {
+    public ApiResponse logout(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client, @ApiParameter(value = "session", optional = true) final UUID sessionId) {
         Session session = client.get(Session.class);
         if (session == null || !session.isValid()) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "NOT_LOGGED_IN");
@@ -166,7 +171,7 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("delete")
-    public ApiResponse delete(final ApiClient client, @ApiParameter("password") final String password) {
+    public ApiResponse delete(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client, @ApiParameter("password") final String password) {
         Session session = client.get(Session.class);
         if (session == null || !session.isValid()) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "NOT_LOGGED_IN");
@@ -185,7 +190,7 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("get")
-    public ApiResponse get(final ApiClient client, @ApiParameter("id") final UUID userId) {
+    public ApiResponse get(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client, @ApiParameter("id") final UUID userId) {
         final Session session = client.get(Session.class);
         if (session == null || !session.isValid()) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "NOT_LOGGED_IN");

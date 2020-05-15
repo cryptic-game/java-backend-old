@@ -16,6 +16,7 @@ import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.PrintStream;
 import java.sql.SQLException;
 
 public abstract class AppBootstrap {
@@ -28,6 +29,9 @@ public abstract class AppBootstrap {
     private final String dist;
 
     public AppBootstrap(final String[] args, final Object config, final String dist) {
+        System.setOut(new PrintStream(new LoggerOutputStream("SysOut", Level.TRACE, System.out)));
+        System.setErr(new PrintStream(new LoggerOutputStream("SysErr", Level.ERROR, System.err)));
+
         AppBootstrap.instance = this;
 
         ConfigHandler configHandler = null;

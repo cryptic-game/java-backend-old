@@ -1,10 +1,15 @@
 package net.cryptic_game.backend.base.timeout;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 public class TimeoutHandler implements Runnable {
 
+    private static final Logger log = LoggerFactory.getLogger(TimeoutHandler.class);
     private final static long tick = 1000; // milliseconds
 
     private final Set<Timeout> timeouts;
@@ -27,15 +32,16 @@ public class TimeoutHandler implements Runnable {
             try {
                 Thread.sleep(tick);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                log.error("Error while waiting for next timer tick.", e);
             }
         }
     }
 
     public void doTick(final long currentTime) {
-        this.timeouts.forEach(tick -> {
-            if (tick.toTick(currentTime)) {
-                this.timeouts.remove(tick);
+        final Iterator<Timeout> iterator = this.timeouts.iterator();
+        iterator.forEachRemaining(tick -> {
+            if (tick.doTick(currentTime)) {
+                iterator.remove();
             }
         });
     }

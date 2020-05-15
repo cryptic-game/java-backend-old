@@ -5,6 +5,6 @@ import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
 public class NetworkInvitationEndpoints extends ApiEndpointCollection {
 
     public NetworkInvitationEndpoints() {
-        super("network/invitation");
+        super("network/invitation", "todo");
     }
 }
