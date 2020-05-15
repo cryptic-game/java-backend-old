@@ -1,24 +1,6 @@
 package net.cryptic_game.backend.base.sql;
 
-import org.hibernate.dialect.Dialect;
-import org.hibernate.dialect.H2Dialect;
-import org.hibernate.dialect.MariaDB102Dialect;
-import org.hibernate.dialect.MariaDB103Dialect;
-import org.hibernate.dialect.MariaDB10Dialect;
-import org.hibernate.dialect.MariaDB53Dialect;
-import org.hibernate.dialect.MySQL55Dialect;
-import org.hibernate.dialect.MySQL57Dialect;
-import org.hibernate.dialect.MySQL5Dialect;
-import org.hibernate.dialect.MySQL8Dialect;
-import org.hibernate.dialect.PostgreSQL10Dialect;
-import org.hibernate.dialect.PostgreSQL81Dialect;
-import org.hibernate.dialect.PostgreSQL82Dialect;
-import org.hibernate.dialect.PostgreSQL91Dialect;
-import org.hibernate.dialect.PostgreSQL92Dialect;
-import org.hibernate.dialect.PostgreSQL93Dialect;
-import org.hibernate.dialect.PostgreSQL94Dialect;
-import org.hibernate.dialect.PostgreSQL95Dialect;
-import org.hibernate.dialect.PostgreSQL9Dialect;
+import org.hibernate.dialect.*;
 
 import java.sql.Driver;
 

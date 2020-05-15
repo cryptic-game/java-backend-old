@@ -6,12 +6,7 @@ import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModel;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
