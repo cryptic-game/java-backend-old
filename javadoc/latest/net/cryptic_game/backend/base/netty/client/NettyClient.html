@@ -153,11 +153,12 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,java.net.SocketAddress,boolean,net.cryptic_game.backend.base.netty.EventLoopGroupHandler,net.cryptic_game.backend.base.netty.NettyCodec)">NettyClient</a></span>&#8203;(java.lang.String&nbsp;name,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,java.net.SocketAddress,boolean,net.cryptic_game.backend.base.netty.EventLoopGroupHandler,net.cryptic_game.backend.base.netty.NettyCodec,java.util.function.Consumer)">NettyClient</a></span>&#8203;(java.lang.String&nbsp;name,
            java.net.SocketAddress&nbsp;address,
            boolean&nbsp;unixSocket,
            <a href="../EventLoopGroupHandler.html" title="class in net.cryptic_game.backend.base.netty">EventLoopGroupHandler</a>&nbsp;eventLoopGroupHandler,
-           <a href="../NettyCodec.html" title="class in net.cryptic_game.backend.base.netty">NettyCodec</a>&lt;?&gt;&nbsp;nettyCodec)</code></th>
+           <a href="../NettyCodec.html" title="class in net.cryptic_game.backend.base.netty">NettyCodec</a>&lt;?&gt;&nbsp;nettyCodec,
+           java.util.function.Consumer&lt;io.netty.channel.Channel&gt;&nbsp;connectCallback)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -227,7 +228,7 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(java.lang.String,java.net.SocketAddress,boolean,net.cryptic_game.backend.base.netty.EventLoopGroupHandler,net.cryptic_game.backend.base.netty.NettyCodec)">
+<a id="&lt;init&gt;(java.lang.String,java.net.SocketAddress,boolean,net.cryptic_game.backend.base.netty.EventLoopGroupHandler,net.cryptic_game.backend.base.netty.NettyCodec,java.util.function.Consumer)">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -237,7 +238,8 @@ extends java.lang.Object</pre>
                    java.net.SocketAddress&nbsp;address,
                    boolean&nbsp;unixSocket,
                    <a href="../EventLoopGroupHandler.html" title="class in net.cryptic_game.backend.base.netty">EventLoopGroupHandler</a>&nbsp;eventLoopGroupHandler,
-                   <a href="../NettyCodec.html" title="class in net.cryptic_game.backend.base.netty">NettyCodec</a>&lt;?&gt;&nbsp;nettyCodec)</pre>
+                   <a href="../NettyCodec.html" title="class in net.cryptic_game.backend.base.netty">NettyCodec</a>&lt;?&gt;&nbsp;nettyCodec,
+                   java.util.function.Consumer&lt;io.netty.channel.Channel&gt;&nbsp;connectCallback)</pre>
 </li>
 </ul>
 </li>
