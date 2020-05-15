@@ -153,7 +153,7 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(net.cryptic_game.backend.base.api.endpoint.ApiEndpointList)">DaemonHandler</a></span>&#8203;(<a href="../../base/api/endpoint/ApiEndpointList.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiEndpointList</a>&nbsp;endpointList)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">DaemonHandler</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -181,14 +181,16 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addEndpointCollections(java.util.Set)">addEndpointCollections</a></span>&#8203;(java.util.Set&lt;<a href="../../base/api/endpoint/ApiEndpointCollectionData.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiEndpointCollectionData</a>&gt;&nbsp;endpointCollections)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addFunctions(java.util.Set)">addFunctions</a></span>&#8203;(java.util.Set&lt;<a href="../../base/daemon/Function.html" title="class in net.cryptic_game.backend.base.daemon">Function</a>&gt;&nbsp;functions)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addWebSocketRespond(java.lang.String,java.lang.String,io.netty.channel.Channel)">addWebSocketRespond</a></span>&#8203;(java.lang.String&nbsp;tag,
-                   java.lang.String&nbsp;userTag,
-                   io.netty.channel.Channel&nbsp;channel)</code></th>
+<td class="colFirst"><code>java.util.UUID</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#executeFunction(java.lang.String,io.netty.channel.Channel,net.cryptic_game.backend.base.daemon.Function,java.util.UUID,com.google.gson.JsonObject)">executeFunction</a></span>&#8203;(java.lang.String&nbsp;tag,
+               io.netty.channel.Channel&nbsp;client,
+               <a href="../../base/daemon/Function.html" title="class in net.cryptic_game.backend.base.daemon">Function</a>&nbsp;function,
+               java.util.UUID&nbsp;userId,
+               com.google.gson.JsonObject&nbsp;data)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
@@ -197,24 +199,23 @@ extends java.lang.Object</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isRequestOpen(java.lang.String)">isRequestOpen</a></span>&#8203;(java.lang.String&nbsp;tag)</code></th>
+<td class="colFirst"><code><a href="../../base/daemon/Function.html" title="class in net.cryptic_game.backend.base.daemon">Function</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFunction(java.lang.String)">getFunction</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeDaemon(io.netty.channel.Channel)">removeDaemon</a></span>&#8203;(io.netty.channel.Channel&nbsp;channel)</code></th>
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isRequstOpen(java.util.UUID)">isRequstOpen</a></span>&#8203;(java.util.UUID&nbsp;tag)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#respondToClient(com.google.gson.JsonObject)">respondToClient</a></span>&#8203;(com.google.gson.JsonObject&nbsp;json)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeDaemon(io.netty.channel.Channel)">removeDaemon</a></span>&#8203;(io.netty.channel.Channel&nbsp;channel)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSend(java.lang.Object,java.lang.reflect.Method)">setSend</a></span>&#8203;(java.lang.Object&nbsp;sendObject,
-       java.lang.reflect.Method&nbsp;sendMethod)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#respondToClient(com.google.gson.JsonObject)">respondToClient</a></span>&#8203;(com.google.gson.JsonObject&nbsp;json)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -241,13 +242,13 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(net.cryptic_game.backend.base.api.endpoint.ApiEndpointList)">
+<a id="&lt;init&gt;()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>DaemonHandler</h4>
-<pre>public&nbsp;DaemonHandler&#8203;(<a href="../../base/api/endpoint/ApiEndpointList.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiEndpointList</a>&nbsp;endpointList)</pre>
+<pre>public&nbsp;DaemonHandler()</pre>
 </li>
 </ul>
 </li>
@@ -278,15 +279,6 @@ extends java.lang.Object</pre>
 <pre class="methodSignature">public&nbsp;void&nbsp;removeDaemon&#8203;(io.netty.channel.Channel&nbsp;channel)</pre>
 </li>
 </ul>
-<a id="addEndpointCollections(java.util.Set)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>addEndpointCollections</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;addEndpointCollections&#8203;(java.util.Set&lt;<a href="../../base/api/endpoint/ApiEndpointCollectionData.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiEndpointCollectionData</a>&gt;&nbsp;endpointCollections)</pre>
-</li>
-</ul>
 <a id="getDaemons()">
 <!--   -->
 </a>
@@ -294,6 +286,37 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getDaemons</h4>
 <pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="../../base/daemon/Daemon.html" title="class in net.cryptic_game.backend.base.daemon">Daemon</a>&gt;&nbsp;getDaemons()</pre>
+</li>
+</ul>
+<a id="addFunctions(java.util.Set)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addFunctions</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;addFunctions&#8203;(java.util.Set&lt;<a href="../../base/daemon/Function.html" title="class in net.cryptic_game.backend.base.daemon">Function</a>&gt;&nbsp;functions)</pre>
+</li>
+</ul>
+<a id="getFunction(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getFunction</h4>
+<pre class="methodSignature">public&nbsp;<a href="../../base/daemon/Function.html" title="class in net.cryptic_game.backend.base.daemon">Function</a>&nbsp;getFunction&#8203;(java.lang.String&nbsp;name)</pre>
+</li>
+</ul>
+<a id="executeFunction(java.lang.String,io.netty.channel.Channel,net.cryptic_game.backend.base.daemon.Function,java.util.UUID,com.google.gson.JsonObject)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>executeFunction</h4>
+<pre class="methodSignature">public&nbsp;java.util.UUID&nbsp;executeFunction&#8203;(java.lang.String&nbsp;tag,
+                                      io.netty.channel.Channel&nbsp;client,
+                                      <a href="../../base/daemon/Function.html" title="class in net.cryptic_game.backend.base.daemon">Function</a>&nbsp;function,
+                                      java.util.UUID&nbsp;userId,
+                                      com.google.gson.JsonObject&nbsp;data)</pre>
 </li>
 </ul>
 <a id="respondToClient(com.google.gson.JsonObject)">
@@ -305,34 +328,13 @@ extends java.lang.Object</pre>
 <pre class="methodSignature">public&nbsp;void&nbsp;respondToClient&#8203;(com.google.gson.JsonObject&nbsp;json)</pre>
 </li>
 </ul>
-<a id="addWebSocketRespond(java.lang.String,java.lang.String,io.netty.channel.Channel)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>addWebSocketRespond</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;addWebSocketRespond&#8203;(java.lang.String&nbsp;tag,
-                                java.lang.String&nbsp;userTag,
-                                io.netty.channel.Channel&nbsp;channel)</pre>
-</li>
-</ul>
-<a id="isRequestOpen(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isRequestOpen</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;isRequestOpen&#8203;(java.lang.String&nbsp;tag)</pre>
-</li>
-</ul>
-<a id="setSend(java.lang.Object,java.lang.reflect.Method)">
+<a id="isRequstOpen(java.util.UUID)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>setSend</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setSend&#8203;(java.lang.Object&nbsp;sendObject,
-                    java.lang.reflect.Method&nbsp;sendMethod)</pre>
+<h4>isRequstOpen</h4>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;isRequstOpen&#8203;(java.util.UUID&nbsp;tag)</pre>
 </li>
 </ul>
 </li>

@@ -89,7 +89,7 @@ loadScripts(document, 'script');</script>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -123,7 +123,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
+<li><a href="../../../../base/api/endpoint/ApiEndpointCollection.html" title="class in net.cryptic_game.backend.base.api.endpoint">net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection</a></li>
+<li>
+<ul class="inheritance">
 <li>net.cryptic_game.backend.server.server.websocket.endpoints.WebSocketDaemonEndpoints</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -132,14 +137,30 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <hr>
 <pre>public class <span class="typeNameLabel">WebSocketDaemonEndpoints</span>
-extends java.lang.Object</pre>
-<div class="block">No <a href="../../../../base/api/endpoint/ApiEndpointCollection.html" title="class in net.cryptic_game.backend.base.api.endpoint"><code>ApiEndpointCollection</code></a>!</div>
+extends <a href="../../../../base/api/endpoint/ApiEndpointCollection.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiEndpointCollection</a></pre>
 </li>
 </ul>
 </div>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
+<ul class="blockList">
+<li class="blockList"><a id="field.summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a id="fields.inherited.from.class.net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection">
+<!--   -->
+</a>
+<h3>Fields inherited from class&nbsp;net.cryptic_game.backend.base.api.endpoint.<a href="../../../../base/api/endpoint/ApiEndpointCollection.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiEndpointCollection</a></h3>
+<code><a href="../../../../base/api/endpoint/ApiEndpointCollection.html#appBootstrap">appBootstrap</a>, <a href="../../../../base/api/endpoint/ApiEndpointCollection.html#clients">clients</a>, <a href="../../../../base/api/endpoint/ApiEndpointCollection.html#sqlConnection">sqlConnection</a></code></li>
+</ul>
+</li>
+</ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <section role="region">
 <ul class="blockList">
@@ -177,19 +198,26 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="../../../../base/api/endpoint/ApiResponse.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiResponse</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#send(net.cryptic_game.backend.base.api.client.ApiClient,java.lang.String,net.cryptic_game.backend.base.api.endpoint.ApiEndpointData,com.google.gson.JsonObject)">send</a></span>&#8203;(<a href="../../../../base/api/client/ApiClient.html" title="class in net.cryptic_game.backend.base.api.client">ApiClient</a>&nbsp;client,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#send(net.cryptic_game.backend.base.api.client.ApiClient,java.lang.String,java.lang.String,com.google.gson.JsonObject)">send</a></span>&#8203;(<a href="../../../../base/api/client/ApiClient.html" title="class in net.cryptic_game.backend.base.api.client">ApiClient</a>&nbsp;client,
     java.lang.String&nbsp;tag,
-    <a href="../../../../base/api/endpoint/ApiEndpointData.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiEndpointData</a>&nbsp;endpoint,
+    java.lang.String&nbsp;functionName,
     com.google.gson.JsonObject&nbsp;data)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;net.cryptic_game.backend.base.api.endpoint.<a href="../../../../base/api/endpoint/ApiEndpointCollection.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiEndpointCollection</a></h3>
+<code><a href="../../../../base/api/endpoint/ApiEndpointCollection.html#equals(java.lang.Object)">equals</a>, <a href="../../../../base/api/endpoint/ApiEndpointCollection.html#hashCode()">hashCode</a></code></li>
+</ul>
+<ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
+<code>clone, finalize, getClass, notify, notifyAll, toString, wait, wait, wait</code></li>
 </ul>
 </li>
 </ul>
@@ -226,7 +254,7 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="send(net.cryptic_game.backend.base.api.client.ApiClient,java.lang.String,net.cryptic_game.backend.base.api.endpoint.ApiEndpointData,com.google.gson.JsonObject)">
+<a id="send(net.cryptic_game.backend.base.api.client.ApiClient,java.lang.String,java.lang.String,com.google.gson.JsonObject)">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -234,7 +262,7 @@ extends java.lang.Object</pre>
 <h4>send</h4>
 <pre class="methodSignature">public&nbsp;<a href="../../../../base/api/endpoint/ApiResponse.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiResponse</a>&nbsp;send&#8203;(<a href="../../../../base/api/client/ApiClient.html" title="class in net.cryptic_game.backend.base.api.client">ApiClient</a>&nbsp;client,
                         java.lang.String&nbsp;tag,
-                        <a href="../../../../base/api/endpoint/ApiEndpointData.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiEndpointData</a>&nbsp;endpoint,
+                        java.lang.String&nbsp;functionName,
                         com.google.gson.JsonObject&nbsp;data)</pre>
 </li>
 </ul>
@@ -290,7 +318,7 @@ extends java.lang.Object</pre>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
