@@ -2,12 +2,7 @@ package net.cryptic_game.backend.server.server.websocket.endpoints;
 
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.api.client.ApiClient;
-import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
-import net.cryptic_game.backend.base.api.endpoint.ApiEndpointData;
-import net.cryptic_game.backend.base.api.endpoint.ApiParameter;
-import net.cryptic_game.backend.base.api.endpoint.ApiParameterSpecialType;
-import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
-import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
+import net.cryptic_game.backend.base.api.endpoint.*;
 import net.cryptic_game.backend.base.daemon.DaemonEndpointData;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.utils.ApiUtils;
@@ -44,15 +39,16 @@ public class WebSocketDaemonEndpoints {
 
             final DaemonEndpointData daemonEndpoint = (DaemonEndpointData) endpoint;
 
-            this.daemonHandler.addWebSocketRespond(ApiUtils.request(daemonEndpoint.getDaemon().getChannel(),
+            String requestTag = ApiUtils.request(daemonEndpoint.getDaemon().getChannel(),
                     endpoint.getName(),
                     JsonBuilder.create(data)
                             .add("user_id", session.getUser().getId())
-            ).toString(), tag, client.getChannel());
+            ).toString();
+            this.daemonHandler.addWebSocketRespond(requestTag, tag, client.getChannel());
 
             App.addTimeout(App.getInstance().getConfig().getResponseTimeout() * 1000, () -> {
-                if (this.daemonHandler.isRequestOpen(tag)) {
-                    this.daemonHandler.respondToClient(JsonBuilder.create("tag", tag)
+                if (this.daemonHandler.isRequestOpen(requestTag)) {
+                    this.daemonHandler.respondToClient(JsonBuilder.create("tag", requestTag)
                             .add("info", JsonBuilder.create(ApiResponseType.GATEWAY_TIMEOUT)
                                     .add("notification", false)
                                     .build())
