@@ -1,6 +1,10 @@
 package net.cryptic_game.backend.base.json;
 
-import com.google.gson.*;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import net.cryptic_game.backend.base.json.types.InstantTypeAdapter;
 import net.cryptic_game.backend.base.json.types.ZonedDateTimeAdapter;
 import org.slf4j.Logger;

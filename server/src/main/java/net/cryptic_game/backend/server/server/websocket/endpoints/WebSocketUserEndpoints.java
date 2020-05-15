@@ -1,7 +1,12 @@
 package net.cryptic_game.backend.server.server.websocket.endpoints;
 
 import net.cryptic_game.backend.base.api.client.ApiClient;
-import net.cryptic_game.backend.base.api.endpoint.*;
+import net.cryptic_game.backend.base.api.endpoint.ApiEndpoint;
+import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
+import net.cryptic_game.backend.base.api.endpoint.ApiParameter;
+import net.cryptic_game.backend.base.api.endpoint.ApiParameterSpecialType;
+import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
+import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.utils.ValidationUtils;
 import net.cryptic_game.backend.data.user.Session;

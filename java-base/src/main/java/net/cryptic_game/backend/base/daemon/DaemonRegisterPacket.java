@@ -9,7 +9,11 @@ import net.cryptic_game.backend.base.api.endpoint.ApiParameterSpecialType;
 import net.cryptic_game.backend.base.json.JsonTransient;
 import net.cryptic_game.backend.base.json.JsonUtils;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 public class DaemonRegisterPacket {

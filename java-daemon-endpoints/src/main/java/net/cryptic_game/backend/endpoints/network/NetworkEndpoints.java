@@ -1,7 +1,12 @@
 package net.cryptic_game.backend.endpoints.network;
 
 import com.google.gson.JsonArray;
-import net.cryptic_game.backend.base.api.endpoint.*;
+import net.cryptic_game.backend.base.api.endpoint.ApiEndpoint;
+import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
+import net.cryptic_game.backend.base.api.endpoint.ApiParameter;
+import net.cryptic_game.backend.base.api.endpoint.ApiParameterSpecialType;
+import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
+import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
 import net.cryptic_game.backend.data.device.Device;
 import net.cryptic_game.backend.data.network.Network;
 import net.cryptic_game.backend.data.network.NetworkMember;
