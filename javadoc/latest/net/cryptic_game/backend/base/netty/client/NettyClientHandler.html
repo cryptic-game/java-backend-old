@@ -176,10 +176,11 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="NettyClient.html" title="class in net.cryptic_game.backend.base.netty.client">NettyClient</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addClient(java.lang.String,java.net.SocketAddress,boolean,net.cryptic_game.backend.base.netty.NettyCodec)">addClient</a></span>&#8203;(java.lang.String&nbsp;name,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addClient(java.lang.String,java.net.SocketAddress,boolean,net.cryptic_game.backend.base.netty.NettyCodec,java.util.function.Consumer)">addClient</a></span>&#8203;(java.lang.String&nbsp;name,
          java.net.SocketAddress&nbsp;address,
          boolean&nbsp;unixSocket,
-         <a href="../NettyCodec.html" title="class in net.cryptic_game.backend.base.netty">NettyCodec</a>&lt;?&gt;&nbsp;nettyCodec)</code></th>
+         <a href="../NettyCodec.html" title="class in net.cryptic_game.backend.base.netty">NettyCodec</a>&lt;?&gt;&nbsp;nettyCodec,
+         java.util.function.Consumer&lt;io.netty.channel.Channel&gt;&nbsp;connectCallback)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
@@ -230,7 +231,7 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="addClient(java.lang.String,java.net.SocketAddress,boolean,net.cryptic_game.backend.base.netty.NettyCodec)">
+<a id="addClient(java.lang.String,java.net.SocketAddress,boolean,net.cryptic_game.backend.base.netty.NettyCodec,java.util.function.Consumer)">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -239,7 +240,8 @@ extends java.lang.Object</pre>
 <pre class="methodSignature">public&nbsp;<a href="NettyClient.html" title="class in net.cryptic_game.backend.base.netty.client">NettyClient</a>&nbsp;addClient&#8203;(java.lang.String&nbsp;name,
                              java.net.SocketAddress&nbsp;address,
                              boolean&nbsp;unixSocket,
-                             <a href="../NettyCodec.html" title="class in net.cryptic_game.backend.base.netty">NettyCodec</a>&lt;?&gt;&nbsp;nettyCodec)</pre>
+                             <a href="../NettyCodec.html" title="class in net.cryptic_game.backend.base.netty">NettyCodec</a>&lt;?&gt;&nbsp;nettyCodec,
+                             java.util.function.Consumer&lt;io.netty.channel.Channel&gt;&nbsp;connectCallback)</pre>
 </li>
 </ul>
 <a id="start()">
