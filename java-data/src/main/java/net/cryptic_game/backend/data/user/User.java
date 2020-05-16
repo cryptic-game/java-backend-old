@@ -1,18 +1,18 @@
 package net.cryptic_game.backend.data.user;
 
-import java.time.ZonedDateTime;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 import net.cryptic_game.backend.base.json.JsonTransient;
 import net.cryptic_game.backend.base.sql.models.TableModel;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.base.utils.SecurityUtils;
 import org.hibernate.Session;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.time.ZonedDateTime;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Entity representing an user entry in the database
@@ -46,7 +46,6 @@ public class User extends TableModelAutoId {
      * Create a {@link User} with the given user data
      *
      * @param username The username of the new user
-     * @param mail     The mail address of the new user
      * @param password The password of the new user
      * @return The instance of the created {@link User}
      */
