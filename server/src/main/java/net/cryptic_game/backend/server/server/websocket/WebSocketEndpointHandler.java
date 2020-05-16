@@ -15,9 +15,9 @@ public class WebSocketEndpointHandler {
     private final ApiEndpointList apiList;
     private Set<ApiEndpointCollection> apiCollections;
 
-    public WebSocketEndpointHandler() {
+    public WebSocketEndpointHandler(final String hostname, final int port) {
         this.apiCollections = new HashSet<>();
-        this.apiList = new ApiEndpointList();
+        this.apiList = new ApiEndpointList(hostname, port);
     }
 
     public void postInit() {

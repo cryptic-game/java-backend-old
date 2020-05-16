@@ -7,13 +7,13 @@ import net.cryptic_game.backend.base.config.ConfigValue;
 public class ServerConfig {
 
     @ConfigValue("websocket_host")
-    private String websocketHost = "0.0.0.0";
+    private String websocketHost = "localhost";
 
     @ConfigValue("websocket_port")
     private int websocketPort = 80;
 
     @ConfigValue("http_host")
-    private String httpHost = "0.0.0.0";
+    private String httpHost = "localhost";
 
     @ConfigValue("http_port")
     private int httpPort = 8080;

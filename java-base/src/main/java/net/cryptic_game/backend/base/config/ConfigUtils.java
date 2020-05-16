@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,12 +53,15 @@ final class ConfigUtils {
     static void parseStrings(final Set<Object> objects, final List<String> lines) {
         final Map<String, Object> values = yaml.load(String.join(System.lineSeparator(), lines));
 
-        if (values != null) objects.forEach(object -> {
-            final Class<?> clazz = object.getClass();
-            if (!clazz.isAnnotationPresent(Config.class)) return;
-            final String name = clazz.getAnnotation(Config.class).value().toLowerCase().strip();
-            ConfigUtils.parseConfigPart((HashMap<String, Object>) (name.isBlank() ? values : values.get(name)), object, name);
-        });
+        objects.stream()
+                .filter(object -> object.getClass().isAnnotationPresent(Config.class))
+                .map(object -> new AbstractMap.SimpleEntry<>(object.getClass().getAnnotation(Config.class).value().strip().toLowerCase(), object))
+                .forEach(object -> {
+                    final Map<String, Object> currentValues = object.getKey().isBlank() ? values : (Map<String, Object>) (values.get(object.getKey()));
+                    if (currentValues != null) {
+                        ConfigUtils.parseConfigPart(currentValues, object.getValue(), object.getKey());
+                    }
+                });
     }
 
     private static void parseConfigPart(final Map<String, Object> values, final Object object, final String name) {

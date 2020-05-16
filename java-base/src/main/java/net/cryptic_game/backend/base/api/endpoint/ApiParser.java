@@ -52,11 +52,10 @@ public final class ApiParser {
     }
 
     public static List<ApiParameterData> parseParameters(final Parameter[] parameters) {
-        final List<ApiParameterData> collect = Arrays.stream(parameters)
+        return Arrays.stream(parameters)
                 .map(ApiParser::parseParameter)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
-        return collect;
     }
 
     private static ApiParameterData parseParameter(final Parameter parameter) {
@@ -66,12 +65,18 @@ public final class ApiParser {
         } else return null;
     }
 
-    public static JsonElement toPlayground(final Collection<ApiEndpointCollectionData> endpointCollections) {
-        return JsonBuilder.create("apiUrl", "/")
+    public static JsonElement toPlayground(final String address, final Collection<ApiEndpointCollectionData> endpointCollections) {
+        return JsonBuilder.create("apiUrl", "ws://" + address + "/")
                 .add("endpointCollections", endpointCollections.stream()
                         .peek(collection -> collection.setEndpoints(collection.getEndpoints().entrySet()
                                 .stream()
-                                .peek(entry -> entry.getValue().setParameters(entry.getValue().getParameters()
+                                .map(entry -> {
+                                    final ApiEndpointData endpointData = entry.getValue().copy();
+                                    final String[] name = endpointData.getName().split("/");
+                                    endpointData.setName(name[name.length - 1]);
+                                    entry.setValue(endpointData);
+                                    return entry;
+                                }).peek(entry -> entry.getValue().setParameters(entry.getValue().getParameters()
                                         .stream()
                                         .filter(parameter -> parameter.getSpecial().equals(ApiParameterSpecialType.NORMAL))
                                         .collect(Collectors.toList())))

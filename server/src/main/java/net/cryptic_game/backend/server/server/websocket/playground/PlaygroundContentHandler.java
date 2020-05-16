@@ -34,7 +34,12 @@ public class PlaygroundContentHandler extends NettyChannelHandler<FullHttpReques
     private static final String LOCATION = File.separatorChar + "playground";
     private static final String QUOTED_LOCATION = Pattern.quote(LOCATION);
 
+    private final byte[] content;
     private FullHttpRequest request;
+
+    public PlaygroundContentHandler(final byte[] content) {
+        this.content = content;
+    }
 
     @Override
     protected void channelRead0(final ChannelHandlerContext ctx, final FullHttpRequest msg) throws Exception {
@@ -46,7 +51,14 @@ public class PlaygroundContentHandler extends NettyChannelHandler<FullHttpReques
             return;
         }
 
-        final File file = new File(BASE_DIR + path.replaceFirst(Pattern.compile(QUOTED_LOCATION).pattern(), ""));
+        final String filePath = path.replaceFirst(Pattern.compile(QUOTED_LOCATION).pattern(), "");
+
+        if (filePath.equalsIgnoreCase(File.separator + "playground.json")) {
+            this.sendStatus(ctx, HttpResponseStatus.OK, "application/json", this.content);
+            return;
+        }
+
+        final File file = new File(BASE_DIR + filePath);
         if (checkFile(ctx, msg.uri(), file)) this.sendFile(ctx, file);
     }
 
@@ -120,8 +132,12 @@ public class PlaygroundContentHandler extends NettyChannelHandler<FullHttpReques
     }
 
     private void sendStatus(final ChannelHandlerContext ctx, final HttpResponseStatus status) {
-        final FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, status, Unpooled.copiedBuffer(status.toString() + "\r\n", CharsetUtil.UTF_8));
-        response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/plain; charset=" + StandardCharsets.UTF_8.toString());
+        this.sendStatus(ctx, status, "text/plain", (status.toString() + "\r\n").getBytes(CharsetUtil.UTF_8));
+    }
+
+    public void sendStatus(final ChannelHandlerContext ctx, final HttpResponseStatus status, final String contentType, final byte[] content) {
+        final FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, status, Unpooled.copiedBuffer(content));
+        response.headers().set(HttpHeaderNames.CONTENT_TYPE, contentType + "; charset=" + StandardCharsets.UTF_8.toString());
         this.sendAndCleanupConnection(ctx, response);
     }
 
