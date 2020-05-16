@@ -7,11 +7,8 @@ This is the official rewrite of the Cryptic backend.
 
 ### Documentation
 
-- [Getting Started](getting-started.html)
-- [Deployment](deployment.html)
 - [Java Documentation](javadoc/latest/index.html)
-- [Api Documentation](api/latest/index.html)
-- [Daemon Api Documentation](daemon-api/latest/index.html)
+- [Further Information](https://wiki.cryptic-game.net/books/einf%C3%BChrungen/chapter/java)
 
 ### Other
 
