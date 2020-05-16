@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":9,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
+var data = {"i0":9,"i1":10,"i2":10,"i3":9,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -211,8 +211,7 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static <a href="User.html" title="class in net.cryptic_game.backend.data.user">User</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createUser(java.lang.String,java.lang.String,java.lang.String)">createUser</a></span>&#8203;(java.lang.String&nbsp;username,
-          java.lang.String&nbsp;mail,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createUser(java.lang.String,java.lang.String)">createUser</a></span>&#8203;(java.lang.String&nbsp;username,
           java.lang.String&nbsp;password)</code></th>
 <td class="colLast">
 <div class="block">Create a <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a> with the given user data</div>
@@ -262,75 +261,61 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMail()">getMail</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Returns the mail of the <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
-</td>
-</tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPasswordHash()">getPasswordHash</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the password hash of the <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUsername()">getUsername</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the username of the <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Hashes the <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a> using <code>Objects</code> hash method</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCreated(java.time.ZonedDateTime)">setCreated</a></span>&#8203;(java.time.ZonedDateTime&nbsp;created)</code></th>
 <td class="colLast">
 <div class="block">Sets a new creation date of the <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setLast(java.time.ZonedDateTime)">setLast</a></span>&#8203;(java.time.ZonedDateTime&nbsp;last)</code></th>
 <td class="colLast">
 <div class="block">Sets a new last-seen date of the <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMail(java.lang.String)">setMail</a></span>&#8203;(java.lang.String&nbsp;mail)</code></th>
-<td class="colLast">
-<div class="block">Sets a new mail of the <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
-</td>
-</tr>
-<tr id="i14" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPassword(java.lang.String)">setPassword</a></span>&#8203;(java.lang.String&nbsp;newPassword)</code></th>
 <td class="colLast">
 <div class="block">Set a new password for the given <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPasswordHash(java.lang.String)">setPasswordHash</a></span>&#8203;(java.lang.String&nbsp;passwordHash)</code></th>
 <td class="colLast">
 <div class="block">Sets a new password hash of the <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setUsername(java.lang.String)">setUsername</a></span>&#8203;(java.lang.String&nbsp;username)</code></th>
 <td class="colLast">
 <div class="block">Sets a new username of the <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#verifyPassword(java.lang.String)">verifyPassword</a></span>&#8203;(java.lang.String&nbsp;input)</code></th>
 <td class="colLast">
@@ -395,20 +380,18 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="createUser(java.lang.String,java.lang.String,java.lang.String)">
+<a id="createUser(java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createUser</h4>
 <pre class="methodSignature">public static&nbsp;<a href="User.html" title="class in net.cryptic_game.backend.data.user">User</a>&nbsp;createUser&#8203;(java.lang.String&nbsp;username,
-                              java.lang.String&nbsp;mail,
                               java.lang.String&nbsp;password)</pre>
 <div class="block">Create a <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a> with the given user data</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>username</code> - The username of the new user</dd>
-<dd><code>mail</code> - The mail address of the new user</dd>
 <dd><code>password</code> - The password of the new user</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The instance of the created <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></dd>
@@ -472,34 +455,6 @@ extends <a href="../../base/sql/models/TableModelAutoId.html" title="class in ne
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>username</code> - New username to be set</dd>
-</dl>
-</li>
-</ul>
-<a id="getMail()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getMail</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getMail()</pre>
-<div class="block">Returns the mail of the <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>Mail of the <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></dd>
-</dl>
-</li>
-</ul>
-<a id="setMail(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setMail</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setMail&#8203;(java.lang.String&nbsp;mail)</pre>
-<div class="block">Sets a new mail of the <a href="User.html" title="class in net.cryptic_game.backend.data.user"><code>User</code></a></div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>mail</code> - New mail to be set</dd>
 </dl>
 </li>
 </ul>
