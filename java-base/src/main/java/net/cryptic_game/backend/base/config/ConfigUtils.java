@@ -1,5 +1,6 @@
 package net.cryptic_game.backend.base.config;
 
+import net.cryptic_game.backend.base.type.TypeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
@@ -77,7 +78,11 @@ final class ConfigUtils {
             if (value != null) {
                 try {
                     field.setAccessible(true);
-                    field.set(object, value);
+                    if (value instanceof String && field.getType() != String.class) {
+                        field.set(object, TypeUtils.fromString(field.getType(), String.valueOf(value)));
+                    } else {
+                        field.set(object, value);
+                    }
                     field.setAccessible(false);
                 } catch (IllegalAccessException e) {
                     log.error("Unable to access field \"{}\" in Config \"{}\".", field.getName(), name);

@@ -12,17 +12,15 @@ import java.util.Set;
 
 public class ApiEndpointList {
 
-    private final String hostname;
-    private final int port;
+    private final String address;
     private final Map<String, ApiEndpointCollectionData> collections;
     private final Map<String, ApiEndpointData> endpoints;
     private final Set<ApiClient> clients;
 
     private byte[] playgroundContent;
 
-    public ApiEndpointList(final String hostname, final int port) {
-        this.hostname = hostname;
-        this.port = port;
+    public ApiEndpointList(final String address) {
+        this.address = address;
         this.collections = new HashMap<>();
         this.endpoints = new HashMap<>();
         this.clients = new HashSet<>();
@@ -42,8 +40,8 @@ public class ApiEndpointList {
             collection.setClients(this.clients);
         }
         this.collections.forEach((name, collectionData) -> collectionData.getEndpoints().forEach((endpointName, endpointData) -> this.endpoints.merge(endpointName, endpointData, (mergeName, mergeEndpointData) -> mergeEndpointData)));
-        if (this.hostname != null)
-            this.playgroundContent = ApiParser.toPlayground(this.hostname + ":" + this.port, this.collections.values()).toString().getBytes(StandardCharsets.UTF_8);
+        if (this.address != null)
+            this.playgroundContent = ApiParser.toPlayground(this.address, this.collections.values()).toString().getBytes(StandardCharsets.UTF_8);
     }
 
     public void addCollections(final Collection<ApiEndpointCollectionData> endpointCollections) {
@@ -51,8 +49,8 @@ public class ApiEndpointList {
             this.collections.put(collection.getName(), collection);
             collection.getEndpoints().forEach((endpointName, endpointData) -> this.endpoints.merge(endpointName, endpointData, (mergeName, mergeEndpointData) -> mergeEndpointData));
         });
-        if (this.hostname != null) {
-            this.playgroundContent = ApiParser.toPlayground(this.hostname + ":" + this.port, this.collections.values()).toString().getBytes(StandardCharsets.UTF_8);
+        if (this.address != null) {
+            this.playgroundContent = ApiParser.toPlayground(this.address, this.collections.values()).toString().getBytes(StandardCharsets.UTF_8);
         }
     }
 
