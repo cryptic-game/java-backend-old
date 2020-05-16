@@ -16,6 +16,7 @@ net.cryptic_game.backend.base.netty.server
 net.cryptic_game.backend.base.sql
 net.cryptic_game.backend.base.sql.models
 net.cryptic_game.backend.base.timeout
+net.cryptic_game.backend.base.type
 net.cryptic_game.backend.base.utils
 net.cryptic_game.backend.daemon
 net.cryptic_game.backend.daemon.api
