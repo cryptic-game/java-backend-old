@@ -1,18 +1,18 @@
 package net.cryptic_game.backend.data.user;
 
+import java.time.ZonedDateTime;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import net.cryptic_game.backend.base.json.JsonTransient;
 import net.cryptic_game.backend.base.sql.models.TableModel;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.base.utils.SecurityUtils;
 import org.hibernate.Session;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import java.time.ZonedDateTime;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
 
 /**
  * Entity representing an user entry in the database
@@ -25,9 +25,6 @@ public class User extends TableModelAutoId {
 
     @Column(name = "username", updatable = true, nullable = false, unique = true)
     private String username;
-
-    @Column(name = "mail", updatable = true, nullable = false, unique = true)
-    private String mail;
 
     @JsonTransient
     @Column(name = "password", updatable = true, nullable = false)
@@ -53,12 +50,11 @@ public class User extends TableModelAutoId {
      * @param password The password of the new user
      * @return The instance of the created {@link User}
      */
-    public static User createUser(final String username, final String mail, final String password) {
+    public static User createUser(final String username, final String password) {
         final ZonedDateTime now = ZonedDateTime.now();
 
         final User user = new User();
         user.setUsername(username);
-        user.setMail(mail);
         user.setCreated(now);
         user.setLast(now);
         user.setPassword(password);
@@ -115,24 +111,6 @@ public class User extends TableModelAutoId {
      */
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    /**
-     * Returns the mail of the {@link User}
-     *
-     * @return Mail of the {@link User}
-     */
-    public String getMail() {
-        return mail;
-    }
-
-    /**
-     * Sets a new mail of the {@link User}
-     *
-     * @param mail New mail to be set
-     */
-    public void setMail(final String mail) {
-        this.mail = mail;
     }
 
     /**
@@ -232,7 +210,6 @@ public class User extends TableModelAutoId {
                 Objects.equals(this.getVersion(), that.getVersion()) &&
                 Objects.equals(this.getCreated(), that.getCreated()) &&
                 Objects.equals(this.getLast(), that.getLast()) &&
-                Objects.equals(this.getMail(), that.getMail()) &&
                 Objects.equals(this.getUsername(), that.getUsername()) &&
                 Objects.equals(this.getPasswordHash(), that.getPasswordHash());
     }
@@ -245,6 +222,6 @@ public class User extends TableModelAutoId {
     @Override
     public int hashCode() {
         return Objects.hash(this.getId(), this.getVersion(), this.getCreated(), this.getLast(),
-                this.getMail(), this.getUsername(), this.getPasswordHash());
+                this.getUsername(), this.getPasswordHash());
     }
 }

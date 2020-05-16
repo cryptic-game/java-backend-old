@@ -59,7 +59,6 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
     public ApiResponse register(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client,
                                 @ApiParameter("username") final String username,
                                 @ApiParameter("password") final String password,
-                                @ApiParameter("mail") final String mail,
                                 @ApiParameter("device_name") final String deviceName) {
         Session session = client.get(Session.class);
         if (session != null && session.isValid()) {
@@ -74,16 +73,12 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_PASSWORD");
         }
 
-        if (!ValidationUtils.checkMail(mail)) {
-            return new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_MAIL");
-        }
-
         if (User.getByUsername(username) != null) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "USER_ALREADY_EXISTS");
         }
 
         final UUID token = UUID.randomUUID();
-        final User user = User.createUser(username, mail, password);
+        final User user = User.createUser(username, password);
         session = Session.createSession(user, token, deviceName);
         client.add(session);
 

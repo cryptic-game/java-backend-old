@@ -28,9 +28,6 @@ dependencies {
     // BCrypt
     api("at.favre.lib:bcrypt:0.9.0")
 
-    // Validator
-    api("commons-validator:commons-validator:1.6")
-
     // Sentry
     api("io.sentry:sentry-log4j2:1.7.30")
 
