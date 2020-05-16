@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10};
+var data = {"i0":10,"i1":10,"i2":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -194,7 +194,7 @@ extends <a href="../../../../base/netty/NettyChannelHandler.html" title="class i
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">PlaygroundContentHandler</a></span>()</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(byte%5B%5D)">PlaygroundContentHandler</a></span>&#8203;(byte[]&nbsp;content)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -225,6 +225,14 @@ extends <a href="../../../../base/netty/NettyChannelHandler.html" title="class i
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#exceptionCaught(io.netty.channel.ChannelHandlerContext,java.lang.Throwable)">exceptionCaught</a></span>&#8203;(io.netty.channel.ChannelHandlerContext&nbsp;ctx,
                java.lang.Throwable&nbsp;cause)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sendStatus(io.netty.channel.ChannelHandlerContext,io.netty.handler.codec.http.HttpResponseStatus,java.lang.String,byte%5B%5D)">sendStatus</a></span>&#8203;(io.netty.channel.ChannelHandlerContext&nbsp;ctx,
+          io.netty.handler.codec.http.HttpResponseStatus&nbsp;status,
+          java.lang.String&nbsp;contentType,
+          byte[]&nbsp;content)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -286,13 +294,13 @@ extends <a href="../../../../base/netty/NettyChannelHandler.html" title="class i
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;()">
+<a id="&lt;init&gt;(byte[])">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>PlaygroundContentHandler</h4>
-<pre>public&nbsp;PlaygroundContentHandler()</pre>
+<pre>public&nbsp;PlaygroundContentHandler&#8203;(byte[]&nbsp;content)</pre>
 </li>
 </ul>
 </li>
@@ -325,7 +333,7 @@ extends <a href="../../../../base/netty/NettyChannelHandler.html" title="class i
 <a id="exceptionCaught(io.netty.channel.ChannelHandlerContext,java.lang.Throwable)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>exceptionCaught</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;exceptionCaught&#8203;(io.netty.channel.ChannelHandlerContext&nbsp;ctx,
@@ -341,6 +349,18 @@ extends <a href="../../../../base/netty/NettyChannelHandler.html" title="class i
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.Exception</code></dd>
 </dl>
+</li>
+</ul>
+<a id="sendStatus(io.netty.channel.ChannelHandlerContext,io.netty.handler.codec.http.HttpResponseStatus,java.lang.String,byte[])">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>sendStatus</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;sendStatus&#8203;(io.netty.channel.ChannelHandlerContext&nbsp;ctx,
+                       io.netty.handler.codec.http.HttpResponseStatus&nbsp;status,
+                       java.lang.String&nbsp;contentType,
+                       byte[]&nbsp;content)</pre>
 </li>
 </ul>
 </li>
