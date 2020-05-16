@@ -7,6 +7,7 @@ EXPOSE 8080
 
 COPY /docker/docker-entrypoint.sh ./docker-entrypoint.sh
 COPY /server/build/install/server ./server/
+COPY /server/www/ ./www/
 COPY /java-daemon/build/install/java-daemon ./java-daemon/
 #COPY Python files
 
