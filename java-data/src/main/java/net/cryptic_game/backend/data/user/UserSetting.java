@@ -180,5 +180,19 @@ public class UserSetting extends TableModel implements JsonSerializable {
             this.user = user;
             this.key = key;
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            UserSettingKey that = (UserSettingKey) o;
+            return Objects.equals(user, that.user) &&
+                    Objects.equals(key, that.key);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(user, key);
+        }
     }
 }

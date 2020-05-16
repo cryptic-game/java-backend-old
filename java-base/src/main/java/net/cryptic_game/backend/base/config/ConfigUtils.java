@@ -57,7 +57,7 @@ final class ConfigUtils {
                 .filter(object -> object.getClass().isAnnotationPresent(Config.class))
                 .map(object -> new AbstractMap.SimpleEntry<>(object.getClass().getAnnotation(Config.class).value().strip().toLowerCase(), object))
                 .forEach(object -> {
-                    final Map<String, Object> currentValues = object.getKey().isBlank() ? values : (Map<String, Object>) (values.get(object.getKey()));
+                    final Map<String, Object> currentValues = object.getKey().isBlank() ? values : values == null ? new HashMap<>() : (Map<String, Object>) (values.get(object.getKey()));
                     if (currentValues != null) {
                         ConfigUtils.parseConfigPart(currentValues, object.getValue(), object.getKey());
                     }
