@@ -12,8 +12,8 @@ import java.util.stream.Collectors;
 
 public class ApiEndpointData implements JsonSerializable, Comparable<ApiEndpointData> {
 
-    private final String name;
     private final String description;
+    private String name;
     private Method method;
     private Object object;
     private boolean normalParameters;
@@ -38,6 +38,10 @@ public class ApiEndpointData implements JsonSerializable, Comparable<ApiEndpoint
 
     public String getName() {
         return this.name;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -83,6 +87,12 @@ public class ApiEndpointData implements JsonSerializable, Comparable<ApiEndpoint
     @Override
     public int compareTo(final ApiEndpointData object) {
         return this.getName().compareTo(object.getName());
+    }
+
+    protected ApiEndpointData copy() {
+        final ApiEndpointData endpointData = new ApiEndpointData(this.name, this.description, this.method, this.object, this.parameters);
+        endpointData.setNormalParameters(this.normalParameters);
+        return endpointData;
     }
 
     @Override

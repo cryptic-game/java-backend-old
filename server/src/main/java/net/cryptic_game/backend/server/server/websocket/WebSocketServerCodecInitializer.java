@@ -5,11 +5,18 @@ import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
+import net.cryptic_game.backend.base.api.endpoint.ApiEndpointList;
 import net.cryptic_game.backend.base.netty.NettyCodecInitializer;
 import net.cryptic_game.backend.server.App;
 import net.cryptic_game.backend.server.server.websocket.playground.PlaygroundContentHandler;
 
 public class WebSocketServerCodecInitializer extends NettyCodecInitializer<WebSocketServerCodec> {
+
+    private final ApiEndpointList endpointList;
+
+    public WebSocketServerCodecInitializer(final ApiEndpointList endpointList) {
+        this.endpointList = endpointList;
+    }
 
     @Override
     public void configure(ChannelPipeline pipeline) {
@@ -19,7 +26,7 @@ public class WebSocketServerCodecInitializer extends NettyCodecInitializer<WebSo
         pipeline.addLast("websocket-server-protocol-handler", new WebSocketServerProtocolHandler("/"));
         pipeline.addLast("websocket-text-frame-codec", new WebsocketTextFrameMessageCodec());
         if (!App.getInstance().getConfig().isProductive()) {
-            pipeline.addLast(new PlaygroundContentHandler());
+            pipeline.addLast(new PlaygroundContentHandler(this.endpointList.getPlaygroundContent()));
         }
     }
 }

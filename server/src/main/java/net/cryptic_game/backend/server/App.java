@@ -47,7 +47,7 @@ public class App extends AppBootstrap {
     @Override
     protected void preInit() {
         this.daemonEndpointHandler = new DaemonEndpointHandler();
-        this.webSocketEndpointHandler = new WebSocketEndpointHandler();
+        this.webSocketEndpointHandler = new WebSocketEndpointHandler(serverConfig.getWebsocketHost(), serverConfig.getWebsocketPort());
         this.httpEndpointHandler = new HttpEndpointHandler();
 
         this.daemonHandler = new DaemonHandler(this.webSocketEndpointHandler.getApiList());

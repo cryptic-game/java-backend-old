@@ -29,7 +29,8 @@ public class TestEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("notification")
-    public ApiResponse notification(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client, @ApiParameter("user_id") final UUID userId) {
+    public ApiResponse notification(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client,
+                                    @ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId) {
         DaemonUtils.notifyUser(client.getChannel(), userId, "test", JsonBuilder.create("foo", "bar"));
         return new ApiResponse(ApiResponseType.OK);
     }

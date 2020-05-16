@@ -171,7 +171,8 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("delete")
-    public ApiResponse delete(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client, @ApiParameter("password") final String password) {
+    public ApiResponse delete(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client,
+                              @ApiParameter("password") final String password) {
         Session session = client.get(Session.class);
         if (session == null || !session.isValid()) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "NOT_LOGGED_IN");
@@ -190,7 +191,8 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("get")
-    public ApiResponse get(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client, @ApiParameter("id") final UUID userId) {
+    public ApiResponse get(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client,
+                           @ApiParameter("id") final UUID userId) {
         final Session session = client.get(Session.class);
         if (session == null || !session.isValid()) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "NOT_LOGGED_IN");

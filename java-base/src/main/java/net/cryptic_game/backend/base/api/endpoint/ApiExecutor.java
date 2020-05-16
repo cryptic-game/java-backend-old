@@ -3,6 +3,7 @@ package net.cryptic_game.backend.base.api.endpoint;
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.api.ApiException;
 import net.cryptic_game.backend.base.api.client.ApiClient;
+import net.cryptic_game.backend.base.json.JsonTypeMappingException;
 import net.cryptic_game.backend.base.json.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,7 +59,11 @@ public final class ApiExecutor {
                     if (!parameter.isOptional() && (!data.has(parameter.getName()) || data.get(parameter.getName()).isJsonNull())) {
                         throw new ApiException("Parameter \"" + parameter.getName() + "\" is missing.");
                     } else if (normalParameters) {
-                        objects[current] = JsonUtils.fromJson(data.get(parameter.getName()), parameter.getJavaType());
+                        try {
+                            objects[current] = JsonUtils.fromJson(data.get(parameter.getName()), parameter.getJavaType());
+                        } catch (JsonTypeMappingException e) {
+                            throw new ApiException("Invalid format of parameter \"" + parameter.getName() + "\".", e);
+                        }
                     }
                     break;
                 case TAG:
@@ -77,7 +82,11 @@ public final class ApiExecutor {
                     if (!parameter.isOptional() && (!data.has(parameter.getName()) || data.get(parameter.getName()).isJsonNull())) {
                         throw new ApiException("Parameter \"" + parameter.getName() + "\" is missing.");
                     } else if (normalParameters) {
-                        objects[current] = JsonUtils.fromJson(data.get(parameter.getName()), parameter.getJavaType());
+                        try {
+                            objects[current] = JsonUtils.fromJson(data.get(parameter.getName()), parameter.getJavaType());
+                        } catch (JsonTypeMappingException e) {
+                            throw new ApiException("Invalid format of parameter \"" + parameter.getName() + "\".", e);
+                        }
                     }
             }
             current++;
