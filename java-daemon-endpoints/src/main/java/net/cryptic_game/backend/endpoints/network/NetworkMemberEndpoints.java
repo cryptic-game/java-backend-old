@@ -107,5 +107,36 @@ public class NetworkMemberEndpoints extends ApiEndpointCollection {
         return new ApiResponse(ApiResponseType.OK, invitations);
 
     }
-    
+
+    @ApiEndpoint("leave")
+    public Object leave(@ApiParameter("user")final UUID userId,
+                        @ApiParameter("device")final UUID deviceId,
+                        @ApiParameter("id")final UUID id) {
+        final User user = User.getById(userId);
+        final Device device = Device.getById(deviceId);
+        Network network = Network.getById(id);
+
+        if (device == null || !device.hasUserAccess(user)) {
+            return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_ACCESS_DENIED");
+        }
+
+        if(!device.isPoweredOn()) {
+            return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
+        }
+
+        if(network.getOwner().equals(device)){
+            return new ApiResponse(ApiResponseType.UNAUTHORIZED, "CANNOT_LEAVE_OWN_NETWORK");
+        }
+        NetworkMember member = NetworkMember.getMember(network, device);
+        if (member != null) {
+            member.delete();
+            return new ApiResponse(ApiResponseType.OK);
+        }
+
+        return new ApiResponse(ApiResponseType.BAD_REQUEST);  // I dont know witch request message i should write for this
+
+
+    }
+
+
 }
