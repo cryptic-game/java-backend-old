@@ -12,6 +12,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Entity representing a network invitation entry in the database
@@ -173,6 +174,8 @@ public class NetworkInvitation extends TableModel implements JsonSerializable {
      * @param o {@link Object} to compare
      * @return True if the {@link Object} equals the {@link NetworkInvitation} | False if it does not
      */
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
