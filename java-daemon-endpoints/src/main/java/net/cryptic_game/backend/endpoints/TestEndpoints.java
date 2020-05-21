@@ -18,7 +18,7 @@ public class TestEndpoints extends ApiEndpointCollection {
         super("test", "todo");
     }
 
-    @ApiEndpoint("timeout")
+    /*@ApiEndpoint("timeout")
     public ApiResponse timeout() {
         try {
             Thread.sleep(1000 * 25);
@@ -26,7 +26,7 @@ public class TestEndpoints extends ApiEndpointCollection {
             e.printStackTrace();
         }
         return new ApiResponse(ApiResponseType.OK);
-    }
+    }*/
 
     @ApiEndpoint("notification")
     public ApiResponse notification(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client,

@@ -85,6 +85,7 @@ public class DaemonHandler {
 
     public void respondToClient(final JsonObject json) {
         final ClientRespond respond = this.channel.remove(json.get("tag").getAsString());
+        if (respond == null) return;
         final JsonBuilder info = JsonBuilder.create(json.get("info").getAsJsonObject());
         if (JsonUtils.fromJson(JsonUtils.fromJson(json.get("info"), JsonObject.class).get("code"), int.class) == ApiResponseType.INTERNAL_SERVER_ERROR.getCode()) {
             final ApiResponseType type = ApiResponseType.BAD_GATEWAY;

@@ -12,7 +12,7 @@ import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonUtils;
 import net.cryptic_game.backend.base.netty.NettyChannelHandler;
 
-import java.util.Iterator;
+import java.util.ConcurrentModificationException;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
@@ -49,13 +49,19 @@ public class JsonApiServerContentHandler extends NettyChannelHandler<JsonObject>
     @Override
     public void handlerRemoved(final ChannelHandlerContext ctx) throws Exception {
         super.handlerRemoved(ctx);
-        final Iterator<ApiClient> iterator = this.clients.iterator();
-        iterator.forEachRemaining(client -> {
-            if (client.getChannel().equals(ctx.channel())) {
-                iterator.remove();
-                if (this.disconnectedCallback != null) this.disconnectedCallback.accept(client);
+        ApiClient client = this.clients.stream().filter((c) -> c.getChannel().equals(ctx.channel())).findFirst().orElse(null);
+        if (client == null) return;
+        boolean exception;
+        do {
+            exception = false;
+            try {
+                this.clients.remove(client);
+            } catch (ConcurrentModificationException ignored) {
+                exception = true;
             }
-        });
+            Thread.sleep(1);
+        } while (!exception);
+        if (this.disconnectedCallback != null) this.disconnectedCallback.accept(client);
     }
 
     @Override
