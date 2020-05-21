@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-
-
 public class NetworkMemberEndpoints extends ApiEndpointCollection {
 
     public NetworkMemberEndpoints() {
@@ -36,7 +34,6 @@ public class NetworkMemberEndpoints extends ApiEndpointCollection {
         List<NetworkMember> memberships = NetworkMember.getMembershipsOfDevice(device);
 
         return new ApiResponse(ApiResponseType.OK, memberships);
-
     }
 
     @ApiEndpoint("request")
@@ -50,8 +47,6 @@ public class NetworkMemberEndpoints extends ApiEndpointCollection {
         if (device == null || !device.hasUserAccess(user)) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_ACCESS_DENIED");
         }
-
-
 
         if (!device.isPoweredOn()) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
@@ -73,17 +68,15 @@ public class NetworkMemberEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.ALREADY_EXISTS, "INVITATION_ALREADY_EXISTS");
         }
 
-
         NetworkInvitation invitation = NetworkInvitation.createInvitation(network, device, null);
 
         return new ApiResponse(ApiResponseType.OK, invitation.serialize());
-
     }
 
     @ApiEndpoint("invitations")
     public Object invitations(@ApiParameter("user") final UUID userId,
                               @ApiParameter("device") final UUID deviceId,
-                              @ApiParameter("id") final UUID id){
+                              @ApiParameter("id") final UUID id) {
         final User user = User.getById(userId);
         final Device device = Device.getById(deviceId);
         Network network = Network.getById(id);
@@ -92,26 +85,24 @@ public class NetworkMemberEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_ACCESS_DENIED");
         }
 
-        if(!device.isPoweredOn()) {
+        if (!device.isPoweredOn()) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
         }
 
         List<JsonObject> invitations = new ArrayList<>();
         List<NetworkInvitation> networkInvitations = (List<NetworkInvitation>) NetworkInvitation.getInvitation(network, device);
 
-        for(NetworkInvitation invitation : networkInvitations){
+        for (NetworkInvitation invitation : networkInvitations) {
             invitations.add(invitation.serialize());
-
         }
 
         return new ApiResponse(ApiResponseType.OK, invitations);
-
     }
 
     @ApiEndpoint("leave")
-    public Object leave(@ApiParameter("user")final UUID userId,
-                        @ApiParameter("device")final UUID deviceId,
-                        @ApiParameter("id")final UUID id) {
+    public Object leave(@ApiParameter("user") final UUID userId,
+                        @ApiParameter("device") final UUID deviceId,
+                        @ApiParameter("id") final UUID id) {
         final User user = User.getById(userId);
         final Device device = Device.getById(deviceId);
         Network network = Network.getById(id);
@@ -120,13 +111,14 @@ public class NetworkMemberEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_ACCESS_DENIED");
         }
 
-        if(!device.isPoweredOn()) {
+        if (!device.isPoweredOn()) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
         }
 
-        if(network.getOwner().equals(device)){
+        if (network.getOwner().equals(device)) {
             return new ApiResponse(ApiResponseType.UNAUTHORIZED, "CANNOT_LEAVE_OWN_NETWORK");
         }
+
         NetworkMember member = NetworkMember.getMember(network, device);
         if (member != null) {
             member.delete();
@@ -134,9 +126,5 @@ public class NetworkMemberEndpoints extends ApiEndpointCollection {
         }
 
         return new ApiResponse(ApiResponseType.BAD_REQUEST);  // I dont know witch request message i should write for this
-
-
     }
-
-
 }
