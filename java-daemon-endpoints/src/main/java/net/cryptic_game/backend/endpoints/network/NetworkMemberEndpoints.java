@@ -45,8 +45,6 @@ public class NetworkMemberEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_ACCESS_DENIED");
         }
 
-
-
         if (!device.isPoweredOn()) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
         }
@@ -63,7 +61,7 @@ public class NetworkMemberEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.ALREADY_EXISTS, "INVITATION_ALREADY_EXISTS");
         }
 
-        return new ApiResponse(ApiResponseType.OK, NetworkInvitation.createInvitation(network, device, null).serialize());
+        return new ApiResponse(ApiResponseType.OK, NetworkInvitation.createInvitation(network, device, null));
 
     }
 
