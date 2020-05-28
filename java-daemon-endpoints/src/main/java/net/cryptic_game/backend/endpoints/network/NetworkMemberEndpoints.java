@@ -12,15 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-
-
 public class NetworkMemberEndpoints extends ApiEndpointCollection {
 
     public NetworkMemberEndpoints() {
         super("network_member");
     }
 
-    @ApiEndpoint("member")
+    @ApiEndpoint("members")
     public ApiResponse member(@ApiParameter("user_id") final UUID userId,
                               @ApiParameter("device") final UUID deviceId) {
         final User user = User.getById(userId);
@@ -34,7 +32,7 @@ public class NetworkMemberEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("request")
-    public Object request(@ApiParameter("user") final UUID userId,
+    public Object request(@ApiParameter("user_id") final UUID userId,
                           @ApiParameter("device") final UUID deviceId,
                           @ApiParameter("id") final UUID id) {
         final User user = User.getById(userId);
@@ -60,13 +58,11 @@ public class NetworkMemberEndpoints extends ApiEndpointCollection {
         if (NetworkInvitation.getInvitation(network, device) != null) {
             return new ApiResponse(ApiResponseType.ALREADY_EXISTS, "INVITATION_ALREADY_EXISTS");
         }
-
         return new ApiResponse(ApiResponseType.OK, NetworkInvitation.createInvitation(network, device, null));
-
     }
 
     @ApiEndpoint("invitations")
-    public Object invitations(@ApiParameter("user") final UUID user_id,
+    public Object invitations(@ApiParameter("user_id") final UUID user_id,
                               @ApiParameter("device") final UUID device_id,
                               @ApiParameter("id") final UUID id){
         final User user = User.getById(user_id);
@@ -77,24 +73,17 @@ public class NetworkMemberEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_ACCESS_DENIED");
         }
 
-        if(!device.isPoweredOn()) {
+        if(!device.isPoweredOn()){
             return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
         }
 
         List<JsonObject> invitations = new ArrayList<>();
-        List<NetworkInvitation> networkInvitations = (List<NetworkInvitation>) NetworkInvitation.getInvitation(network, device);
-
-        for(NetworkInvitation invitation : networkInvitations){
-            invitations.add(invitation.serialize());
-
-        }
 
         return new ApiResponse(ApiResponseType.OK, invitations);
-
     }
 
     @ApiEndpoint("leave")
-    public Object leave(@ApiParameter("user")final UUID user_id,
+    public Object leave(@ApiParameter("user_id")final UUID user_id,
                         @ApiParameter("device")final UUID device_id,
                         @ApiParameter("id")final UUID id) {
         final User user = User.getById(user_id);
@@ -117,7 +106,6 @@ public class NetworkMemberEndpoints extends ApiEndpointCollection {
             member.delete();
             return new ApiResponse(ApiResponseType.OK);
         }
-
-        return new ApiResponse(ApiResponseType.BAD_REQUEST);  // I dont know witch request message i should write for this
+        return new ApiResponse(ApiResponseType.NOT_FOUND, "NETWORK_MEMBER");  // I dont know witch request message i should write for this
     }
 }
