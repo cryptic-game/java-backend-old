@@ -8,4 +8,4 @@ Closes #XX
 > Give us step by step instructions on how to test your changes.
 
 **Additional Notes**
-> Anything else that will help us test the pull request.
+> Add any other context about the pull request here.
