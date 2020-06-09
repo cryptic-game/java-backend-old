@@ -60,7 +60,7 @@ public class JsonApiServerContentHandler extends NettyChannelHandler<JsonObject>
                 exception = true;
             }
             Thread.sleep(1);
-        } while (!exception);
+        } while (exception);
         if (this.disconnectedCallback != null) this.disconnectedCallback.accept(client);
     }
 
