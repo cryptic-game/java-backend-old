@@ -8,5 +8,7 @@
   ],
   "labels": [
     "dependencies"
-  ]
+  ],
+  "branchName": "{{{branchPrefix}}}{{{managerBranchPrefix}}}{{{branchTopic}}}",
+  "branchPrefix": "dependencies/"
 }
