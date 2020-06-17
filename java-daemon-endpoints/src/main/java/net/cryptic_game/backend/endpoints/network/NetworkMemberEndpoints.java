@@ -32,7 +32,7 @@ public class NetworkMemberEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("request")
-    public Object request(@ApiParameter("user_id") final UUID userId,
+    public ApiResponse request(@ApiParameter("user_id") final UUID userId,
                           @ApiParameter("device") final UUID deviceId,
                           @ApiParameter("id") final UUID id) {
         final User user = User.getById(userId);
@@ -62,7 +62,7 @@ public class NetworkMemberEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("invitations")
-    public Object invitations(@ApiParameter("user_id") final UUID user_id,
+    public ApiResponse invitations(@ApiParameter("user_id") final UUID user_id,
                               @ApiParameter("device") final UUID device_id,
                               @ApiParameter("id") final UUID id){
         final User user = User.getById(user_id);
@@ -83,7 +83,7 @@ public class NetworkMemberEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("leave")
-    public Object leave(@ApiParameter("user_id")final UUID user_id,
+    public ApiResponse leave(@ApiParameter("user_id")final UUID user_id,
                         @ApiParameter("device")final UUID device_id,
                         @ApiParameter("id")final UUID id) {
         final User user = User.getById(user_id);
@@ -106,6 +106,6 @@ public class NetworkMemberEndpoints extends ApiEndpointCollection {
             member.delete();
             return new ApiResponse(ApiResponseType.OK);
         }
-        return new ApiResponse(ApiResponseType.NOT_FOUND, "NETWORK_MEMBER");  // I dont know witch request message i should write for this
+        return new ApiResponse(ApiResponseType.NOT_FOUND, "NETWORK_MEMBER");
     }
 }
