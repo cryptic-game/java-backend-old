@@ -1,4 +1,4 @@
-/** package net.cryptic_game.backend.endpoints.network;
+package net.cryptic_game.backend.endpoints.network;
 
 import com.google.gson.JsonArray;
 import net.cryptic_game.backend.base.api.endpoint.*;
@@ -6,77 +6,7 @@ import net.cryptic_game.backend.data.device.Device;
 import net.cryptic_game.backend.data.network.Network;
 import net.cryptic_game.backend.data.network.NetworkMember;
 import net.cryptic_game.backend.data.user.User;
-
-import java.util.UUID;
-
-public class NetworkEndpoints extends ApiEndpointCollection {
-
-    public NetworkEndpoints() {
-        super("network");
-    }
-
-    @ApiEndpoint("create")
-    public ApiResponse create(@ApiParameter("user_id") UUID userId,
-                              @ApiParameter("name") String name,
-                              @ApiParameter("hidden") boolean hidden,
-                              @ApiParameter("device") UUID deviceId) {
-        User user = User.getById(userId);
-        Device device = Device.getById(deviceId);
-
-        if (!device.hasUserAccess(user))
-            return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_ACCESS_DENIED");
-
-        if (!device.isPoweredOn())
-            return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
-
-        if (Network.getNetworksOwnedByDevice(device).size() >= 2)
-            return new ApiResponse(ApiResponseType.FORBIDDEN, "NETWORK_LIMIT_REACHED");
-
-        if (Network.getByName(name) != null)
-            return new ApiResponse(ApiResponseType.ALREADY_EXISTS, "NETWORK_NAME");
-
-        Network network = Network.createNetwork(name, device, hidden);
-        NetworkMember.createMember(network, device);
-
-        return new ApiResponse(ApiResponseType.OK, network.serialize());
-    }
-
-    @ApiEndpoint("list")
-    public ApiResponse list(@ApiParameter("user_id") UUID userId,
-                            @ApiParameter(value = "device", optional = true) UUID deviceId) {
-        if (deviceId == null) {
-            JsonArray networks = new JsonArray();
-            Network.getPublicNetworks().forEach(network -> networks.add(network.serialize()));
-            return new ApiResponse(ApiResponseType.OK, networks);
-        }
-
-        User user = User.getById(userId);
-        Device device = Device.getById(deviceId);
-
-        if (!device.hasUserAccess(user))
-            return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_ACCESS_DENIED");
-
-        if (!device.isPoweredOn())
-            return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
-
-        JsonArray networks = new JsonArray();
-        NetworkMember.getMembershipsOfDevice(device).forEach(networkMember -> networks.add(networkMember.serialize()));
-        return new ApiResponse(ApiResponseType.OK, networks);
-    }
-} **/
-
-package net.cryptic_game.backend.endpoints.network;
-
-import com.google.gson.JsonObject;
-import com.google.protobuf.Api;
-import net.cryptic_game.backend.base.api.endpoint.*;
-import net.cryptic_game.backend.data.device.Device;
-import net.cryptic_game.backend.data.network.Network;
-import net.cryptic_game.backend.data.network.NetworkInvitation;
-import net.cryptic_game.backend.data.network.NetworkMember;
-import net.cryptic_game.backend.data.user.User;
 import org.h2.util.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -87,104 +17,75 @@ public class NetworkEndpoint extends ApiEndpointCollection {
         super("network");
     }
 
-    @ApiEndpoint("names")
-    public ApiResponse name(@ApiParameter("user_id") UUID userId,
-                            @ApiParameter("name") String name) {
+    @ApiEndpoint("get")
+    public ApiResponse get(@ApiParameter(value = "user_id") final UUID userId,
+                           @ApiParameter(value = "network_id", optional = true) final UUID network_id,
+                           @ApiParameter(value = "name", optional = true) final String name) {
 
-        Network network = Network.getByName(name);
-        if (network == null) return new ApiResponse(ApiResponseType.NOT_FOUND, "network_not_found");
-
-        return new ApiResponse(ApiResponseType.OK, network.serialize());
-    }
-
-    @ApiEndpoint("gets")
-    public ApiResponse get(@ApiParameter("user_id") UUID userId,
-                           @ApiParameter("uuid") UUID uuid) {
-
-        Network network = Network.getById(uuid);
-        if (network == null) return new ApiResponse(ApiResponseType.NOT_FOUND, "network_not_found");
-
-        return new ApiResponse(ApiResponseType.OK, network.serialize());
-    }
-
-    @ApiEndpoint("publics")
-    public ApiResponse GetPublic(@ApiParameter("user_id") UUID userId) {
-
-        List<Network> networks = Network.getPublicNetworks();
-
-        List<JsonObject> jsonNetworks = new ArrayList<>();
-
-        for (Network network : networks) {
-            jsonNetworks.add(network.serialize());
+        if (network_id == null && name == null) return new ApiResponse(ApiResponseType.BAD_REQUEST, "NO_NAME_OR_NETWORKID_PROVIDED");
+        Network network;
+        if(network_id != null) {
+            network = Network.getById(network_id);
+        } else {
+            network = Network.getByName(name);
         }
+        if (network == null) return new ApiResponse(ApiResponseType.NOT_FOUND, "NETWORK_NOT_FOUND");
 
-        return new ApiResponse(ApiResponseType.OK, jsonNetworks);
+        return new ApiResponse(ApiResponseType.OK, network.serialize());
 
     }
 
-    @ApiEndpoint("creates")
-    public ApiResponse create(@ApiParameter("user_id") UUID userId,
-                              @ApiParameter("device") UUID deviceId,
-                              @ApiParameter("name") String name,
-                              @ApiParameter("hidden") Boolean hidden) {
+    @ApiEndpoint("public")
+    public ApiResponse GetPublic(@ApiParameter("user_id") final UUID userId) {
 
-        User user = User.getById(userId);
+        final List<Network> networks = Network.getPublicNetworks();
+
+        return new ApiResponse(ApiResponseType.OK, networks);
+
+    }
+
+    @ApiEndpoint("create")
+    public ApiResponse create(@ApiParameter("user_id") final UUID userId,
+                              @ApiParameter("device_id") final UUID deviceId,
+                              @ApiParameter("name") final String name,
+                              @ApiParameter("hidden") final Boolean hidden) {
+
+        final User user = User.getById(userId);
+        if (user == null) return new ApiResponse(ApiResponseType.NOT_FOUND, "USER_NOT_FOUND");
         Device device = Device.getById(deviceId);
+        if (device == null) return new ApiResponse(ApiResponseType.NOT_FOUND, "DEVICE_NOT_FOUND");
 
-        if (!device.hasUserAccess(user))
-            return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_ACCESS_DENIED");
+        if (!device.hasUserAccess(user)) return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_ACCESS_DENIED");
 
-        if (!device.isPoweredOn())
-            return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
+        if (!device.isPoweredOn()) return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
 
-        if (Network.getNetworksOwnedByDevice(device).size() >= 2)
-            return new ApiResponse(ApiResponseType.FORBIDDEN, "NETWORK_LIMIT_REACHED");
+        if (Network.getNetworksOwnedByDevice(device).size() >= 2) return new ApiResponse(ApiResponseType.FORBIDDEN, "NETWORK_LIMIT_REACHED");
 
-        if (Network.getByName(name) != null)
-            return new ApiResponse(ApiResponseType.ALREADY_EXISTS, "NETWORK_NAME");
+        if (Network.getByName(name) != null) return new ApiResponse(ApiResponseType.ALREADY_EXISTS, "NETWORK_NAME");
 
-        Network network = Network.createNetwork(name, device, hidden);
+        final Network network = Network.createNetwork(name, device, hidden);
         NetworkMember.createMember(network, device);
 
-        return new ApiResponse(ApiResponseType.OK, network.serialize());
+        return new ApiResponse(ApiResponseType.OK, network);
 
     }
 
-    @ApiEndpoint("checks")
-    public ApiResponse check(@ApiParameter("user_id") UUID userId,
-                             @ApiParameter("source") UUID sourceId,
-                             @ApiParameter("destination") UUID destinationId) {
+    @ApiEndpoint("member")
+    public ApiResponse members(@ApiParameter("user_id") final UUID userId,
+                               @ApiParameter("network_id") final UUID network_id,
+                               @ApiParameter("device") final UUID deviceId) {
 
-        //TODO get Member class
-        for (Network network : Member.getNetworks(sourceId)) {
-            for (Member member : Member.getMembers(network.getUUID())) {
-                if (member.getDevice().equals(destinationId)) {
-                    return new ApiResponse(ApiResponseType.OK, "connected");
-                }
-            }
-        }
-
-        return new ApiResponse(ApiResponseType.FORBIDDEN, "connected");
-
-    }
-
-    @ApiEndpoint("members")
-    public ApiResponse members(@ApiParameter("user_id") UUID userId,
-                               @ApiParameter("uuid") UUID uuid,
-                               @ApiParameter("device") UUID deviceId) {
-
-        Network network = Network.getById(uuid);
-        User user = User.getById(userId);
-        Device device = Device.getById(deviceId);
-
-        return new ApiResponse(ApiResponseType.FORBIDDEN, "connected");
+        // REDUNDANT?
+        final Network network = Network.getById(network_id);
+        final User user = User.getById(userId);
+        final Device device = Device.getById(deviceId);
 
         if (network == null || !device.hasUserAccess(user)) {
-            return new ApiResponse(ApiResponseType.NOT_FOUND, "network_not_found");
+            return new ApiResponse(ApiResponseType.NOT_FOUND, "NETWORK_NOT_FOUND");
         }
 
         //TODO get Member class
-        List<Member> members = Member.getMembers(uuid);
+        final List<Member> members = Member.getMembers(network_id);
         List<JSONObject> jsonMembers = new ArrayList<>();
 
         for (Member member : members) {
@@ -195,26 +96,27 @@ public class NetworkEndpoint extends ApiEndpointCollection {
 
     }
 
-    @ApiEndpoint("delete_users")
-    public ApiResponse deleteUser(@ApiParameter("user_id") UUID userId,
-                             @ApiParameter("ms") String ms) {
-
-        // TODO: get Invitation and Member classes
-        for (Invitation invitation : Invitation.getInvitationsOfUser(user)) {
-            invitation.delete();
-        }
-        for (Member member : Member.getMembershipsOfUser(user)) {
-            member.delete();
-        }
-        for (Network network : Network.getNetworksOfUser(user)) {
-            for (Member member : Member.getMembers(network.getUUID())) {
-                member.delete();
-            }
-            network.delete();
+    @ApiEndpoint("list")
+    public ApiResponse list(@ApiParameter("user_id") final UUID userId,
+                            @ApiParameter(value = "device", optional = true) final UUID deviceId) {
+        if (deviceId == null) {
+            JsonArray networks = new JsonArray();
+            Network.getPublicNetworks().forEach(network -> networks.add(network.serialize()));
+            return new ApiResponse(ApiResponseType.OK, networks);
         }
 
-        return new ApiResponse(ApiResponseType.OK);
+        final User user = User.getById(userId);
+        final Device device = Device.getById(deviceId);
 
+        if (!device.hasUserAccess(user))
+            return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_ACCESS_DENIED");
+
+        if (!device.isPoweredOn())
+            return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
+
+        final JsonArray networks = new JsonArray();
+        NetworkMember.getMembershipsOfDevice(device).forEach(networkMember -> networks.add(networkMember.serialize()));
+        return new ApiResponse(ApiResponseType.OK, networks);
     }
 
 }
