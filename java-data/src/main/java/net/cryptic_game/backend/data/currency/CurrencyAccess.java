@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import java.util.Objects;
 
 /**
- * Entity representing a currency access entry in the database
+ * Entity representing a currency access entry in the database.
  *
  * @since 0.3.0
  */
@@ -33,7 +33,7 @@ public class CurrencyAccess extends TableModelAutoId implements JsonSerializable
     private CurrencyWallet wallet;
 
     /**
-     * Returns the {@link User} of the {@link CurrencyAccess}
+     * Returns the {@link User} of the {@link CurrencyAccess}.
      *
      * @return the {@link User}
      */
@@ -42,7 +42,7 @@ public class CurrencyAccess extends TableModelAutoId implements JsonSerializable
     }
 
     /**
-     * Sets a new {@link User} for the {@link CurrencyAccess}
+     * Sets a new {@link User} for the {@link CurrencyAccess}.
      *
      * @param user the new {@link User} to be set
      */
@@ -51,7 +51,7 @@ public class CurrencyAccess extends TableModelAutoId implements JsonSerializable
     }
 
     /**
-     * Returns the {@link CurrencyWallet} of the {@link CurrencyAccess}
+     * Returns the {@link CurrencyWallet} of the {@link CurrencyAccess}.
      *
      * @return the {@link CurrencyAccess}
      */
@@ -60,7 +60,7 @@ public class CurrencyAccess extends TableModelAutoId implements JsonSerializable
     }
 
     /**
-     * Sets a new {@link CurrencyAccess}
+     * Sets a new {@link CurrencyAccess}.
      *
      * @param wallet the new {@link CurrencyAccess} to be set
      */
@@ -69,7 +69,7 @@ public class CurrencyAccess extends TableModelAutoId implements JsonSerializable
     }
 
     /**
-     * Generates a {@link JsonObject} containing all relevant {@link CurrencyTransaction} information
+     * Generates a {@link JsonObject} containing all relevant {@link CurrencyTransaction} information.
      *
      * @return The generated {@link JsonObject}
      */
@@ -82,22 +82,22 @@ public class CurrencyAccess extends TableModelAutoId implements JsonSerializable
     }
 
     /**
-     * Compares an {@link Object} if it equals the {@link CurrencyAccess}
+     * Compares an {@link Object} if it equals the {@link CurrencyAccess}.
      *
      * @param o {@link Object} to compare
      * @return True if the {@link Object} equals the {@link CurrencyAccess} | False if it does not
      */
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CurrencyAccess that = (CurrencyAccess) o;
-        return Objects.equals(getUser(), that.getUser()) &&
-                Objects.equals(getWallet(), that.getWallet());
+        return Objects.equals(getUser(), that.getUser())
+                && Objects.equals(getWallet(), that.getWallet());
     }
 
     /**
-     * Hashes the {@link CurrencyAccess} using {@link Objects} hash method
+     * Hashes the {@link CurrencyAccess} using {@link Objects} hash method.
      *
      * @return Hash of the {@link CurrencyAccess}
      */

@@ -17,7 +17,7 @@ import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
- * Entity representing a currency transaction entry in the database
+ * Entity representing a currency transaction entry in the database.
  *
  * @since 0.3.0
  */
@@ -48,7 +48,7 @@ public class CurrencyTransaction extends TableModelAutoId implements JsonSeriali
     private String origin;
 
     /**
-     * Returns the {@link ZonedDateTime}, the timestamp when the {@link CurrencyTransaction} has been made
+     * Returns the {@link ZonedDateTime}, the timestamp when the {@link CurrencyTransaction} has been made.
      *
      * @return the timestamp
      */
@@ -57,7 +57,7 @@ public class CurrencyTransaction extends TableModelAutoId implements JsonSeriali
     }
 
     /**
-     * Sets a new timestap as {@link ZonedDateTime} for the {@link CurrencyTransaction}
+     * Sets a new timestap as {@link ZonedDateTime} for the {@link CurrencyTransaction}.
      *
      * @param timeStamp the new {@link ZonedDateTime} to be set
      */
@@ -66,7 +66,7 @@ public class CurrencyTransaction extends TableModelAutoId implements JsonSeriali
     }
 
     /**
-     * Returns the {@link User} who sends the {@link CurrencyTransaction}
+     * Returns the {@link User} who sends the {@link CurrencyTransaction}.
      *
      * @return the source {@link User}
      */
@@ -75,7 +75,7 @@ public class CurrencyTransaction extends TableModelAutoId implements JsonSeriali
     }
 
     /**
-     * Sets a new {@link User} as source for the {@link CurrencyTransaction}
+     * Sets a new {@link User} as source for the {@link CurrencyTransaction}.
      *
      * @param userSource the new {@link User} to be set
      */
@@ -84,7 +84,7 @@ public class CurrencyTransaction extends TableModelAutoId implements JsonSeriali
     }
 
     /**
-     * Returns the {@link User} who receives the {@link CurrencyTransaction}
+     * Returns the {@link User} who receives the {@link CurrencyTransaction}.
      *
      * @return the destination {@link User}
      */
@@ -93,7 +93,7 @@ public class CurrencyTransaction extends TableModelAutoId implements JsonSeriali
     }
 
     /**
-     * Sets a new {@link User} as destination for the {@link CurrencyTransaction}
+     * Sets a new {@link User} as destination for the {@link CurrencyTransaction}.
      *
      * @param userDestination the new {@link User} to be set
      */
@@ -102,7 +102,7 @@ public class CurrencyTransaction extends TableModelAutoId implements JsonSeriali
     }
 
     /**
-     * Returns the amount of transacted morphcoin
+     * Returns the amount of transacted morphcoin.
      *
      * @return the amount of money
      */
@@ -111,7 +111,7 @@ public class CurrencyTransaction extends TableModelAutoId implements JsonSeriali
     }
 
     /**
-     * Sets a new amount of mophcoin to be transacted
+     * Sets a new amount of mophcoin to be transacted.
      *
      * @param sendAmount the new amount of money to be set
      */
@@ -129,7 +129,7 @@ public class CurrencyTransaction extends TableModelAutoId implements JsonSeriali
     }
 
     /**
-     * Sets a new purpose for the {@link CurrencyTransaction}
+     * Sets a new purpose for the {@link CurrencyTransaction}.
      *
      * @param purpose New purpose to be set.
      */
@@ -138,7 +138,7 @@ public class CurrencyTransaction extends TableModelAutoId implements JsonSeriali
     }
 
     /**
-     * Returns the origin of the {@link CurrencyTransaction}
+     * Returns the origin of the {@link CurrencyTransaction}.
      *
      * @return the origin
      */
@@ -147,7 +147,7 @@ public class CurrencyTransaction extends TableModelAutoId implements JsonSeriali
     }
 
     /**
-     * Sets a new origin of the {@link CurrencyTransaction}
+     * Sets a new origin of the {@link CurrencyTransaction}.
      *
      * @param origin New origin to be set.
      */
@@ -156,7 +156,7 @@ public class CurrencyTransaction extends TableModelAutoId implements JsonSeriali
     }
 
     /**
-     * Generates a {@link JsonObject} containing all relevant {@link CurrencyTransaction} information
+     * Generates a {@link JsonObject} containing all relevant {@link CurrencyTransaction} information.
      *
      * @return The generated {@link JsonObject}
      */
@@ -173,7 +173,7 @@ public class CurrencyTransaction extends TableModelAutoId implements JsonSeriali
     }
 
     /**
-     * Compares an {@link Object} if it equals the {@link CurrencyTransaction}
+     * Compares an {@link Object} if it equals the {@link CurrencyTransaction}.
      *
      * @param o {@link Object} to compare
      * @return True if the {@link Object} equals the {@link CurrencyTransaction} | False if it does not
@@ -183,16 +183,16 @@ public class CurrencyTransaction extends TableModelAutoId implements JsonSeriali
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CurrencyTransaction that = (CurrencyTransaction) o;
-        return getSendAmount() == that.getSendAmount() &&
-                Objects.equals(getTimeStamp(), that.getTimeStamp()) &&
-                Objects.equals(getUserSource().getId(), that.getUserSource().getId()) &&
-                Objects.equals(getUserDestination().getId(), that.getUserDestination().getId()) &&
-                Objects.equals(getPurpose(), that.getPurpose()) &&
-                Objects.equals(getOrigin(), that.getOrigin());
+        return getSendAmount() == that.getSendAmount()
+                && Objects.equals(getTimeStamp(), that.getTimeStamp())
+                && Objects.equals(getUserSource().getId(), that.getUserSource().getId())
+                && Objects.equals(getUserDestination().getId(), that.getUserDestination().getId())
+                && Objects.equals(getPurpose(), that.getPurpose())
+                && Objects.equals(getOrigin(), that.getOrigin());
     }
 
     /**
-     * Hashes the {@link CurrencyTransaction} using {@link Objects} hash method
+     * Hashes the {@link CurrencyTransaction} using {@link Objects} hash method.
      *
      * @return Hash of the {@link CurrencyTransaction}
      */

@@ -15,10 +15,10 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.InvocationTargetException;
 import java.net.InetSocketAddress;
 
-public class App extends AppBootstrap {
+public final class App extends AppBootstrap {
 
-    private static final Logger log = LoggerFactory.getLogger(App.class);
-    private static final DaemonConfig daemonConfig = new DaemonConfig();
+    private static final Logger LOG = LoggerFactory.getLogger(App.class);
+    private static final DaemonConfig DAEMON_CONFIG = new DaemonConfig();
 
     private NettyClientHandler clientHandler;
     private NettyClient client;
@@ -27,11 +27,11 @@ public class App extends AppBootstrap {
     private DaemonBootstrapper daemonBootstrapper;
 
     public App(final String[] args) {
-        super(args, daemonConfig, "Java-Daemon");
+        super(args, DAEMON_CONFIG, "Java-Daemon");
     }
 
-    public static void main(String[] args) {
-        log.info("Bootstrapping Java Daemon...");
+    public static void main(final String[] args) {
+        LOG.info("Bootstrapping Java Daemon...");
         new App(args);
     }
 
@@ -69,7 +69,7 @@ public class App extends AppBootstrap {
     }
 
     public void onConnect(final Channel channel) {
-        log.info("Sending request for registering on the server.");
+        LOG.info("Sending request for registering on the server.");
         this.daemonBootstrapper.sendRegisterPackage(channel);
     }
 }

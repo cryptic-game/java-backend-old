@@ -9,9 +9,9 @@ import org.slf4j.LoggerFactory;
 import java.util.HashSet;
 import java.util.Set;
 
-public class DaemonEndpointHandler {
+public final class DaemonEndpointHandler {
 
-    private static final Logger log = LoggerFactory.getLogger(DaemonEndpointHandler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DaemonEndpointHandler.class);
     private final ApiEndpointList apiList;
     private Set<ApiEndpointCollection> apiCollections;
 
@@ -25,7 +25,7 @@ public class DaemonEndpointHandler {
             this.apiList.setCollections(this.apiCollections);
             this.apiCollections = null;
         } catch (ApiException e) {
-            log.error("Unable to register Api-Collections.", e);
+            LOG.error("Unable to register Api-Collections.", e);
         }
     }
 
@@ -34,7 +34,7 @@ public class DaemonEndpointHandler {
             this.apiCollections.add(apiCollection);
             return apiCollection;
         } else {
-            log.error("It's too late to register any more endpoints.");
+            LOG.error("It's too late to register any more endpoints.");
             return null;
         }
     }

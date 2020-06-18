@@ -25,9 +25,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class DaemonHandler {
+public final class DaemonHandler {
 
-    private final static Logger log = LoggerFactory.getLogger(DaemonHandler.class);
+    private final static Logger LOG = LoggerFactory.getLogger(DaemonHandler.class);
 
     private final ApiEndpointList endpointList;
     private final HashMap<String, ClientRespond> channel;
@@ -62,7 +62,7 @@ public class DaemonHandler {
                 }
             });
 
-            log.info("Removed daemon \"" + daemon.getName() + "\"");
+            LOG.info("Removed daemon \"" + daemon.getName() + "\"");
         }
     }
 

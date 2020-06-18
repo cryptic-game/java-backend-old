@@ -16,7 +16,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * Entity representing a device workload entry in the database
+ * Entity representing a device workload entry in the database.
  *
  * @since 0.3.0
  */
@@ -61,7 +61,7 @@ public class DeviceWorkload extends TableModel implements JsonSerializable, Seri
     private float usageNetwork;
 
     /**
-     * Returns the {@link Device} of the {@link DeviceWorkload}
+     * Returns the {@link Device} of the {@link DeviceWorkload}.
      *
      * @return the {@link Device}
      */
@@ -70,7 +70,7 @@ public class DeviceWorkload extends TableModel implements JsonSerializable, Seri
     }
 
     /**
-     * Sets a new {@link Device} for the {@link DeviceWorkload}
+     * Sets a new {@link Device} for the {@link DeviceWorkload}.
      *
      * @param device the new {@link Device} to be set
      */
@@ -79,7 +79,7 @@ public class DeviceWorkload extends TableModel implements JsonSerializable, Seri
     }
 
     /**
-     * Returns the performance of to CPU from the {@link DeviceWorkload}
+     * Returns the performance of to CPU from the {@link DeviceWorkload}.
      *
      * @return the performance
      */
@@ -88,7 +88,7 @@ public class DeviceWorkload extends TableModel implements JsonSerializable, Seri
     }
 
     /**
-     * Sets a new performance for the CPU from the {@link DeviceWorkload}
+     * Sets a new performance for the CPU from the {@link DeviceWorkload}.
      *
      * @param performanceCPU the new performance to be set
      */
@@ -97,7 +97,7 @@ public class DeviceWorkload extends TableModel implements JsonSerializable, Seri
     }
 
     /**
-     * Returns the performance of the GPU from the {@link DeviceWorkload}
+     * Returns the performance of the GPU from the {@link DeviceWorkload}.
      *
      * @return the performance
      */
@@ -106,7 +106,7 @@ public class DeviceWorkload extends TableModel implements JsonSerializable, Seri
     }
 
     /**
-     * Sets a new performance for the GPU from the {@link DeviceWorkload}
+     * Sets a new performance for the GPU from the {@link DeviceWorkload}.
      *
      * @param performanceGPU the new performance to be set
      */
@@ -115,7 +115,7 @@ public class DeviceWorkload extends TableModel implements JsonSerializable, Seri
     }
 
     /**
-     * Returns the performance of the RAM from the {@link DeviceWorkload}
+     * Returns the performance of the RAM from the {@link DeviceWorkload}.
      *
      * @return the performance
      */
@@ -124,7 +124,7 @@ public class DeviceWorkload extends TableModel implements JsonSerializable, Seri
     }
 
     /**
-     * Sets a new performance for the RAM from the {@link DeviceWorkload}
+     * Sets a new performance for the RAM from the {@link DeviceWorkload}.
      *
      * @param performanceRAM the new performance to be set
      */
@@ -133,7 +133,7 @@ public class DeviceWorkload extends TableModel implements JsonSerializable, Seri
     }
 
     /**
-     * Returns the performance of the Disk from the {@link DeviceWorkload}
+     * Returns the performance of the Disk from the {@link DeviceWorkload}.
      *
      * @return the performance
      */
@@ -142,7 +142,7 @@ public class DeviceWorkload extends TableModel implements JsonSerializable, Seri
     }
 
     /**
-     * Sets a new performance for the RAM from the {@link DeviceWorkload}
+     * Sets a new performance for the RAM from the {@link DeviceWorkload}.
      *
      * @param performanceDisk the new performance to be set
      */
@@ -151,7 +151,7 @@ public class DeviceWorkload extends TableModel implements JsonSerializable, Seri
     }
 
     /**
-     * Returns the performance of the Network from the {@link DeviceWorkload}
+     * Returns the performance of the Network from the {@link DeviceWorkload}.
      *
      * @return the performance
      */
@@ -160,7 +160,7 @@ public class DeviceWorkload extends TableModel implements JsonSerializable, Seri
     }
 
     /**
-     * Sets a new performance for the Network from the {@link DeviceWorkload}
+     * Sets a new performance for the Network from the {@link DeviceWorkload}.
      *
      * @param performanceNetwork the new performance to be set
      */
@@ -169,7 +169,7 @@ public class DeviceWorkload extends TableModel implements JsonSerializable, Seri
     }
 
     /**
-     * Returns the usage of the CPU from the {@link DeviceWorkload}
+     * Returns the usage of the CPU from the {@link DeviceWorkload}.
      *
      * @return the usage
      */
@@ -178,7 +178,7 @@ public class DeviceWorkload extends TableModel implements JsonSerializable, Seri
     }
 
     /**
-     * Sets a new usage for the CPU from the {@link DeviceWorkload}
+     * Sets a new usage for the CPU from the {@link DeviceWorkload}.
      *
      * @param usageCPU the new usage to be set
      */
@@ -187,7 +187,7 @@ public class DeviceWorkload extends TableModel implements JsonSerializable, Seri
     }
 
     /**
-     * Returns the usage of the GPU from the {@link DeviceWorkload}
+     * Returns the usage of the GPU from the {@link DeviceWorkload}.
      *
      * @return the usage
      */
@@ -196,7 +196,7 @@ public class DeviceWorkload extends TableModel implements JsonSerializable, Seri
     }
 
     /**
-     * Sets a new usage for the GPU from the {@link DeviceWorkload}
+     * Sets a new usage for the GPU from the {@link DeviceWorkload}.
      *
      * @param usageGPU the new usage to be set
      */
@@ -205,7 +205,7 @@ public class DeviceWorkload extends TableModel implements JsonSerializable, Seri
     }
 
     /**
-     * Returns the usage of the RAM from the {@link DeviceWorkload}
+     * Returns the usage of the RAM from the {@link DeviceWorkload}.
      *
      * @return the usage
      */
@@ -214,7 +214,7 @@ public class DeviceWorkload extends TableModel implements JsonSerializable, Seri
     }
 
     /**
-     * Sets a new usage for the RAM from the {@link DeviceWorkload}
+     * Sets a new usage for the RAM from the {@link DeviceWorkload}.
      *
      * @param usageRAM the new usage to be set
      */
@@ -223,7 +223,7 @@ public class DeviceWorkload extends TableModel implements JsonSerializable, Seri
     }
 
     /**
-     * Returns the usage of the Disk from the {@link DeviceWorkload}
+     * Returns the usage of the Disk from the {@link DeviceWorkload}.
      *
      * @return the usage
      */
@@ -232,7 +232,7 @@ public class DeviceWorkload extends TableModel implements JsonSerializable, Seri
     }
 
     /**
-     * Sets a new usage for the Disk from the {@link DeviceWorkload}
+     * Sets a new usage for the Disk from the {@link DeviceWorkload}.
      *
      * @param usageDisk the new usage to be set
      */
@@ -241,7 +241,7 @@ public class DeviceWorkload extends TableModel implements JsonSerializable, Seri
     }
 
     /**
-     * Returns the usage of the Network from the {@link DeviceWorkload}
+     * Returns the usage of the Network from the {@link DeviceWorkload}.
      *
      * @return the usage
      */
@@ -250,7 +250,7 @@ public class DeviceWorkload extends TableModel implements JsonSerializable, Seri
     }
 
     /**
-     * Sets a new usage for the Network from the {@link DeviceWorkload}
+     * Sets a new usage for the Network from the {@link DeviceWorkload}.
      *
      * @param usageNetwork the new usage to be set
      */
@@ -259,41 +259,43 @@ public class DeviceWorkload extends TableModel implements JsonSerializable, Seri
     }
 
     /**
-     * Compares an {@link Object} if it equals the {@link DeviceWorkload}
+     * Compares an {@link Object} if it equals the {@link DeviceWorkload}.
      *
      * @param o {@link Object} to compare
      * @return True if the {@link Object} equals the {@link DeviceWorkload} | False if it does not
      */
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DeviceWorkload workload = (DeviceWorkload) o;
-        return Float.compare(workload.getPerformanceCPU(), getPerformanceCPU()) == 0 &&
-                Float.compare(workload.getPerformanceGPU(), getPerformanceGPU()) == 0 &&
-                Float.compare(workload.getPerformanceRAM(), getPerformanceRAM()) == 0 &&
-                Float.compare(workload.getPerformanceDisk(), getPerformanceDisk()) == 0 &&
-                Float.compare(workload.getPerformanceNetwork(), getPerformanceNetwork()) == 0 &&
-                Float.compare(workload.getUsageCPU(), getUsageCPU()) == 0 &&
-                Float.compare(workload.getUsageGPU(), getUsageGPU()) == 0 &&
-                Float.compare(workload.getUsageRAM(), getUsageRAM()) == 0 &&
-                Float.compare(workload.getUsageDisk(), getUsageDisk()) == 0 &&
-                Float.compare(workload.getUsageNetwork(), getUsageNetwork()) == 0 &&
-                Objects.equals(getDevice(), workload.getDevice());
+        return Float.compare(workload.getPerformanceCPU(), getPerformanceCPU()) == 0
+                && Float.compare(workload.getPerformanceGPU(), getPerformanceGPU()) == 0
+                && Float.compare(workload.getPerformanceRAM(), getPerformanceRAM()) == 0
+                && Float.compare(workload.getPerformanceDisk(), getPerformanceDisk()) == 0
+                && Float.compare(workload.getPerformanceNetwork(), getPerformanceNetwork()) == 0
+                && Float.compare(workload.getUsageCPU(), getUsageCPU()) == 0
+                && Float.compare(workload.getUsageGPU(), getUsageGPU()) == 0
+                && Float.compare(workload.getUsageRAM(), getUsageRAM()) == 0
+                && Float.compare(workload.getUsageDisk(), getUsageDisk()) == 0
+                && Float.compare(workload.getUsageNetwork(), getUsageNetwork()) == 0
+                && Objects.equals(getDevice(), workload.getDevice());
     }
 
     /**
-     * Hashes the {@link DeviceWorkload} using {@link Objects} hash method
+     * Hashes the {@link DeviceWorkload} using {@link Objects} hash method.
      *
      * @return Hash of the {@link DeviceWorkload}
      */
     @Override
     public int hashCode() {
-        return Objects.hash(getDevice(), getPerformanceCPU(), getPerformanceGPU(), getPerformanceRAM(), getPerformanceDisk(), getPerformanceNetwork(), getUsageCPU(), getUsageGPU(), getUsageRAM(), getUsageDisk(), getUsageNetwork());
+        return Objects.hash(getDevice(), getPerformanceCPU(), getPerformanceGPU(), getPerformanceRAM(),
+                getPerformanceDisk(), getPerformanceNetwork(), getUsageCPU(), getUsageGPU(), getUsageRAM(),
+                getUsageDisk(), getUsageNetwork());
     }
 
     /**
-     * Generates a {@link JsonObject} containing all relevant {@link DeviceWorkload} information
+     * Generates a {@link JsonObject} containing all relevant {@link DeviceWorkload} information.
      *
      * @return The generated {@link JsonObject}
      */

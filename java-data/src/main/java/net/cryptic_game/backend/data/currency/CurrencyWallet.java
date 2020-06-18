@@ -12,7 +12,7 @@ import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
- * Entity representing a currency wallet entry in the database
+ * Entity representing a currency wallet entry in the database.
  *
  * @since 0.3.0
  */
@@ -30,7 +30,7 @@ public class CurrencyWallet extends TableModelAutoId implements JsonSerializable
     private int amount;
 
     /**
-     * Returns the {@link ZonedDateTime} of the {@link CurrencyWallet}
+     * Returns the {@link ZonedDateTime} of the {@link CurrencyWallet}.
      *
      * @return the {@link ZonedDateTime}
      */
@@ -39,7 +39,7 @@ public class CurrencyWallet extends TableModelAutoId implements JsonSerializable
     }
 
     /**
-     * Sets a new {@link ZonedDateTime} as timestamp for the {@link CurrencyWallet}
+     * Sets a new {@link ZonedDateTime} as timestamp for the {@link CurrencyWallet}.
      *
      * @param timeStamp the new {@link ZonedDateTime} to be set
      */
@@ -48,7 +48,7 @@ public class CurrencyWallet extends TableModelAutoId implements JsonSerializable
     }
 
     /**
-     * Returns the password of the {@link CurrencyWallet}
+     * Returns the password of the {@link CurrencyWallet}.
      *
      * @return the password
      */
@@ -57,7 +57,7 @@ public class CurrencyWallet extends TableModelAutoId implements JsonSerializable
     }
 
     /**
-     * Sets a new password for the {@link CurrencyWallet}
+     * Sets a new password for the {@link CurrencyWallet}.
      *
      * @param sendAmount the new password to be set
      */
@@ -66,7 +66,7 @@ public class CurrencyWallet extends TableModelAutoId implements JsonSerializable
     }
 
     /**
-     * Returns the Amount of Morphcoins held in the {@link CurrencyWallet}
+     * Returns the Amount of Morphcoins held in the {@link CurrencyWallet}.
      *
      * @return the amount of Morphcoins
      */
@@ -75,7 +75,7 @@ public class CurrencyWallet extends TableModelAutoId implements JsonSerializable
     }
 
     /**
-     * Sets a new amount of morphcoins help in the {@link CurrencyWallet}
+     * Sets a new amount of morphcoins help in the {@link CurrencyWallet}.
      *
      * @param amount the new amount to be set
      */
@@ -84,7 +84,7 @@ public class CurrencyWallet extends TableModelAutoId implements JsonSerializable
     }
 
     /**
-     * Compares an {@link Object} if it equals the {@link CurrencyWallet}
+     * Compares an {@link Object} if it equals the {@link CurrencyWallet}.
      *
      * @param o {@link Object} to compare
      * @return True if the {@link Object} equals the {@link CurrencyWallet} | False if it does not
@@ -94,13 +94,13 @@ public class CurrencyWallet extends TableModelAutoId implements JsonSerializable
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CurrencyWallet that = (CurrencyWallet) o;
-        return getAmount() == that.getAmount() &&
-                Objects.equals(getTimeStamp(), that.getTimeStamp()) &&
-                Objects.equals(getPassword(), that.getPassword());
+        return getAmount() == that.getAmount()
+                && Objects.equals(getTimeStamp(), that.getTimeStamp())
+                && Objects.equals(getPassword(), that.getPassword());
     }
 
     /**
-     * Hashes the {@link CurrencyWallet} using {@link Objects} hash method
+     * Hashes the {@link CurrencyWallet} using {@link Objects} hash method.
      *
      * @return Hash of the {@link CurrencyWallet}
      */
@@ -110,7 +110,7 @@ public class CurrencyWallet extends TableModelAutoId implements JsonSerializable
     }
 
     /**
-     * Generates a {@link JsonObject} containing all relevant {@link CurrencyWallet} information
+     * Generates a {@link JsonObject} containing all relevant {@link CurrencyWallet} information.
      *
      * @return The generated {@link JsonObject}
      */

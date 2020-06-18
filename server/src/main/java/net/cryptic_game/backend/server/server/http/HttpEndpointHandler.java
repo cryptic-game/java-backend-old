@@ -11,7 +11,7 @@ import java.util.Set;
 
 public class HttpEndpointHandler {
 
-    private static final Logger log = LoggerFactory.getLogger(HttpEndpointHandler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HttpEndpointHandler.class);
     private final ApiEndpointList apiList;
     private Set<ApiEndpointCollection> apiCollections;
 
@@ -25,7 +25,7 @@ public class HttpEndpointHandler {
             this.apiList.setCollections(this.apiCollections);
             this.apiCollections = null;
         } catch (ApiException e) {
-            log.error("Unable to register Api-Collections.", e);
+            LOG.error("Unable to register Api-Collections.", e);
         }
     }
 
@@ -34,7 +34,7 @@ public class HttpEndpointHandler {
             this.apiCollections.add(apiCollection);
             return apiCollection;
         } else {
-            log.error("It's too late to register any more endpoints.");
+            LOG.error("It's too late to register any more endpoints.");
             return null;
         }
     }

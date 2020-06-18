@@ -21,7 +21,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * Entity representing a chat channel access entry in the database
+ * Entity representing a chat channel access entry in the database.
  *
  * @since 0.3.0
  */
@@ -29,7 +29,7 @@ import java.util.Set;
 @Table(name = "chat_channel_access")
 public class ChatChannelAccess extends TableModelAutoId implements JsonSerializable {
 
-    private static final Logger log = LoggerFactory.getLogger(ChatChannelAccess.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ChatChannelAccess.class);
 
     @ManyToOne
     @JoinColumn(name = "user_id", updatable = false, nullable = false)
@@ -42,7 +42,7 @@ public class ChatChannelAccess extends TableModelAutoId implements JsonSerializa
     private ChatChannel channel;
 
     /**
-     * Joins a {@link User} to a {@link} Channel and returns the {@link ChatChannelAccess}
+     * Joins a {@link User} to a {@link} Channel and returns the {@link ChatChannelAccess}.
      *
      * @param user        the {@link User} who join
      * @param channel     the {@link ChatChannel} where to join
@@ -59,14 +59,14 @@ public class ChatChannelAccess extends TableModelAutoId implements JsonSerializa
     }
 
     /**
-     * The {@link User} leaves a {@link ChatChannel}
+     * The {@link User} leaves a {@link ChatChannel}.
      *
      * @param user        the {@link User} who leaves the {@link ChatChannel}
      * @param channel     the leaved {@link ChatChannel}
      * @param notifyUsers the {@link ApiClient}s as {@link Set} which {@link ApiClient}s to notify
      * @return True if successful | otherwise false
      */
-    public static boolean leave(final User user, final ChatChannel channel, Set<ApiClient> notifyUsers) {
+    public static boolean leave(final User user, final ChatChannel channel, final Set<ApiClient> notifyUsers) {
         try (Session sqlSession = sqlConnection.openSession()) {
             sqlSession
                     .createQuery("delete from ChannelAccess ca where ca.channel = :channel and ca.user = :user")
@@ -74,13 +74,13 @@ public class ChatChannelAccess extends TableModelAutoId implements JsonSerializa
                     .setParameter("user", user);
             return true;
         } catch (HibernateException e) {
-            log.error("The user wasn't found in the channel. Therefore he can't leave the channel", e);
+            LOG.error("The user wasn't found in the channel. Therefore he can't leave the channel", e);
             return false;
         }
     }
 
     /**
-     * Returns a {@link List} of {@link User}s, who are in a {@link ChatChannel}
+     * Returns a {@link List} of {@link User}s, who are in a {@link ChatChannel}.
      *
      * @param channel the {@link ChatChannel} where to get the {@link User}s from
      * @return the {@link List} of {@link User}s in the {@link ChatChannel}
@@ -96,7 +96,7 @@ public class ChatChannelAccess extends TableModelAutoId implements JsonSerializa
     }
 
     /**
-     * Returns the {@link User} of the {@link ChatChannelAccess}
+     * Returns the {@link User} of the {@link ChatChannelAccess}.
      *
      * @return the {@link User}
      */
@@ -105,16 +105,16 @@ public class ChatChannelAccess extends TableModelAutoId implements JsonSerializa
     }
 
     /**
-     * Sets a new {@link User} for the {@link ChatChannelAccess}
+     * Sets a new {@link User} for the {@link ChatChannelAccess}.
      *
      * @param user the new {@link User} to be set
      */
-    public void setUser(User user) {
+    public void setUser(final User user) {
         this.user = user;
     }
 
     /**
-     * Returns the {@link ChatChannel} of the {@link ChatChannelAccess}
+     * Returns the {@link ChatChannel} of the {@link ChatChannelAccess}.
      *
      * @return the {@link ChatChannel}
      */
@@ -123,7 +123,7 @@ public class ChatChannelAccess extends TableModelAutoId implements JsonSerializa
     }
 
     /**
-     * Sets a new {@link ChatChannel} for the {@link ChatChannelAccess}
+     * Sets a new {@link ChatChannel} for the {@link ChatChannelAccess}.
      *
      * @param channel the new {@link ChatChannel} to be set
      */
@@ -132,7 +132,7 @@ public class ChatChannelAccess extends TableModelAutoId implements JsonSerializa
     }
 
     /**
-     * Compares an {@link Object} if it equals the {@link ChatChannelAccess}
+     * Compares an {@link Object} if it equals the {@link ChatChannelAccess}.
      *
      * @param o {@link Object} to compare
      * @return True if the {@link Object} equals the {@link ChatChannelAccess} | False if it does not
@@ -142,13 +142,13 @@ public class ChatChannelAccess extends TableModelAutoId implements JsonSerializa
         if (this == o) return true;
         if (!(o instanceof ChatChannelAccess)) return false;
         final ChatChannelAccess that = (ChatChannelAccess) o;
-        return this.getId().equals(that.getId()) &&
-                this.getUser().equals(that.getUser()) &&
-                this.getChannel().equals(that.getChannel());
+        return this.getId().equals(that.getId())
+                && this.getUser().equals(that.getUser())
+                && this.getChannel().equals(that.getChannel());
     }
 
     /**
-     * Hashes the {@link ChatChannelAccess} using {@link Objects} hash method
+     * Hashes the {@link ChatChannelAccess} using {@link Objects} hash method.
      *
      * @return Hash of the {@link ChatChannelAccess}
      */
@@ -158,7 +158,7 @@ public class ChatChannelAccess extends TableModelAutoId implements JsonSerializa
     }
 
     /**
-     * Generates a {@link JsonObject} containing all relevant {@link ChatChannelAccess} information
+     * Generates a {@link JsonObject} containing all relevant {@link ChatChannelAccess} information.
      *
      * @return The generated {@link JsonObject}
      */

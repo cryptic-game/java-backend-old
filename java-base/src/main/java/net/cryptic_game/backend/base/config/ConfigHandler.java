@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class ConfigHandler {
+public final class ConfigHandler {
 
     private final Logger log = LoggerFactory.getLogger(ConfigHandler.class);
 
@@ -42,7 +42,7 @@ public class ConfigHandler {
         else {
             final List<String> content = new ArrayList<>();
 
-            try (final BufferedReader reader = new BufferedReader(new FileReader(this.configFile))) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(this.configFile))) {
                 String line;
                 while ((line = reader.readLine()) != null) if (!line.isBlank()) content.add(line);
             } catch (IOException e) {

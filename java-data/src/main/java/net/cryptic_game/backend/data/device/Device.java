@@ -17,13 +17,13 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * Entity representing a device entry in the database
+ * Entity representing a device entry in the database.
  *
  * @since 0.3.0
  */
 @Entity
 @Table(name = "device_device")
-public class Device extends TableModelAutoId implements JsonSerializable {
+public final class Device extends TableModelAutoId implements JsonSerializable {
 
     @Column(name = "name", updatable = true, nullable = false)
     private String name;
@@ -37,13 +37,13 @@ public class Device extends TableModelAutoId implements JsonSerializable {
     private boolean poweredOn;
 
     /**
-     * Empty constructor to create a new {@link Device}
+     * Empty constructor to create a new {@link Device}.
      */
     public Device() {
     }
 
     /**
-     * Creates a new {@link Device}
+     * Creates a new {@link Device}.
      *
      * @param name      Name of the {@link Device}
      * @param owner     Owner of the {@link Device}
@@ -66,17 +66,17 @@ public class Device extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Fetches the {@link Device} with the given id
+     * Fetches the {@link Device} with the given id.
      *
      * @param id The id of the {@link Device}
      * @return The instance of the fetched {@link Device} if it exists | null if the entity does not exist
      */
-    public static Device getById(UUID id) {
+    public static Device getById(final UUID id) {
         return getById(Device.class, id);
     }
 
     /**
-     * Returns the name of the {@link Device}
+     * Returns the name of the {@link Device}.
      *
      * @return Name of the {@link Device}
      */
@@ -85,7 +85,7 @@ public class Device extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Sets a new name of the {@link Device}
+     * Sets a new name of the {@link Device}.
      *
      * @param name New name to be set
      */
@@ -94,7 +94,7 @@ public class Device extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Returns the owner of the {@link Device}
+     * Returns the owner of the {@link Device}.
      *
      * @return Owner of the {@link Device}
      */
@@ -103,7 +103,7 @@ public class Device extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Sets a new owner of the {@link Device}
+     * Sets a new owner of the {@link Device}.
      *
      * @param owner New owner to be set
      */
@@ -112,7 +112,7 @@ public class Device extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Returns the power state of the {@link Device}
+     * Returns the power state of the {@link Device}.
      *
      * @return Power state of the {@link Device}
      */
@@ -121,7 +121,7 @@ public class Device extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Sets a new power state of the {@link Device}
+     * Sets a new power state of the {@link Device}.
      *
      * @param poweredOn New power state to be set
      */
@@ -129,12 +129,12 @@ public class Device extends TableModelAutoId implements JsonSerializable {
         this.poweredOn = poweredOn;
     }
 
-    public boolean hasUserAccess(User user) {
+    public boolean hasUserAccess(final User user) {
         return getOwner().equals(user) || DeviceAccess.hasUserAccessToDevice(user, this);
     }
 
     /**
-     * Generates a {@link JsonObject} containing all relevant {@link Device} information
+     * Generates a {@link JsonObject} containing all relevant {@link Device} information.
      *
      * @return The generated {@link JsonObject}
      */
@@ -148,24 +148,24 @@ public class Device extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Compares an {@link Object} if it equals the {@link Device}
+     * Compares an {@link Object} if it equals the {@link Device}.
      *
      * @param o {@link Object} to compare
      * @return True if the {@link Object} equals the {@link Device} | False if it does not
      */
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Device device = (Device) o;
-        return isPoweredOn() == device.isPoweredOn() &&
-                Objects.equals(getName(), device.getName()) &&
-                Objects.equals(getOwner(), device.getOwner()) &&
-                getId().equals(device.getId());
+        return isPoweredOn() == device.isPoweredOn()
+                && Objects.equals(getName(), device.getName())
+                && Objects.equals(getOwner(), device.getOwner())
+                && getId().equals(device.getId());
     }
 
     /**
-     * Hashes the {@link Device} using {@link Objects} hash method
+     * Hashes the {@link Device} using {@link Objects} hash method.
      *
      * @return Hash of the {@link Device}
      */

@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-public class DaemonRegisterPacket {
+public final class DaemonRegisterPacket {
 
     @JsonTransient
     private final Daemon daemon;

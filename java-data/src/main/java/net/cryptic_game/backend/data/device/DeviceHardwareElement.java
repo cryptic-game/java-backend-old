@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import java.util.Objects;
 
 /**
- * Entity representing a device hardware element entry in the database
+ * Entity representing a device hardware element entry in the database.
  *
  * @since 0.3.0
  */
@@ -26,7 +26,7 @@ public class DeviceHardwareElement extends TableModelAutoId implements JsonSeria
     private String manufacturer;
 
     /**
-     * Returns the name of the {@link DeviceHardwareElement}
+     * Returns the name of the {@link DeviceHardwareElement}.
      *
      * @return the name of the {@link DeviceHardwareElement}
      */
@@ -35,7 +35,7 @@ public class DeviceHardwareElement extends TableModelAutoId implements JsonSeria
     }
 
     /**
-     * Sets the the name of the {@link DeviceHardwareElement}
+     * Sets the the name of the {@link DeviceHardwareElement}.
      *
      * @param name the new name for the {@link DeviceHardwareElement}
      */
@@ -44,7 +44,7 @@ public class DeviceHardwareElement extends TableModelAutoId implements JsonSeria
     }
 
     /**
-     * Returns the Manufacturer of the {@link DeviceHardwareElement}
+     * Returns the Manufacturer of the {@link DeviceHardwareElement}.
      *
      * @return the Manufacturer of the {@link DeviceHardwareElement}
      */
@@ -53,7 +53,7 @@ public class DeviceHardwareElement extends TableModelAutoId implements JsonSeria
     }
 
     /**
-     * Sets the Manufacturer of the {@link DeviceHardwareElement}
+     * Sets the Manufacturer of the {@link DeviceHardwareElement}.
      *
      * @param manufacturer the new Manufacturer of the {@link DeviceHardwareElement}
      */
@@ -62,23 +62,23 @@ public class DeviceHardwareElement extends TableModelAutoId implements JsonSeria
     }
 
     /**
-     * Compares an {@link Object} if it equals the {@link DeviceHardwareElement}
+     * Compares an {@link Object} if it equals the {@link DeviceHardwareElement}.
      *
      * @param o {@link Object} to compare
      * @return True if the {@link Object} equals the {@link DeviceHardwareElement} | False if it does not
      */
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DeviceHardwareElement that = (DeviceHardwareElement) o;
-        return Objects.equals(getName(), that.getName()) &&
-                Objects.equals(getManufacturer(), that.getManufacturer()) &&
-                Objects.equals(getId(), that.getId());
+        return Objects.equals(getName(), that.getName())
+                && Objects.equals(getManufacturer(), that.getManufacturer())
+                && Objects.equals(getId(), that.getId());
     }
 
     /**
-     * Hashes the {@link DeviceHardwareElement} using {@link Objects} hash method
+     * Hashes the {@link DeviceHardwareElement} using {@link Objects} hash method.
      *
      * @return Hash of the {@link DeviceHardwareElement}
      */
@@ -88,7 +88,7 @@ public class DeviceHardwareElement extends TableModelAutoId implements JsonSeria
     }
 
     /**
-     * Generates a {@link JsonObject} containing all relevant {@link DeviceHardwareElement} information
+     * Generates a {@link JsonObject} containing all relevant {@link DeviceHardwareElement} information.
      *
      * @return The generated {@link JsonObject}
      */

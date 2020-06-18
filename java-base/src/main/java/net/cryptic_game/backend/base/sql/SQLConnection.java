@@ -39,7 +39,7 @@ public class SQLConnection {
                 sqlServer.getDatabase() + (sqlServer.getLocation().startsWith("//") ?
                 "?autoReconnect=true&useUnicode=true&characterEncoding=utf-8" :
                 !sqlServer.getLocation().contains("tcp") ? ";AUTO_SERVER=TRUE" : ""));
-        settings.put(Environment.AUTOCOMMIT, false);
+        settings.put(Environment.AUTOCOMMIT, "false");
         settings.put(Environment.USER, sqlServer.getUsername());
         settings.put(Environment.PASS, sqlServer.getPassword());
         settings.put(Environment.DIALECT, sqlServer.getSqlServerType().getDialect());
@@ -47,22 +47,15 @@ public class SQLConnection {
         settings.put(Environment.HBM2DDL_CHARSET_NAME, StandardCharsets.UTF_8.toString());
         settings.put(Environment.CONNECTION_PREFIX + ".CharSet", StandardCharsets.UTF_8.toString());
         settings.put(Environment.CONNECTION_PREFIX + ".characterEncoding", StandardCharsets.UTF_8.toString());
-        settings.put(Environment.CONNECTION_PREFIX + ".useUnicode", true);
-        settings.put("connection.autoReconnect", true);
-        settings.put("connection.autoReconnectForPools", true);
-        settings.put("connection.is-connection-validation-required", true);
+        settings.put(Environment.CONNECTION_PREFIX + ".useUnicode", "true");
+        settings.put("connection.autoReconnect", "true");
+        settings.put("connection.autoReconnectForPools", "true");
+        settings.put("connection.is-connection-validation-required", "true");
         settings.put(Environment.JDBC_TIME_ZONE, "UTC");
 
-        settings.put(Environment.C3P0_MIN_SIZE, 2);
-        settings.put(Environment.C3P0_MAX_SIZE, 20);
-        settings.put(Environment.C3P0_ACQUIRE_INCREMENT, 3);
-        settings.put(Environment.C3P0_TIMEOUT, 300);
-        settings.put(Environment.C3P0_MAX_STATEMENTS, 50);
-        settings.put(Environment.C3P0_IDLE_TEST_PERIOD, 300);
-
         if (debug) {
-            settings.put(Environment.SHOW_SQL, true);
-            settings.put(Environment.FORMAT_SQL, true);
+            settings.put(Environment.SHOW_SQL, "true");
+            settings.put(Environment.FORMAT_SQL, "true");
         }
 
         return settings;

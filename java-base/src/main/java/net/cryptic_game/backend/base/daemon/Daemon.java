@@ -5,7 +5,7 @@ import net.cryptic_game.backend.base.json.JsonTransient;
 
 import java.time.ZonedDateTime;
 
-public class Daemon {
+public final class Daemon {
 
     @JsonTransient
     private final Channel channel;

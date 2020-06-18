@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Entity representing a network member entry in the database
+ * Entity representing a network member entry in the database.
  *
  * @since 0.3.0
  */
@@ -31,13 +31,13 @@ public class NetworkMember extends TableModel implements JsonSerializable {
     private MemberKey key;
 
     /**
-     * Empty constructor to create a new {@link NetworkMember}
+     * Empty constructor to create a new {@link NetworkMember}.
      */
     public NetworkMember() {
     }
 
     /**
-     * Creates a new {@link NetworkMember}
+     * Creates a new {@link NetworkMember}.
      *
      * @param network {@link Network} of the {@link NetworkMember}
      * @param device  {@link Device} of the {@link NetworkMember}
@@ -60,7 +60,7 @@ public class NetworkMember extends TableModel implements JsonSerializable {
     }
 
     /**
-     * Fetches the {@link NetworkMember} with the given key
+     * Fetches the {@link NetworkMember} with the given key.
      *
      * @param network {@link Network} of the {@link NetworkMember}
      * @param device  {@link Device} of the {@link NetworkMember}
@@ -74,12 +74,12 @@ public class NetworkMember extends TableModel implements JsonSerializable {
     }
 
     /**
-     * Fetches the {@link NetworkMember} of the give {@link Device}
+     * Fetches the {@link NetworkMember} of the give {@link Device}.
      *
      * @param device {@link Device} of the {@link NetworkMember}
      * @return A {@link List} containing the fetched {@link NetworkMember}'s
      */
-    public static List<NetworkMember> getMembershipsOfDevice(Device device) {
+    public static List<NetworkMember> getMembershipsOfDevice(final Device device) {
         final Session sqlSession = sqlConnection.openSession();
         final List<NetworkMember> networkMembers = sqlSession
                 .createQuery("select object (n) from NetworkMember as n where n.key.device = :device", NetworkMember.class)
@@ -100,7 +100,7 @@ public class NetworkMember extends TableModel implements JsonSerializable {
     }
 
     /**
-     * Returns the {@link MemberKey} of the {@link NetworkMember}
+     * Returns the {@link MemberKey} of the {@link NetworkMember}.
      *
      * @return {@link MemberKey} of the {@link NetworkMember}
      */
@@ -118,7 +118,7 @@ public class NetworkMember extends TableModel implements JsonSerializable {
     }
 
     /**
-     * Returns the {@link Network} of the {@link NetworkMember}
+     * Returns the {@link Network} of the {@link NetworkMember}.
      *
      * @return {@link Network} of the {@link NetworkMember}
      */
@@ -128,7 +128,7 @@ public class NetworkMember extends TableModel implements JsonSerializable {
     }
 
     /**
-     * Sets a new {@link Network} of the {@link NetworkMember}
+     * Sets a new {@link Network} of the {@link NetworkMember}.
      *
      * @param network New {@link Network} to be set
      */
@@ -138,7 +138,7 @@ public class NetworkMember extends TableModel implements JsonSerializable {
     }
 
     /**
-     * Returns the {@link Device} of the {@link NetworkMember}
+     * Returns the {@link Device} of the {@link NetworkMember}.
      *
      * @return {@link Device} of the {@link NetworkMember}
      */
@@ -148,7 +148,7 @@ public class NetworkMember extends TableModel implements JsonSerializable {
     }
 
     /**
-     * Sets a new {@link Device} of the {@link NetworkMember}
+     * Sets a new {@link Device} of the {@link NetworkMember}.
      *
      * @param device New {@link Device} to be set
      */
@@ -158,7 +158,7 @@ public class NetworkMember extends TableModel implements JsonSerializable {
     }
 
     /**
-     * Generates a {@link JsonObject} containing all relevant {@link NetworkMember} information
+     * Generates a {@link JsonObject} containing all relevant {@link NetworkMember} information.
      *
      * @return The generated {@link JsonObject}
      */
@@ -170,7 +170,7 @@ public class NetworkMember extends TableModel implements JsonSerializable {
     }
 
     /**
-     * Compares an {@link Object} if it equals the {@link NetworkMember}
+     * Compares an {@link Object} if it equals the {@link NetworkMember}.
      *
      * @param o {@link Object} to compare
      * @return True if the {@link Object} equals the {@link NetworkMember} | False if it does not
@@ -180,12 +180,12 @@ public class NetworkMember extends TableModel implements JsonSerializable {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
         NetworkMember networkMember = (NetworkMember) o;
-        return Objects.equals(this.getNetwork(), networkMember.getNetwork()) &&
-                Objects.equals(this.getDevice(), networkMember.getDevice());
+        return Objects.equals(this.getNetwork(), networkMember.getNetwork())
+                && Objects.equals(this.getDevice(), networkMember.getDevice());
     }
 
     /**
-     * Hashes the {@link NetworkMember} using {@link Objects} hash method
+     * Hashes the {@link NetworkMember} using {@link Objects} hash method.
      *
      * @return Hash of the {@link NetworkMember}
      */
@@ -195,7 +195,7 @@ public class NetworkMember extends TableModel implements JsonSerializable {
     }
 
     /**
-     * Key of the {@link NetworkMember} entity
+     * Key of the {@link NetworkMember} entity.
      */
     @SuppressWarnings("JpaDataSourceORMInspection")
     @Embeddable
@@ -212,13 +212,13 @@ public class NetworkMember extends TableModel implements JsonSerializable {
         private Device device;
 
         /**
-         * Empty constructor to create a new {@link MemberKey}
+         * Empty constructor to create a new {@link MemberKey}.
          */
         public MemberKey() {
         }
 
         /**
-         * Creates a new {@link MemberKey}
+         * Creates a new {@link MemberKey}.
          *
          * @param network {@link Network} of the {@link MemberKey}
          * @param device  {@link Device} of the {@link MemberKey}
@@ -229,22 +229,22 @@ public class NetworkMember extends TableModel implements JsonSerializable {
         }
 
         /**
-         * Compares an {@link Object} if it equals the {@link MemberKey}
+         * Compares an {@link Object} if it equals the {@link MemberKey}.
          *
          * @param o {@link Object} to compare
          * @return True if the {@link Object} equals the {@link MemberKey} | False if it does not
          */
         @Override
-        public boolean equals(Object o) {
+        public boolean equals(final Object o) {
             if (this == o) return true;
             if (o == null || this.getClass() != o.getClass()) return false;
             MemberKey memberKey = (MemberKey) o;
-            return Objects.equals(this.network, memberKey.network) &&
-                    Objects.equals(this.device, memberKey.device);
+            return Objects.equals(this.network, memberKey.network)
+                    && Objects.equals(this.device, memberKey.device);
         }
 
         /**
-         * Hashes the {@link MemberKey} using {@link Objects} hash method
+         * Hashes the {@link MemberKey} using {@link Objects} hash method.
          *
          * @return Hash of the {@link MemberKey}
          */

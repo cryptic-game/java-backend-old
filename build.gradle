@@ -1,0 +1,30 @@
+plugins {
+    id 'base'
+    id 'io.freefair.git-version' version '5.1.0'
+    id 'io.freefair.aggregate-javadoc' version '5.1.0'
+    id 'io.freefair.javadoc-utf-8' version '5.1.0'
+    id 'io.freefair.javadoc-links' version '5.1.0'
+}
+
+allprojects {
+    group 'net.cryptic-game'
+    version version.toString().startsWith('v') ? version.toString().substring(1) : version
+}
+
+subprojects {
+    apply from: "${rootDir}/gradle/java.gradle"
+    apply from: "${rootDir}/gradle/test.gradle"
+    apply from: "${rootDir}/gradle/checkstyle.gradle"
+    apply from: "${rootDir}/gradle/javadoc.gradle"
+    apply from: "${rootDir}/gradle/jacoco.gradle"
+}
+
+task copyJavaDocStyles(type: Copy) {
+    from "$rootDir/gradle/javadoc.css"
+    rename "javadoc.css", "stylesheet.css"
+    into "$buildDir/docs/aggregateJavadoc/"
+}
+
+aggregateJavadoc {
+    finalizedBy copyJavaDocStyles
+}

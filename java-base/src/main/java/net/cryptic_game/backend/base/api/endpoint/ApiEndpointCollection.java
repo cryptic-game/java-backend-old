@@ -16,20 +16,20 @@ public abstract class ApiEndpointCollection {
         this.description = description;
     }
 
-    boolean hasClient() {
+    final boolean hasClient() {
         return this.clients != null;
     }
 
-    public String getName() {
+    public final String getName() {
         return this.name;
     }
 
 
-    public String getDescription() {
+    public final String getDescription() {
         return this.description;
     }
 
-    void setClients(final Set<ApiClient> clients) {
+    final void setClients(final Set<ApiClient> clients) {
         this.clients = clients;
     }
 
@@ -38,9 +38,9 @@ public abstract class ApiEndpointCollection {
         if (this == o) return true;
         if (!(o instanceof ApiEndpointCollection)) return false;
         ApiEndpointCollection that = (ApiEndpointCollection) o;
-        return getName().equals(that.getName()) &&
-                getDescription().equals(that.getDescription()) &&
-                Objects.equals(clients, that.clients);
+        return getName().equals(that.getName())
+                && getDescription().equals(that.getDescription())
+                && Objects.equals(clients, that.clients);
     }
 
     @Override

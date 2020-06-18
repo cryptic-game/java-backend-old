@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import java.util.Objects;
 
 /**
- * Entity representing a device service req entry in the database
+ * Entity representing a device service req entry in the database.
  *
  * @since 0.3.0
  */
@@ -49,7 +49,7 @@ public class DeviceServiceReq extends TableModelAutoId implements JsonSerializab
     private float allocatedNetwork;
 
     /**
-     * Returns the {@link Service} where the {@link DeviceServiceReq} is located
+     * Returns the {@link Service} where the {@link DeviceServiceReq} is located.
      *
      * @return the {@link Service}
      */
@@ -58,7 +58,7 @@ public class DeviceServiceReq extends TableModelAutoId implements JsonSerializab
     }
 
     /**
-     * Sets a new {@link Service} for the {@link DeviceServiceReq}
+     * Sets a new {@link Service} for the {@link DeviceServiceReq}.
      *
      * @param service the new {@link Service} to be set
      */
@@ -67,7 +67,7 @@ public class DeviceServiceReq extends TableModelAutoId implements JsonSerializab
     }
 
     /**
-     * Returns the {@link Device} where the {@link Device} is located
+     * Returns the {@link Device} where the {@link Device} is located.
      *
      * @return the {@link Device}
      */
@@ -76,7 +76,7 @@ public class DeviceServiceReq extends TableModelAutoId implements JsonSerializab
     }
 
     /**
-     * Sets a new {@link Device} for the {@link Device}
+     * Sets a new {@link Device} for the {@link Device}.
      *
      * @param device the new {@link Device} to be set
      */
@@ -85,7 +85,7 @@ public class DeviceServiceReq extends TableModelAutoId implements JsonSerializab
     }
 
     /**
-     * Returns the allocated CPU
+     * Returns the allocated CPU.
      *
      * @return the allocated CPU
      */
@@ -94,7 +94,7 @@ public class DeviceServiceReq extends TableModelAutoId implements JsonSerializab
     }
 
     /**
-     * Sets the allocated CPU
+     * Sets the allocated CPU.
      *
      * @param allocatedCPU the new allocated CPU to be set
      */
@@ -103,7 +103,7 @@ public class DeviceServiceReq extends TableModelAutoId implements JsonSerializab
     }
 
     /**
-     * Returns the allocated RAM
+     * Returns the allocated RAM.
      *
      * @return the allocated RAM
      */
@@ -112,7 +112,7 @@ public class DeviceServiceReq extends TableModelAutoId implements JsonSerializab
     }
 
     /**
-     * Sets the allocated RAM
+     * Sets the allocated RAM.
      *
      * @param allocatedRAM the new allocated RAM to be set
      */
@@ -121,16 +121,16 @@ public class DeviceServiceReq extends TableModelAutoId implements JsonSerializab
     }
 
     /**
-     * Returns the allocated GPU
+     * Returns the allocated GPU.
      *
-     * @return the allocated GPU
+     * @return the allocated GPU.
      */
     public float getAllocatedGPU() {
         return this.allocatedGPU;
     }
 
     /**
-     * Sets the allocated GPU
+     * Sets the allocated GPU.
      *
      * @param allocatedGPU the new allocated GPU to be set
      */
@@ -139,7 +139,7 @@ public class DeviceServiceReq extends TableModelAutoId implements JsonSerializab
     }
 
     /**
-     * Returns the allocated Disk
+     * Returns the allocated Disk.
      *
      * @return the allocated Disk
      */
@@ -148,7 +148,7 @@ public class DeviceServiceReq extends TableModelAutoId implements JsonSerializab
     }
 
     /**
-     * Sets the allocated Disk
+     * Sets the allocated Disk.
      *
      * @param allocatedDisk the new allocated Disk to be set
      */
@@ -157,7 +157,7 @@ public class DeviceServiceReq extends TableModelAutoId implements JsonSerializab
     }
 
     /**
-     * Returns the allocated Network
+     * Returns the allocated Network.
      *
      * @return the allocated Network
      */
@@ -166,7 +166,7 @@ public class DeviceServiceReq extends TableModelAutoId implements JsonSerializab
     }
 
     /**
-     * Sets the allocated Network
+     * Sets the allocated Network.
      *
      * @param allocatedNetwork the new allocated Network to be set
      */
@@ -175,7 +175,7 @@ public class DeviceServiceReq extends TableModelAutoId implements JsonSerializab
     }
 
     /**
-     * Generates a {@link JsonObject} containing all relevant {@link DeviceServiceReq} information
+     * Generates a {@link JsonObject} containing all relevant {@link DeviceServiceReq} information.
      *
      * @return The generated {@link JsonObject}
      */
@@ -193,33 +193,34 @@ public class DeviceServiceReq extends TableModelAutoId implements JsonSerializab
     }
 
     /**
-     * Compares an {@link Object} if it equals the {@link DeviceServiceReq}
+     * Compares an {@link Object} if it equals the {@link DeviceServiceReq}.
      *
      * @param o {@link Object} to compare
      * @return True if the {@link Object} equals the {@link DeviceServiceReq} | False if it does not
      */
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DeviceServiceReq that = (DeviceServiceReq) o;
-        return Float.compare(that.getAllocatedCPU(), getAllocatedCPU()) == 0 &&
-                Float.compare(that.getAllocatedRAM(), getAllocatedRAM()) == 0 &&
-                Float.compare(that.getAllocatedGPU(), getAllocatedGPU()) == 0 &&
-                Float.compare(that.getAllocatedDisk(), getAllocatedDisk()) == 0 &&
-                Float.compare(that.getAllocatedNetwork(), getAllocatedNetwork()) == 0 &&
-                Objects.equals(getService(), that.getService()) &&
-                Objects.equals(getDevice(), that.getDevice()) &&
-                Objects.equals(getId(), that.getId());
+        return Float.compare(that.getAllocatedCPU(), getAllocatedCPU()) == 0
+                && Float.compare(that.getAllocatedRAM(), getAllocatedRAM()) == 0
+                && Float.compare(that.getAllocatedGPU(), getAllocatedGPU()) == 0
+                && Float.compare(that.getAllocatedDisk(), getAllocatedDisk()) == 0
+                && Float.compare(that.getAllocatedNetwork(), getAllocatedNetwork()) == 0
+                && Objects.equals(getService(), that.getService())
+                && Objects.equals(getDevice(), that.getDevice())
+                && Objects.equals(getId(), that.getId());
     }
 
     /**
-     * Hashes the {@link DeviceServiceReq} using {@link Objects} hash method
+     * Hashes the {@link DeviceServiceReq} using {@link Objects} hash method.
      *
      * @return Hash of the {@link DeviceServiceReq}
      */
     @Override
     public int hashCode() {
-        return Objects.hash(getService(), getDevice(), getAllocatedCPU(), getAllocatedRAM(), getAllocatedGPU(), getAllocatedDisk(), getAllocatedNetwork());
+        return Objects.hash(getService(), getDevice(), getAllocatedCPU(), getAllocatedRAM(),
+                getAllocatedGPU(), getAllocatedDisk(), getAllocatedNetwork());
     }
 }

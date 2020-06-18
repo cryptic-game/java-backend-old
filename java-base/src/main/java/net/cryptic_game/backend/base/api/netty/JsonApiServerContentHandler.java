@@ -18,7 +18,7 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-public class JsonApiServerContentHandler extends NettyChannelHandler<JsonObject> {
+public final class JsonApiServerContentHandler extends NettyChannelHandler<JsonObject> {
 
     private final Map<String, ApiEndpointData> endpoints;
     private final Set<ApiClient> clients;
@@ -65,7 +65,7 @@ public class JsonApiServerContentHandler extends NettyChannelHandler<JsonObject>
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, JsonObject msg) throws Exception {
+    protected void channelRead0(final ChannelHandlerContext ctx, final JsonObject msg) throws Exception {
         channelRead0(ctx, msg, null);
     }
 
@@ -101,7 +101,7 @@ public class JsonApiServerContentHandler extends NettyChannelHandler<JsonObject>
     }
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+    public void exceptionCaught(final ChannelHandlerContext ctx, final Throwable cause) throws Exception {
         if (cause.getCause() instanceof JsonSyntaxException) {
             this.channelRead0(ctx, new JsonObject(), new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_JSON"));
         } else {

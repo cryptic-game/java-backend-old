@@ -23,10 +23,10 @@ import org.slf4j.LoggerFactory;
 
 import java.net.InetSocketAddress;
 
-public class App extends AppBootstrap {
+public final class App extends AppBootstrap {
 
-    private static final Logger log = LoggerFactory.getLogger(App.class);
-    private static final ServerConfig serverConfig = new ServerConfig();
+    private static final Logger LOG = LoggerFactory.getLogger(App.class);
+    private static final ServerConfig SERVER_CONFIG = new ServerConfig();
 
     private DaemonEndpointHandler daemonEndpointHandler;
     private WebSocketEndpointHandler webSocketEndpointHandler;
@@ -36,18 +36,18 @@ public class App extends AppBootstrap {
     private NettyServerHandler serverHandler;
 
     public App(final String[] args) {
-        super(args, serverConfig, "Java-Server");
+        super(args, SERVER_CONFIG, "Java-Server");
     }
 
-    public static void main(String[] args) {
-        log.info("Bootstrapping Java Server...");
+    public static void main(final String[] args) {
+        LOG.info("Bootstrapping Java Server...");
         new App(args);
     }
 
     @Override
     protected void preInit() {
         this.daemonEndpointHandler = new DaemonEndpointHandler();
-        this.webSocketEndpointHandler = new WebSocketEndpointHandler(serverConfig.getPlaygroundAddress());
+        this.webSocketEndpointHandler = new WebSocketEndpointHandler(SERVER_CONFIG.getPlaygroundAddress());
         this.httpEndpointHandler = new HttpEndpointHandler();
 
         this.daemonHandler = new DaemonHandler(this.webSocketEndpointHandler.getApiList());
@@ -61,7 +61,7 @@ public class App extends AppBootstrap {
                             JsonObject.class)
             );
         } catch (NoSuchMethodException e) {
-            log.error("Unable to load method send from " + WebSocketDaemonEndpoints.class.getName() + ".", e);
+            LOG.error("Unable to load method send from " + WebSocketDaemonEndpoints.class.getName() + ".", e);
         }
         this.serverHandler = new NettyServerHandler();
     }
@@ -88,11 +88,11 @@ public class App extends AppBootstrap {
                 useUnixSocket, new DaemonServerCodec(this.daemonHandler, this.daemonEndpointHandler));
 
         this.serverHandler.addServer("websocket",
-                new InetSocketAddress(serverConfig.getWebsocketHost(), serverConfig.getWebsocketPort()),
+                new InetSocketAddress(SERVER_CONFIG.getWebsocketHost(), SERVER_CONFIG.getWebsocketPort()),
                 false, new WebSocketServerCodec(this.webSocketEndpointHandler));
 
         this.serverHandler.addServer("http",
-                new InetSocketAddress(serverConfig.getHttpHost(), serverConfig.getHttpPort()),
+                new InetSocketAddress(SERVER_CONFIG.getHttpHost(), SERVER_CONFIG.getHttpPort()),
                 false, new HttpServerCodec(this.httpEndpointHandler));
     }
 

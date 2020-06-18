@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import java.util.Objects;
 
 /**
- * Entity representing a device hardware entry in the database
+ * Entity representing a device hardware entry in the database.
  *
  * @since 0.3.0
  */
@@ -39,7 +39,7 @@ public class DeviceHardware extends TableModelAutoId implements JsonSerializable
     private HardwareType type;
 
     /**
-     * Returns the {@link Device} where the {@link DeviceHardware} is located
+     * Returns the {@link Device} where the {@link DeviceHardware} is located.
      *
      * @return the {@link Device} where the {@link DeviceHardware} is located
      */
@@ -48,7 +48,7 @@ public class DeviceHardware extends TableModelAutoId implements JsonSerializable
     }
 
     /**
-     * Sets the {@link Device} where the {@link DeviceHardware} is located
+     * Sets the {@link Device} where the {@link DeviceHardware} is located.
      *
      * @param device the {@link Device} where the {@link DeviceHardware} is located
      */
@@ -57,7 +57,7 @@ public class DeviceHardware extends TableModelAutoId implements JsonSerializable
     }
 
     /**
-     * Returns the {@link DeviceHardwareElement} of the {@link DeviceHardware}
+     * Returns the {@link DeviceHardwareElement} of the {@link DeviceHardware}.
      *
      * @return the {@link DeviceHardwareElement} of the {@link DeviceHardware}
      */
@@ -66,7 +66,7 @@ public class DeviceHardware extends TableModelAutoId implements JsonSerializable
     }
 
     /**
-     * Sets the {@link DeviceHardwareElement} of the {@link DeviceHardware}
+     * Sets the {@link DeviceHardwareElement} of the {@link DeviceHardware}.
      *
      * @param element the new {@link DeviceHardwareElement} of the {@link DeviceHardware}
      */
@@ -75,7 +75,7 @@ public class DeviceHardware extends TableModelAutoId implements JsonSerializable
     }
 
     /**
-     * Returns the {@link HardwareType} (the Type of the {@link DeviceHardware})
+     * Returns the {@link HardwareType} (the Type of the {@link DeviceHardware}).
      *
      * @return the {@link HardwareType}
      */
@@ -84,7 +84,7 @@ public class DeviceHardware extends TableModelAutoId implements JsonSerializable
     }
 
     /**
-     * Sets the {@link HardwareType} (the Type of the {@link DeviceHardware})
+     * Sets the {@link HardwareType} (the Type of the {@link DeviceHardware}).
      *
      * @param type the new {@link HardwareType}
      */
@@ -93,7 +93,7 @@ public class DeviceHardware extends TableModelAutoId implements JsonSerializable
     }
 
     /**
-     * Compares an {@link Object} if it equals the {@link DeviceHardware}
+     * Compares an {@link Object} if it equals the {@link DeviceHardware}.
      *
      * @param o {@link Object} to compare
      * @return True if the {@link Object} equals the {@link DeviceHardware} | False if it does not
@@ -103,14 +103,14 @@ public class DeviceHardware extends TableModelAutoId implements JsonSerializable
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DeviceHardware hardware = (DeviceHardware) o;
-        return Objects.equals(getDevice(), hardware.getDevice()) &&
-                Objects.equals(getElement(), hardware.getElement()) &&
-                getType() == hardware.getType() &&
-                Objects.equals(getId(), hardware.getId());
+        return Objects.equals(getDevice(), hardware.getDevice())
+                && Objects.equals(getElement(), hardware.getElement())
+                && getType() == hardware.getType()
+                && Objects.equals(getId(), hardware.getId());
     }
 
     /**
-     * Hashes the {@link DeviceHardware} using {@link Objects} hash method
+     * Hashes the {@link DeviceHardware} using {@link Objects} hash method.
      *
      * @return Hash of the {@link DeviceHardware}
      */
@@ -120,7 +120,7 @@ public class DeviceHardware extends TableModelAutoId implements JsonSerializable
     }
 
     /**
-     * Generates a {@link JsonObject} containing all relevant {@link DeviceHardware} information
+     * Generates a {@link JsonObject} containing all relevant {@link DeviceHardware} information.
      *
      * @return The generated {@link JsonObject}
      */
@@ -134,8 +134,6 @@ public class DeviceHardware extends TableModelAutoId implements JsonSerializable
     }
 
     public enum HardwareType {
-
         PROCESSOR, MAINBOARD, RAM, COOLER, GRAPHIC_CARD, DISK, POWER_PACK, CASE
     }
-
 }

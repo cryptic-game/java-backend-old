@@ -4,7 +4,7 @@ import net.cryptic_game.backend.base.json.JsonTransient;
 
 import java.util.Objects;
 
-public class ApiParameterData {
+public final class ApiParameterData {
 
     private final String name;
     private final String description;
@@ -25,7 +25,13 @@ public class ApiParameterData {
     }
 
     private String getTypeAsString() {
-        if (!Number.class.isAssignableFrom(this.getJavaType()) && !Integer.TYPE.isAssignableFrom(this.getJavaType()) && !Long.TYPE.isAssignableFrom(this.getJavaType()) && !Double.TYPE.isAssignableFrom(this.getJavaType()) && !Byte.TYPE.isAssignableFrom(this.getJavaType()) && !Short.TYPE.isAssignableFrom(this.getJavaType()) && !Float.TYPE.isAssignableFrom(this.getJavaType())) {
+        if (!Number.class.isAssignableFrom(this.getJavaType())
+                && !Integer.TYPE.isAssignableFrom(this.getJavaType())
+                && !Long.TYPE.isAssignableFrom(this.getJavaType())
+                && !Double.TYPE.isAssignableFrom(this.getJavaType())
+                && !Byte.TYPE.isAssignableFrom(this.getJavaType())
+                && !Short.TYPE.isAssignableFrom(this.getJavaType())
+                && !Float.TYPE.isAssignableFrom(this.getJavaType())) {
             return !Boolean.class.isAssignableFrom(this.getJavaType()) && !Boolean.TYPE.isAssignableFrom(this.getJavaType()) ? "string" : "boolean";
         } else {
             return "number";
@@ -65,11 +71,11 @@ public class ApiParameterData {
         if (this == o) return true;
         if (!(o instanceof ApiParameterData)) return false;
         ApiParameterData that = (ApiParameterData) o;
-        return isOptional() == that.isOptional() &&
-                getName().equals(that.getName()) &&
-                getSpecial() == that.getSpecial() &&
-                getDescription().equals(that.getDescription()) &&
-                getJavaType().equals(that.getJavaType());
+        return isOptional() == that.isOptional()
+                && getName().equals(that.getName())
+                && getSpecial() == that.getSpecial()
+                && getDescription().equals(that.getDescription())
+                && getJavaType().equals(that.getJavaType());
     }
 
     @Override
@@ -78,6 +84,7 @@ public class ApiParameterData {
     }
 
     public String toString() {
-        return "ApiParameterData(name=" + this.getName() + ", special=" + this.getSpecial() + ", description=" + this.getDescription() + ", optional=" + this.isOptional() + ", type=" + this.getJavaType() + ")";
+        return "ApiParameterData(name=" + this.getName() + ", special=" + this.getSpecial() + ", description="
+                + this.getDescription() + ", optional=" + this.isOptional() + ", type=" + this.getJavaType() + ")";
     }
 }

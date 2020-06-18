@@ -2,7 +2,7 @@ package net.cryptic_game.backend.base.type;
 
 import org.apache.logging.log4j.Level;
 
-public class LevelType implements TypeMapping<Level> {
+public final class LevelType implements TypeMapping<Level> {
 
     @Override
     public Level fromString(final String string) throws Exception {

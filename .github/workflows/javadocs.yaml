@@ -1,0 +1,80 @@
+name: JavaDocs
+
+on:
+  push:
+    # Publish `v1.2.3` tags as releases.
+    tags:
+      - v*
+    paths-ignore: ['**.md']
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/cache@v1
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Run checks with Gradle
+        run: ./gradlew check --no-daemon
+
+  docs:
+    needs: check
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/cache@v1
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build JavaDocs with Gradle
+        run: ./gradlew aggregateJavadoc --no-daemon
+
+      - name: generate version
+        id: version
+        run: |
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          # Strip "v" prefix from tag name
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          echo "::set-output name=version::$VERSION"
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: build/docs/aggregateJavadoc
+          TARGET_FOLDER: javadoc/${{ steps.version.outputs.version }}
+          CLEAN: true
+          DEBUG: true
+          GIT_CONFIG_NAME: GitHub Actions
+          GIT_CONFIG_EMAIL: actions@github.com

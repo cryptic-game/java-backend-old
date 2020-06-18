@@ -15,7 +15,7 @@ import net.cryptic_game.backend.data.user.User;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
-public class WebSocketUserEndpoints extends ApiEndpointCollection {
+public final class WebSocketUserEndpoints extends ApiEndpointCollection {
 
     public WebSocketUserEndpoints() {
         super("user", "todo");

@@ -9,14 +9,14 @@ public enum ChatAction {
 
     CHANNEL_DELETE("channel-delete");
 
-    final String value;
+    private final String value;
 
     ChatAction(final String value) {
         this.value = value;
     }
 
     /**
-     * Returns the {@link ChatAction} value
+     * Returns the {@link ChatAction} value.
      *
      * @return the Value
      */

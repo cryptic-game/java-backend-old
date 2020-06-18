@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Entity representing a chat message entry in the database
+ * Entity representing a chat message entry in the database.
  *
  * @since 0.3.0
  */
@@ -53,7 +53,7 @@ public class ChatMessage extends TableModelAutoId implements JsonSerializable {
     private User target;
 
     /**
-     * Returns the {@link User} who send the {@link ChatMessage}
+     * Returns the {@link User} who send the {@link ChatMessage}.
      *
      * @return the message's sender
      */
@@ -62,7 +62,7 @@ public class ChatMessage extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Sets the {@link User} who sends the {@link ChatMessage}
+     * Sets the {@link User} who sends the {@link ChatMessage}.
      *
      * @param user the new {@link User}
      */
@@ -71,7 +71,7 @@ public class ChatMessage extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Returns the {@link ChatChannel} where the {@link User} is sending the {@link ChatMessage}
+     * Returns the {@link ChatChannel} where the {@link User} is sending the {@link ChatMessage}.
      *
      * @return the {@link ChatChannel}
      */
@@ -80,7 +80,7 @@ public class ChatMessage extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Sets a new {@link ChatChannel} where the {@link ChatMessage} will be sent
+     * Sets a new {@link ChatChannel} where the {@link ChatMessage} will be sent.
      *
      * @param channel the new {@link ChatChannel} to be set
      */
@@ -89,7 +89,7 @@ public class ChatMessage extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Returns the {@link ChatAction} which is triggered by the {@link ChatMessage}
+     * Returns the {@link ChatAction} which is triggered by the {@link ChatMessage}.
      *
      * @return the {@link ChatAction}
      */
@@ -98,7 +98,7 @@ public class ChatMessage extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Sets a new {@link ChatAction} triggered by the {@link ChatMessage}
+     * Sets a new {@link ChatAction} triggered by the {@link ChatMessage}.
      *
      * @param type the new {@link ChatAction} to be set
      */
@@ -107,7 +107,7 @@ public class ChatMessage extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Returns the Text of the {@link ChatMessage}
+     * Returns the Text of the {@link ChatMessage}.
      *
      * @return the Text
      */
@@ -116,7 +116,7 @@ public class ChatMessage extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Sets a new Text for the {@link ChatMessage}
+     * Sets a new Text for the {@link ChatMessage}.
      *
      * @param text the new Text to be set
      */
@@ -125,7 +125,7 @@ public class ChatMessage extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Returns the {@link User} who receives the {@link ChatMessage}
+     * Returns the {@link User} who receives the {@link ChatMessage}.
      *
      * @return the targeted {@link User}
      */
@@ -134,16 +134,16 @@ public class ChatMessage extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Sets a new {@link User} as receiver for the {@link ChatMessage}
+     * Sets a new {@link User} as receiver for the {@link ChatMessage}.
      *
-     * @param target the new {@link User} to be set for receiving the {@link ChatMessage}
+     * @param target the new {@link User} to be set for receiving the {@link ChatMessage}.
      */
     public void setTarget(final User target) {
         this.target = target;
     }
 
     /**
-     * Sends a {@link ChatMessage} without a target and as "SEND_MESSAGE" {@link ChatAction}
+     * Sends a {@link ChatMessage} without a target and as {@link ChatAction#SEND_MESSAGE}.
      *
      * @param channel the {@link} Channel where the {@link ChatMessage} will be sent
      * @param user    the {@link User} who sends the {@link ChatMessage}
@@ -155,7 +155,7 @@ public class ChatMessage extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Sends a {@link ChatMessage} without a target
+     * Sends a {@link ChatMessage} without a target.
      *
      * @param channel the {@link} Channel where the {@link ChatMessage} will be sent
      * @param user    the {@link User} who sends the {@link ChatMessage}
@@ -168,7 +168,7 @@ public class ChatMessage extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Sends a {@link ChatMessage}
+     * Sends a {@link ChatMessage}.
      *
      * @param channel the {@link} Channel where the {@link ChatMessage} will be sent
      * @param user    the {@link User} who sends the {@link ChatMessage}
@@ -190,7 +190,7 @@ public class ChatMessage extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Returns a {@link List} of {@link ChatMessage}s sent in a {@link ChatChannel} by a {@link User}
+     * Returns a {@link List} of {@link ChatMessage}s sent in a {@link ChatChannel} by a {@link User}.
      *
      * @param user    the {@link User} who sent the {@link ChatMessage}s
      * @param channel the {@link ChatChannel} where the {@link ChatMessage}s were sent
@@ -199,8 +199,8 @@ public class ChatMessage extends TableModelAutoId implements JsonSerializable {
     public List<ChatMessage> getMessages(final User user, final ChatChannel channel) {
         try (Session sqlSession = sqlConnection.openSession()) {
             return sqlSession
-                    .createQuery("select object (m) from Message m where  m.channel = :channel " +
-                            "and (m.target is null or (m.type = :whisper and m.target = :user) or (m.type = :whisper and m.user = :user))", ChatMessage.class)
+                    .createQuery("select object (m) from Message m where  m.channel = :channel "
+                            + "and (m.target is null or (m.type = :whisper and m.target = :user) or (m.type = :whisper and m.user = :user))", ChatMessage.class)
                     .setParameter("user", user)
                     .setParameter("channel", channel)
                     .setParameter("whisper", ChatAction.WHISPER_MESSAGE)
@@ -209,7 +209,7 @@ public class ChatMessage extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Compares an {@link Object} if it equals the {@link ChatMessage}
+     * Compares an {@link Object} if it equals the {@link ChatMessage}.
      *
      * @param o {@link Object} to compare
      * @return True if the {@link Object} equals the {@link ChatMessage} | False if it does not
@@ -219,16 +219,16 @@ public class ChatMessage extends TableModelAutoId implements JsonSerializable {
         if (this == o) return true;
         if (!(o instanceof ChatMessage)) return false;
         final ChatMessage message = (ChatMessage) o;
-        return this.getId().equals(message.getId()) &&
-                this.getUser().equals(message.getUser()) &&
-                this.getChannel().equals(message.getChannel()) &&
-                this.getType() == message.getType() &&
-                this.getText().equals(message.getText()) &&
-                Objects.equals(this.getTarget(), message.getTarget());
+        return this.getId().equals(message.getId())
+                && this.getUser().equals(message.getUser())
+                && this.getChannel().equals(message.getChannel())
+                && this.getType() == message.getType()
+                && this.getText().equals(message.getText())
+                && Objects.equals(this.getTarget(), message.getTarget());
     }
 
     /**
-     * Hashes the {@link ChatMessage} using {@link Objects} hash method
+     * Hashes the {@link ChatMessage} using {@link Objects} hash method.
      *
      * @return Hash of the {@link ChatMessage}
      */
@@ -238,7 +238,7 @@ public class ChatMessage extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Generates a {@link JsonObject} containing all relevant {@link ChatMessage} information
+     * Generates a {@link JsonObject} containing all relevant {@link ChatMessage} information.
      *
      * @return The generated {@link JsonObject}
      */

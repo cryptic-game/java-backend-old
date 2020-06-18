@@ -1,8 +1,21 @@
-# Cryptic Java Backend
-[![Build](https://github.com/cryptic-game/java-backend-dev/workflows/Cryptic%20Backend%20Build/badge.svg)](https://github.com/cryptic-game/java-backend-dev/actions?query=workflow%3A%22Cryptic+Backend+Build%22)
-[![Releases](https://badge.fury.io/gh/cryptic-game%2Fjava-backend-dev.svg)](https://github.com/cryptic-game/java-backend-dev/releases)
+<h1 align="center">
+    Cryptic Java Backend
+</h1>
 
-This is the [Java Backend](https://cryptic-game.github.io/java-backend-dev/) of the Cryptic project.
+<p align="center">
+    <a style="text-decoration:none" href="https://github.com/cryptic-game/java-backend-dev/releases">
+        <img alt="Releases" src="https://img.shields.io/github/v/tag/cryptic-game/java-backend-dev?label=latest%20version&style=flat-square">
+    </a>
+    <a style="text-decoration:none" href="https://github.com/cryptic-game/java-backend-dev/actions">
+        <img alt="Build" src="https://img.shields.io/github/workflow/status/cryptic-game/java-backend-dev/Build?label=Build&style=flat-square">
+    </a>
+    <a style="text-decoration:none" href="https://hub.docker.com/r/crypticcp/cryptic-backend">
+        <img alt="DockerHub" src="https://img.shields.io/docker/pulls/crypticcp/cryptic-backend?style=flat-square">
+    </a>
+</p>
+<p align="center">
+    This is the <a href="https://cryptic-game.github.io/java-backend-dev/">Java Backend</a> of the Cryptic project.
+</p>
 
 ## Getting Started
 

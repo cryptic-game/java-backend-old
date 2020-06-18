@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Entity representing a device access entry in the database
+ * Entity representing a device access entry in the database.
  *
  * @since 0.3.0
  */
@@ -47,7 +47,7 @@ public class DeviceAccess extends TableModelAutoId implements JsonSerializable {
     private boolean valid;
 
     /**
-     * Checks if a {@link User} has got access to the {@link Device}
+     * Checks if a {@link User} has got access to the {@link Device}.
      *
      * @param user   the {@link User}
      * @param device the {@link Device}
@@ -65,7 +65,7 @@ public class DeviceAccess extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Grants access for a {@link User} to a {@link Device}
+     * Grants access for a {@link User} to a {@link Device}.
      *
      * @param user     the {@link User}
      * @param device   the {@link Device}
@@ -90,7 +90,7 @@ public class DeviceAccess extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Returns a {@link List} of {@link DeviceAccess}es, so accesses for a {@link Device}
+     * Returns a {@link List} of {@link DeviceAccess}es, so accesses for a {@link Device}.
      *
      * @param device the {@link Device}
      * @return the {@link List} of {@link DeviceAccess}
@@ -106,7 +106,7 @@ public class DeviceAccess extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Returns the {@link Device} of the {@link DeviceAccess}
+     * Returns the {@link Device} of the {@link DeviceAccess}.
      *
      * @return the {@link Device}
      */
@@ -115,7 +115,7 @@ public class DeviceAccess extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Sets a new {@link Device} for the {@link DeviceAccess}
+     * Sets a new {@link Device} for the {@link DeviceAccess}.
      *
      * @param device the new {@link Device} to be set
      */
@@ -124,7 +124,7 @@ public class DeviceAccess extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Returns the {@link User} of the {@link DeviceAccess}
+     * Returns the {@link User} of the {@link DeviceAccess}.
      *
      * @return the {@link User}
      */
@@ -133,7 +133,7 @@ public class DeviceAccess extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Sets a new {@link User} for the {@link DeviceAccess}
+     * Sets a new {@link User} for the {@link DeviceAccess}.
      *
      * @param user the new {@link DeviceAccess}
      */
@@ -142,7 +142,7 @@ public class DeviceAccess extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Returns the {@link ZonedDateTime} when the {@link DeviceAccess} has been granted
+     * Returns the {@link ZonedDateTime} when the {@link DeviceAccess} has been granted.
      *
      * @return the time accessed
      */
@@ -151,7 +151,7 @@ public class DeviceAccess extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Sets a new {@link ZonedDateTime} as time accessed
+     * Sets a new {@link ZonedDateTime} as time accessed.
      *
      * @param accessGranted the new {@link ZonedDateTime} to be set
      */
@@ -160,7 +160,7 @@ public class DeviceAccess extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Returns the {@link ZonedDateTime}
+     * Returns the {@link ZonedDateTime}.
      *
      * @return the time the access will expire
      */
@@ -169,7 +169,7 @@ public class DeviceAccess extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Sets a new {@link ZonedDateTime}
+     * Sets a new {@link ZonedDateTime}.
      *
      * @param expire the new {@link ZonedDateTime} to be set
      */
@@ -178,7 +178,7 @@ public class DeviceAccess extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Returns whether the {@link DeviceAccess} is valid or not
+     * Returns whether the {@link DeviceAccess} is valid or not.
      *
      * @return true if it is otherwise false
      */
@@ -187,7 +187,7 @@ public class DeviceAccess extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Sets a new boolean if the {@link DeviceAccess} is valid
+     * Sets a new boolean if the {@link DeviceAccess} is valid.
      *
      * @param valid the new boolean to be set
      */
@@ -196,7 +196,7 @@ public class DeviceAccess extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Generates a {@link JsonObject} containing all relevant {@link DeviceAccess} information
+     * Generates a {@link JsonObject} containing all relevant {@link DeviceAccess} information.
      *
      * @return The generated {@link JsonObject}
      */
@@ -212,26 +212,26 @@ public class DeviceAccess extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Compares an {@link Object} if it equals the {@link DeviceAccess}
+     * Compares an {@link Object} if it equals the {@link DeviceAccess}.
      *
      * @param o {@link Object} to compare
      * @return True if the {@link Object} equals the {@link DeviceAccess} | False if it does not
      */
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DeviceAccess that = (DeviceAccess) o;
-        return isValid() == that.isValid() &&
-                Objects.equals(getDevice(), that.getDevice()) &&
-                Objects.equals(getUser(), that.getUser()) &&
-                Objects.equals(getAccessGranted(), that.getAccessGranted()) &&
-                Objects.equals(getExpire(), that.getExpire()) &&
-                Objects.equals(getId(), that.getId());
+        return isValid() == that.isValid()
+                && Objects.equals(getDevice(), that.getDevice())
+                && Objects.equals(getUser(), that.getUser())
+                && Objects.equals(getAccessGranted(), that.getAccessGranted())
+                && Objects.equals(getExpire(), that.getExpire())
+                && Objects.equals(getId(), that.getId());
     }
 
     /**
-     * Hashes the {@link DeviceAccess} using {@link Objects} hash method
+     * Hashes the {@link DeviceAccess} using {@link Objects} hash method.
      *
      * @return Hash of the {@link DeviceAccess}
      */

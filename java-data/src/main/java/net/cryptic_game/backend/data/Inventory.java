@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import java.util.Objects;
 
 /**
- * Entity representing an inventory entry in the database
+ * Entity representing an inventory entry in the database.
  *
  * @since 0.3.0
  */
@@ -32,7 +32,7 @@ public class Inventory extends TableModelAutoId implements JsonSerializable {
     private User owner;
 
     /**
-     * Returns the element name of the {@link Inventory}
+     * Returns the element name of the {@link Inventory}.
      *
      * @return Element name of the {@link Inventory}
      */
@@ -41,7 +41,7 @@ public class Inventory extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Sets a new element name for the {@link Inventory}
+     * Sets a new element name for the {@link Inventory}.
      *
      * @param elementName the new name to be set
      */
@@ -50,7 +50,7 @@ public class Inventory extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Returns the {@link User} who owns that {@link Inventory}
+     * Returns the {@link User} who owns that {@link Inventory}.
      *
      * @return {@link User} who owns the {@link Inventory}
      */
@@ -59,7 +59,7 @@ public class Inventory extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Sets a new owner for the {@link Inventory}
+     * Sets a new owner for the {@link Inventory}.
      *
      * @param owner the new {@link User} to be set as owner
      */
@@ -68,7 +68,7 @@ public class Inventory extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Generates a {@link JsonObject} containing all relevant {@link Inventory} information
+     * Generates a {@link JsonObject} containing all relevant {@link Inventory} information.
      *
      * @return The generated {@link JsonObject}
      */
@@ -81,23 +81,23 @@ public class Inventory extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Compares an {@link Object} if it equals the {@link Inventory}
+     * Compares an {@link Object} if it equals the {@link Inventory}.
      *
      * @param o {@link Object} to compare
      * @return True if the {@link Object} equals the {@link Inventory} | False if it does not
      */
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Inventory inventory = (Inventory) o;
-        return Objects.equals(getElementName(), inventory.getElementName()) &&
-                Objects.equals(getOwner(), inventory.getOwner()) &&
-                Objects.equals(getId(), inventory.getId());
+        return Objects.equals(getElementName(), inventory.getElementName())
+                && Objects.equals(getOwner(), inventory.getOwner())
+                && Objects.equals(getId(), inventory.getId());
     }
 
     /**
-     * Hashes the {@link Inventory} using {@link Objects} hash method
+     * Hashes the {@link Inventory} using {@link Objects} hash method.
      *
      * @return Hash of the {@link Inventory}
      */

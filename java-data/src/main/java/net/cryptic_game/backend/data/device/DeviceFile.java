@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Entity representing a device file entry in the database
+ * Entity representing a device file entry in the database.
  *
  * @since 0.3.0
  */
@@ -44,7 +44,7 @@ public class DeviceFile extends TableModelAutoId implements JsonSerializable {
     private DeviceFile parentDirectory;
 
     /**
-     * Creates a {@link DeviceFile} and returns itself
+     * Creates a {@link DeviceFile} and returns itself.
      *
      * @param device      the {@link DeviceFile}  where the file will be added
      * @param name        the name of the {@link DeviceFile}
@@ -71,7 +71,7 @@ public class DeviceFile extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Creates a {@link DeviceFile} and returns itself as file, not directory
+     * Creates a {@link DeviceFile} and returns itself as file, not directory.
      *
      * @param device    the {@link DeviceFile}  where the file will be added
      * @param name      the name of the {@link DeviceFile}
@@ -84,7 +84,7 @@ public class DeviceFile extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Creates a {@link DeviceFile} and returns itself as directory
+     * Creates a {@link DeviceFile} and returns itself as directory.
      *
      * @param device    the {@link DeviceFile}  where the file will be added
      * @param name      the name of the {@link DeviceFile}
@@ -96,13 +96,13 @@ public class DeviceFile extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Returns a list of all {@link DeviceFile} of a {@link Device}
+     * Returns a list of all {@link DeviceFile} of a {@link Device}.
      *
      * @param device the {@link Device} where you want all {@link DeviceFile}
      * @return the {@link List} of all {@link DeviceFile} of a {@link Device}
      */
     public static List<DeviceFile> getFilesByDevice(final Device device) {
-        try (final Session sqlSession = sqlConnection.openSession()) {
+        try (Session sqlSession = sqlConnection.openSession()) {
             return sqlSession
                     .createQuery("select object (f) from DeviceFile f where f.device = :device", DeviceFile.class)
                     .setParameter("device", device)
@@ -111,7 +111,7 @@ public class DeviceFile extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Returns the {@link Device} where the {@link DeviceFile} is located
+     * Returns the {@link Device} where the {@link DeviceFile} is located.
      *
      * @return the {@link Device}
      */
@@ -120,7 +120,7 @@ public class DeviceFile extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Sets the {@link Device} where the {@link DeviceFile} is located
+     * Sets the {@link Device} where the {@link DeviceFile} is located.
      *
      * @param device New {@link Device} to be set.
      */
@@ -129,7 +129,7 @@ public class DeviceFile extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Returns the Name of the {@link DeviceFile}
+     * Returns the Name of the {@link DeviceFile}.
      *
      * @return the Name
      */
@@ -138,7 +138,7 @@ public class DeviceFile extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Sets the name of the {@link DeviceFile}
+     * Sets the name of the {@link DeviceFile}.
      *
      * @param name the new name
      */
@@ -147,7 +147,7 @@ public class DeviceFile extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Returns the Content of the {@link DeviceFile}
+     * Returns the Content of the {@link DeviceFile}.
      *
      * @return the content
      */
@@ -156,7 +156,7 @@ public class DeviceFile extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Sets the content of the {@link DeviceFile}
+     * Sets the content of the {@link DeviceFile}.
      *
      * @param content the new content
      */
@@ -165,7 +165,7 @@ public class DeviceFile extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Returns whether the {@link DeviceFile} is a directory (true) or not (false)
+     * Returns whether the {@link DeviceFile} is a directory (true) or not (false).
      *
      * @return whether the {@link DeviceFile} is a directory
      */
@@ -174,34 +174,34 @@ public class DeviceFile extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Sets whether the {@link DeviceFile} is a directory (true) or not (false)
+     * Sets whether the {@link DeviceFile} is a directory (true) or not (false).
      *
-     * @param isDirectory depends whether the {@link DeviceFile} is a direcory or not
+     * @param isDirectory depends whether the {@link DeviceFile} is a directory or not
      */
     public void setIsDirectory(final boolean isDirectory) {
         this.isDirectory = isDirectory;
     }
 
     /**
-     * Returns the parentdirectory of the {@link DeviceFile}
+     * Returns the parent directory of the {@link DeviceFile}.
      *
-     * @return the parentdirectory of the {@link DeviceFile}
+     * @return the parent directory of the {@link DeviceFile}
      */
     public DeviceFile getParentDirectory() {
         return this.parentDirectory;
     }
 
     /**
-     * Sets the parentdirectory of the {@link DeviceFile}
+     * Sets the parent directory of the {@link DeviceFile}.
      *
-     * @param parentDirectory the new parentdirectory
+     * @param parentDirectory the new parent directory
      */
     public void setParentDirectory(final DeviceFile parentDirectory) {
         this.parentDirectory = parentDirectory;
     }
 
     /**
-     * Generates a {@link JsonObject} containing all relevant {@link DeviceFile} information
+     * Generates a {@link JsonObject} containing all relevant {@link DeviceFile} information.
      *
      * @return The generated {@link JsonObject}
      */
@@ -217,26 +217,26 @@ public class DeviceFile extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Compares an {@link Object} if it equals the {@link DeviceFile}
+     * Compares an {@link Object} if it equals the {@link DeviceFile}.
      *
      * @param o {@link Object} to compare
      * @return True if the {@link Object} equals the {@link DeviceFile} | False if it does not
      */
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DeviceFile file = (DeviceFile) o;
-        return isDirectory() == file.isDirectory() &&
-                Objects.equals(getDevice(), file.getDevice()) &&
-                Objects.equals(getName(), file.getName()) &&
-                Objects.equals(getContent(), file.getContent()) &&
-                Objects.equals(getParentDirectory(), file.getParentDirectory()) &&
-                Objects.equals(getId(), file.getId());
+        return isDirectory() == file.isDirectory()
+                && Objects.equals(getDevice(), file.getDevice())
+                && Objects.equals(getName(), file.getName())
+                && Objects.equals(getContent(), file.getContent())
+                && Objects.equals(getParentDirectory(), file.getParentDirectory())
+                && Objects.equals(getId(), file.getId());
     }
 
     /**
-     * Hashes the {@link DeviceFile} using {@link Objects} hash method
+     * Hashes the {@link DeviceFile} using {@link Objects} hash method.
      *
      * @return Hash of the {@link DeviceFile}
      */

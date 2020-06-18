@@ -13,7 +13,7 @@ import java.util.Map;
 
 public final class ApiExecutor {
 
-    private static final Logger log = LoggerFactory.getLogger(ApiExecutor.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ApiExecutor.class);
 
     private ApiExecutor() {
         throw new UnsupportedOperationException();
@@ -33,16 +33,28 @@ public final class ApiExecutor {
 
     private static ApiResponse executeMethod(final ApiEndpointData methodData, final JsonObject data, final ApiClient client, final String tag) {
         try {
-            return (ApiResponse) methodData.getMethod().invoke(methodData.getObject(), getParameters(methodData.getParameters(), methodData.isNormalParameters(), data == null ? new JsonObject() : data, client, tag, methodData));
+            return (ApiResponse) methodData.getMethod().invoke(methodData.getObject(), getParameters(methodData.getParameters(),
+                    methodData.isNormalParameters(),
+                    data == null ? new JsonObject() : data,
+                    client,
+                    tag,
+                    methodData));
         } catch (ApiException e) {
             return new ApiResponse(ApiResponseType.BAD_REQUEST, e.getMessage());
         } catch (Exception e) {
-            log.error("Error while executing endpoint \"" + methodData.getName() + "\".", e);
+            LOG.error("Error while executing endpoint \"" + methodData.getName() + "\".", e);
             return new ApiResponse(ApiResponseType.INTERNAL_SERVER_ERROR);
         }
     }
 
-    private static Object[] getParameters(final List<ApiParameterData> parameters, final boolean normalParameters, final JsonObject data, final ApiClient client, final String tag, final ApiEndpointData endpoint) throws ApiException {
+    private static Object[] getParameters(
+            final List<ApiParameterData> parameters,
+            final boolean normalParameters,
+            final JsonObject data,
+            final ApiClient client,
+            final String tag,
+            final ApiEndpointData endpoint
+    ) throws ApiException {
         int size = 0;
         for (final ApiParameterData parameter : parameters) {
             if (parameter.getSpecial().equals(ApiParameterSpecialType.NORMAL) || parameter.getSpecial().equals(ApiParameterSpecialType.USER)) {

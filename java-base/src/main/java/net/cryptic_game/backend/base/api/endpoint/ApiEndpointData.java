@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class ApiEndpointData implements JsonSerializable, Comparable<ApiEndpointData> {
+public final class ApiEndpointData implements JsonSerializable, Comparable<ApiEndpointData> {
 
     private final String description;
     private String name;
@@ -81,7 +81,8 @@ public class ApiEndpointData implements JsonSerializable, Comparable<ApiEndpoint
     }
 
     public String toString() {
-        return "ApiEndpointData(name=" + this.getName() + ", description=" + this.getDescription() + ", method=" + this.getMethod() + ", object=" + this.getObject() + ", parameters=" + this.getParameters() + ")";
+        return "ApiEndpointData(name=" + this.getName() + ", description=" + this.getDescription() + ", method="
+                + this.getMethod() + ", object=" + this.getObject() + ", parameters=" + this.getParameters() + ")";
     }
 
     @Override
@@ -100,11 +101,11 @@ public class ApiEndpointData implements JsonSerializable, Comparable<ApiEndpoint
         if (this == o) return true;
         if (!(o instanceof ApiEndpointData)) return false;
         ApiEndpointData that = (ApiEndpointData) o;
-        return getName().equals(that.getName()) &&
-                getDescription().equals(that.getDescription()) &&
-                getMethod().equals(that.getMethod()) &&
-                getObject().equals(that.getObject()) &&
-                getParameters().equals(that.getParameters());
+        return getName().equals(that.getName())
+                && getDescription().equals(that.getDescription())
+                && getMethod().equals(that.getMethod())
+                && getObject().equals(that.getObject())
+                && getParameters().equals(that.getParameters());
     }
 
     @Override

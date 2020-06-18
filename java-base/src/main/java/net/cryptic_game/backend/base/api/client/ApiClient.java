@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class ApiClient {
+public final class ApiClient {
 
     private final Channel channel;
     private final Set<String> topics;
@@ -43,13 +43,13 @@ public class ApiClient {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (!(o instanceof ApiClient)) return false;
         ApiClient apiClient = (ApiClient) o;
-        return getChannel().equals(apiClient.getChannel()) &&
-                topics.equals(apiClient.topics) &&
-                objects.equals(apiClient.objects);
+        return getChannel().equals(apiClient.getChannel())
+                && topics.equals(apiClient.topics)
+                && objects.equals(apiClient.objects);
     }
 
     @Override

@@ -6,7 +6,7 @@ import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 
 import java.util.List;
 
-public class WebsocketTextFrameMessageCodec extends MessageToMessageCodec<TextWebSocketFrame, String> {
+public final class WebsocketTextFrameMessageCodec extends MessageToMessageCodec<TextWebSocketFrame, String> {
 
     @Override
     protected void encode(final ChannelHandlerContext ctx, final String msg, final List<Object> out) throws Exception {
@@ -14,7 +14,7 @@ public class WebsocketTextFrameMessageCodec extends MessageToMessageCodec<TextWe
     }
 
     @Override
-    protected void decode(ChannelHandlerContext ctx, TextWebSocketFrame msg, List<Object> out) throws Exception {
+    protected void decode(final ChannelHandlerContext ctx, final TextWebSocketFrame msg, List<Object> out) throws Exception {
         out.add(msg.text());
     }
 }

@@ -21,7 +21,7 @@ import java.sql.SQLException;
 
 public abstract class AppBootstrap {
 
-    private static final Logger log = LoggerFactory.getLogger(AppBootstrap.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AppBootstrap.class);
     private static AppBootstrap instance;
     private static TimeoutHandler timeoutHandler;
     protected final BaseConfig config;
@@ -53,7 +53,7 @@ public abstract class AppBootstrap {
         this.dist = dist;
         this.setLoglevel(Level.valueOf(this.config.getLogLevel().toUpperCase()));
 
-        log.info("Starting {}...", dist);
+        LOG.info("Starting {}...", dist);
 
         this.initSentry();
 
@@ -64,7 +64,7 @@ public abstract class AppBootstrap {
         try {
             this.initSQLTableModels();
         } catch (SQLException e) {
-            log.error("Can't register all table models.", e);
+            LOG.error("Can't register all table models.", e);
         }
         this.setUpSQL();
         this.init();
@@ -99,14 +99,18 @@ public abstract class AppBootstrap {
         if (!dsn.isBlank()) {
             final SentryClient client = Sentry.init(dsn + "?stacktrace.app.packages=net.cryptic_game");
 
+            client.addTag("OS", System.getProperty("OS"));
+
             final String version = AppBootstrap.class.getPackage().getImplementationVersion();
             client.setRelease(version == null ? "debug" : version);
             client.setEnvironment(this.config.isProductive() ? "production" : "development");
             client.setDist(this.dist);
+        } else {
+            Sentry.init("");
         }
     }
 
-    protected void setUpSQL() {
+    protected final void setUpSQL() {
         this.sqlConnection.init(new SQLServer(
                 this.config.getSqlServerLocation(),
                 this.config.getSqlServerDatabase(),
@@ -123,15 +127,15 @@ public abstract class AppBootstrap {
         ctx.updateLoggers();
     }
 
-    public BaseConfig getConfig() {
+    public final BaseConfig getConfig() {
         return this.config;
     }
 
-    public SQLConnection getSqlConnection() {
+    public final SQLConnection getSqlConnection() {
         return this.sqlConnection;
     }
 
-    protected String getName() {
+    protected final String getName() {
         return this.dist;
     }
 }

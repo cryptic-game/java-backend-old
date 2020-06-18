@@ -29,9 +29,9 @@ public enum ApiResponseType implements JsonSerializable {
     // Self made
     ALREADY_EXISTS(905, "ALREADY_EXIST", true);
 
-    final int code;
-    final String name;
-    final boolean error;
+    private final int code;
+    private final String name;
+    private final boolean error;
 
     ApiResponseType(final int code, final String name, final boolean error) {
         this.code = code;
@@ -66,10 +66,10 @@ public enum ApiResponseType implements JsonSerializable {
 
     @Override
     public String toString() {
-        return "ApiResponseType{" +
-                "code=" + code +
-                ", name='" + name + '\'' +
-                ", error=" + error +
-                '}';
+        return "ApiResponseType{"
+                + "code=" + code
+                + ", name='" + name + '\''
+                + ", error=" + error
+                + '}';
     }
 }

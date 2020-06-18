@@ -19,7 +19,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * Entity representing a network entry in the database
+ * Entity representing a network entry in the database.
  *
  * @since 0.3.0
  */
@@ -42,13 +42,13 @@ public class Network extends TableModelAutoId implements JsonSerializable {
     private ZonedDateTime created;
 
     /**
-     * Empty constructor to create a new {@link Network}
+     * Empty constructor to create a new {@link Network}.
      */
     public Network() {
     }
 
     /**
-     * Creates a new {@link Network}
+     * Creates a new {@link Network}.
      *
      * @param name    Name of the {@link Network}
      * @param owner   Owner of the {@link Network}
@@ -73,7 +73,7 @@ public class Network extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Fetches the {@link Network} with the given id
+     * Fetches the {@link Network} with the given id.
      *
      * @param id The id of the {@link Network}
      * @return The instance of the fetched {@link Network} if it exists | null if the entity does not exist
@@ -83,7 +83,7 @@ public class Network extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Fetches the {@link Network} with the given name
+     * Fetches the {@link Network} with the given name.
      *
      * @param name The name of the {@link Network}
      * @return The instance of the fetched {@link Network} if it exists | null if the entity does not exist
@@ -101,7 +101,7 @@ public class Network extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Fetches all {@link Network}'s owned by the give {@link Device}
+     * Fetches all {@link Network}'s owned by the give {@link Device}.
      *
      * @param device The {@link Device}
      * @return A {@link List} containing the fetched {@link Network}'s
@@ -117,7 +117,7 @@ public class Network extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Fetches all public {@link Network}'s
+     * Fetches all public {@link Network}'s.
      *
      * @return A {@link List} containing the fetched {@link Network}'s
      */
@@ -131,7 +131,7 @@ public class Network extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Returns the name of the {@link Network}
+     * Returns the name of the {@link Network}.
      *
      * @return Name of the {@link Network}
      */
@@ -140,7 +140,7 @@ public class Network extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Sets a new name of the {@link Network}
+     * Sets a new name of the {@link Network}.
      *
      * @param name New name to be set
      */
@@ -149,7 +149,7 @@ public class Network extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Returns the owner {@link Device} of the {@link Network}
+     * Returns the owner {@link Device} of the {@link Network}.
      *
      * @return Owner of the {@link Network}
      */
@@ -158,7 +158,7 @@ public class Network extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Sets a new owner {@link Device} of the {@link Network}
+     * Sets a new owner {@link Device} of the {@link Network}.
      *
      * @param owner New owner to be set
      */
@@ -167,7 +167,7 @@ public class Network extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Returns the public state of the {@link Network}
+     * Returns the public state of the {@link Network}.
      *
      * @return Public state of the {@link Network}
      */
@@ -176,7 +176,7 @@ public class Network extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Sets a new public state of the {@link Network}
+     * Sets a new public state of the {@link Network}.
      *
      * @param _public New public state to be set
      */
@@ -185,7 +185,7 @@ public class Network extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Returns the creation date of the {@link Network}
+     * Returns the creation date of the {@link Network}.
      *
      * @return Creation date of the {@link Network}
      */
@@ -194,7 +194,7 @@ public class Network extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Sets a new creation date of the {@link Network}
+     * Sets a new creation date of the {@link Network}.
      *
      * @param created New creation date to be set
      */
@@ -203,7 +203,7 @@ public class Network extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Generates a {@link JsonObject} containing all relevant {@link Network} information
+     * Generates a {@link JsonObject} containing all relevant {@link Network} information.
      *
      * @return The generated {@link JsonObject}
      */
@@ -218,7 +218,7 @@ public class Network extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Compares an {@link Object} if it equals the {@link Network}
+     * Compares an {@link Object} if it equals the {@link Network}.
      *
      * @param o {@link Object} to compare
      * @return True if the {@link Object} equals the {@link Network} | False if it does not
@@ -228,15 +228,15 @@ public class Network extends TableModelAutoId implements JsonSerializable {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
         Network network = (Network) o;
-        return this.isPublic() == network.isPublic() &&
-                this.getName().equals(network.getName()) &&
-                this.getOwner().equals(network.getOwner()) &&
-                this.getCreated().equals(network.getCreated()) &&
-                this.getId().equals(network.getId());
+        return this.isPublic() == network.isPublic()
+                && this.getName().equals(network.getName())
+                && this.getOwner().equals(network.getOwner())
+                && this.getCreated().equals(network.getCreated())
+                && this.getId().equals(network.getId());
     }
 
     /**
-     * Hashes the {@link Network} using {@link Objects} hash method
+     * Hashes the {@link Network} using {@link Objects} hash method.
      *
      * @return Hash of the {@link Network}
      */

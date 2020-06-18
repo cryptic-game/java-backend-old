@@ -8,7 +8,7 @@ import net.cryptic_game.backend.base.json.JsonTransient;
 import java.util.Map;
 import java.util.Objects;
 
-public class ApiEndpointCollectionData implements JsonSerializable, Comparable<ApiEndpointCollectionData> {
+public final class ApiEndpointCollectionData implements JsonSerializable, Comparable<ApiEndpointCollectionData> {
 
     private final String name;
     private final String description;
@@ -46,12 +46,13 @@ public class ApiEndpointCollectionData implements JsonSerializable, Comparable<A
         return this.endpoints;
     }
 
-    public void setEndpoints(Map<String, ApiEndpointData> endpoints) {
+    public void setEndpoints(final Map<String, ApiEndpointData> endpoints) {
         this.endpoints = endpoints;
     }
 
     public String toString() {
-        return "ApiEndpointCollectionData(name=" + this.getName() + ", description=" + this.getDescription() + ", object=" + this.getObject() + ", endpoints=" + this.getEndpoints() + ")";
+        return "ApiEndpointCollectionData(name=" + this.getName() + ", description=" + this.getDescription()
+                + ", object=" + this.getObject() + ", endpoints=" + this.getEndpoints() + ")";
     }
 
     @Override
@@ -59,10 +60,10 @@ public class ApiEndpointCollectionData implements JsonSerializable, Comparable<A
         if (this == o) return true;
         if (!(o instanceof ApiEndpointCollectionData)) return false;
         ApiEndpointCollectionData that = (ApiEndpointCollectionData) o;
-        return getName().equals(that.getName()) &&
-                getDescription().equals(that.getDescription()) &&
-                getObject().equals(that.getObject()) &&
-                getEndpoints().equals(that.getEndpoints());
+        return getName().equals(that.getName())
+                && getDescription().equals(that.getDescription())
+                && getObject().equals(that.getObject())
+                && getEndpoints().equals(that.getEndpoints());
     }
 
     @Override
