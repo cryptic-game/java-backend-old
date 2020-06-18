@@ -7,9 +7,6 @@ import net.cryptic_game.backend.data.network.Network;
 import net.cryptic_game.backend.data.network.NetworkInvitation;
 import net.cryptic_game.backend.data.network.NetworkMember;
 import net.cryptic_game.backend.data.user.User;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public class NetworkMemberEndpoints extends ApiEndpointCollection {
@@ -20,21 +17,25 @@ public class NetworkMemberEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("members")
     public ApiResponse member(@ApiParameter("user_id") final UUID userId,
-                              @ApiParameter("device") final UUID deviceId) {
+                              @ApiParameter("device_id") final UUID deviceId) {
         final User user = User.getById(userId);
         final Device device = Device.getById(deviceId);
 
-        if (!device.isPoweredOn())
-            return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
+        if (device == null || !device.hasUserAccess(user)) {
+            return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_ACCESS_DENIED");
+        }
 
-        return new ApiResponse(ApiResponseType.OK, NetworkMember.getMembershipsOfDevice(device));
+        if (!device.isPoweredOn()) {
+            return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
+        }
+            return new ApiResponse(ApiResponseType.OK, NetworkMember.getMembershipsOfDevice(device));
 
     }
 
     @ApiEndpoint("request")
     public ApiResponse request(@ApiParameter("user_id") final UUID userId,
-                          @ApiParameter("device") final UUID deviceId,
-                          @ApiParameter("id") final UUID id) {
+                          @ApiParameter("device_id") final UUID deviceId,
+                          @ApiParameter("network_id") final UUID id) {
         final User user = User.getById(userId);
         final Device device = Device.getById(deviceId);
         final Network network = Network.getById(id);
@@ -63,11 +64,19 @@ public class NetworkMemberEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("invitations")
     public ApiResponse invitations(@ApiParameter("user_id") final UUID user_id,
-                              @ApiParameter("device") final UUID device_id,
-                              @ApiParameter("id") final UUID id){
+                              @ApiParameter(value = "device_id", optional = true) final UUID device_id,
+                              @ApiParameter(value = "network_id", optional = true) final UUID id){
         final User user = User.getById(user_id);
         final Device device = Device.getById(device_id);
         final Network network = Network.getById(id);
+
+        if(device == null && !device.hasUserAccess(user) && network == null){
+            return new ApiResponse(ApiResponseType.BAD_REQUEST, "ACCESS_DENIED");
+
+
+
+        }
+
 
         if (device == null || !device.hasUserAccess(user)) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_ACCESS_DENIED");
@@ -77,15 +86,13 @@ public class NetworkMemberEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
         }
 
-        List<JsonObject> invitations = new ArrayList<>();
-
-        return new ApiResponse(ApiResponseType.OK, invitations);
+        return new ApiResponse(ApiResponseType.OK, NetworkInvitation.getInvitation(network, device));
     }
 
     @ApiEndpoint("leave")
     public ApiResponse leave(@ApiParameter("user_id")final UUID user_id,
-                        @ApiParameter("device")final UUID device_id,
-                        @ApiParameter("id")final UUID id) {
+                        @ApiParameter("device_id")final UUID device_id,
+                        @ApiParameter("network_id")final UUID id) {
         final User user = User.getById(user_id);
         final Device device = Device.getById(device_id);
         final Network network = Network.getById(id);
@@ -99,7 +106,7 @@ public class NetworkMemberEndpoints extends ApiEndpointCollection {
         }
 
         if(network.getOwner().equals(device)){
-            return new ApiResponse(ApiResponseType.UNAUTHORIZED, "CANNOT_LEAVE_OWN_NETWORK");
+            return new ApiResponse(ApiResponseType.UNAUTHORIZED, "CAN_NOT_LEAVE_OWN_NETWORK");
         }
         NetworkMember member = NetworkMember.getMember(network, device);
         if (member != null) {
