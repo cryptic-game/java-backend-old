@@ -84,6 +84,16 @@ public class NetworkMember extends TableModel implements JsonSerializable {
         return networkMembers;
     }
 
+    public static List<NetworkMember> getMembershipsOfNetwork(Network network) {
+        final Session sqlSession = sqlConnection.openSession();
+        final List<NetworkMember> networkMembers = sqlSession
+                .createQuery("select object (n) from NetworkMember as n where n.key.network = :network", NetworkMember.class)
+                .setParameter("network", network)
+                .getResultList();
+        sqlSession.close();
+        return networkMembers;
+    }
+
     /**
      * Returns the {@link MemberKey} of the {@link NetworkMember}
      *

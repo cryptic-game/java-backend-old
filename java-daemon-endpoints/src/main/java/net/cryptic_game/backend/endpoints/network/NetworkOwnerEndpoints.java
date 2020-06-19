@@ -23,11 +23,9 @@ public class NetworkOwnerEndpoints extends ApiEndpointCollection {
     @ApiEndpoint("owner")
     public ApiResponse getAll(@ApiParameter("device") final UUID deviceId) {
         Device device = Device.getById(deviceId);
-        if (device == null)
-            return new ApiResponse(ApiResponseType.NOT_FOUND, "DEVICE_NOT_FOUND");
+        if (device == null) return new ApiResponse(ApiResponseType.NOT_FOUND, "DEVICE_NOT_FOUND");
 
-        if (!device.isPoweredOn())
-            return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
+        if (!device.isPoweredOn()) return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
 
         List<Network> networks = Network.getNetworksOwnedByDevice(device);
 
@@ -39,40 +37,32 @@ public class NetworkOwnerEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("invite")
     public ApiResponse invite(@ApiParameter("user_id") UUID userId,
-                              @ApiParameter("network") final UUID networkId,
-                              @ApiParameter("device") final UUID deviceId) {
+                              @ApiParameter("network_id") final UUID networkId,
+                              @ApiParameter("device_id") final UUID deviceId) {
 
         Device device = Device.getById(deviceId);
-        if (device == null) {
-            return new ApiResponse(ApiResponseType.NOT_FOUND, "DEVICE_NOT_FOUND");
-        }
+        if (device == null) return new ApiResponse(ApiResponseType.NOT_FOUND, "DEVICE_NOT_FOUND");
 
-        if (!device.isPoweredOn()) {
-            return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
-        }
+        if (!device.isPoweredOn()) return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
 
         Network network = Network.getById(networkId);
         User user = User.getById(userId);
 
-        if (network == null || !device.hasUserAccess(user)) {
-            return new ApiResponse(ApiResponseType.NOT_FOUND, "NETWORK_NOT_FOUND");
-        }
+        if (network == null || !device.hasUserAccess(user)) return new ApiResponse(ApiResponseType.NOT_FOUND, "NETWORK_NOT_FOUND");
 
-        if (network.getOwner().equals(device)) {
-            return new ApiResponse(ApiResponseType.FORBIDDEN, "ALREADY_MEMBER_OF_NETWORK");
-        }
+        if (network.getOwner().equals(device)) return new ApiResponse(ApiResponseType.FORBIDDEN, "ALREADY_MEMBER_OF_NETWORK");
 
         NetworkMember member = NetworkMember.getMember(network, device);
-        if (member != null) {
-            return new ApiResponse(ApiResponseType.FORBIDDEN, "ALREADY_MEMBER_OF_NETWORK");
-        }
+        if (member != null) return new ApiResponse(ApiResponseType.FORBIDDEN, "ALREADY_MEMBER_OF_NETWORK");
 
-        List<NetworkInvitation> invitations = new ArrayList<>(); //TODO: get invitations for device
-        if (invitations.stream().anyMatch(inv -> inv.getNetwork().getId().equals(networkId))) {
+        List<NetworkInvitation> invitations = new ArrayList<>();
+        for (NetworkInvitation invitation : NetworkInvitation.getInvitationsOfNetwork(network)) {
+            invitations.add(invitation);
+        }
+        if (invitations.stream().anyMatch(inv -> inv.getNetwork().getId().equals(networkId)))
             return new ApiResponse(ApiResponseType.FORBIDDEN, "INVITATION_ALREADY_EXISTS");
-        }
 
-        Device inviter = null; //TODO: get device of user
+        Device inviter = NetworkInvitation.getInvitation(network, device).getDevice();
         NetworkInvitation networkInvitation = NetworkInvitation.createInvitation(network, device, inviter);
 
         return new ApiResponse(ApiResponseType.OK, networkInvitation.serialize());
@@ -81,36 +71,26 @@ public class NetworkOwnerEndpoints extends ApiEndpointCollection {
     @ApiEndpoint("accept")
     public ApiResponse accept(@ApiParameter("user") final UUID userId,
                               @ApiParameter("uuid") final UUID invitationId) {
-        NetworkInvitation invitation = null; //TODO: get invitation by id
+        NetworkInvitation invitation = NetworkInvitation.getById(invitationId);
         User user = User.getById(userId);
-        if (invitation == null) {
-            return new ApiResponse(ApiResponseType.NOT_FOUND, "INVITATION_NOT_FOUND");
-        }
+        if (invitation == null) return new ApiResponse(ApiResponseType.NOT_FOUND, "INVITATION_NOT_FOUND");
 
         if (!invitation.isRequest()) {
             Device device = invitation.getDevice();
 
-            if (!device.hasUserAccess(user)) {
-                return new ApiResponse(ApiResponseType.FORBIDDEN, "NO_PERMISSION");
-            }
+            if (!device.hasUserAccess(user)) return new ApiResponse(ApiResponseType.FORBIDDEN, "NO_PERMISSION");
 
-            if (!device.isPoweredOn()) {
-                return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
-            }
+            if (!device.isPoweredOn()) return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
         } else {
             Device owner = invitation.getNetwork().getOwner();
 
-            if (!owner.hasUserAccess(user)) {
-                return new ApiResponse(ApiResponseType.FORBIDDEN, "NO_PERMISSION");
-            }
+            if (!owner.hasUserAccess(user)) return new ApiResponse(ApiResponseType.FORBIDDEN, "NO_PERMISSION");
 
-            if (!owner.isPoweredOn()) {
-                return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
-            }
+            if (!owner.isPoweredOn()) return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
 
         }
 
-        // TODO: accept invitation
+        invitation.accept();
 
         return new ApiResponse(ApiResponseType.OK);
     }
@@ -118,43 +98,33 @@ public class NetworkOwnerEndpoints extends ApiEndpointCollection {
     @ApiEndpoint("deny")
     public ApiResponse deny(@ApiParameter("user") final UUID userId,
                             @ApiParameter("uuid") final UUID invitationId) {
-        NetworkInvitation invitation = null; //TODO: get invitation by id
+        NetworkInvitation invitation = NetworkInvitation.getById(invitationId);
         User user = User.getById(userId);
-        if (invitation == null) {
-            return new ApiResponse(ApiResponseType.NOT_FOUND, "INVITATION_NOT_FOUND");
-        }
+        if (invitation == null) return new ApiResponse(ApiResponseType.NOT_FOUND, "INVITATION_NOT_FOUND");
 
         if (!invitation.isRequest()) {
             Device device = invitation.getDevice();
 
-            if (!device.hasUserAccess(user)) {
-                return new ApiResponse(ApiResponseType.FORBIDDEN, "NO_PERMISSION");
-            }
+            if (!device.hasUserAccess(user)) return new ApiResponse(ApiResponseType.FORBIDDEN, "NO_PERMISSION");
 
-            if (!device.isPoweredOn()) {
-                return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
-            }
+            if (!device.isPoweredOn()) return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
         } else {
             Device owner = invitation.getNetwork().getOwner();
 
-            if (!owner.hasUserAccess(user)) {
-                return new ApiResponse(ApiResponseType.FORBIDDEN, "NO_PERMISSION");
-            }
+            if (!owner.hasUserAccess(user)) return new ApiResponse(ApiResponseType.FORBIDDEN, "NO_PERMISSION");
 
-            if (!owner.isPoweredOn()) {
-                return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
-            }
+            if (!owner.isPoweredOn()) return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
 
         }
 
-        // TODO: deny invitation
+        invitation.deny();
 
         return new ApiResponse(ApiResponseType.OK);
     }
 
     @ApiEndpoint("requests")
-    public ApiResponse requests(@ApiParameter("user") final UUID userId,
-                                @ApiParameter("uuid") final UUID networkId) {
+    public ApiResponse requests(@ApiParameter("user_id") final UUID userId,
+                                @ApiParameter("network_id") final UUID networkId) {
 
         Network network = Network.getById(networkId);
         User user = User.getById(userId);
@@ -167,47 +137,27 @@ public class NetworkOwnerEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
         }
 
-        List<NetworkInvitation> invitations = new ArrayList<>(); //TODO: get invitations for network/device (NetworkInvitation.getInvitation())
+        List<NetworkInvitation> invitations = new ArrayList<>(NetworkInvitation.getInvitationsOfNetwork(network));
 
-        List<JsonObject> json = new ArrayList<>();
-        invitations.forEach(inv -> json.add(inv.serialize()));
-
-        return new ApiResponse(ApiResponseType.OK, json);
-    }
-
-    @ApiEndpoint("invitations/network")
-    public ApiResponse invitationsNetwork(@ApiParameter("uuid") final UUID networkId) {
-        /*
-        TODO: mby remove this, because only difference to the requests endpoint:
-        requests endpoint: Invitation.getInvitationsOfNetwork(uuid, true)
-        this endpoint: Invitation.getInvitationsOfNetwork(uuid, false)
-        there is no more boolean required in the getInvitationsOfNetwork() getter
-         */
-        return new ApiResponse(ApiResponseType.NOT_IMPLEMENTED);
+        return new ApiResponse(ApiResponseType.OK, invitations);
     }
 
     @ApiEndpoint("kick")
-    public ApiResponse kick(@ApiParameter("userId") final UUID userId,
-                            @ApiParameter("uuid") final UUID networkId,
+    public ApiResponse kick(@ApiParameter("user_id") final UUID userId,
+                            @ApiParameter("network_id") final UUID networkId,
                             @ApiParameter("device") final UUID deviceId) {
 
         User user = User.getById(userId);
         Network network = Network.getById(networkId);
         Device device = Device.getById(deviceId);
 
-        if (network == null || !network.getOwner().hasUserAccess(user)) {
-            return new ApiResponse(ApiResponseType.FORBIDDEN, "NO_PERMISSION");
-        }
+        if (network == null || !network.getOwner().hasUserAccess(user)) return new ApiResponse(ApiResponseType.FORBIDDEN, "NO_PERMISSION");
 
-        if (!network.getOwner().isPoweredOn()) {
-            return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
-        }
+        if (!network.getOwner().isPoweredOn()) return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
 
-        if (network.getOwner().equals(device)) {
-            return new ApiResponse(ApiResponseType.FORBIDDEN, "CANNOT_KICK_OWNER");
-        }
+        if (network.getOwner().equals(device)) return new ApiResponse(ApiResponseType.FORBIDDEN, "CANNOT_KICK_OWNER");
 
-        for (NetworkMember member : new ArrayList<NetworkMember>()) { //TODO: Get member of network
+        for (NetworkMember member : NetworkMember.getMembershipsOfNetwork(network)) {
             if (member.getDevice().equals(device)) {
                 member.delete();
 
@@ -225,20 +175,16 @@ public class NetworkOwnerEndpoints extends ApiEndpointCollection {
         User user = User.getById(userId);
         Network network = Network.getById(networkId);
 
-        if (network == null || !network.getOwner().hasUserAccess(user)) {
-            return new ApiResponse(ApiResponseType.NOT_FOUND, "NETWORK_NOT_FOUND");
-        }
+        if (network == null || !network.getOwner().hasUserAccess(user)) return new ApiResponse(ApiResponseType.NOT_FOUND, "NETWORK_NOT_FOUND");
 
-        if (network.getOwner().isPoweredOn()) {
-            return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
-        }
+        if (network.getOwner().isPoweredOn()) return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
 
         network.delete();
 
-        List<NetworkMember> members = new ArrayList<>(); //TODO: Get member of network
+        List<NetworkMember> members = NetworkMember.getMembershipsOfNetwork(network);
         members.forEach(TableModel::delete);
 
-        List<NetworkInvitation> invitations = new ArrayList<>(); //TODO: get invitations for network
+        List<NetworkInvitation> invitations = NetworkInvitation.getInvitationsOfNetwork(network);
         invitations.forEach(TableModel::delete);
 
         return new ApiResponse(ApiResponseType.OK);
@@ -247,36 +193,27 @@ public class NetworkOwnerEndpoints extends ApiEndpointCollection {
     @ApiEndpoint("revoke")
     public ApiResponse revoke(@ApiParameter("user") final UUID userId,
                               @ApiParameter("uuid") final UUID invitationId) {
-        NetworkInvitation invitation = null; //TODO: get invitation by id
+        NetworkInvitation invitation = NetworkInvitation.getById(invitationId);
         User user = User.getById(userId);
-        if (invitation == null) {
-            return new ApiResponse(ApiResponseType.NOT_FOUND, "INVITATION_NOT_FOUND");
-        }
+        if (invitation == null) return new ApiResponse(ApiResponseType.NOT_FOUND, "INVITATION_NOT_FOUND");
 
         if (!invitation.isRequest()) {
             Device device = invitation.getDevice();
 
-            if (!device.hasUserAccess(user)) {
-                return new ApiResponse(ApiResponseType.FORBIDDEN, "NO_PERMISSION");
-            }
+            if (!device.hasUserAccess(user)) return new ApiResponse(ApiResponseType.FORBIDDEN, "NO_PERMISSION");
 
-            if (!device.isPoweredOn()) {
-                return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
-            }
+            if (!device.isPoweredOn()) return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
         } else {
             Device owner = invitation.getNetwork().getOwner();
 
-            if (!owner.hasUserAccess(user)) {
-                return new ApiResponse(ApiResponseType.FORBIDDEN, "NO_PERMISSION");
-            }
+            if (!owner.hasUserAccess(user)) return new ApiResponse(ApiResponseType.FORBIDDEN, "NO_PERMISSION");
 
-            if (!owner.isPoweredOn()) {
-                return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
-            }
+            if (!owner.isPoweredOn()) return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
 
         }
 
         // TODO: revoke invitation
+        // Create new one??
 
         return new ApiResponse(ApiResponseType.OK);
     }

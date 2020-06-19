@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class NetworkEndpoint extends ApiEndpointCollection {
+public class NetworkEndpoints extends ApiEndpointCollection {
 
-    public NetworkEndpoint() {
+    public NetworkEndpoints() {
         super("network");
     }
 
@@ -75,7 +75,6 @@ public class NetworkEndpoint extends ApiEndpointCollection {
                                @ApiParameter("network_id") final UUID network_id,
                                @ApiParameter("device") final UUID deviceId) {
 
-        // REDUNDANT?
         final Network network = Network.getById(network_id);
         final User user = User.getById(userId);
         final Device device = Device.getById(deviceId);
@@ -84,15 +83,10 @@ public class NetworkEndpoint extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "NETWORK_NOT_FOUND");
         }
 
-        //TODO get Member class
-        final List<Member> members = Member.getMembers(network_id);
-        List<JSONObject> jsonMembers = new ArrayList<>();
+        //TODO add or find Methode getMembers
+        final List<NetworkMember> members = NetworkMember.getMembershipsOfNetwork(network);
 
-        for (Member member : members) {
-            jsonMembers.add(member.serialize());
-        }
-
-        return new ApiResponse(ApiResponseType.OK, jsonMembers);
+        return new ApiResponse(ApiResponseType.OK, members);
 
     }
 

@@ -4,13 +4,16 @@ import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModel;
+import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.data.device.Device;
 import org.hibernate.Session;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Entity representing a network invitation entry in the database
@@ -19,7 +22,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "network_invitation")
-public class NetworkInvitation extends TableModel implements JsonSerializable {
+public class NetworkInvitation extends TableModelAutoId implements JsonSerializable {
 
     @EmbeddedId
     private InvitationKey key;
@@ -57,6 +60,12 @@ public class NetworkInvitation extends TableModel implements JsonSerializable {
         return networkInvitation;
     }
 
+    public void deleteInvitation(final NetworkInvitation invitation) {
+        final Session sqlSession = sqlConnection.openSession();
+        sqlSession.delete(invitation);
+        sqlSession.close();
+    }
+
     /**
      * Fetches the {@link NetworkInvitation} with the given key
      *
@@ -69,6 +78,27 @@ public class NetworkInvitation extends TableModel implements JsonSerializable {
         NetworkInvitation networkInvitation = sqlSession.find(NetworkInvitation.class, new NetworkInvitation.InvitationKey(network, device));
         sqlSession.close();
         return networkInvitation;
+    }
+
+    public static NetworkInvitation getById(final UUID id) {return getById(NetworkInvitation.class, id);}
+
+    public static List<NetworkInvitation> getInvitationsOfNetwork(final Network network) {
+        final Session sqlSession = sqlConnection.openSession();
+        final List<NetworkInvitation> networkInvitations = sqlSession
+                .createQuery("select object (n) from NetworkInvitation as n where n.key.network = :network", NetworkInvitation.class)
+                .setParameter("network", network)
+                .getResultList();
+        sqlSession.close();
+        return networkInvitations;
+    }
+
+    public void accept() {
+        final NetworkMember networkMember = NetworkMember.createMember(this.getNetwork(), this.getDevice());
+        this.deleteInvitation(this);
+    }
+
+    public void deny() {
+        this.deleteInvitation(this);
     }
 
     /**
