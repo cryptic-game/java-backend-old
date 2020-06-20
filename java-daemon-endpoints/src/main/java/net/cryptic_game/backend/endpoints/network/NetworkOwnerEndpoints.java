@@ -70,13 +70,21 @@ public class NetworkOwnerEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("accept")
     public ApiResponse accept(@ApiParameter("user") final UUID userId,
-                              @ApiParameter("uuid") final UUID invitationId) {
-        NetworkInvitation invitation = NetworkInvitation.getById(invitationId);
+                              @ApiParameter("network_id") final UUID networkId,
+                              @ApiParameter("device") final UUID deviceId) {
+
+        Network network = Network.getById(networkId);
+        Device device = Device.getById(deviceId);
+
+        if (network == null) return new ApiResponse(ApiResponseType.NOT_FOUND, "NETWORK_NOT_FOUND");
+
+        if (device == null) return new ApiResponse(ApiResponseType.NOT_FOUND, "DEVICE_NOT_FOUND");
+
+        NetworkInvitation invitation = NetworkInvitation.getInvitation(network, device);
         User user = User.getById(userId);
         if (invitation == null) return new ApiResponse(ApiResponseType.NOT_FOUND, "INVITATION_NOT_FOUND");
 
         if (!invitation.isRequest()) {
-            Device device = invitation.getDevice();
 
             if (!device.hasUserAccess(user)) return new ApiResponse(ApiResponseType.FORBIDDEN, "NO_PERMISSION");
 
@@ -97,13 +105,21 @@ public class NetworkOwnerEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("deny")
     public ApiResponse deny(@ApiParameter("user") final UUID userId,
-                            @ApiParameter("uuid") final UUID invitationId) {
-        NetworkInvitation invitation = NetworkInvitation.getById(invitationId);
+                            @ApiParameter("network_id") final UUID networkId,
+                            @ApiParameter("device") final UUID deviceId) {
+
+        Network network = Network.getById(networkId);
+        Device device = Device.getById(deviceId);
+
+        if (network == null) return new ApiResponse(ApiResponseType.NOT_FOUND, "NETWORK_NOT_FOUND");
+
+        if (device == null) return new ApiResponse(ApiResponseType.NOT_FOUND, "DEVICE_NOT_FOUND");
+
+        NetworkInvitation invitation = NetworkInvitation.getInvitation(network, device);
         User user = User.getById(userId);
         if (invitation == null) return new ApiResponse(ApiResponseType.NOT_FOUND, "INVITATION_NOT_FOUND");
 
         if (!invitation.isRequest()) {
-            Device device = invitation.getDevice();
 
             if (!device.hasUserAccess(user)) return new ApiResponse(ApiResponseType.FORBIDDEN, "NO_PERMISSION");
 
@@ -192,13 +208,21 @@ public class NetworkOwnerEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("revoke")
     public ApiResponse revoke(@ApiParameter("user") final UUID userId,
-                              @ApiParameter("uuid") final UUID invitationId) {
-        NetworkInvitation invitation = NetworkInvitation.getById(invitationId);
+                              @ApiParameter("device_id") final UUID deviceId,
+                              @ApiParameter("network_id") final UUID networkId) {
+
+        Network network = Network.getById(networkId);
+        Device device = Device.getById(deviceId);
+
+        if (network == null) return new ApiResponse(ApiResponseType.NOT_FOUND, "NETWORK_NOT_FOUND");
+
+        if (device == null) return new ApiResponse(ApiResponseType.NOT_FOUND, "DEVICE_NOT_FOUND");
+
+        NetworkInvitation invitation = NetworkInvitation.getInvitation(network, device);
         User user = User.getById(userId);
         if (invitation == null) return new ApiResponse(ApiResponseType.NOT_FOUND, "INVITATION_NOT_FOUND");
 
         if (!invitation.isRequest()) {
-            Device device = invitation.getDevice();
 
             if (!device.hasUserAccess(user)) return new ApiResponse(ApiResponseType.FORBIDDEN, "NO_PERMISSION");
 
@@ -212,8 +236,7 @@ public class NetworkOwnerEndpoints extends ApiEndpointCollection {
 
         }
 
-        // TODO: revoke invitation
-        // Create new one??
+        invitation.deleteInvitation();
 
         return new ApiResponse(ApiResponseType.OK);
     }

@@ -22,7 +22,7 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "network_invitation")
-public class NetworkInvitation extends TableModelAutoId implements JsonSerializable {
+public class NetworkInvitation extends TableModel implements JsonSerializable {
 
     @EmbeddedId
     private InvitationKey key;
@@ -60,9 +60,9 @@ public class NetworkInvitation extends TableModelAutoId implements JsonSerializa
         return networkInvitation;
     }
 
-    public void deleteInvitation(final NetworkInvitation invitation) {
+    public void deleteInvitation() {
         final Session sqlSession = sqlConnection.openSession();
-        sqlSession.delete(invitation);
+        sqlSession.delete(this);
         sqlSession.close();
     }
 
@@ -80,8 +80,6 @@ public class NetworkInvitation extends TableModelAutoId implements JsonSerializa
         return networkInvitation;
     }
 
-    public static NetworkInvitation getById(final UUID id) {return getById(NetworkInvitation.class, id);}
-
     public static List<NetworkInvitation> getInvitationsOfNetwork(final Network network) {
         final Session sqlSession = sqlConnection.openSession();
         final List<NetworkInvitation> networkInvitations = sqlSession
@@ -94,11 +92,11 @@ public class NetworkInvitation extends TableModelAutoId implements JsonSerializa
 
     public void accept() {
         final NetworkMember networkMember = NetworkMember.createMember(this.getNetwork(), this.getDevice());
-        this.deleteInvitation(this);
+        this.deleteInvitation();
     }
 
     public void deny() {
-        this.deleteInvitation(this);
+        this.deleteInvitation();
     }
 
     /**
