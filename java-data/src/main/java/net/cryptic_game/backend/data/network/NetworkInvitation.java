@@ -77,6 +77,21 @@ public class NetworkInvitation extends TableModel implements JsonSerializable {
         return networkInvitation;
     }
 
+    /**
+     * Fetches the {@link NetworkInvitation}s with the given device
+     *
+     * @param device {@link Device} of the {@link NetworkInvitation}
+     * @return A {@link List} with the fetched {@link NetworkInvitation}s
+     */
+    public static List<NetworkInvitation> getInvitationsOfDevice(final Device device) {
+        try (final Session sqlSession = sqlConnection.openSession()) {
+            return sqlSession
+                    .createQuery("select object (n) from NetworkInvitation as n where n.key.device = :device", NetworkInvitation.class)
+                    .setParameter("device", device)
+                    .getResultList();
+        }
+    }
+
     public static List<NetworkInvitation> getInvitationsOfNetwork(final Network network) {
         final Session sqlSession = sqlConnection.openSession();
         final List<NetworkInvitation> networkInvitations = sqlSession
@@ -212,7 +227,6 @@ public class NetworkInvitation extends TableModel implements JsonSerializable {
                 .add("inviter", this.getInviter() != null, () -> this.getInviter().getId())
                 .build();
     }
-
 
     /**
      * Key of the {@link NetworkInvitation} entity
