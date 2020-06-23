@@ -1,6 +1,11 @@
 package net.cryptic_game.backend.endpoints.network;
 
-import net.cryptic_game.backend.base.api.endpoint.*;
+import net.cryptic_game.backend.base.api.endpoint.ApiEndpoint;
+import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
+import net.cryptic_game.backend.base.api.endpoint.ApiParameter;
+import net.cryptic_game.backend.base.api.endpoint.ApiParameterSpecialType;
+import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
+import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
 import net.cryptic_game.backend.data.device.Device;
 import net.cryptic_game.backend.data.network.Network;
 import net.cryptic_game.backend.data.network.NetworkInvitation;
@@ -12,11 +17,11 @@ import java.util.UUID;
 public class NetworkMemberEndpoints extends ApiEndpointCollection {
 
     public NetworkMemberEndpoints() {
-        super("network_member");
+        super("network/member", "todo");
     }
 
     @ApiEndpoint("members")
-    public ApiResponse member(@ApiParameter("user_id") final UUID userId,
+    public ApiResponse member(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
                               @ApiParameter("device_id") final UUID deviceId) {
         final User user = User.getById(userId);
         final Device device = Device.getById(deviceId);
@@ -37,7 +42,7 @@ public class NetworkMemberEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("request")
-    public ApiResponse request(@ApiParameter("user_id") final UUID userId,
+    public ApiResponse request(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
                                @ApiParameter("device_id") final UUID deviceId,
                                @ApiParameter("network_id") final UUID networkId) {
         final User user = User.getById(userId);
@@ -76,7 +81,7 @@ public class NetworkMemberEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("invitations")
-    public ApiResponse invitations(@ApiParameter("user_id") final UUID userId,
+    public ApiResponse invitations(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
                                    @ApiParameter("device_id") final UUID deviceId) {
         final User user = User.getById(userId);
         final Device device = Device.getById(deviceId);
@@ -97,7 +102,7 @@ public class NetworkMemberEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("leave")
-    public ApiResponse leave(@ApiParameter("user_id") final UUID userId,
+    public ApiResponse leave(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
                              @ApiParameter("device_id") final UUID deviceId,
                              @ApiParameter("network_id") final UUID id) {
         final User user = User.getById(userId);

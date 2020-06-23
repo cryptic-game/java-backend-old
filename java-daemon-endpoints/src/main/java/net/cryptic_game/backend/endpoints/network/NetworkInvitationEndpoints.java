@@ -1,6 +1,11 @@
 package net.cryptic_game.backend.endpoints.network;
 
-import net.cryptic_game.backend.base.api.endpoint.*;
+import net.cryptic_game.backend.base.api.endpoint.ApiEndpoint;
+import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
+import net.cryptic_game.backend.base.api.endpoint.ApiParameter;
+import net.cryptic_game.backend.base.api.endpoint.ApiParameterSpecialType;
+import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
+import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
 import net.cryptic_game.backend.data.device.Device;
 import net.cryptic_game.backend.data.network.Network;
 import net.cryptic_game.backend.data.network.NetworkInvitation;
@@ -16,7 +21,7 @@ public class NetworkInvitationEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("accept")
-    public ApiResponse accept(@ApiParameter("user_id") final UUID userId,
+    public ApiResponse accept(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
                               @ApiParameter("network_id") final UUID networkId,
                               @ApiParameter("device_id") final UUID deviceId) {
         final User user = User.getById(userId);
@@ -60,7 +65,7 @@ public class NetworkInvitationEndpoints extends ApiEndpointCollection {
 
 
     @ApiEndpoint("deny")
-    public ApiResponse deny(@ApiParameter("user_id") final UUID userId,
+    public ApiResponse deny(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
                             @ApiParameter("network_id") final UUID networkId,
                             @ApiParameter("device_id") final UUID deviceId) {
         final User user = User.getById(userId);
@@ -103,7 +108,7 @@ public class NetworkInvitationEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("revoke")
-    public ApiResponse revoke(@ApiParameter("user_id") final UUID userId,
+    public ApiResponse revoke(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
                               @ApiParameter("network_id") final UUID networkId,
                               @ApiParameter("device_id") final UUID deviceId) {
         final User user = User.getById(userId);

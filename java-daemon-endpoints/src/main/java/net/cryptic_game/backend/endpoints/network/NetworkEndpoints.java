@@ -1,6 +1,11 @@
 package net.cryptic_game.backend.endpoints.network;
 
-import net.cryptic_game.backend.base.api.endpoint.*;
+import net.cryptic_game.backend.base.api.endpoint.ApiEndpoint;
+import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
+import net.cryptic_game.backend.base.api.endpoint.ApiParameter;
+import net.cryptic_game.backend.base.api.endpoint.ApiParameterSpecialType;
+import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
+import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
 import net.cryptic_game.backend.data.device.Device;
 import net.cryptic_game.backend.data.network.Network;
 import net.cryptic_game.backend.data.network.NetworkMember;
@@ -11,12 +16,11 @@ import java.util.UUID;
 public class NetworkEndpoints extends ApiEndpointCollection {
 
     public NetworkEndpoints() {
-        super("network");
+        super("network", "todo");
     }
 
     @ApiEndpoint("get")
-    public ApiResponse get(@ApiParameter("user_id") final UUID userId,
-                           @ApiParameter(value = "network_id", optional = true) final UUID network_id,
+    public ApiResponse get(@ApiParameter(value = "network_id", optional = true) final UUID network_id,
                            @ApiParameter(value = "name", optional = true) final String name) {
         if (network_id == null && name == null) {
             return new ApiResponse(ApiResponseType.BAD_REQUEST, "NO_NAME_OR_NETWORK_ID_PROVIDED");
@@ -36,7 +40,7 @@ public class NetworkEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("create")
-    public ApiResponse create(@ApiParameter("user_id") final UUID userId,
+    public ApiResponse create(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
                               @ApiParameter("device_id") final UUID deviceId,
                               @ApiParameter("name") final String name,
                               @ApiParameter("hidden") final Boolean hidden) {
@@ -80,7 +84,7 @@ public class NetworkEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("list")
-    public ApiResponse list(@ApiParameter("user_id") final UUID userId,
+    public ApiResponse list(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
                             @ApiParameter("device_id") final UUID deviceId) {
         final User user = User.getById(userId);
         final Device device = Device.getById(deviceId);
