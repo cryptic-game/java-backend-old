@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModel;
-import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.data.device.Device;
 import org.hibernate.Session;
 import org.hibernate.annotations.Type;
@@ -13,7 +12,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 /**
  * Entity representing a network invitation entry in the database
@@ -60,12 +58,6 @@ public class NetworkInvitation extends TableModel implements JsonSerializable {
         return networkInvitation;
     }
 
-    public void deleteInvitation() {
-        final Session sqlSession = sqlConnection.openSession();
-        sqlSession.delete(this);
-        sqlSession.close();
-    }
-
     /**
      * Fetches the {@link NetworkInvitation} with the given key
      *
@@ -88,15 +80,6 @@ public class NetworkInvitation extends TableModel implements JsonSerializable {
                 .getResultList();
         sqlSession.close();
         return networkInvitations;
-    }
-
-    public void accept() {
-        final NetworkMember networkMember = NetworkMember.createMember(this.getNetwork(), this.getDevice());
-        this.deleteInvitation();
-    }
-
-    public void deny() {
-        this.deleteInvitation();
     }
 
     /**
