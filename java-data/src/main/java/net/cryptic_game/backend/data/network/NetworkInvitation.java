@@ -10,6 +10,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -69,6 +70,16 @@ public class NetworkInvitation extends TableModel implements JsonSerializable {
         NetworkInvitation networkInvitation = sqlSession.find(NetworkInvitation.class, new NetworkInvitation.InvitationKey(network, device));
         sqlSession.close();
         return networkInvitation;
+    }
+
+    public static List<NetworkInvitation> getInvitationsOfNetwork(final Network network) {
+        final Session sqlSession = sqlConnection.openSession();
+        final List<NetworkInvitation> networkInvitations = sqlSession
+                .createQuery("select object (n) from NetworkInvitation as n where n.key.network = :network", NetworkInvitation.class)
+                .setParameter("network", network)
+                .getResultList();
+        sqlSession.close();
+        return networkInvitations;
     }
 
     /**
