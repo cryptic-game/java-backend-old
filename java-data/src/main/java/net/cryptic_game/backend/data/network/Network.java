@@ -124,7 +124,7 @@ public class Network extends TableModelAutoId implements JsonSerializable {
     public static List<Network> getPublicNetworks() {
         final Session sqlSession = sqlConnection.openSession();
         final List<Network> networks = sqlSession
-                .createQuery("select object (n) from Network as n where n._public = false", Network.class)
+                .createQuery("select object (n) from Network as n where n._public = true", Network.class)
                 .getResultList();
         sqlSession.close();
         return networks;

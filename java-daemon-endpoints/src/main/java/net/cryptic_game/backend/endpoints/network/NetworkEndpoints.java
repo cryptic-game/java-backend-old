@@ -43,7 +43,7 @@ public class NetworkEndpoints extends ApiEndpointCollection {
     public ApiResponse create(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
                               @ApiParameter("device_id") final UUID deviceId,
                               @ApiParameter("name") final String name,
-                              @ApiParameter("hidden") final Boolean hidden) {
+                              @ApiParameter("public") final boolean _public) {
         final User user = User.getById(userId);
         final Device device = Device.getById(deviceId);
 
@@ -67,14 +67,14 @@ public class NetworkEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.ALREADY_EXISTS, "NETWORK_NAME");
         }
 
-        final Network network = Network.createNetwork(name, device, hidden);
+        final Network network = Network.createNetwork(name, device, _public);
         NetworkMember.createMember(network, device);
         return new ApiResponse(ApiResponseType.OK, network);
     }
 
     @ApiEndpoint("members")
-    public ApiResponse members(@ApiParameter("network_id") final UUID network_id) {
-        final Network network = Network.getById(network_id);
+    public ApiResponse members(@ApiParameter("network_id") final UUID networkId) {
+        final Network network = Network.getById(networkId);
 
         if (network == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "NETWORK");
