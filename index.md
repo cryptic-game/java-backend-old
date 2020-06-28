@@ -7,8 +7,10 @@ This is the official rewrite of the Cryptic backend.
 
 ### Documentation
 
-- [Java Documentation](javadoc/latest/index.html)
-- [Further Information](https://wiki.cryptic-game.net/books/einf%C3%BChrungen/chapter/java)
+#### Versions
+- [v0.3.0-pre-alpha-rc1](javadoc/0.3.0-pre-alpha-rc1)
+
+[Further Information](https://wiki.cryptic-game.net/books/einf%C3%BChrungen/chapter/java)  
 
 ### Other
 
