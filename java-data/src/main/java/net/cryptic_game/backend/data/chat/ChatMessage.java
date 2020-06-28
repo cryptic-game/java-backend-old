@@ -46,9 +46,7 @@ public class ChatMessage extends TableModelAutoId implements JsonSerializable {
     @Column(name = "text", updatable = false, nullable = true)
     private String text;
 
-    /**
-     * User ID of the target, if it is not a whisper it is null and consequently targets everyone in the channel.
-     */
+    /* User ID of the target, if it is not a whisper it is null and consequently targets everyone in the channel. */
     @OneToOne
     @JoinColumn(name = "target", updatable = false, nullable = true)
     private User target;
