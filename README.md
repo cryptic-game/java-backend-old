@@ -7,7 +7,7 @@
         <img alt="Releases" src="https://img.shields.io/github/v/tag/cryptic-game/java-backend-dev?label=latest%20version&style=flat-square">
     </a>
     <a style="text-decoration:none" href="https://github.com/cryptic-game/java-backend-dev/actions">
-        <img alt="Build" src="https://img.shields.io/github/workflow/status/cryptic-game/java-backend-dev/Build?label=Build&style=flat-square">
+        <img alt="Build" src="https://img.shields.io/github/workflow/status/cryptic-game/java-backend-dev/Build/master?style=flat-square">
     </a>
     <a style="text-decoration:none" href="https://hub.docker.com/r/crypticcp/cryptic-backend">
         <img alt="DockerHub" src="https://img.shields.io/docker/pulls/crypticcp/cryptic-backend?style=flat-square">
@@ -52,6 +52,12 @@ Java-Daemon:
 ````sh
 ./gradlew :java-daemon:run
 ````
+
+After the first run you will find a `config.yaml` in the directories `java-server` and `java-daemon`, where you can customize your development environment. 
+
+### Documentation
+
+The Javadocs can be found in [github pages](https://cryptic-game.github.io/java-backend-dev/) and the protocol documentation in our [wiki](https://wiki.cryptic-game.net/books/einf%C3%BChrungen/chapter/java).
 
 ### Deployment
 
