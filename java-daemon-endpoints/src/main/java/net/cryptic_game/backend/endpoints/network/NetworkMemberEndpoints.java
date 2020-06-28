@@ -41,45 +41,6 @@ public class NetworkMemberEndpoints extends ApiEndpointCollection {
         return new ApiResponse(ApiResponseType.OK, NetworkMember.getMembershipsOfDevice(device));
     }
 
-    @ApiEndpoint("request")
-    public ApiResponse request(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
-                               @ApiParameter("device_id") final UUID deviceId,
-                               @ApiParameter("network_id") final UUID networkId) {
-        final User user = User.getById(userId);
-        final Device device = Device.getById(deviceId);
-        final Network network = Network.getById(networkId);
-
-        if (device == null) {
-            return new ApiResponse(ApiResponseType.NOT_FOUND, "DEVICE");
-        }
-
-        if (!device.hasUserAccess(user)) {
-            return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
-        }
-
-        if (!device.isPoweredOn()) {
-            return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
-        }
-
-        if (network == null) {
-            return new ApiResponse(ApiResponseType.FORBIDDEN, "NETWORK");
-        }
-
-        if (NetworkMember.getMember(network, device) != null) {
-            return new ApiResponse(ApiResponseType.FORBIDDEN, "ALREADY_MEMBER_OF_NETWORK");
-        }
-
-        final NetworkInvitation invitation = NetworkInvitation.getInvitation(network, device);
-        if (invitation == null) {
-            return new ApiResponse(ApiResponseType.OK, NetworkInvitation.createInvitation(network, device, null));
-        } else if (invitation.isRequest()) {
-            return new ApiResponse(ApiResponseType.FORBIDDEN, "REQUEST_ALREADY_EXISTS");
-        } else {
-            invitation.delete();
-            return new ApiResponse(ApiResponseType.OK, NetworkMember.createMember(invitation.getNetwork(), invitation.getDevice()));
-        }
-    }
-
     @ApiEndpoint("invitations")
     public ApiResponse invitations(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
                                    @ApiParameter("device_id") final UUID deviceId) {

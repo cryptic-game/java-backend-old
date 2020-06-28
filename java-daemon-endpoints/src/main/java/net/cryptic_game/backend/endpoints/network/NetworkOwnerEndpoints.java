@@ -42,41 +42,6 @@ public class NetworkOwnerEndpoints extends ApiEndpointCollection {
         return new ApiResponse(ApiResponseType.OK, Network.getNetworksOwnedByDevice(device));
     }
 
-    @ApiEndpoint("invite")
-    public ApiResponse invite(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
-                              @ApiParameter("network_id") final UUID networkId,
-                              @ApiParameter("device_id") final UUID deviceId) {
-        final User user = User.getById(userId);
-        final Network network = Network.getById(networkId);
-        final Device device = Device.getById(deviceId);
-
-        if (network == null) {
-            return new ApiResponse(ApiResponseType.NOT_FOUND, "NETWORK");
-        }
-
-        if (!network.getOwner().hasUserAccess(user)) {
-            return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
-        }
-
-        if (device == null) {
-            return new ApiResponse(ApiResponseType.NOT_FOUND, "DEVICE_NOT_FOUND");
-        }
-
-        if (NetworkMember.getMember(network, device) != null) {
-            return new ApiResponse(ApiResponseType.FORBIDDEN, "ALREADY_MEMBER_OF_NETWORK");
-        }
-
-        final NetworkInvitation invitation = NetworkInvitation.getInvitation(network, device);
-        if (invitation == null) {
-            return new ApiResponse(ApiResponseType.OK, NetworkInvitation.createInvitation(network, device, network.getOwner()));
-        } else if (invitation.isRequest()) {
-            invitation.delete();
-            return new ApiResponse(ApiResponseType.OK, NetworkMember.createMember(invitation.getNetwork(), invitation.getDevice()));
-        } else {
-            return new ApiResponse(ApiResponseType.FORBIDDEN, "INVITATION_ALREADY_EXISTS");
-        }
-    }
-
     @ApiEndpoint("invitations")
     public ApiResponse invitations(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
                                    @ApiParameter("network_id") final UUID networkId) {
