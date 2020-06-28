@@ -35,6 +35,6 @@ public class JsonApiServerCodec extends NettyCodec<JsonApiServerCodecInitializer
                               final Consumer<ApiClient> connectedCallback,
                               final Consumer<ApiClient> disconnectedCallback) {
         super(new JsonApiServerCodecInitializer(endpoints, clients, responseCallback, connectedCallback, disconnectedCallback));
-        this.initializer.setCodec(this);
+        this.getInitializer().setCodec(this);
     }
 }

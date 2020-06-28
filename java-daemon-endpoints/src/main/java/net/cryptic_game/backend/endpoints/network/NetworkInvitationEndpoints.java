@@ -14,7 +14,7 @@ import net.cryptic_game.backend.data.user.User;
 
 import java.util.UUID;
 
-public class NetworkInvitationEndpoints extends ApiEndpointCollection {
+public final class NetworkInvitationEndpoints extends ApiEndpointCollection {
 
     public NetworkInvitationEndpoints() {
         super("network/invitation", "todo");

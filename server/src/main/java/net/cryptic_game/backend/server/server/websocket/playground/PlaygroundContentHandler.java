@@ -28,7 +28,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 import java.util.regex.Pattern;
 
-public class PlaygroundContentHandler extends NettyChannelHandler<FullHttpRequest> {
+public final class PlaygroundContentHandler extends NettyChannelHandler<FullHttpRequest> {
 
     private static final String BASE_DIR = "www";
     private static final String LOCATION = File.separatorChar + "playground";
@@ -63,7 +63,7 @@ public class PlaygroundContentHandler extends NettyChannelHandler<FullHttpReques
     }
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+    public void exceptionCaught(final ChannelHandlerContext ctx, final Throwable cause) {
         super.exceptionCaught(ctx, cause);
         this.sendStatus(ctx, HttpResponseStatus.INTERNAL_SERVER_ERROR);
     }
@@ -77,7 +77,7 @@ public class PlaygroundContentHandler extends NettyChannelHandler<FullHttpReques
             return;
         }
 
-        try (final RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r")) {
+        try (RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r")) {
             final long length = randomAccessFile.length();
             final boolean keepAlive = HttpUtil.isKeepAlive(this.request);
 

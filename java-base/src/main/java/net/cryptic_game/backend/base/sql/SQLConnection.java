@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class SQLConnection {
+public final class SQLConnection {
 
     private final Configuration configuration;
     private SessionFactory factory;
@@ -35,10 +35,10 @@ public class SQLConnection {
     private Properties generateSettings(final SQLServer sqlServer, final boolean debug) {
         final Properties settings = new Properties();
         settings.put(Environment.DRIVER, sqlServer.getSqlServerType().getDriver());
-        settings.put(Environment.URL, "jdbc:" + sqlServer.getSqlServerType().getUrlPrefix() + ":" + sqlServer.getLocation() + "/" +
-                sqlServer.getDatabase() + (sqlServer.getLocation().startsWith("//") ?
-                "?autoReconnect=true&useUnicode=true&characterEncoding=utf-8" :
-                !sqlServer.getLocation().contains("tcp") ? ";AUTO_SERVER=TRUE" : ""));
+        settings.put(Environment.URL, "jdbc:" + sqlServer.getSqlServerType().getUrlPrefix() + ":" + sqlServer.getLocation() + "/"
+                + sqlServer.getDatabase() + (sqlServer.getLocation().startsWith("//")
+                ? "?autoReconnect=true&useUnicode=true&characterEncoding=utf-8"
+                : !sqlServer.getLocation().contains("tcp") ? ";AUTO_SERVER=TRUE" : ""));
         settings.put(Environment.AUTOCOMMIT, "false");
         settings.put(Environment.USER, sqlServer.getUsername());
         settings.put(Environment.PASS, sqlServer.getPassword());

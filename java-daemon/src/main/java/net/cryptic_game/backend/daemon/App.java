@@ -2,27 +2,23 @@ package net.cryptic_game.backend.daemon;
 
 import io.netty.channel.Channel;
 import io.netty.channel.unix.DomainSocketAddress;
+import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.AppBootstrap;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
-import net.cryptic_game.backend.base.netty.client.NettyClient;
 import net.cryptic_game.backend.base.netty.client.NettyClientHandler;
 import net.cryptic_game.backend.daemon.api.DaemonEndpointHandler;
 import net.cryptic_game.backend.daemon.client.daemon.DaemonClientCodec;
 import org.reflections.Reflections;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.net.InetSocketAddress;
 
+@Slf4j
 public final class App extends AppBootstrap {
 
-    private static final Logger LOG = LoggerFactory.getLogger(App.class);
     private static final DaemonConfig DAEMON_CONFIG = new DaemonConfig();
 
     private NettyClientHandler clientHandler;
-    private NettyClient client;
-
     private DaemonEndpointHandler daemonEndpointHandler;
     private DaemonBootstrapper daemonBootstrapper;
 
@@ -31,7 +27,7 @@ public final class App extends AppBootstrap {
     }
 
     public static void main(final String[] args) {
-        LOG.info("Bootstrapping Java Daemon...");
+        log.info("Bootstrapping Java Daemon...");
         new App(args);
     }
 
@@ -58,7 +54,7 @@ public final class App extends AppBootstrap {
         this.clientHandler = new NettyClientHandler();
 
         final boolean useUnixSocket = this.getConfig().isUseUnixSocket();
-        this.client = this.clientHandler.addClient("daemon",
+        this.clientHandler.addClient("daemon",
                 useUnixSocket ? new DomainSocketAddress(this.getConfig().getUnixSocketPath()) : new InetSocketAddress("localhost", 4012),
                 useUnixSocket, new DaemonClientCodec(this.daemonEndpointHandler), this::onConnect);
     }
@@ -69,7 +65,7 @@ public final class App extends AppBootstrap {
     }
 
     public void onConnect(final Channel channel) {
-        LOG.info("Sending request for registering on the server.");
+        log.info("Sending request for registering on the server.");
         this.daemonBootstrapper.sendRegisterPackage(channel);
     }
 }

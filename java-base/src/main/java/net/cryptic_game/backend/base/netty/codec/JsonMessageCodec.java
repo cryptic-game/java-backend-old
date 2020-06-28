@@ -7,7 +7,7 @@ import io.netty.handler.codec.MessageToMessageCodec;
 
 import java.util.List;
 
-public class JsonMessageCodec extends MessageToMessageCodec<String, JsonElement> {
+public final class JsonMessageCodec extends MessageToMessageCodec<String, JsonElement> {
 
     @Override
     protected void encode(final ChannelHandlerContext ctx, final JsonElement msg, final List<Object> out) throws Exception {

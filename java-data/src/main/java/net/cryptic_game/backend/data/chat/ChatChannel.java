@@ -1,6 +1,7 @@
 package net.cryptic_game.backend.data.chat;
 
 import com.google.gson.JsonObject;
+import lombok.Data;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
@@ -8,7 +9,6 @@ import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -18,6 +18,7 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "chat_channel")
+@Data
 public class ChatChannel extends TableModelAutoId implements JsonSerializable {
 
     @Column(name = "name", updatable = true, nullable = false)
@@ -57,49 +58,6 @@ public class ChatChannel extends TableModelAutoId implements JsonSerializable {
      */
     public static ChatChannel getById(final UUID id) {
         return getById(ChatChannel.class, id);
-    }
-
-    /**
-     * Returns the name of the {@link ChatChannel}.
-     *
-     * @return the name of the {@link ChatChannel}
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Sets a new name for the {@link ChatChannel}.
-     *
-     * @param name new Name to be set
-     */
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    /**
-     * Compares an {@link Object} if it equals the {@link ChatChannel}.
-     *
-     * @param o {@link Object} to compare
-     * @return True if the {@link Object} equals the {@link ChatChannel} | False if it does not
-     */
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        final ChatChannel channel = (ChatChannel) o;
-        return Objects.equals(getName(), channel.getName())
-                && Objects.equals(getId(), channel.getId());
-    }
-
-    /**
-     * Hashes the {@link ChatChannel} using {@link Objects} hash method.
-     *
-     * @return Hash of the {@link ChatChannel}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getName());
     }
 
     /**

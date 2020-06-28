@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class DaemonUserEndpoints extends ApiEndpointCollection {
+public final class DaemonUserEndpoints extends ApiEndpointCollection {
 
     public DaemonUserEndpoints() {
         super("user", "todo");

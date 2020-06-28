@@ -1,17 +1,18 @@
 package net.cryptic_game.backend.server.server.http;
 
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.api.ApiException;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointList;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class HttpEndpointHandler {
+@Slf4j
+public final class HttpEndpointHandler {
 
-    private static final Logger LOG = LoggerFactory.getLogger(HttpEndpointHandler.class);
+    @Getter
     private final ApiEndpointList apiList;
     private Set<ApiEndpointCollection> apiCollections;
 
@@ -25,7 +26,7 @@ public class HttpEndpointHandler {
             this.apiList.setCollections(this.apiCollections);
             this.apiCollections = null;
         } catch (ApiException e) {
-            LOG.error("Unable to register Api-Collections.", e);
+            log.error("Unable to register Api-Collections.", e);
         }
     }
 
@@ -34,12 +35,8 @@ public class HttpEndpointHandler {
             this.apiCollections.add(apiCollection);
             return apiCollection;
         } else {
-            LOG.error("It's too late to register any more endpoints.");
+            log.error("It's too late to register any more endpoints.");
             return null;
         }
-    }
-
-    public ApiEndpointList getApiList() {
-        return this.apiList;
     }
 }

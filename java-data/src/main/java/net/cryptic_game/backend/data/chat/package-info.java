@@ -1,5 +1,5 @@
 /**
- * Contains all database models associated with chat
+ * Contains all database models associated with chat.
  *
  * @since 0.3.0
  */

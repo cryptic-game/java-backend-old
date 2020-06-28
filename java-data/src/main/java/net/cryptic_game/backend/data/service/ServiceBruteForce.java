@@ -5,7 +5,6 @@ import lombok.Data;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
-import net.cryptic_game.backend.data.currency.CurrencyWallet;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
@@ -14,38 +13,39 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+
 /**
- * Entity representing a miner service entry in the database.
+ * Entity representing a brute force service entry in the database.
  *
  * @since 0.3.0
  */
 @Entity
-@Table(name = "service_miner")
+@Table(name = "service_brute_force")
 @Data
-public class ServiceMiner extends TableModelAutoId implements JsonSerializable {
+public class ServiceBruteForce extends TableModelAutoId implements JsonSerializable {
 
-    @ManyToOne
-    @JoinColumn(name = "wallet", nullable = true, updatable = true)
-    @Type(type = "uuid-char")
-    private CurrencyWallet wallet;
-
-    @Column(name = "started", updatable = false, nullable = true)
+    @Column(name = "started", updatable = false, nullable = true) // updatable?
     private int started;
 
-    @Column(name = "power", updatable = true, nullable = true)
-    private float power;
+    @ManyToOne
+    @JoinColumn(name = "target_service", updatable = true, nullable = true)
+    @Type(type = "uuid-char")
+    private Service targetService;
+
+    @Column(name = "progress", updatable = true, nullable = true)
+    private float progress;
 
     /**
-     * Generates a {@link ServiceMiner} containing all relevant {@link ServiceMiner} information.
+     * Generates a {@link JsonObject} containing all relevant {@link ServiceBruteForce} information.
      *
      * @return The generated {@link JsonObject}
      */
     @Override
     public JsonObject serialize() {
         return JsonBuilder.create("id", this.getId())
-                .add("wallet", this.getWallet().getId())
                 .add("started", this.getStarted())
-                .add("power", this.getPower())
+                .add("targetService", this.getTargetService().getId())
+                .add("progress", this.getProgress())
                 .build();
     }
 }

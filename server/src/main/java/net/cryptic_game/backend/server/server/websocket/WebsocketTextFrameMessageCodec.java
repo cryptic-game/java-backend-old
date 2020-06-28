@@ -14,7 +14,7 @@ public final class WebsocketTextFrameMessageCodec extends MessageToMessageCodec<
     }
 
     @Override
-    protected void decode(final ChannelHandlerContext ctx, final TextWebSocketFrame msg, List<Object> out) throws Exception {
+    protected void decode(final ChannelHandlerContext ctx, final TextWebSocketFrame msg, final List<Object> out) throws Exception {
         out.add(msg.text());
     }
 }

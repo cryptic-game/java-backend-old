@@ -15,7 +15,7 @@ import net.cryptic_game.backend.data.user.User;
 
 import java.util.UUID;
 
-public class NetworkOwnerEndpoints extends ApiEndpointCollection {
+public final class NetworkOwnerEndpoints extends ApiEndpointCollection {
 
     public NetworkOwnerEndpoints() {
         super("network/owner", "todo");

@@ -8,7 +8,7 @@ import net.cryptic_game.backend.base.netty.NettyCodecInitializer;
 
 import java.nio.charset.StandardCharsets;
 
-public class DaemonClientCodecInitializer extends NettyCodecInitializer<DaemonClientCodec> {
+public final class DaemonClientCodecInitializer extends NettyCodecInitializer<DaemonClientCodec> {
 
     @Override
     public void configure(final ChannelPipeline pipeline) {

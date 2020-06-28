@@ -2,20 +2,21 @@ package net.cryptic_game.backend.base.api.client;
 
 import com.google.gson.JsonObject;
 import io.netty.channel.Channel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
+@EqualsAndHashCode
 public final class ApiClient {
 
+    @Getter
     private final Channel channel;
-    private final Set<String> topics;
     private final Set<Object> objects;
 
     public ApiClient(final Channel channel) {
         this.channel = channel;
-        this.topics = new HashSet<>();
         this.objects = new HashSet<>();
     }
 
@@ -36,24 +37,5 @@ public final class ApiClient {
 
     public <T> void remove(final Class<? extends T> type) {
         this.objects.removeIf(object -> object.getClass().equals(type));
-    }
-
-    public Channel getChannel() {
-        return channel;
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ApiClient)) return false;
-        ApiClient apiClient = (ApiClient) o;
-        return getChannel().equals(apiClient.getChannel())
-                && topics.equals(apiClient.topics)
-                && objects.equals(apiClient.objects);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getChannel(), topics, objects);
     }
 }

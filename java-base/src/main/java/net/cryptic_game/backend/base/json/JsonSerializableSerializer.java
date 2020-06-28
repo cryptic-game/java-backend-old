@@ -6,7 +6,7 @@ import com.google.gson.JsonSerializer;
 
 import java.lang.reflect.Type;
 
-public class JsonSerializableSerializer implements JsonSerializer<JsonSerializable> {
+public final class JsonSerializableSerializer implements JsonSerializer<JsonSerializable> {
 
     @Override
     public JsonElement serialize(final JsonSerializable src, final Type typeOfSrc, final JsonSerializationContext context) {

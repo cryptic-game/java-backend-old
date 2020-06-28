@@ -1,10 +1,9 @@
 package net.cryptic_game.backend.base.json;
 
 import com.google.gson.JsonObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.EqualsAndHashCode;
+import lombok.extern.slf4j.Slf4j;
 
-import java.util.Objects;
 import java.util.concurrent.Callable;
 
 /**
@@ -30,9 +29,9 @@ import java.util.concurrent.Callable;
  * @see JsonSerializable
  * @see JsonObject
  */
-public class JsonBuilder implements JsonSerializable {
-
-    private static final Logger log = LoggerFactory.getLogger(JsonBuilder.class);
+@Slf4j
+@EqualsAndHashCode
+public final class JsonBuilder implements JsonSerializable {
 
     private final JsonObject json;
 
@@ -161,18 +160,5 @@ public class JsonBuilder implements JsonSerializable {
     @Override
     public String toString() {
         return this.build().toString();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof JsonBuilder)) return false;
-        JsonBuilder that = (JsonBuilder) o;
-        return this.json.equals(that.json);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.json);
     }
 }

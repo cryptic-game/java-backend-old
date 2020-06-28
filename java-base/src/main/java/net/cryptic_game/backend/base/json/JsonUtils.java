@@ -5,10 +5,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.json.types.InstantTypeAdapter;
 import net.cryptic_game.backend.base.json.types.ZonedDateTimeAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -17,11 +17,11 @@ import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.function.Function;
 
+@Slf4j
 public final class JsonUtils {
 
-    private static final Logger log = LoggerFactory.getLogger(JsonUtils.class);
-
-    private static final Gson gson = new GsonBuilder()
+    @Getter
+    private static final Gson GSON = new GsonBuilder()
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
             .serializeNulls()
             .serializeSpecialFloatingPointValues()
@@ -40,7 +40,7 @@ public final class JsonUtils {
             log.warn("Use \"{}\" instant of \"{}\".", ZonedDateTime.class.getName(), LocalDateTime.class.getName());
         }
         try {
-            return gson.fromJson(jsonElement, type);
+            return GSON.fromJson(jsonElement, type);
         } catch (Exception e) {
             throw new JsonTypeMappingException("Error while converting a \"" + JsonElement.class.getName() + "\" into a \"" + type.getName() + "\".", e);
         }
@@ -54,7 +54,7 @@ public final class JsonUtils {
             log.warn("Use \"{}\" instant of \"{}\".", ZonedDateTime.class.getName(), LocalDateTime.class.getName());
         }
         try {
-            return gson.toJsonTree(object);
+            return GSON.toJsonTree(object);
         } catch (Exception e) {
             throw new JsonTypeMappingException("Error while converting a \"" + object.getClass().getName() + "\" into a \"" + JsonElement.class.getName() + "\".", e);
         }
@@ -73,9 +73,5 @@ public final class JsonUtils {
     public static <C extends Collection<T>, T> C fromArray(final JsonArray array, final C collection, final Function<JsonElement, T> function) {
         array.forEach(item -> collection.add(function.apply(item)));
         return collection;
-    }
-
-    public static Gson getGson() {
-        return gson;
     }
 }

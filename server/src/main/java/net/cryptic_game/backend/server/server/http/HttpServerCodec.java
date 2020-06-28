@@ -7,6 +7,6 @@ public class HttpServerCodec extends NettyCodec<HttpServerCodecInitializer> {
 
     public HttpServerCodec(final HttpEndpointHandler httpEndpointHandler) {
         super(new HttpServerCodecInitializer(), new JsonApiServerCodec(httpEndpointHandler.getApiList().getEndpoints(), httpEndpointHandler.getApiList().getClients()));
-        this.initializer.setCodec(this);
+        this.getInitializer().setCodec(this);
     }
 }

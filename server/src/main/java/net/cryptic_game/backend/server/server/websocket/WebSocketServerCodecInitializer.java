@@ -10,7 +10,7 @@ import net.cryptic_game.backend.base.netty.NettyCodecInitializer;
 import net.cryptic_game.backend.server.App;
 import net.cryptic_game.backend.server.server.websocket.playground.PlaygroundContentHandler;
 
-public class WebSocketServerCodecInitializer extends NettyCodecInitializer<WebSocketServerCodec> {
+public final class WebSocketServerCodecInitializer extends NettyCodecInitializer<WebSocketServerCodec> {
 
     private final ApiEndpointList endpointList;
 
@@ -19,7 +19,7 @@ public class WebSocketServerCodecInitializer extends NettyCodecInitializer<WebSo
     }
 
     @Override
-    public void configure(ChannelPipeline pipeline) {
+    public void configure(final ChannelPipeline pipeline) {
         pipeline.addLast("http-server-codec", new HttpServerCodec());
         pipeline.addLast("chunked-write-handler", new ChunkedWriteHandler());
         pipeline.addLast("http-object-aggregator", new HttpObjectAggregator(65536));

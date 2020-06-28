@@ -2,6 +2,8 @@ package net.cryptic_game.backend.server;
 
 import com.google.gson.JsonObject;
 import io.netty.channel.unix.DomainSocketAddress;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.AppBootstrap;
 import net.cryptic_game.backend.base.api.client.ApiClient;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointData;
@@ -18,17 +20,16 @@ import net.cryptic_game.backend.server.server.websocket.WebSocketServerCodec;
 import net.cryptic_game.backend.server.server.websocket.endpoints.WebSocketDaemonEndpoints;
 import net.cryptic_game.backend.server.server.websocket.endpoints.WebSocketInfoEndpoints;
 import net.cryptic_game.backend.server.server.websocket.endpoints.WebSocketUserEndpoints;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.net.InetSocketAddress;
 
+@Slf4j
 public final class App extends AppBootstrap {
 
-    private static final Logger LOG = LoggerFactory.getLogger(App.class);
     private static final ServerConfig SERVER_CONFIG = new ServerConfig();
 
     private DaemonEndpointHandler daemonEndpointHandler;
+    @Getter
     private WebSocketEndpointHandler webSocketEndpointHandler;
     private HttpEndpointHandler httpEndpointHandler;
 
@@ -40,7 +41,7 @@ public final class App extends AppBootstrap {
     }
 
     public static void main(final String[] args) {
-        LOG.info("Bootstrapping Java Server...");
+        log.info("Bootstrapping Java Server...");
         new App(args);
     }
 
@@ -61,7 +62,7 @@ public final class App extends AppBootstrap {
                             JsonObject.class)
             );
         } catch (NoSuchMethodException e) {
-            LOG.error("Unable to load method send from " + WebSocketDaemonEndpoints.class.getName() + ".", e);
+            log.error("Unable to load method send from " + WebSocketDaemonEndpoints.class.getName() + ".", e);
         }
         this.serverHandler = new NettyServerHandler();
     }
@@ -99,9 +100,5 @@ public final class App extends AppBootstrap {
     @Override
     protected void start() {
         this.serverHandler.start();
-    }
-
-    public WebSocketEndpointHandler getWebSocketEndpointHandler() {
-        return webSocketEndpointHandler;
     }
 }

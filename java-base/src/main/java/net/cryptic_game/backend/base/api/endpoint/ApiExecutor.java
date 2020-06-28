@@ -100,6 +100,8 @@ public final class ApiExecutor {
                             throw new ApiException("Invalid format of parameter \"" + parameter.getName() + "\".", e);
                         }
                     }
+                default:
+                    throw new IllegalArgumentException(parameter.getSpecial().toString());
             }
             current++;
         }

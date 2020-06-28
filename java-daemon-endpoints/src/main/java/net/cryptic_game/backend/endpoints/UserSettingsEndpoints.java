@@ -11,16 +11,16 @@ import net.cryptic_game.backend.data.user.UserSetting;
 
 import java.util.UUID;
 
-public class UserSettingsEndpoints extends ApiEndpointCollection {
+public final class UserSettingsEndpoints extends ApiEndpointCollection {
 
     public UserSettingsEndpoints() {
         super("settings", "Save, update or delete user settings");
     }
 
     @ApiEndpoint(value = "save", description = "Save or override a user setting")
-    public ApiResponse save(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) UUID userId,
-                            @ApiParameter("key") String key,
-                            @ApiParameter("value") String value) {
+    public ApiResponse save(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
+                            @ApiParameter("key") final String key,
+                            @ApiParameter("value") final String value) {
         User user = User.getById(userId);
 
         if (key.length() > 256) {
@@ -42,8 +42,8 @@ public class UserSettingsEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint(value = "get", description = "Get a user setting")
-    public ApiResponse get(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) UUID userId,
-                           @ApiParameter("key") String key) {
+    public ApiResponse get(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
+                           @ApiParameter("key") final String key) {
         User user = User.getById(userId);
 
         if (key.length() > 256) {
@@ -58,8 +58,8 @@ public class UserSettingsEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint(value = "delete", description = "Delete a user setting")
-    public ApiResponse delete(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) UUID userId,
-                              @ApiParameter("key") String key) {
+    public ApiResponse delete(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
+                              @ApiParameter("key") final String key) {
         User user = User.getById(userId);
 
         if (key.length() > 256) {
@@ -75,7 +75,7 @@ public class UserSettingsEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint(value = "all", description = "Get all user settings")
-    public ApiResponse all(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) UUID userId) {
+    public ApiResponse all(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId) {
         User user = User.getById(userId);
         return new ApiResponse(ApiResponseType.OK, UserSetting.getSettings(user));
     }

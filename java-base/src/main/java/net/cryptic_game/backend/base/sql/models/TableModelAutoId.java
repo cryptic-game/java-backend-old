@@ -1,5 +1,6 @@
 package net.cryptic_game.backend.base.sql.models;
 
+import lombok.Data;
 import org.hibernate.Session;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
@@ -11,6 +12,7 @@ import javax.persistence.MappedSuperclass;
 import java.util.UUID;
 
 @MappedSuperclass
+@Data
 public abstract class TableModelAutoId extends TableModel {
 
     @Id
@@ -21,25 +23,17 @@ public abstract class TableModelAutoId extends TableModel {
     private UUID id;
 
     /**
-     * Fetches the entity with the given id
+     * Fetches the entity with the given id.
      *
      * @param id          The id of the entity
      * @param entityClass Model class of the entity
      * @param <T>         Model type of the entity
      * @return The instance of the fetched entity if it exists | null if the entity does not exist
      */
-    public static <T extends TableModelAutoId> T getById(Class<T> entityClass, final UUID id) {
-        final Session session = sqlConnection.openSession();
+    public static <T extends TableModelAutoId> T getById(final Class<T> entityClass, final UUID id) {
+        final Session session = SQL_CONNECTION.openSession();
         final T entity = session.find(entityClass, id);
         session.close();
         return entity;
-    }
-
-    public UUID getId() {
-        return this.id;
-    }
-
-    public void setId(final UUID id) {
-        this.id = id;
     }
 }

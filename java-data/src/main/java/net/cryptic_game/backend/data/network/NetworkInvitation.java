@@ -1,6 +1,9 @@
 package net.cryptic_game.backend.data.network;
 
 import com.google.gson.JsonObject;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModel;
@@ -16,15 +19,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
 
 /**
- * Entity representing a network invitation entry in the database
+ * Entity representing a network invitation entry in the database.
  *
  * @since 0.3.0
  */
 @Entity
 @Table(name = "network_invitation")
+@Data
 public class NetworkInvitation extends TableModel implements JsonSerializable {
 
     @EmbeddedId
@@ -36,13 +39,7 @@ public class NetworkInvitation extends TableModel implements JsonSerializable {
     private Device inviter;
 
     /**
-     * Empty constructor to create a new {@link NetworkInvitation}
-     */
-    public NetworkInvitation() {
-    }
-
-    /**
-     * Creates a new {@link NetworkInvitation}
+     * Creates a new {@link NetworkInvitation}.
      *
      * @param network {@link Network} of the {@link NetworkInvitation}
      * @param device  {@link Device} of the {@link NetworkInvitation}
@@ -55,7 +52,7 @@ public class NetworkInvitation extends TableModel implements JsonSerializable {
         networkInvitation.setDevice(device);
         networkInvitation.setInviter(inviter);
 
-        final Session session = sqlConnection.openSession();
+        final Session session = SQL_CONNECTION.openSession();
         session.beginTransaction();
         session.save(networkInvitation);
         session.getTransaction().commit();
@@ -64,27 +61,27 @@ public class NetworkInvitation extends TableModel implements JsonSerializable {
     }
 
     /**
-     * Fetches the {@link NetworkInvitation} with the given key
+     * Fetches the {@link NetworkInvitation} with the given key.
      *
      * @param network {@link Network} of the {@link NetworkInvitation}
      * @param device  {@link Device} of the {@link NetworkInvitation}
      * @return The instance of the fetched {@link NetworkInvitation} if it exists | null if the entity does not exist
      */
     public static NetworkInvitation getInvitation(final Network network, final Device device) {
-        final Session sqlSession = sqlConnection.openSession();
+        final Session sqlSession = SQL_CONNECTION.openSession();
         NetworkInvitation networkInvitation = sqlSession.find(NetworkInvitation.class, new NetworkInvitation.InvitationKey(network, device));
         sqlSession.close();
         return networkInvitation;
     }
 
     /**
-     * Fetches the {@link NetworkInvitation}s with the given device
+     * Fetches the {@link NetworkInvitation}s with the given device.
      *
      * @param device {@link Device} of the {@link NetworkInvitation}
      * @return A {@link List} with the fetched {@link NetworkInvitation}s
      */
     public static List<NetworkInvitation> getInvitationsOfDevice(final Device device) {
-        try (final Session sqlSession = sqlConnection.openSession()) {
+        try (Session sqlSession = SQL_CONNECTION.openSession()) {
             return sqlSession
                     .createQuery("select object (n) from NetworkInvitation as n where n.key.device = :device", NetworkInvitation.class)
                     .setParameter("device", device)
@@ -93,7 +90,7 @@ public class NetworkInvitation extends TableModel implements JsonSerializable {
     }
 
     public static List<NetworkInvitation> getInvitationsOfNetwork(final Network network) {
-        final Session sqlSession = sqlConnection.openSession();
+        final Session sqlSession = SQL_CONNECTION.openSession();
         final List<NetworkInvitation> networkInvitations = sqlSession
                 .createQuery("select object (n) from NetworkInvitation as n where n.key.network = :network", NetworkInvitation.class)
                 .setParameter("network", network)
@@ -103,25 +100,7 @@ public class NetworkInvitation extends TableModel implements JsonSerializable {
     }
 
     /**
-     * Returns the {@link InvitationKey} of the {@link NetworkInvitation}
-     *
-     * @return {@link InvitationKey} of the {@link NetworkInvitation}
-     */
-    public InvitationKey getKey() {
-        return this.key;
-    }
-
-    /**
-     * Sets a new {@link InvitationKey} of the {@link NetworkInvitation}
-     *
-     * @param key New {@link InvitationKey} to be set
-     */
-    public void setKey(final InvitationKey key) {
-        this.key = key;
-    }
-
-    /**
-     * Returns the {@link Network} of the {@link NetworkInvitation}
+     * Returns the {@link Network} of the {@link NetworkInvitation}.
      *
      * @return {@link Network} of the {@link NetworkInvitation}
      */
@@ -131,7 +110,7 @@ public class NetworkInvitation extends TableModel implements JsonSerializable {
     }
 
     /**
-     * Sets a new {@link Network} of the {@link NetworkInvitation}
+     * Sets a new {@link Network} of the {@link NetworkInvitation}.
      *
      * @param network New {@link Network} to be set
      */
@@ -141,7 +120,7 @@ public class NetworkInvitation extends TableModel implements JsonSerializable {
     }
 
     /**
-     * Returns the {@link Device} of the {@link NetworkInvitation}
+     * Returns the {@link Device} of the {@link NetworkInvitation}.
      *
      * @return {@link Device} of the {@link NetworkInvitation}
      */
@@ -151,7 +130,7 @@ public class NetworkInvitation extends TableModel implements JsonSerializable {
     }
 
     /**
-     * Sets a new {@link Device} of the {@link NetworkInvitation}
+     * Sets a new {@link Device} of the {@link NetworkInvitation}.
      *
      * @param device New {@link Device} to be set
      */
@@ -161,7 +140,7 @@ public class NetworkInvitation extends TableModel implements JsonSerializable {
     }
 
     /**
-     * Returns whether the {@link NetworkInvitation} is a request
+     * Returns whether the {@link NetworkInvitation} is a request.
      *
      * @return true if the {@link NetworkInvitation} is a request | false if it is not
      */
@@ -170,52 +149,7 @@ public class NetworkInvitation extends TableModel implements JsonSerializable {
     }
 
     /**
-     * Returns the inviter {@link Device} of the {@link NetworkInvitation}
-     *
-     * @return inviter {@link Device} of the {@link NetworkInvitation}
-     */
-    public Device getInviter() {
-        return this.inviter;
-    }
-
-    /**
-     * Sets a new inviter {@link Device} of the {@link NetworkInvitation}
-     *
-     * @param inviter New inviter {@link Device} to be set
-     */
-    public void setInviter(final Device inviter) {
-        this.inviter = inviter;
-    }
-
-    /**
-     * Compares an {@link Object} if it equals the {@link NetworkInvitation}
-     *
-     * @param o {@link Object} to compare
-     * @return True if the {@link Object} equals the {@link NetworkInvitation} | False if it does not
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || this.getClass() != o.getClass()) return false;
-        NetworkInvitation that = (NetworkInvitation) o;
-        return this.isRequest() == that.isRequest() &&
-                Objects.equals(this.getNetwork(), that.getNetwork()) &&
-                Objects.equals(this.getDevice(), that.getDevice()) &&
-                Objects.equals(this.getInviter(), that.getInviter());
-    }
-
-    /**
-     * Hashes the {@link NetworkInvitation} using {@link Objects} hash method
-     *
-     * @return Hash of the {@link NetworkInvitation}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.getNetwork(), this.getDevice(), this.isRequest(), this.getInviter());
-    }
-
-    /**
-     * Generates a {@link JsonObject} containing all relevant {@link NetworkInvitation} information
+     * Generates a {@link JsonObject} containing all relevant {@link NetworkInvitation} information.
      *
      * @return The generated {@link JsonObject}
      */
@@ -229,10 +163,13 @@ public class NetworkInvitation extends TableModel implements JsonSerializable {
     }
 
     /**
-     * Key of the {@link NetworkInvitation} entity
+     * Key of the {@link NetworkInvitation} entity.
      */
     @SuppressWarnings("JpaDataSourceORMInspection")
     @Embeddable
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class InvitationKey implements Serializable {
 
         @ManyToOne
@@ -244,47 +181,5 @@ public class NetworkInvitation extends TableModel implements JsonSerializable {
         @JoinColumn(name = "device_id", nullable = false, updatable = false)
         @Type(type = "uuid-char")
         private Device device;
-
-        /**
-         * Empty constructor to create a new {@link InvitationKey}
-         */
-        public InvitationKey() {
-        }
-
-        /**
-         * Creates a new {@link InvitationKey}
-         *
-         * @param network {@link Network} of the {@link InvitationKey}
-         * @param device  {@link Device} of the {@link InvitationKey}
-         */
-        public InvitationKey(final Network network, final Device device) {
-            this.network = network;
-            this.device = device;
-        }
-
-        /**
-         * Compares an {@link Object} if it equals the {@link InvitationKey}
-         *
-         * @param o {@link Object} to compare
-         * @return True if the {@link Object} equals the {@link InvitationKey} | False if it does not
-         */
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || this.getClass() != o.getClass()) return false;
-            NetworkInvitation.InvitationKey invitationKey = (NetworkInvitation.InvitationKey) o;
-            return Objects.equals(this.network, invitationKey.network) &&
-                    Objects.equals(this.device, invitationKey.device);
-        }
-
-        /**
-         * Hashes the {@link InvitationKey} using {@link Objects} hash method
-         *
-         * @return Hash of the {@link InvitationKey}
-         */
-        @Override
-        public int hashCode() {
-            return Objects.hash(this.network, this.device);
-        }
     }
 }

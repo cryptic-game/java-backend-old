@@ -69,10 +69,13 @@ public final class JsonApiServerContentHandler extends NettyChannelHandler<JsonO
         channelRead0(ctx, msg, null);
     }
 
-    protected void channelRead0(final ChannelHandlerContext ctx, final JsonObject request, ApiResponse apiResponse) {
+    @SuppressWarnings("checkstyle:FinalParameters")
+    protected void channelRead0(final ChannelHandlerContext ctx, final JsonObject request, final ApiResponse apiResponse) {
         final String tag = JsonUtils.fromJson(request.get("tag"), String.class);
 
-        if (apiResponse == null) {
+        ApiResponse response = apiResponse;
+
+        if (response == null) {
             ApiClient client = null;
             for (final ApiClient currentClient : this.clients)
                 if (currentClient.getChannel().equals(ctx.channel())) client = currentClient;
@@ -82,26 +85,23 @@ public final class JsonApiServerContentHandler extends NettyChannelHandler<JsonO
                 return;
             }
 
-            if (tag == null) apiResponse = new ApiResponse(ApiResponseType.BAD_REQUEST, "MISSING_TAG");
-            else apiResponse = ApiExecutor.execute(this.endpoints, request, client, tag);
+            if (tag == null) response = new ApiResponse(ApiResponseType.BAD_REQUEST, "MISSING_TAG");
+            else response = ApiExecutor.execute(this.endpoints, request, client, tag);
         }
 
-        if (apiResponse != null) {
+        // TODO Write this in a Timeout with the TAG and the DAEMON and some other information,
+        //      to handle the incoming response from the daemon.
 
-            // TODO: Write this in a Timeout with the TAG and the DAEMON and some other information,
-            //       to handle the incoming response from the daemon.
-
-            ctx.write(JsonBuilder.create("tag", tag == null ? "00000000-0000-0000-0000-000000000000" : tag)
-                    .add("info", JsonBuilder.create(apiResponse.getType().serialize(true))
-                            .add("message", apiResponse.hasMessage(), apiResponse::getMessage))
-                    .add("response", true)
-                    .add("data", apiResponse.hasData(), apiResponse::getData)
-                    .build());
-        }
+        ctx.write(JsonBuilder.create("tag", tag == null ? "00000000-0000-0000-0000-000000000000" : tag)
+                .add("info", JsonBuilder.create(response.getType().serialize(true))
+                        .add("message", response.hasMessage(), response::getMessage))
+                .add("response", true)
+                .add("data", response.hasData(), response::getData)
+                .build());
     }
 
     @Override
-    public void exceptionCaught(final ChannelHandlerContext ctx, final Throwable cause) throws Exception {
+    public void exceptionCaught(final ChannelHandlerContext ctx, final Throwable cause) {
         if (cause.getCause() instanceof JsonSyntaxException) {
             this.channelRead0(ctx, new JsonObject(), new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_JSON"));
         } else {

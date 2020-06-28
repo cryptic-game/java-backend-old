@@ -1,6 +1,7 @@
 package net.cryptic_game.backend.data.device;
 
 import com.google.gson.JsonObject;
+import lombok.Data;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
@@ -13,7 +14,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -23,6 +23,7 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "device_device")
+@Data
 public final class Device extends TableModelAutoId implements JsonSerializable {
 
     @Column(name = "name", updatable = true, nullable = false)
@@ -37,12 +38,6 @@ public final class Device extends TableModelAutoId implements JsonSerializable {
     private boolean poweredOn;
 
     /**
-     * Empty constructor to create a new {@link Device}.
-     */
-    public Device() {
-    }
-
-    /**
      * Creates a new {@link Device}.
      *
      * @param name      Name of the {@link Device}
@@ -51,7 +46,7 @@ public final class Device extends TableModelAutoId implements JsonSerializable {
      * @return The instance of the created {@link Device}
      */
     public static Device createDevice(final String name, final User owner, final boolean poweredOn) {
-        final Session sqlSession = sqlConnection.openSession();
+        final Session sqlSession = SQL_CONNECTION.openSession();
 
         final Device device = new Device();
         device.setName(name);
@@ -75,60 +70,6 @@ public final class Device extends TableModelAutoId implements JsonSerializable {
         return getById(Device.class, id);
     }
 
-    /**
-     * Returns the name of the {@link Device}.
-     *
-     * @return Name of the {@link Device}
-     */
-    public String getName() {
-        return this.name;
-    }
-
-    /**
-     * Sets a new name of the {@link Device}.
-     *
-     * @param name New name to be set
-     */
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    /**
-     * Returns the owner of the {@link Device}.
-     *
-     * @return Owner of the {@link Device}
-     */
-    public User getOwner() {
-        return this.owner;
-    }
-
-    /**
-     * Sets a new owner of the {@link Device}.
-     *
-     * @param owner New owner to be set
-     */
-    public void setOwner(final User owner) {
-        this.owner = owner;
-    }
-
-    /**
-     * Returns the power state of the {@link Device}.
-     *
-     * @return Power state of the {@link Device}
-     */
-    public boolean isPoweredOn() {
-        return this.poweredOn;
-    }
-
-    /**
-     * Sets a new power state of the {@link Device}.
-     *
-     * @param poweredOn New power state to be set
-     */
-    public void setPoweredOn(final boolean poweredOn) {
-        this.poweredOn = poweredOn;
-    }
-
     public boolean hasUserAccess(final User user) {
         return getOwner().equals(user) || DeviceAccess.hasUserAccessToDevice(user, this);
     }
@@ -145,32 +86,5 @@ public final class Device extends TableModelAutoId implements JsonSerializable {
                 .add("owner", this.getOwner().getId())
                 .add("powered_on", this.isPoweredOn())
                 .build();
-    }
-
-    /**
-     * Compares an {@link Object} if it equals the {@link Device}.
-     *
-     * @param o {@link Object} to compare
-     * @return True if the {@link Object} equals the {@link Device} | False if it does not
-     */
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Device device = (Device) o;
-        return isPoweredOn() == device.isPoweredOn()
-                && Objects.equals(getName(), device.getName())
-                && Objects.equals(getOwner(), device.getOwner())
-                && getId().equals(device.getId());
-    }
-
-    /**
-     * Hashes the {@link Device} using {@link Objects} hash method.
-     *
-     * @return Hash of the {@link Device}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getName(), getOwner(), isPoweredOn());
     }
 }

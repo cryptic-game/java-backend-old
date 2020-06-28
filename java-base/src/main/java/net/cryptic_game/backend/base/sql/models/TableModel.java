@@ -1,5 +1,6 @@
 package net.cryptic_game.backend.base.sql.models;
 
+import lombok.Data;
 import net.cryptic_game.backend.base.AppBootstrap;
 import net.cryptic_game.backend.base.json.JsonTransient;
 import net.cryptic_game.backend.base.sql.SQLConnection;
@@ -10,38 +11,34 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
 @MappedSuperclass
+@Data
 public abstract class TableModel {
 
-    protected static final SQLConnection sqlConnection;
+    protected static final SQLConnection SQL_CONNECTION;
 
     static {
         final AppBootstrap app = AppBootstrap.getInstance();
-        sqlConnection = app.getSqlConnection();
+        SQL_CONNECTION = app.getSqlConnection();
     }
 
     @JsonTransient
     @Version
     @Column(name = "version")
-    private int version;
+    private long version;
 
-    public int getVersion() {
-        return this.version;
-    }
-
-    public void setVersion(final int version) {
-        this.version = version;
-    }
-
-    public void saveOrUpdate() {
-        final Session session = sqlConnection.openSession();
+    public final void saveOrUpdate() {
+        final Session session = SQL_CONNECTION.openSession();
         session.beginTransaction();
         session.saveOrUpdate(this);
         session.getTransaction().commit();
         session.close();
     }
 
+    /**
+     * Deletes this entity.
+     */
     public void delete() {
-        final Session session = sqlConnection.openSession();
+        final Session session = SQL_CONNECTION.openSession();
         session.beginTransaction();
         session.delete(this);
         session.getTransaction().commit();

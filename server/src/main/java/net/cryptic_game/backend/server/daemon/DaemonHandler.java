@@ -2,6 +2,7 @@ package net.cryptic_game.backend.server.daemon;
 
 import com.google.gson.JsonObject;
 import io.netty.channel.Channel;
+import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollectionData;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointList;
 import net.cryptic_game.backend.base.api.endpoint.ApiParameterData;
@@ -12,8 +13,6 @@ import net.cryptic_game.backend.base.daemon.DaemonEndpointCollectionData;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonUtils;
 import net.cryptic_game.backend.base.utils.ApiUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -25,9 +24,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Slf4j
 public final class DaemonHandler {
-
-    private final static Logger LOG = LoggerFactory.getLogger(DaemonHandler.class);
 
     private final ApiEndpointList endpointList;
     private final HashMap<String, ClientRespond> channel;
@@ -62,7 +60,7 @@ public final class DaemonHandler {
                 }
             });
 
-            LOG.info("Removed daemon \"" + daemon.getName() + "\"");
+            log.info("Removed daemon \"" + daemon.getName() + "\"");
         }
     }
 

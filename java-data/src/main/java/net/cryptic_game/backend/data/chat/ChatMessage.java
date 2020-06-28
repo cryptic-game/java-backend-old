@@ -1,6 +1,7 @@
 package net.cryptic_game.backend.data.chat;
 
 import com.google.gson.JsonObject;
+import lombok.Data;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
@@ -17,7 +18,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Entity representing a chat message entry in the database.
@@ -26,6 +26,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "chat_message")
+@Data
 public class ChatMessage extends TableModelAutoId implements JsonSerializable {
 
     @ManyToOne
@@ -51,96 +52,6 @@ public class ChatMessage extends TableModelAutoId implements JsonSerializable {
     @OneToOne
     @JoinColumn(name = "target", updatable = false, nullable = true)
     private User target;
-
-    /**
-     * Returns the {@link User} who send the {@link ChatMessage}.
-     *
-     * @return the message's sender
-     */
-    public User getUser() {
-        return user;
-    }
-
-    /**
-     * Sets the {@link User} who sends the {@link ChatMessage}.
-     *
-     * @param user the new {@link User}
-     */
-    public void setUser(final User user) {
-        this.user = user;
-    }
-
-    /**
-     * Returns the {@link ChatChannel} where the {@link User} is sending the {@link ChatMessage}.
-     *
-     * @return the {@link ChatChannel}
-     */
-    public ChatChannel getChannel() {
-        return channel;
-    }
-
-    /**
-     * Sets a new {@link ChatChannel} where the {@link ChatMessage} will be sent.
-     *
-     * @param channel the new {@link ChatChannel} to be set
-     */
-    public void setChannel(final ChatChannel channel) {
-        this.channel = channel;
-    }
-
-    /**
-     * Returns the {@link ChatAction} which is triggered by the {@link ChatMessage}.
-     *
-     * @return the {@link ChatAction}
-     */
-    public ChatAction getType() {
-        return type;
-    }
-
-    /**
-     * Sets a new {@link ChatAction} triggered by the {@link ChatMessage}.
-     *
-     * @param type the new {@link ChatAction} to be set
-     */
-    public void setType(final ChatAction type) {
-        this.type = type;
-    }
-
-    /**
-     * Returns the Text of the {@link ChatMessage}.
-     *
-     * @return the Text
-     */
-    public String getText() {
-        return text;
-    }
-
-    /**
-     * Sets a new Text for the {@link ChatMessage}.
-     *
-     * @param text the new Text to be set
-     */
-    public void setText(final String text) {
-        this.text = text;
-    }
-
-    /**
-     * Returns the {@link User} who receives the {@link ChatMessage}.
-     *
-     * @return the targeted {@link User}
-     */
-    public User getTarget() {
-        return target;
-    }
-
-    /**
-     * Sets a new {@link User} as receiver for the {@link ChatMessage}.
-     *
-     * @param target the new {@link User} to be set for receiving the {@link ChatMessage}.
-     */
-    public void setTarget(final User target) {
-        this.target = target;
-    }
 
     /**
      * Sends a {@link ChatMessage} without a target and as {@link ChatAction#SEND_MESSAGE}.
@@ -197,7 +108,7 @@ public class ChatMessage extends TableModelAutoId implements JsonSerializable {
      * @return the {@link List} of {@link ChatMessage}s
      */
     public List<ChatMessage> getMessages(final User user, final ChatChannel channel) {
-        try (Session sqlSession = sqlConnection.openSession()) {
+        try (Session sqlSession = SQL_CONNECTION.openSession()) {
             return sqlSession
                     .createQuery("select object (m) from Message m where  m.channel = :channel "
                             + "and (m.target is null or (m.type = :whisper and m.target = :user) or (m.type = :whisper and m.user = :user))", ChatMessage.class)
@@ -206,35 +117,6 @@ public class ChatMessage extends TableModelAutoId implements JsonSerializable {
                     .setParameter("whisper", ChatAction.WHISPER_MESSAGE)
                     .getResultList();
         }
-    }
-
-    /**
-     * Compares an {@link Object} if it equals the {@link ChatMessage}.
-     *
-     * @param o {@link Object} to compare
-     * @return True if the {@link Object} equals the {@link ChatMessage} | False if it does not
-     */
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ChatMessage)) return false;
-        final ChatMessage message = (ChatMessage) o;
-        return this.getId().equals(message.getId())
-                && this.getUser().equals(message.getUser())
-                && this.getChannel().equals(message.getChannel())
-                && this.getType() == message.getType()
-                && this.getText().equals(message.getText())
-                && Objects.equals(this.getTarget(), message.getTarget());
-    }
-
-    /**
-     * Hashes the {@link ChatMessage} using {@link Objects} hash method.
-     *
-     * @return Hash of the {@link ChatMessage}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.getId(), this.getUser(), this.getChannel(), this.getType(), this.getText(), this.getTarget());
     }
 
     /**

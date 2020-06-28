@@ -142,7 +142,8 @@ public final class WebSocketUserEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("logout")
-    public ApiResponse logout(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client, @ApiParameter(value = "session", optional = true) final UUID sessionId) {
+    public ApiResponse logout(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client,
+                              @ApiParameter(value = "session", optional = true) final UUID sessionId) {
         Session session = client.get(Session.class);
         if (session == null || !session.isValid()) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "NOT_LOGGED_IN");

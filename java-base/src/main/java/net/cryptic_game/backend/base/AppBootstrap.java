@@ -2,6 +2,7 @@ package net.cryptic_game.backend.base;
 
 import io.sentry.Sentry;
 import io.sentry.SentryClient;
+import lombok.Getter;
 import net.cryptic_game.backend.base.config.ConfigHandler;
 import net.cryptic_game.backend.base.sql.SQLConnection;
 import net.cryptic_game.backend.base.sql.SQLServer;
@@ -24,11 +25,14 @@ public abstract class AppBootstrap {
     private static final Logger LOG = LoggerFactory.getLogger(AppBootstrap.class);
     private static AppBootstrap instance;
     private static TimeoutHandler timeoutHandler;
-    protected final BaseConfig config;
-    protected final SQLConnection sqlConnection;
-    private final String dist;
+    @Getter
+    private final BaseConfig config;
+    @Getter
+    private final SQLConnection sqlConnection;
+    @Getter
+    private final String name;
 
-    public AppBootstrap(final String[] args, final Object config, final String dist) {
+    public AppBootstrap(final String[] args, final Object config, final String name) {
         System.setOut(new PrintStream(new LoggerOutputStream("SysOut", Level.TRACE, System.out)));
         System.setErr(new PrintStream(new LoggerOutputStream("SysErr", Level.ERROR, System.err)));
 
@@ -50,10 +54,10 @@ public abstract class AppBootstrap {
         configHandler.loadConfig();
 
         timeoutHandler = new TimeoutHandler();
-        this.dist = dist;
+        this.name = name;
         this.setLoglevel(Level.valueOf(this.config.getLogLevel().toUpperCase()));
 
-        LOG.info("Starting {}...", dist);
+        LOG.info("Starting {}...", name);
 
         this.initSentry();
 
@@ -104,7 +108,7 @@ public abstract class AppBootstrap {
             final String version = AppBootstrap.class.getPackage().getImplementationVersion();
             client.setRelease(version == null ? "debug" : version);
             client.setEnvironment(this.config.isProductive() ? "production" : "development");
-            client.setDist(this.dist);
+            client.setDist(this.name);
         } else {
             Sentry.init("");
         }
@@ -125,17 +129,5 @@ public abstract class AppBootstrap {
         final LoggerConfig loggerConfig = ctx.getConfiguration().getLoggerConfig(LogManager.ROOT_LOGGER_NAME);
         loggerConfig.setLevel(level);
         ctx.updateLoggers();
-    }
-
-    public final BaseConfig getConfig() {
-        return this.config;
-    }
-
-    public final SQLConnection getSqlConnection() {
-        return this.sqlConnection;
-    }
-
-    protected final String getName() {
-        return this.dist;
     }
 }
