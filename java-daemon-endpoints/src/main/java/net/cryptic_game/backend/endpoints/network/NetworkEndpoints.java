@@ -20,13 +20,13 @@ public class NetworkEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("get")
-    public ApiResponse get(@ApiParameter(value = "network_id", optional = true) final UUID network_id,
+    public ApiResponse get(@ApiParameter(value = "network_id", optional = true) final UUID networkId,
                            @ApiParameter(value = "name", optional = true) final String name) {
-        if (network_id == null && name == null) {
+        if (networkId == null && name == null) {
             return new ApiResponse(ApiResponseType.BAD_REQUEST, "NO_NAME_OR_NETWORK_ID_PROVIDED");
         }
 
-        final Network network = network_id == null ? Network.getByName(name) : Network.getById(network_id);
+        final Network network = networkId == null ? Network.getByName(name) : Network.getById(networkId);
         if (network == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "NETWORK");
         }
