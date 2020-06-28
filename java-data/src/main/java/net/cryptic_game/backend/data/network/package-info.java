@@ -1,5 +1,5 @@
 /**
- * Contains all database models associated with network
+ * Contains all database models associated with network.
  *
  * @since 0.3.0
  */

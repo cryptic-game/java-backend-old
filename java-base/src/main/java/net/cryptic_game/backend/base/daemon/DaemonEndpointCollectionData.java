@@ -1,11 +1,17 @@
 package net.cryptic_game.backend.base.daemon;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollectionData;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointData;
 
 import java.util.Map;
 
+@Getter
+@Setter
+@EqualsAndHashCode
 public class DaemonEndpointCollectionData extends ApiEndpointCollectionData {
 
     private Daemon daemon;
@@ -37,12 +43,4 @@ public class DaemonEndpointCollectionData extends ApiEndpointCollectionData {
 //            }
 //        }
 //    }
-
-    public Daemon getDaemon() {
-        return this.daemon;
-    }
-
-    public void setDaemon(final Daemon daemon) {
-        this.daemon = daemon;
-    }
 }

@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class ApiEndpointList {
+public final class ApiEndpointList {
 
     private final String address;
     private final Map<String, ApiEndpointCollectionData> collections;
@@ -39,7 +39,8 @@ public class ApiEndpointList {
             }
             collection.setClients(this.clients);
         }
-        this.collections.forEach((name, collectionData) -> collectionData.getEndpoints().forEach((endpointName, endpointData) -> this.endpoints.merge(endpointName, endpointData, (mergeName, mergeEndpointData) -> mergeEndpointData)));
+        this.collections.forEach((name, collectionData) -> collectionData.getEndpoints()
+                .forEach((endpointName, endpointData) -> this.endpoints.merge(endpointName, endpointData, (mergeName, mergeEndpointData) -> mergeEndpointData)));
         if (this.address != null)
             this.playgroundContent = ApiParser.toPlayground(this.address, this.collections.values()).toString().getBytes(StandardCharsets.UTF_8);
     }
@@ -47,7 +48,8 @@ public class ApiEndpointList {
     public void addCollections(final Collection<ApiEndpointCollectionData> endpointCollections) {
         endpointCollections.forEach(collection -> {
             this.collections.put(collection.getName(), collection);
-            collection.getEndpoints().forEach((endpointName, endpointData) -> this.endpoints.merge(endpointName, endpointData, (mergeName, mergeEndpointData) -> mergeEndpointData));
+            collection.getEndpoints().forEach((endpointName, endpointData) -> this.endpoints
+                    .merge(endpointName, endpointData, (mergeName, mergeEndpointData) -> mergeEndpointData));
         });
         if (this.address != null) {
             this.playgroundContent = ApiParser.toPlayground(this.address, this.collections.values()).toString().getBytes(StandardCharsets.UTF_8);

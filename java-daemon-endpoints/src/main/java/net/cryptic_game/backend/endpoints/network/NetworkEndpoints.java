@@ -13,7 +13,7 @@ import net.cryptic_game.backend.data.user.User;
 
 import java.util.UUID;
 
-public class NetworkEndpoints extends ApiEndpointCollection {
+public final class NetworkEndpoints extends ApiEndpointCollection {
 
     public NetworkEndpoints() {
         super("network", "todo");
@@ -43,7 +43,7 @@ public class NetworkEndpoints extends ApiEndpointCollection {
     public ApiResponse create(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
                               @ApiParameter("device_id") final UUID deviceId,
                               @ApiParameter("name") final String name,
-                              @ApiParameter("public") final boolean _public) {
+                              @ApiParameter("public") final boolean isPublic) {
         final User user = User.getById(userId);
         final Device device = Device.getById(deviceId);
 
@@ -67,7 +67,7 @@ public class NetworkEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.ALREADY_EXISTS, "NETWORK_NAME");
         }
 
-        final Network network = Network.createNetwork(name, device, _public);
+        final Network network = Network.createNetwork(name, device, isPublic);
         NetworkMember.createMember(network, device);
         return new ApiResponse(ApiResponseType.OK, network);
     }

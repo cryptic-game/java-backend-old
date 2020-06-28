@@ -1,5 +1,5 @@
 /**
- * Contains all database models associated with device
+ * Contains all database models associated with device.
  *
  * @since 0.3.0
  */

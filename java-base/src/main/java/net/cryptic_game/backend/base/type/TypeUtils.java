@@ -1,6 +1,6 @@
 package net.cryptic_game.backend.base.type;
 
-public class TypeUtils {
+public final class TypeUtils {
 
     private static final TypeMappingController TYPE_MAPPING_CONTROLLER = new TypeMappingController();
 

@@ -1,6 +1,12 @@
 package net.cryptic_game.backend.data.chat;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
 public enum ChatAction {
+
     MEMBER_JOIN("member-join"),
     MEMBER_LEAVE("member-leave"),
 
@@ -9,18 +15,5 @@ public enum ChatAction {
 
     CHANNEL_DELETE("channel-delete");
 
-    final String value;
-
-    ChatAction(final String value) {
-        this.value = value;
-    }
-
-    /**
-     * Returns the {@link ChatAction} value
-     *
-     * @return the Value
-     */
-    public String getValue() {
-        return this.value;
-    }
+    private final String value;
 }

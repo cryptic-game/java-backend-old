@@ -1,11 +1,15 @@
 package net.cryptic_game.backend.base.daemon;
 
 import io.netty.channel.Channel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import net.cryptic_game.backend.base.json.JsonTransient;
 
 import java.time.ZonedDateTime;
 
-public class Daemon {
+@Getter
+@EqualsAndHashCode
+public final class Daemon {
 
     @JsonTransient
     private final Channel channel;
@@ -16,17 +20,5 @@ public class Daemon {
         this.channel = channel;
         this.name = name;
         this.connectedSince = ZonedDateTime.now();
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public ZonedDateTime getConnectedSince() {
-        return this.connectedSince;
-    }
-
-    public Channel getChannel() {
-        return this.channel;
     }
 }

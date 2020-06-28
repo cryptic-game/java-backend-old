@@ -3,7 +3,7 @@ package net.cryptic_game.backend.base.json;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 
-public class JsonExclusionStrategy implements ExclusionStrategy {
+public final class JsonExclusionStrategy implements ExclusionStrategy {
 
     @Override
     public boolean shouldSkipField(final FieldAttributes field) {

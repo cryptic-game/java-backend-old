@@ -10,15 +10,15 @@ import io.netty.handler.codec.http.HttpVersion;
 
 import java.util.List;
 
-public class HttpToStringMessageCodec extends MessageToMessageCodec<FullHttpRequest, ByteBuf> {
+public final class HttpToStringMessageCodec extends MessageToMessageCodec<FullHttpRequest, ByteBuf> {
 
     @Override
-    protected void decode(final ChannelHandlerContext ctx, final FullHttpRequest msg, final List<Object> out) throws Exception {
+    protected void decode(final ChannelHandlerContext ctx, final FullHttpRequest msg, final List<Object> out) {
         out.add(msg.content());
     }
 
     @Override
-    protected void encode(final ChannelHandlerContext ctx, final ByteBuf msg, final List<Object> out) throws Exception {
+    protected void encode(final ChannelHandlerContext ctx, final ByteBuf msg, final List<Object> out) {
         out.add(new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, msg));
     }
 }

@@ -2,35 +2,31 @@ package net.cryptic_game.backend.daemon;
 
 import io.netty.channel.Channel;
 import io.netty.channel.unix.DomainSocketAddress;
+import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.AppBootstrap;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
-import net.cryptic_game.backend.base.netty.client.NettyClient;
 import net.cryptic_game.backend.base.netty.client.NettyClientHandler;
 import net.cryptic_game.backend.daemon.api.DaemonEndpointHandler;
 import net.cryptic_game.backend.daemon.client.daemon.DaemonClientCodec;
 import org.reflections.Reflections;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.net.InetSocketAddress;
 
-public class App extends AppBootstrap {
+@Slf4j
+public final class App extends AppBootstrap {
 
-    private static final Logger log = LoggerFactory.getLogger(App.class);
-    private static final DaemonConfig daemonConfig = new DaemonConfig();
+    private static final DaemonConfig DAEMON_CONFIG = new DaemonConfig();
 
     private NettyClientHandler clientHandler;
-    private NettyClient client;
-
     private DaemonEndpointHandler daemonEndpointHandler;
     private DaemonBootstrapper daemonBootstrapper;
 
     public App(final String[] args) {
-        super(args, daemonConfig, "Java-Daemon");
+        super(args, DAEMON_CONFIG, "Java-Daemon");
     }
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         log.info("Bootstrapping Java Daemon...");
         new App(args);
     }
@@ -58,7 +54,7 @@ public class App extends AppBootstrap {
         this.clientHandler = new NettyClientHandler();
 
         final boolean useUnixSocket = this.getConfig().isUseUnixSocket();
-        this.client = this.clientHandler.addClient("daemon",
+        this.clientHandler.addClient("daemon",
                 useUnixSocket ? new DomainSocketAddress(this.getConfig().getUnixSocketPath()) : new InetSocketAddress("localhost", 4012),
                 useUnixSocket, new DaemonClientCodec(this.daemonEndpointHandler), this::onConnect);
     }

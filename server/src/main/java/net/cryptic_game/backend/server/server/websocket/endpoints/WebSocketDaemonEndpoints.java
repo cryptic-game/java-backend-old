@@ -1,8 +1,8 @@
 package net.cryptic_game.backend.server.server.websocket.endpoints;
 
 import com.google.gson.JsonObject;
+import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.api.client.ApiClient;
-import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointData;
 import net.cryptic_game.backend.base.api.endpoint.ApiParameter;
 import net.cryptic_game.backend.base.api.endpoint.ApiParameterSpecialType;
@@ -14,15 +14,13 @@ import net.cryptic_game.backend.base.utils.ApiUtils;
 import net.cryptic_game.backend.data.user.Session;
 import net.cryptic_game.backend.server.App;
 import net.cryptic_game.backend.server.daemon.DaemonHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * No {@link ApiEndpointCollection}!
+ * No {@link net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection}!
  */
-public class WebSocketDaemonEndpoints {
+@Slf4j
+public final class WebSocketDaemonEndpoints {
 
-    private static final Logger log = LoggerFactory.getLogger(WebSocketDaemonEndpoints.class);
     private final DaemonHandler daemonHandler;
 
     public WebSocketDaemonEndpoints(final DaemonHandler daemonHandler) {

@@ -50,7 +50,7 @@ public final class PlaygroundUtils {
         return path.endsWith(File.separator) ? path + INDEX_FILE : path;
     }
 
-    public static void setDateHeader(FullHttpResponse response) {
+    public static void setDateHeader(final FullHttpResponse response) {
         response.headers().set(HttpHeaderNames.DATE, HTTP_DATE_FORMAT.format(ZonedDateTime.now(ZoneOffset.UTC)));
     }
 

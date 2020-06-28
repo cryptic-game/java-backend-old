@@ -1,16 +1,15 @@
 package net.cryptic_game.backend.base.timeout;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-public class TimeoutHandler implements Runnable {
+@Slf4j
+public final class TimeoutHandler implements Runnable {
 
-    private static final Logger log = LoggerFactory.getLogger(TimeoutHandler.class);
-    private final static long tick = 1000; // milliseconds
+    private static final long TICK = 1000; // milliseconds
 
     private final Set<Timeout> timeouts;
     private boolean running;
@@ -30,7 +29,7 @@ public class TimeoutHandler implements Runnable {
             this.doTick(System.currentTimeMillis());
 
             try {
-                Thread.sleep(tick);
+                Thread.sleep(TICK);
             } catch (InterruptedException e) {
                 log.error("Error while waiting for next timer tick.", e);
             }

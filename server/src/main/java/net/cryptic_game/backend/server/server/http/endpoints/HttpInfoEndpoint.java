@@ -6,7 +6,7 @@ import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
 import net.cryptic_game.backend.server.daemon.DaemonHandler;
 
-public class HttpInfoEndpoint extends ApiEndpointCollection {
+public final class HttpInfoEndpoint extends ApiEndpointCollection {
 
     private final DaemonHandler daemonHandler;
 

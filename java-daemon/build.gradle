@@ -1,0 +1,14 @@
+plugins {
+    id 'application'
+}
+
+dependencies {
+    implementation project(':java-base')
+    implementation project(':java-data')
+    implementation project(':java-daemon-endpoints')
+}
+
+application {
+    applicationName = 'java-daemon'
+    mainClassName = 'net.cryptic_game.backend.daemon.App'
+}

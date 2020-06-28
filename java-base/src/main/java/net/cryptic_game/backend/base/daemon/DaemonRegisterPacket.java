@@ -3,6 +3,8 @@ package net.cryptic_game.backend.base.daemon;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import io.netty.channel.Channel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollectionData;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointData;
 import net.cryptic_game.backend.base.api.endpoint.ApiParameterSpecialType;
@@ -16,7 +18,9 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-public class DaemonRegisterPacket {
+@Getter
+@EqualsAndHashCode
+public final class DaemonRegisterPacket {
 
     @JsonTransient
     private final Daemon daemon;
@@ -38,7 +42,9 @@ public class DaemonRegisterPacket {
             final String collectionName = JsonUtils.fromJson(jsonObject.get("name"), String.class);
             final String collectionDescription = JsonUtils.fromJson(jsonObject.get("description"), String.class);
 
-            final Map<String, ApiEndpointData> endpoints = JsonUtils.fromArray(JsonUtils.fromJson(jsonObject.get("endpoints"), JsonArray.class), new TreeSet<>(), DaemonEndpointData.class)
+            final Map<String, ApiEndpointData> endpoints = JsonUtils.fromArray(
+                    JsonUtils.fromJson(jsonObject.get("endpoints"), JsonArray.class),
+                    new TreeSet<>(), DaemonEndpointData.class)
                     .stream()
                     .peek(endpoint -> {
                         endpoint.setDaemon(this.daemon);
@@ -54,19 +60,7 @@ public class DaemonRegisterPacket {
         });
     }
 
-    public Daemon getDaemon() {
-        return this.daemon;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
     public void addEndpointCollections(final Collection<ApiEndpointCollectionData> collections) {
         this.collections.addAll(collections);
-    }
-
-    public Set<ApiEndpointCollectionData> getEndpointCollections() {
-        return this.collections;
     }
 }

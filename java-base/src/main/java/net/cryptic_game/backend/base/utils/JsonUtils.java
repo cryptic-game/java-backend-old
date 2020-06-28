@@ -17,7 +17,11 @@ import java.util.function.Function;
  * @deprecated this will be removed in {@code v0.4.0-pre-alpha}.
  */
 @Deprecated(forRemoval = true)
-public class JsonUtils {
+public final class JsonUtils {
+
+    private JsonUtils() {
+        throw new UnsupportedOperationException();
+    }
 
     /**
      * Returns the associated {@link String} value of a specific property.
@@ -26,7 +30,7 @@ public class JsonUtils {
      * @param key        The property name.
      * @return The {@link String} value of the property.
      */
-    public static String getString(JsonObject jsonObject, String key) {
+    public static String getString(final JsonObject jsonObject, final String key) {
         return net.cryptic_game.backend.base.json.JsonUtils.fromJson(jsonObject.get(key), String.class);
     }
 
@@ -37,7 +41,7 @@ public class JsonUtils {
      * @param key        The property name.
      * @return The {@link Integer} value of the property.
      */
-    public static int getInt(JsonObject jsonObject, String key) {
+    public static int getInt(final JsonObject jsonObject, final String key) {
         return net.cryptic_game.backend.base.json.JsonUtils.fromJson(jsonObject.get(key), Integer.class);
     }
 
@@ -48,7 +52,7 @@ public class JsonUtils {
      * @param key        The property name.
      * @return The {@link Long} value of the property.
      */
-    public static long getLong(JsonObject jsonObject, String key) {
+    public static long getLong(final JsonObject jsonObject, final String key) {
         return net.cryptic_game.backend.base.json.JsonUtils.fromJson(jsonObject.get(key), Long.class);
     }
 
@@ -59,7 +63,7 @@ public class JsonUtils {
      * @param key        The property name.
      * @return The {@link Boolean} value of the property.
      */
-    public static boolean getBoolean(JsonObject jsonObject, String key) {
+    public static boolean getBoolean(final JsonObject jsonObject, final String key) {
         return net.cryptic_game.backend.base.json.JsonUtils.fromJson(jsonObject.get(key), Boolean.class);
     }
 
@@ -70,7 +74,7 @@ public class JsonUtils {
      * @param key        The property name.
      * @return The {@link UUID} value of the property.
      */
-    public static UUID getUUID(JsonObject jsonObject, String key) {
+    public static UUID getUuid(final JsonObject jsonObject, final String key) {
         return net.cryptic_game.backend.base.json.JsonUtils.fromJson(jsonObject.get(key), UUID.class);
     }
 
@@ -84,7 +88,7 @@ public class JsonUtils {
      * Use {@link JsonUtils#getLocalDate(JsonObject, String)} and {@link JsonUtils#getZonedDateTime(JsonObject, String)} instead.
      */
     @Deprecated
-    public static Date getDate(JsonObject jsonObject, String key) {
+    public static Date getDate(final JsonObject jsonObject, final String key) {
         if (jsonObject.get(key) != null) {
             return new Date(getLong(jsonObject, key));
         } else {
@@ -99,7 +103,7 @@ public class JsonUtils {
      * @param key        The property name.
      * @return The {@link LocalDate} value of the property.
      */
-    public static LocalDate getLocalDate(JsonObject jsonObject, String key) {
+    public static LocalDate getLocalDate(final JsonObject jsonObject, final String key) {
         if (jsonObject.get(key) != null) {
             return LocalDate.parse(jsonObject.get(key).getAsString());
         } else {
@@ -114,7 +118,7 @@ public class JsonUtils {
      * @param key        The property name.
      * @return The {@link ZonedDateTime} value of the property.
      */
-    public static ZonedDateTime getZonedDateTime(JsonObject jsonObject, String key) {
+    public static ZonedDateTime getZonedDateTime(final JsonObject jsonObject, final String key) {
         if (jsonObject.get(key) != null) {
             return ZonedDateTime.parse(jsonObject.get(key).getAsString());
         } else {
@@ -129,7 +133,7 @@ public class JsonUtils {
      * @param key        The property name.
      * @return The {@link JsonObject} value of the property.
      */
-    public static JsonObject getJsonObject(JsonObject jsonObject, String key) {
+    public static JsonObject getJsonObject(final JsonObject jsonObject, final String key) {
         return net.cryptic_game.backend.base.json.JsonUtils.fromJson(jsonObject.get(key), JsonObject.class);
     }
 
@@ -140,7 +144,7 @@ public class JsonUtils {
      * @param key        The property name.
      * @return The {@link JsonArray} value of the property.
      */
-    public static JsonArray getJsonArray(JsonObject jsonObject, String key) {
+    public static JsonArray getJsonArray(final JsonObject jsonObject, final String key) {
         return net.cryptic_game.backend.base.json.JsonUtils.fromJson(jsonObject.get(key), JsonArray.class);
     }
 

@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
 
-public class NettyClientHandler {
+public final class NettyClientHandler {
 
     private final Set<NettyClient> clients;
     private final EventLoopGroupHandler eventLoopGroupHandler;
@@ -19,7 +19,11 @@ public class NettyClientHandler {
         this.eventLoopGroupHandler = new EventLoopGroupHandler();
     }
 
-    public NettyClient addClient(final String name, final SocketAddress address, final boolean unixSocket, final NettyCodec<?> nettyCodec, final Consumer<Channel> connectCallback) {
+    public NettyClient addClient(final String name,
+                                 final SocketAddress address,
+                                 final boolean unixSocket,
+                                 final NettyCodec<?> nettyCodec,
+                                 final Consumer<Channel> connectCallback) {
         final NettyClient client = new NettyClient(name, address, unixSocket, this.eventLoopGroupHandler, nettyCodec, connectCallback);
         this.clients.add(client);
         return client;

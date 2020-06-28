@@ -7,7 +7,7 @@ import io.netty.handler.ssl.SslContext;
 
 import java.util.List;
 
-public class NettyInitializer extends ChannelInitializer<Channel> {
+public final class NettyInitializer extends ChannelInitializer<Channel> {
 
     private final SslContext sslContext;
     private final List<NettyCodecInitializer<?>> nettyCodecInitializers;

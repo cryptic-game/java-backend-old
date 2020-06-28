@@ -19,8 +19,8 @@ import java.util.Set;
 
 final class ConfigUtils {
 
-    private static final Logger log = LoggerFactory.getLogger(ConfigUtils.class);
-    private static final Yaml yaml = new Yaml();
+    private static final Logger LOG = LoggerFactory.getLogger(ConfigUtils.class);
+    private static final Yaml YAML = new Yaml();
     private static final String SPACING = "  ";
 
     private ConfigUtils() {
@@ -52,13 +52,15 @@ final class ConfigUtils {
     }
 
     static void parseStrings(final Set<Object> objects, final List<String> lines) {
-        final Map<String, Object> values = yaml.load(String.join(System.lineSeparator(), lines));
+        final Map<String, Object> values = YAML.load(String.join(System.lineSeparator(), lines));
 
         objects.stream()
                 .filter(object -> object.getClass().isAnnotationPresent(Config.class))
                 .map(object -> new AbstractMap.SimpleEntry<>(object.getClass().getAnnotation(Config.class).value().strip().toLowerCase(), object))
                 .forEach(object -> {
-                    final Map<String, Object> currentValues = object.getKey().isBlank() ? values : values == null ? new HashMap<>() : (Map<String, Object>) (values.get(object.getKey()));
+                    final Map<String, Object> currentValues = object.getKey().isBlank()
+                            ? values
+                            : values == null ? new HashMap<>() : (Map<String, Object>) (values.get(object.getKey()));
                     if (currentValues != null) {
                         ConfigUtils.parseConfigPart(currentValues, object.getValue(), object.getKey());
                     }
@@ -72,7 +74,7 @@ final class ConfigUtils {
             final Object value = values.get(field.getAnnotation(ConfigValue.class).value().strip().toLowerCase());
 
             if (Modifier.isFinal(field.getModifiers())) {
-                log.error("Unable to access field \"{}\" in Config \"{}\" because it is \"final\".", field.getName(), name);
+                LOG.error("Unable to access field \"{}\" in Config \"{}\" because it is \"final\".", field.getName(), name);
             }
 
             if (value != null) {
@@ -85,14 +87,14 @@ final class ConfigUtils {
                     }
                     field.setAccessible(false);
                 } catch (IllegalAccessException e) {
-                    log.error("Unable to access field \"{}\" in Config \"{}\".", field.getName(), name);
+                    LOG.error("Unable to access field \"{}\" in Config \"{}\".", field.getName(), name);
                 }
             }
         }
     }
 
     static void save(final Set<Object> objects, final OutputStream outputStream) {
-        try (final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream))) {
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream))) {
             objects.forEach(object -> {
                 final Class<?> clazz = object.getClass();
                 if (!clazz.isAnnotationPresent(Config.class)) return;
@@ -125,16 +127,16 @@ final class ConfigUtils {
                             field.setAccessible(false);
                             writer.newLine();
                         } catch (IllegalAccessException e) {
-                            log.error("Unable to access Config Field \"{}\".", field.getName());
+                            LOG.error("Unable to access Config Field \"{}\".", field.getName());
                         }
                     }
                     writer.newLine();
                 } catch (IOException e) {
-                    log.error("Unable to dump Config to OutputStream.", e);
+                    LOG.error("Unable to dump Config to OutputStream.", e);
                 }
             });
         } catch (IOException e) {
-            log.error("Unable to dump Config to OutputStream.", e);
+            LOG.error("Unable to dump Config to OutputStream.", e);
         }
     }
 }

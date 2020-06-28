@@ -15,7 +15,7 @@ import net.cryptic_game.backend.data.user.User;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
-public class WebSocketUserEndpoints extends ApiEndpointCollection {
+public final class WebSocketUserEndpoints extends ApiEndpointCollection {
 
     public WebSocketUserEndpoints() {
         super("user", "todo");
@@ -142,7 +142,8 @@ public class WebSocketUserEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("logout")
-    public ApiResponse logout(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client, @ApiParameter(value = "session", optional = true) final UUID sessionId) {
+    public ApiResponse logout(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client,
+                              @ApiParameter(value = "session", optional = true) final UUID sessionId) {
         Session session = client.get(Session.class);
         if (session == null || !session.isValid()) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "NOT_LOGGED_IN");

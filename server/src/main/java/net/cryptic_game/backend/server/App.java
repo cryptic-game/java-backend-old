@@ -2,6 +2,8 @@ package net.cryptic_game.backend.server;
 
 import com.google.gson.JsonObject;
 import io.netty.channel.unix.DomainSocketAddress;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.AppBootstrap;
 import net.cryptic_game.backend.base.api.client.ApiClient;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointData;
@@ -18,17 +20,16 @@ import net.cryptic_game.backend.server.server.websocket.WebSocketServerCodec;
 import net.cryptic_game.backend.server.server.websocket.endpoints.WebSocketDaemonEndpoints;
 import net.cryptic_game.backend.server.server.websocket.endpoints.WebSocketInfoEndpoints;
 import net.cryptic_game.backend.server.server.websocket.endpoints.WebSocketUserEndpoints;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.net.InetSocketAddress;
 
-public class App extends AppBootstrap {
+@Slf4j
+public final class App extends AppBootstrap {
 
-    private static final Logger log = LoggerFactory.getLogger(App.class);
-    private static final ServerConfig serverConfig = new ServerConfig();
+    private static final ServerConfig SERVER_CONFIG = new ServerConfig();
 
     private DaemonEndpointHandler daemonEndpointHandler;
+    @Getter
     private WebSocketEndpointHandler webSocketEndpointHandler;
     private HttpEndpointHandler httpEndpointHandler;
 
@@ -36,10 +37,10 @@ public class App extends AppBootstrap {
     private NettyServerHandler serverHandler;
 
     public App(final String[] args) {
-        super(args, serverConfig, "Java-Server");
+        super(args, SERVER_CONFIG, "Java-Server");
     }
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         log.info("Bootstrapping Java Server...");
         new App(args);
     }
@@ -47,7 +48,7 @@ public class App extends AppBootstrap {
     @Override
     protected void preInit() {
         this.daemonEndpointHandler = new DaemonEndpointHandler();
-        this.webSocketEndpointHandler = new WebSocketEndpointHandler(serverConfig.getPlaygroundAddress());
+        this.webSocketEndpointHandler = new WebSocketEndpointHandler(SERVER_CONFIG.getPlaygroundAddress());
         this.httpEndpointHandler = new HttpEndpointHandler();
 
         this.daemonHandler = new DaemonHandler(this.webSocketEndpointHandler.getApiList());
@@ -88,20 +89,16 @@ public class App extends AppBootstrap {
                 useUnixSocket, new DaemonServerCodec(this.daemonHandler, this.daemonEndpointHandler));
 
         this.serverHandler.addServer("websocket",
-                new InetSocketAddress(serverConfig.getWebsocketHost(), serverConfig.getWebsocketPort()),
+                new InetSocketAddress(SERVER_CONFIG.getWebsocketHost(), SERVER_CONFIG.getWebsocketPort()),
                 false, new WebSocketServerCodec(this.webSocketEndpointHandler));
 
         this.serverHandler.addServer("http",
-                new InetSocketAddress(serverConfig.getHttpHost(), serverConfig.getHttpPort()),
+                new InetSocketAddress(SERVER_CONFIG.getHttpHost(), SERVER_CONFIG.getHttpPort()),
                 false, new HttpServerCodec(this.httpEndpointHandler));
     }
 
     @Override
     protected void start() {
         this.serverHandler.start();
-    }
-
-    public WebSocketEndpointHandler getWebSocketEndpointHandler() {
-        return webSocketEndpointHandler;
     }
 }

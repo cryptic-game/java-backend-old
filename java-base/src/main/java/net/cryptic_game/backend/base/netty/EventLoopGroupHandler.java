@@ -4,7 +4,9 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.epoll.Epoll;
 import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
+import lombok.Data;
 
+@Data
 public class EventLoopGroupHandler {
 
     private static final boolean EPOLL = Epoll.isAvailable();
@@ -20,14 +22,6 @@ public class EventLoopGroupHandler {
     private void shutdown() {
         if (!this.bossGroup.isShutdown()) this.bossGroup.shutdownGracefully();
         if (!this.workGroup.isShutdown()) this.workGroup.shutdownGracefully();
-    }
-
-    public EventLoopGroup getBossGroup() {
-        return this.bossGroup;
-    }
-
-    public EventLoopGroup getWorkGroup() {
-        return this.workGroup;
     }
 }
 

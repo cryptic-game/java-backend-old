@@ -1,6 +1,7 @@
 package net.cryptic_game.backend.data.network;
 
 import com.google.gson.JsonObject;
+import lombok.Data;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModel;
@@ -16,28 +17,22 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
 
 /**
- * Entity representing a network member entry in the database
+ * Entity representing a network member entry in the database.
  *
  * @since 0.3.0
  */
 @Entity
 @Table(name = "network_member")
+@Data
 public class NetworkMember extends TableModel implements JsonSerializable {
 
     @EmbeddedId
     private MemberKey key;
 
     /**
-     * Empty constructor to create a new {@link NetworkMember}
-     */
-    public NetworkMember() {
-    }
-
-    /**
-     * Creates a new {@link NetworkMember}
+     * Creates a new {@link NetworkMember}.
      *
      * @param network {@link Network} of the {@link NetworkMember}
      * @param device  {@link Device} of the {@link NetworkMember}
@@ -51,7 +46,7 @@ public class NetworkMember extends TableModel implements JsonSerializable {
         networkMember.setNetwork(network);
         networkMember.setDevice(device);
 
-        final Session sqlSession = sqlConnection.openSession();
+        final Session sqlSession = SQL_CONNECTION.openSession();
         sqlSession.beginTransaction();
         sqlSession.save(networkMember);
         sqlSession.getTransaction().commit();
@@ -60,27 +55,29 @@ public class NetworkMember extends TableModel implements JsonSerializable {
     }
 
     /**
-     * Fetches the {@link NetworkMember} with the given key
+     * Fetches the {@link NetworkMember} with the given key.
      *
      * @param network {@link Network} of the {@link NetworkMember}
      * @param device  {@link Device} of the {@link NetworkMember}
      * @return The instance of the fetched {@link NetworkMember} if it exists | null if the entity does not exist
      */
     public static NetworkMember getMember(final Network network, final Device device) {
-        final Session sqlSession = sqlConnection.openSession();
-        NetworkMember networkMember = sqlSession.find(NetworkMember.class, new NetworkMember.MemberKey(network, device));
-        sqlSession.close();
-        return networkMember;
+        try (Session sqlSession = SQL_CONNECTION.openSession()) {
+            final MemberKey primaryKey = new MemberKey();
+            primaryKey.setNetwork(network);
+            primaryKey.setDevice(device);
+            return sqlSession.find(NetworkMember.class, primaryKey);
+        }
     }
 
     /**
-     * Fetches the {@link NetworkMember} of the give {@link Device}
+     * Fetches the {@link NetworkMember} of the give {@link Device}.
      *
      * @param device {@link Device} of the {@link NetworkMember}
      * @return A {@link List} containing the fetched {@link NetworkMember}'s
      */
-    public static List<NetworkMember> getMembershipsOfDevice(Device device) {
-        final Session sqlSession = sqlConnection.openSession();
+    public static List<NetworkMember> getMembershipsOfDevice(final Device device) {
+        final Session sqlSession = SQL_CONNECTION.openSession();
         final List<NetworkMember> networkMembers = sqlSession
                 .createQuery("select object (n) from NetworkMember as n where n.key.device = :device", NetworkMember.class)
                 .setParameter("device", device)
@@ -89,8 +86,8 @@ public class NetworkMember extends TableModel implements JsonSerializable {
         return networkMembers;
     }
 
-    public static List<NetworkMember> getMembershipsOfNetwork(Network network) {
-        final Session sqlSession = sqlConnection.openSession();
+    public static List<NetworkMember> getMembershipsOfNetwork(final Network network) {
+        final Session sqlSession = SQL_CONNECTION.openSession();
         final List<NetworkMember> networkMembers = sqlSession
                 .createQuery("select object (n) from NetworkMember as n where n.key.network = :network", NetworkMember.class)
                 .setParameter("network", network)
@@ -100,25 +97,7 @@ public class NetworkMember extends TableModel implements JsonSerializable {
     }
 
     /**
-     * Returns the {@link MemberKey} of the {@link NetworkMember}
-     *
-     * @return {@link MemberKey} of the {@link NetworkMember}
-     */
-    public MemberKey getKey() {
-        return this.key;
-    }
-
-    /**
-     * Sets a new {@link MemberKey} of the {@link NetworkMember}
-     *
-     * @param key New {@link MemberKey} to be set
-     */
-    public void setKey(final MemberKey key) {
-        this.key = key;
-    }
-
-    /**
-     * Returns the {@link Network} of the {@link NetworkMember}
+     * Returns the {@link Network} of the {@link NetworkMember}.
      *
      * @return {@link Network} of the {@link NetworkMember}
      */
@@ -128,7 +107,7 @@ public class NetworkMember extends TableModel implements JsonSerializable {
     }
 
     /**
-     * Sets a new {@link Network} of the {@link NetworkMember}
+     * Sets a new {@link Network} of the {@link NetworkMember}.
      *
      * @param network New {@link Network} to be set
      */
@@ -138,7 +117,7 @@ public class NetworkMember extends TableModel implements JsonSerializable {
     }
 
     /**
-     * Returns the {@link Device} of the {@link NetworkMember}
+     * Returns the {@link Device} of the {@link NetworkMember}.
      *
      * @return {@link Device} of the {@link NetworkMember}
      */
@@ -148,7 +127,7 @@ public class NetworkMember extends TableModel implements JsonSerializable {
     }
 
     /**
-     * Sets a new {@link Device} of the {@link NetworkMember}
+     * Sets a new {@link Device} of the {@link NetworkMember}.
      *
      * @param device New {@link Device} to be set
      */
@@ -158,7 +137,7 @@ public class NetworkMember extends TableModel implements JsonSerializable {
     }
 
     /**
-     * Generates a {@link JsonObject} containing all relevant {@link NetworkMember} information
+     * Generates a {@link JsonObject} containing all relevant {@link NetworkMember} information.
      *
      * @return The generated {@link JsonObject}
      */
@@ -170,35 +149,11 @@ public class NetworkMember extends TableModel implements JsonSerializable {
     }
 
     /**
-     * Compares an {@link Object} if it equals the {@link NetworkMember}
-     *
-     * @param o {@link Object} to compare
-     * @return True if the {@link Object} equals the {@link NetworkMember} | False if it does not
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || this.getClass() != o.getClass()) return false;
-        NetworkMember networkMember = (NetworkMember) o;
-        return Objects.equals(this.getNetwork(), networkMember.getNetwork()) &&
-                Objects.equals(this.getDevice(), networkMember.getDevice());
-    }
-
-    /**
-     * Hashes the {@link NetworkMember} using {@link Objects} hash method
-     *
-     * @return Hash of the {@link NetworkMember}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.getNetwork(), this.getDevice());
-    }
-
-    /**
-     * Key of the {@link NetworkMember} entity
+     * Key of the {@link NetworkMember} entity.
      */
     @SuppressWarnings("JpaDataSourceORMInspection")
     @Embeddable
+    @Data
     public static class MemberKey implements Serializable {
 
         @ManyToOne
@@ -210,47 +165,5 @@ public class NetworkMember extends TableModel implements JsonSerializable {
         @JoinColumn(name = "device_id", nullable = false, updatable = false)
         @Type(type = "uuid-char")
         private Device device;
-
-        /**
-         * Empty constructor to create a new {@link MemberKey}
-         */
-        public MemberKey() {
-        }
-
-        /**
-         * Creates a new {@link MemberKey}
-         *
-         * @param network {@link Network} of the {@link MemberKey}
-         * @param device  {@link Device} of the {@link MemberKey}
-         */
-        public MemberKey(final Network network, final Device device) {
-            this.network = network;
-            this.device = device;
-        }
-
-        /**
-         * Compares an {@link Object} if it equals the {@link MemberKey}
-         *
-         * @param o {@link Object} to compare
-         * @return True if the {@link Object} equals the {@link MemberKey} | False if it does not
-         */
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || this.getClass() != o.getClass()) return false;
-            MemberKey memberKey = (MemberKey) o;
-            return Objects.equals(this.network, memberKey.network) &&
-                    Objects.equals(this.device, memberKey.device);
-        }
-
-        /**
-         * Hashes the {@link MemberKey} using {@link Objects} hash method
-         *
-         * @return Hash of the {@link MemberKey}
-         */
-        @Override
-        public int hashCode() {
-            return Objects.hash(this.network, this.device);
-        }
     }
 }

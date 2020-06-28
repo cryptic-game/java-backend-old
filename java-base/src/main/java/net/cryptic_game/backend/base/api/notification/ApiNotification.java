@@ -9,7 +9,7 @@ import net.cryptic_game.backend.base.json.JsonUtils;
 
 import java.util.Collection;
 
-public class ApiNotification implements JsonSerializable {
+public final class ApiNotification implements JsonSerializable {
 
     private final String topic;
     private final JsonElement data;

@@ -1,6 +1,7 @@
 package net.cryptic_game.backend.server.server.daemon.endpoints;
 
 import com.google.gson.JsonArray;
+import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.api.client.ApiClient;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpoint;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
@@ -10,12 +11,10 @@ import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
 import net.cryptic_game.backend.base.daemon.DaemonRegisterPacket;
 import net.cryptic_game.backend.server.daemon.DaemonHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class DaemonInfoEndpoints extends ApiEndpointCollection {
+@Slf4j
+public final class DaemonInfoEndpoints extends ApiEndpointCollection {
 
-    private final static Logger log = LoggerFactory.getLogger(DaemonInfoEndpoints.class);
     private final DaemonHandler daemonHandler;
 
     public DaemonInfoEndpoints(final DaemonHandler daemonHandler) {
@@ -31,7 +30,7 @@ public class DaemonInfoEndpoints extends ApiEndpointCollection {
 
         final DaemonRegisterPacket drp = new DaemonRegisterPacket(client.getChannel(), name, collections);
         this.daemonHandler.addDaemon(drp.getDaemon());
-        this.daemonHandler.addEndpointCollections(drp.getEndpointCollections());
+        this.daemonHandler.addEndpointCollections(drp.getCollections());
 
         client.add(drp.getDaemon());
 

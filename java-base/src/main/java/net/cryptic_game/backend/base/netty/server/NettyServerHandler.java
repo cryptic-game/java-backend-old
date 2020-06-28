@@ -7,7 +7,7 @@ import java.net.SocketAddress;
 import java.util.HashSet;
 import java.util.Set;
 
-public class NettyServerHandler {
+public final class NettyServerHandler {
 
     private final Set<NettyServer> servers;
     private final EventLoopGroupHandler eventLoopGroupHandler;
@@ -17,7 +17,7 @@ public class NettyServerHandler {
         this.eventLoopGroupHandler = new EventLoopGroupHandler();
     }
 
-    public void addServer(final String name, SocketAddress address, final boolean unixSocket, final NettyCodec<?> nettyCodec) {
+    public void addServer(final String name, final SocketAddress address, final boolean unixSocket, final NettyCodec<?> nettyCodec) {
         this.servers.add(new NettyServer(name, address, unixSocket, this.eventLoopGroupHandler, nettyCodec));
     }
 

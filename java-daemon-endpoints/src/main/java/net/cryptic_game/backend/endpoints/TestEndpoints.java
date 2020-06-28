@@ -12,7 +12,7 @@ import net.cryptic_game.backend.base.utils.DaemonUtils;
 
 import java.util.UUID;
 
-public class TestEndpoints extends ApiEndpointCollection {
+public final class TestEndpoints extends ApiEndpointCollection {
 
     public TestEndpoints() {
         super("test", "todo");

@@ -178,3 +178,4 @@ gradle-app.setting
 ### Custom ###
 config.yaml
 tmp
+lombok.config

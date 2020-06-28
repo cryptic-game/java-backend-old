@@ -16,11 +16,11 @@ import java.util.UUID;
  * @deprecated this will be removed in {@code v0.4.0-pre-alpha}.
  */
 @Deprecated(forRemoval = true)
-public class JsonBuilder implements JsonSerializable {
+public final class JsonBuilder implements JsonSerializable {
 
     private final JsonObject json;
 
-    private JsonBuilder(JsonObject json) {
+    private JsonBuilder(final JsonObject json) {
         this.json = json;
     }
 
@@ -39,7 +39,7 @@ public class JsonBuilder implements JsonSerializable {
      * @param json The existing {@link JsonObject}
      * @return the {@link JsonBuilder} that has been created.
      */
-    public static JsonBuilder anJSON(JsonObject json) {
+    public static JsonBuilder anJSON(final JsonObject json) {
         return new JsonBuilder(json);
     }
 

@@ -5,7 +5,7 @@ import net.cryptic_game.backend.base.daemon.DaemonRegisterPacket;
 import net.cryptic_game.backend.base.utils.ApiUtils;
 import net.cryptic_game.backend.daemon.api.DaemonEndpointHandler;
 
-public class DaemonBootstrapper {
+public final class DaemonBootstrapper {
 
     private final DaemonRegisterPacket drp;
     private final DaemonEndpointHandler daemonEndpointHandler;
@@ -16,7 +16,7 @@ public class DaemonBootstrapper {
     }
 
     void sendRegisterPackage(final Channel channel) {
-        this.drp.getEndpointCollections().clear();
+        this.drp.getCollections().clear();
         this.drp.addEndpointCollections(this.daemonEndpointHandler.getApiList().getCollections().values());
         ApiUtils.request(channel, "daemon/register", this.drp);
     }

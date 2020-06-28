@@ -9,7 +9,7 @@ import net.cryptic_game.backend.base.netty.NettyCodecInitializer;
 
 import java.nio.charset.StandardCharsets;
 
-public class HttpServerCodecInitializer extends NettyCodecInitializer<net.cryptic_game.backend.server.server.http.HttpServerCodec> {
+public final class HttpServerCodecInitializer extends NettyCodecInitializer<net.cryptic_game.backend.server.server.http.HttpServerCodec> {
 
     @Override
     public void configure(final ChannelPipeline pipeline) {

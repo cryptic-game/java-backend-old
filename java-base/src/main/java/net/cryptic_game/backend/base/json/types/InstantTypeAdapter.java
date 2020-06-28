@@ -13,7 +13,7 @@ import net.cryptic_game.backend.base.json.JsonUtils;
 import java.lang.reflect.Type;
 import java.time.Instant;
 
-public class InstantTypeAdapter implements JsonSerializer<Instant>, JsonDeserializer<Instant> {
+public final class InstantTypeAdapter implements JsonSerializer<Instant>, JsonDeserializer<Instant> {
 
     @Override
     public JsonElement serialize(final Instant src, final Type typeOfSrc, final JsonSerializationContext context) {

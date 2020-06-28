@@ -1,0 +1,18 @@
+apply plugin: 'checkstyle'
+
+def checkstyleDir = "${rootDir}/config/checkstyle"
+
+tasks.withType(Checkstyle) {
+    reports {
+        xml.enabled false
+        html.enabled true
+    }
+}
+
+checkstyleMain {
+    configFile = file("${checkstyleDir}/main.xml")
+}
+
+checkstyleTest {
+    configFile = file("${checkstyleDir}/test.xml")
+}

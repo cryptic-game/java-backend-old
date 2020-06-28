@@ -2,6 +2,7 @@ package net.cryptic_game.backend.data.currency;
 
 
 import com.google.gson.JsonObject;
+import lombok.Data;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
@@ -14,15 +15,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.ZonedDateTime;
-import java.util.Objects;
 
 /**
- * Entity representing a currency transaction entry in the database
+ * Entity representing a currency transaction entry in the database.
  *
  * @since 0.3.0
  */
 @Entity
 @Table(name = "currency_transaction")
+@Data
 public class CurrencyTransaction extends TableModelAutoId implements JsonSerializable {
 
     @Column(name = "timestamp", updatable = false, nullable = false)
@@ -48,115 +49,7 @@ public class CurrencyTransaction extends TableModelAutoId implements JsonSeriali
     private String origin;
 
     /**
-     * Returns the {@link ZonedDateTime}, the timestamp when the {@link CurrencyTransaction} has been made
-     *
-     * @return the timestamp
-     */
-    public ZonedDateTime getTimeStamp() {
-        return this.timeStamp;
-    }
-
-    /**
-     * Sets a new timestap as {@link ZonedDateTime} for the {@link CurrencyTransaction}
-     *
-     * @param timeStamp the new {@link ZonedDateTime} to be set
-     */
-    public void setTimeStamp(final ZonedDateTime timeStamp) {
-        this.timeStamp = timeStamp;
-    }
-
-    /**
-     * Returns the {@link User} who sends the {@link CurrencyTransaction}
-     *
-     * @return the source {@link User}
-     */
-    public User getUserSource() {
-        return this.userSource;
-    }
-
-    /**
-     * Sets a new {@link User} as source for the {@link CurrencyTransaction}
-     *
-     * @param userSource the new {@link User} to be set
-     */
-    public void setUserSource(final User userSource) {
-        this.userSource = userSource;
-    }
-
-    /**
-     * Returns the {@link User} who receives the {@link CurrencyTransaction}
-     *
-     * @return the destination {@link User}
-     */
-    public User getUserDestination() {
-        return this.userDestination;
-    }
-
-    /**
-     * Sets a new {@link User} as destination for the {@link CurrencyTransaction}
-     *
-     * @param userDestination the new {@link User} to be set
-     */
-    public void setUserDestination(final User userDestination) {
-        this.userDestination = userDestination;
-    }
-
-    /**
-     * Returns the amount of transacted morphcoin
-     *
-     * @return the amount of money
-     */
-    public int getSendAmount() {
-        return this.sendAmount;
-    }
-
-    /**
-     * Sets a new amount of mophcoin to be transacted
-     *
-     * @param sendAmount the new amount of money to be set
-     */
-    public void setSendAmount(final int sendAmount) {
-        this.sendAmount = sendAmount;
-    }
-
-    /**
-     * Returns the purpose of the {@link CurrencyTransaction}
-     *
-     * @return the purpose
-     */
-    public String getPurpose() {
-        return this.purpose;
-    }
-
-    /**
-     * Sets a new purpose for the {@link CurrencyTransaction}
-     *
-     * @param purpose New purpose to be set.
-     */
-    public void setPurpose(final String purpose) {
-        this.purpose = purpose;
-    }
-
-    /**
-     * Returns the origin of the {@link CurrencyTransaction}
-     *
-     * @return the origin
-     */
-    public String getOrigin() {
-        return this.origin;
-    }
-
-    /**
-     * Sets a new origin of the {@link CurrencyTransaction}
-     *
-     * @param origin New origin to be set.
-     */
-    public void setOrigin(final String origin) {
-        this.origin = origin;
-    }
-
-    /**
-     * Generates a {@link JsonObject} containing all relevant {@link CurrencyTransaction} information
+     * Generates a {@link JsonObject} containing all relevant {@link CurrencyTransaction} information.
      *
      * @return The generated {@link JsonObject}
      */
@@ -170,34 +63,5 @@ public class CurrencyTransaction extends TableModelAutoId implements JsonSeriali
                 .add("usage", this.getPurpose())
                 .add("origin", this.getOrigin())
                 .build();
-    }
-
-    /**
-     * Compares an {@link Object} if it equals the {@link CurrencyTransaction}
-     *
-     * @param o {@link Object} to compare
-     * @return True if the {@link Object} equals the {@link CurrencyTransaction} | False if it does not
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CurrencyTransaction that = (CurrencyTransaction) o;
-        return getSendAmount() == that.getSendAmount() &&
-                Objects.equals(getTimeStamp(), that.getTimeStamp()) &&
-                Objects.equals(getUserSource().getId(), that.getUserSource().getId()) &&
-                Objects.equals(getUserDestination().getId(), that.getUserDestination().getId()) &&
-                Objects.equals(getPurpose(), that.getPurpose()) &&
-                Objects.equals(getOrigin(), that.getOrigin());
-    }
-
-    /**
-     * Hashes the {@link CurrencyTransaction} using {@link Objects} hash method
-     *
-     * @return Hash of the {@link CurrencyTransaction}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(getTimeStamp(), getUserSource().getId(), getSendAmount(), getUserDestination().getId(), getPurpose(), getOrigin());
     }
 }

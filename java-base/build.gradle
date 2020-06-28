@@ -1,0 +1,39 @@
+plugins {
+    id 'java-library'
+}
+
+dependencies {
+    // Database
+    api 'org.hibernate:hibernate-core:5.4.17.Final'
+    implementation 'org.hibernate:hibernate-hikaricp:5.4.17.Final'
+    implementation 'mysql:mysql-connector-java:8.0.20'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:2.6.0'
+    implementation 'org.postgresql:postgresql:42.2.14'
+    implementation 'com.h2database:h2:1.4.200'
+
+    // Logger
+    api 'org.apache.logging.log4j:log4j-core:2.13.3'
+    api 'org.apache.logging.log4j:log4j-slf4j-impl:2.13.3'
+    api 'org.fusesource.jansi:jansi:1.18'
+
+    // Network
+    api 'io.netty:netty-all:4.1.50.Final'
+
+    // Json
+    api 'com.google.code.gson:gson:2.8.6'
+
+    // Yaml
+    implementation 'org.yaml:snakeyaml:1.26'
+
+    // BCrypt
+    api 'at.favre.lib:bcrypt:0.9.0'
+
+    // Sentry
+    api 'io.sentry:sentry-log4j2:1.7.30'
+
+    // Reflections
+    api 'org.reflections:reflections:0.9.12'
+
+    // Temporally
+    api 'com.sun.activation:javax.activation:1.2.0'
+}

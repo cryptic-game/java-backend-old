@@ -6,7 +6,11 @@ import net.cryptic_game.backend.base.json.JsonBuilder;
 
 import java.util.UUID;
 
-public class ApiUtils {
+public final class ApiUtils {
+
+    private ApiUtils() {
+        throw new UnsupportedOperationException();
+    }
 
     public static UUID request(final Channel channel, final String endpoint, final Object data) {
         final UUID tag = UUID.randomUUID();

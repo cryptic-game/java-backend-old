@@ -23,10 +23,10 @@ import org.hibernate.dialect.PostgreSQL9Dialect;
 import java.sql.Driver;
 
 /**
- * All available Drivers:
+ * All available Drivers.
  * <ul>
  *     <li>
- *         {@code h2}: H2 (Embedded Database, only for developing / testing)
+ *         {@code h2}: H2 (Embedded Database, only for developing / testing purposes)
  *     </li>
  *     <li>
  *         PostgreSQL
@@ -88,10 +88,10 @@ public enum SQLServerType {
 
     NONE("none", "none", Driver.class, Dialect.class);
 
-    final String name;
-    final String urlPrefix;
-    final String driver;
-    final String dialect;
+    private final String name;
+    private final String urlPrefix;
+    private final String driver;
+    private final String dialect;
 
     SQLServerType(final String name, final String urlPrefix, final Class<? extends Driver> driver, final Class<? extends Dialect> dialect) {
         this.name = name;

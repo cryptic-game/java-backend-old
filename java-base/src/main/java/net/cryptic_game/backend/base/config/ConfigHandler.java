@@ -1,7 +1,6 @@
 package net.cryptic_game.backend.base.config;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,9 +13,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class ConfigHandler {
-
-    private final Logger log = LoggerFactory.getLogger(ConfigHandler.class);
+@Slf4j
+public final class ConfigHandler {
 
     private final boolean useEnvironmentConfig;
     private final File configFile;
@@ -42,7 +40,7 @@ public class ConfigHandler {
         else {
             final List<String> content = new ArrayList<>();
 
-            try (final BufferedReader reader = new BufferedReader(new FileReader(this.configFile))) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(this.configFile))) {
                 String line;
                 while ((line = reader.readLine()) != null) if (!line.isBlank()) content.add(line);
             } catch (IOException e) {

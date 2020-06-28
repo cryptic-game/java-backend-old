@@ -1,17 +1,20 @@
 package net.cryptic_game.backend.daemon.api;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.api.ApiException;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointList;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class DaemonEndpointHandler {
+@Slf4j
+@EqualsAndHashCode
+public final class DaemonEndpointHandler {
 
-    private static final Logger log = LoggerFactory.getLogger(DaemonEndpointHandler.class);
+    @Getter
     private final ApiEndpointList apiList;
     private Set<ApiEndpointCollection> apiCollections;
 
@@ -37,9 +40,5 @@ public class DaemonEndpointHandler {
             log.error("It's too late to register any more endpoints.");
             return null;
         }
-    }
-
-    public ApiEndpointList getApiList() {
-        return this.apiList;
     }
 }

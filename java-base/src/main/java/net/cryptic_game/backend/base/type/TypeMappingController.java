@@ -3,7 +3,7 @@ package net.cryptic_game.backend.base.type;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TypeMappingController {
+public final class TypeMappingController {
 
     private final Map<Class<?>, TypeMapping<?>> mappings;
 

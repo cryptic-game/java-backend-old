@@ -17,14 +17,19 @@ import java.util.stream.Collectors;
 
 public final class ApiParser {
 
-    private static final Logger log = LoggerFactory.getLogger(ApiParser.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ApiParser.class);
 
     private ApiParser() {
         throw new UnsupportedOperationException();
     }
 
     public static ApiEndpointCollectionData parseEndpointCollection(final ApiEndpointCollection collection) {
-        return new ApiEndpointCollectionData(collection.getName(), collection.getDescription(), collection, ApiParser.parse(collection.getName(), collection.getClass(), collection));
+        return new ApiEndpointCollectionData(
+                collection.getName(),
+                collection.getDescription(),
+                collection,
+                ApiParser.parse(collection.getName(), collection.getClass(), collection)
+        );
     }
 
     private static Map<String, ApiEndpointData> parse(final String baseName, final Class<?> clazz, final Object object) {
@@ -39,7 +44,7 @@ public final class ApiParser {
         if (method.isAnnotationPresent(ApiEndpoint.class)) {
             final ApiEndpoint apiEndpoint = method.getAnnotation(ApiEndpoint.class);
             if (!method.getReturnType().equals(ApiResponse.class)) {
-                log.error("Api Endpoint \"{}\" does not have \"{}\" as return type.", baseName + "/" + apiEndpoint.value(), ApiResponse.class.getName());
+                LOG.error("Api Endpoint \"{}\" does not have \"{}\" as return type.", baseName + "/" + apiEndpoint.value(), ApiResponse.class.getName());
                 return null;
             } else return new ApiEndpointData(
                     baseName + "/" + apiEndpoint.value(),

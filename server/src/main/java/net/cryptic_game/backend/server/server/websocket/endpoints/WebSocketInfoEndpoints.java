@@ -12,7 +12,7 @@ import net.cryptic_game.backend.server.App;
 
 import static net.cryptic_game.backend.base.json.JsonBuilder.create;
 
-public class WebSocketInfoEndpoints extends ApiEndpointCollection {
+public final class WebSocketInfoEndpoints extends ApiEndpointCollection {
 
     public WebSocketInfoEndpoints() {
         super("info", "todo");
