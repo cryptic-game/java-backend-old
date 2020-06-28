@@ -27,6 +27,12 @@
     catch(err) {
     }
 //-->
+var data = {"i0":10,"i1":10,"i2":10};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var altColor = "altColor";
+var rowColor = "rowColor";
+var tableTab = "tableTab";
+var activeTableTab = "activeTableTab";
 var pathtoroot = "../../../../../";
 var useModuleDirectories = true;
 loadScripts(document, 'script');</script>
@@ -91,7 +97,7 @@ loadScripts(document, 'script');</script>
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
-<li>Method</li>
+<li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
 <a id="skip.navbar.top">
@@ -183,6 +189,33 @@ extends <a href="../../base/api/endpoint/ApiEndpointCollection.html" title="clas
 <!--   -->
 </a>
 <h3>Method Summary</h3>
+<table class="memberSummary">
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tr id="i0" class="altColor">
+<td class="colFirst"><code><a href="../../base/api/endpoint/ApiResponse.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiResponse</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#invitations(java.util.UUID,java.util.UUID)">invitations</a></span>&#8203;(java.util.UUID&nbsp;userId,
+           java.util.UUID&nbsp;deviceId)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code><a href="../../base/api/endpoint/ApiResponse.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiResponse</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#leave(java.util.UUID,java.util.UUID,java.util.UUID)">leave</a></span>&#8203;(java.util.UUID&nbsp;userId,
+     java.util.UUID&nbsp;deviceId,
+     java.util.UUID&nbsp;id)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code><a href="../../base/api/endpoint/ApiResponse.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiResponse</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#member(java.util.UUID,java.util.UUID)">member</a></span>&#8203;(java.util.UUID&nbsp;userId,
+      java.util.UUID&nbsp;deviceId)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</table>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection">
 <!--   -->
@@ -220,6 +253,47 @@ extends <a href="../../base/api/endpoint/ApiEndpointCollection.html" title="clas
 <li class="blockList">
 <h4>NetworkMemberEndpoints</h4>
 <pre>public&nbsp;NetworkMemberEndpoints()</pre>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<!-- ============ METHOD DETAIL ========== -->
+<section role="region">
+<ul class="blockList">
+<li class="blockList"><a id="method.detail">
+<!--   -->
+</a>
+<h3>Method Detail</h3>
+<a id="member(java.util.UUID,java.util.UUID)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>member</h4>
+<pre class="methodSignature">public&nbsp;<a href="../../base/api/endpoint/ApiResponse.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiResponse</a>&nbsp;member&#8203;(java.util.UUID&nbsp;userId,
+                          java.util.UUID&nbsp;deviceId)</pre>
+</li>
+</ul>
+<a id="invitations(java.util.UUID,java.util.UUID)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>invitations</h4>
+<pre class="methodSignature">public&nbsp;<a href="../../base/api/endpoint/ApiResponse.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiResponse</a>&nbsp;invitations&#8203;(java.util.UUID&nbsp;userId,
+                               java.util.UUID&nbsp;deviceId)</pre>
+</li>
+</ul>
+<a id="leave(java.util.UUID,java.util.UUID,java.util.UUID)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>leave</h4>
+<pre class="methodSignature">public&nbsp;<a href="../../base/api/endpoint/ApiResponse.html" title="class in net.cryptic_game.backend.base.api.endpoint">ApiResponse</a>&nbsp;leave&#8203;(java.util.UUID&nbsp;userId,
+                         java.util.UUID&nbsp;deviceId,
+                         java.util.UUID&nbsp;id)</pre>
 </li>
 </ul>
 </li>
@@ -282,7 +356,7 @@ extends <a href="../../base/api/endpoint/ApiEndpointCollection.html" title="clas
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
-<li>Method</li>
+<li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
 <a id="skip.navbar.bottom">

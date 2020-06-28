@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":9,"i5":9,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
+var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":9,"i5":9,"i6":9,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -279,41 +279,46 @@ implements <a href="../../base/json/JsonSerializable.html" title="interface in n
 </td>
 </tr>
 <tr id="i6" class="altColor">
+<td class="colFirst"><code>static java.util.List&lt;<a href="NetworkMember.html" title="class in net.cryptic_game.backend.data.network">NetworkMember</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMembershipsOfNetwork(net.cryptic_game.backend.data.network.Network)">getMembershipsOfNetwork</a></span>&#8203;(<a href="Network.html" title="class in net.cryptic_game.backend.data.network">Network</a>&nbsp;network)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="Network.html" title="class in net.cryptic_game.backend.data.network">Network</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNetwork()">getNetwork</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the <a href="Network.html" title="class in net.cryptic_game.backend.data.network"><code>Network</code></a> of the <a href="NetworkMember.html" title="class in net.cryptic_game.backend.data.network"><code>NetworkMember</code></a></div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Hashes the <a href="NetworkMember.html" title="class in net.cryptic_game.backend.data.network"><code>NetworkMember</code></a> using <code>Objects</code> hash method</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>com.google.gson.JsonObject</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#serialize()">serialize</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Generates a <code>JsonObject</code> containing all relevant <a href="NetworkMember.html" title="class in net.cryptic_game.backend.data.network"><code>NetworkMember</code></a> information</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDevice(net.cryptic_game.backend.data.device.Device)">setDevice</a></span>&#8203;(<a href="../device/Device.html" title="class in net.cryptic_game.backend.data.device">Device</a>&nbsp;device)</code></th>
 <td class="colLast">
 <div class="block">Sets a new <a href="../device/Device.html" title="class in net.cryptic_game.backend.data.device"><code>Device</code></a> of the <a href="NetworkMember.html" title="class in net.cryptic_game.backend.data.network"><code>NetworkMember</code></a></div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setKey(net.cryptic_game.backend.data.network.NetworkMember.MemberKey)">setKey</a></span>&#8203;(<a href="NetworkMember.MemberKey.html" title="class in net.cryptic_game.backend.data.network">NetworkMember.MemberKey</a>&nbsp;key)</code></th>
 <td class="colLast">
 <div class="block">Sets a new <a href="NetworkMember.MemberKey.html" title="class in net.cryptic_game.backend.data.network"><code>NetworkMember.MemberKey</code></a> of the <a href="NetworkMember.html" title="class in net.cryptic_game.backend.data.network"><code>NetworkMember</code></a></div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setNetwork(net.cryptic_game.backend.data.network.Network)">setNetwork</a></span>&#8203;(<a href="Network.html" title="class in net.cryptic_game.backend.data.network">Network</a>&nbsp;network)</code></th>
 <td class="colLast">
@@ -421,6 +426,15 @@ implements <a href="../../base/json/JsonSerializable.html" title="interface in n
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>A <code>List</code> containing the fetched <a href="NetworkMember.html" title="class in net.cryptic_game.backend.data.network"><code>NetworkMember</code></a>'s</dd>
 </dl>
+</li>
+</ul>
+<a id="getMembershipsOfNetwork(net.cryptic_game.backend.data.network.Network)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getMembershipsOfNetwork</h4>
+<pre class="methodSignature">public static&nbsp;java.util.List&lt;<a href="NetworkMember.html" title="class in net.cryptic_game.backend.data.network">NetworkMember</a>&gt;&nbsp;getMembershipsOfNetwork&#8203;(<a href="Network.html" title="class in net.cryptic_game.backend.data.network">Network</a>&nbsp;network)</pre>
 </li>
 </ul>
 <a id="getKey()">
