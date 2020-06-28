@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -74,6 +75,31 @@ public class NetworkInvitation extends TableModel implements JsonSerializable {
         NetworkInvitation networkInvitation = sqlSession.find(NetworkInvitation.class, new NetworkInvitation.InvitationKey(network, device));
         sqlSession.close();
         return networkInvitation;
+    }
+
+    /**
+     * Fetches the {@link NetworkInvitation}s with the given device
+     *
+     * @param device {@link Device} of the {@link NetworkInvitation}
+     * @return A {@link List} with the fetched {@link NetworkInvitation}s
+     */
+    public static List<NetworkInvitation> getInvitationsOfDevice(final Device device) {
+        try (final Session sqlSession = sqlConnection.openSession()) {
+            return sqlSession
+                    .createQuery("select object (n) from NetworkInvitation as n where n.key.device = :device", NetworkInvitation.class)
+                    .setParameter("device", device)
+                    .getResultList();
+        }
+    }
+
+    public static List<NetworkInvitation> getInvitationsOfNetwork(final Network network) {
+        final Session sqlSession = sqlConnection.openSession();
+        final List<NetworkInvitation> networkInvitations = sqlSession
+                .createQuery("select object (n) from NetworkInvitation as n where n.key.network = :network", NetworkInvitation.class)
+                .setParameter("network", network)
+                .getResultList();
+        sqlSession.close();
+        return networkInvitations;
     }
 
     /**
@@ -201,7 +227,6 @@ public class NetworkInvitation extends TableModel implements JsonSerializable {
                 .add("inviter", this.getInviter() != null, () -> this.getInviter().getId())
                 .build();
     }
-
 
     /**
      * Key of the {@link NetworkInvitation} entity
