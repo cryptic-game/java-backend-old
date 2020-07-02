@@ -1,9 +1,6 @@
 package net.cryptic_game.backend.data.chat;
 
-import com.google.gson.JsonObject;
 import lombok.Data;
-import net.cryptic_game.backend.base.json.JsonBuilder;
-import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 
 import javax.persistence.Column;
@@ -19,7 +16,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "chat_channel")
 @Data
-public class ChatChannel extends TableModelAutoId implements JsonSerializable {
+public final class ChatChannel extends TableModelAutoId {
 
     @Column(name = "name", updatable = true, nullable = false)
     private String name;
@@ -39,18 +36,6 @@ public class ChatChannel extends TableModelAutoId implements JsonSerializable {
     }
 
     /**
-     * Deletes a {@link ChatChannel}.
-     *
-     * @param id the {@link UUID} of the {@link ChatChannel}
-     */
-    public static void removeChannel(final UUID id) {
-        final ChatChannel channel = getById(id);
-        if (channel != null) {
-            channel.delete();
-        }
-    }
-
-    /**
      * Returns a {@link ChatChannel} by it's UUID.
      *
      * @param id the {@link UUID} of the Channel
@@ -58,17 +43,5 @@ public class ChatChannel extends TableModelAutoId implements JsonSerializable {
      */
     public static ChatChannel getById(final UUID id) {
         return getById(ChatChannel.class, id);
-    }
-
-    /**
-     * Generates a {@link JsonObject} containing all relevant {@link ChatChannel} information.
-     *
-     * @return The generated {@link JsonObject}
-     */
-    @Override
-    public JsonObject serialize() {
-        return JsonBuilder.create("id", this.getId())
-                .add("name", this.getName())
-                .build();
     }
 }

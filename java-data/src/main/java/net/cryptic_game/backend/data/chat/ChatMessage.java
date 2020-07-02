@@ -11,12 +11,12 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 /**
@@ -27,7 +27,7 @@ import java.util.List;
 @Entity
 @Table(name = "chat_message")
 @Data
-public class ChatMessage extends TableModelAutoId implements JsonSerializable {
+public final class ChatMessage extends TableModelAutoId implements JsonSerializable {
 
     @ManyToOne
     @JoinColumn(name = "user_id", updatable = false, nullable = false)
@@ -39,11 +39,10 @@ public class ChatMessage extends TableModelAutoId implements JsonSerializable {
     @Type(type = "uuid-char")
     private ChatChannel channel;
 
-    @Enumerated(EnumType.STRING)
-    @Column(updatable = false)
-    private ChatAction type;
+    @Column(name = "timestamp", updatable = false, nullable = false)
+    private OffsetDateTime timestamp;
 
-    @Column(name = "text", updatable = false, nullable = true)
+    @Column(name = "text", updatable = false, nullable = false, length = 1024)
     private String text;
 
     /* User ID of the target, if it is not a whisper it is null and consequently targets everyone in the channel. */
@@ -52,67 +51,56 @@ public class ChatMessage extends TableModelAutoId implements JsonSerializable {
     private User target;
 
     /**
-     * Sends a {@link ChatMessage} without a target and as {@link ChatAction#SEND_MESSAGE}.
+     * Creates a new {@link ChatMessage} without a target (no whipser).
      *
-     * @param channel the {@link} Channel where the {@link ChatMessage} will be sent
+     * @param channel the {@link ChatChannel} where the {@link ChatMessage} will be sent
      * @param user    the {@link User} who sends the {@link ChatMessage}
      * @param text    the content of the {@link ChatMessage}
      * @return the sent {@link ChatMessage}
      */
-    public ChatMessage send(final ChatChannel channel, final User user, final String text) {
-        return send(channel, user, ChatAction.SEND_MESSAGE, text);
+    public static ChatMessage create(final ChatChannel channel, final User user, final String text) {
+        return create(channel, user, null, text);
     }
 
     /**
-     * Sends a {@link ChatMessage} without a target.
+     * Creates a new {@link ChatMessage}.
      *
-     * @param channel the {@link} Channel where the {@link ChatMessage} will be sent
-     * @param user    the {@link User} who sends the {@link ChatMessage}
-     * @param type    the {@link ChatAction}-Type of the {@link ChatMessage}
-     * @param text    the content of the {@link ChatMessage}
-     * @return the sent {@link ChatMessage}
-     */
-    public ChatMessage send(final ChatChannel channel, final User user, final ChatAction type, final String text) {
-        return send(channel, user, null, type, text);
-    }
-
-    /**
-     * Sends a {@link ChatMessage}.
-     *
-     * @param channel the {@link} Channel where the {@link ChatMessage} will be sent
+     * @param channel the {@link ChatChannel} where the {@link ChatMessage} will be sent
      * @param user    the {@link User} who sends the {@link ChatMessage}
      * @param target  the {@link User} who receives the {@link ChatMessage}
-     * @param type    the {@link ChatAction}-Type of the {@link ChatMessage}
      * @param text    the content of the {@link ChatMessage}
      * @return the sent {@link ChatMessage}
      */
-    public ChatMessage send(final ChatChannel channel, final User user, final User target, final ChatAction type, final String text) {
+    public static ChatMessage create(final ChatChannel channel, final User user, final User target, final String text) {
         final ChatMessage message = new ChatMessage();
         message.setUser(user);
         message.setChannel(channel);
-        message.setTarget(target);
-        message.setType(type);
+        message.setTimestamp(OffsetDateTime.now(ZoneOffset.UTC));
         message.setText(text);
+        message.setTarget(target);
 
         message.saveOrUpdate();
         return message;
     }
 
     /**
-     * Returns a {@link List} of {@link ChatMessage}s sent in a {@link ChatChannel} by a {@link User}.
+     * Returns a {@link List} of {@link ChatMessage}s sent in a {@link ChatChannel}.
      *
-     * @param user    the {@link User} who sent the {@link ChatMessage}s
      * @param channel the {@link ChatChannel} where the {@link ChatMessage}s were sent
+     * @param user    the {@link User} of the request
+     * @param from    the start {@link OffsetDateTime}
+     * @param to      the end {@link OffsetDateTime}
      * @return the {@link List} of {@link ChatMessage}s
      */
-    public List<ChatMessage> getMessages(final User user, final ChatChannel channel) {
+    public List<ChatMessage> getMessages(final ChatChannel channel, final User user, final OffsetDateTime from, final OffsetDateTime to) {
         try (Session sqlSession = SQL_CONNECTION.openSession()) {
-            return sqlSession
-                    .createQuery("select object (m) from Message m where  m.channel = :channel "
-                            + "and (m.target is null or (m.type = :whisper and m.target = :user) or (m.type = :whisper and m.user = :user))", ChatMessage.class)
-                    .setParameter("user", user)
+            return sqlSession.createQuery("select object (m) from ChatMessage m where m.channel = :channel "
+                    + "and m.timestamp between :from and :to "
+                    + "and (m.target is null or m.target = :user or m.user = :user)", ChatMessage.class)
                     .setParameter("channel", channel)
-                    .setParameter("whisper", ChatAction.WHISPER_MESSAGE)
+                    .setParameter("from", from)
+                    .setParameter("to", to)
+                    .setParameter("user", user)
                     .getResultList();
         }
     }
@@ -125,10 +113,9 @@ public class ChatMessage extends TableModelAutoId implements JsonSerializable {
     @Override
     public JsonObject serialize() {
         return JsonBuilder.create("id", this.getId())
-                .add("channel", this.getChannel().getId())
-                .add("user", this.getUser().getId())
-                .add("type", this.getType().toString())
-                .add("target", this.getTarget().toString())
+                .add("channel_id", this.getChannel().getId())
+                .add("user_id", this.getUser().getId())
+                .add("target_id", this.getTarget().getId())
                 .add("text", this.getText())
                 .build();
     }
