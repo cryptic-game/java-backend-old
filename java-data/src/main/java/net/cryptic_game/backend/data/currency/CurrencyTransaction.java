@@ -6,7 +6,6 @@ import lombok.Data;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
-import net.cryptic_game.backend.data.user.User;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
@@ -14,7 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 /**
  * Entity representing a currency transaction entry in the database.
@@ -24,29 +23,26 @@ import java.time.ZonedDateTime;
 @Entity
 @Table(name = "currency_transaction")
 @Data
-public class CurrencyTransaction extends TableModelAutoId implements JsonSerializable {
+public final class CurrencyTransaction extends TableModelAutoId implements JsonSerializable {
 
     @Column(name = "timestamp", updatable = false, nullable = false)
-    private ZonedDateTime timeStamp;
+    private OffsetDateTime timestamp;
 
     @ManyToOne
     @JoinColumn(name = "source_id", updatable = false, nullable = false)
     @Type(type = "uuid-char")
-    private User userSource;
+    private CurrencyWallet source;
 
     @ManyToOne
     @JoinColumn(name = "destination_id", nullable = false, updatable = false)
     @Type(type = "uuid-char")
-    private User userDestination;
+    private CurrencyWallet destination;
 
-    @Column(name = "send_amount", updatable = false, nullable = false)
-    private int sendAmount;
+    @Column(name = "amount", updatable = false, nullable = false)
+    private int amount;
 
     @Column(name = "purpose", updatable = false, nullable = true)
     private String purpose;
-
-    @Column(name = "origin", updatable = false, nullable = true)
-    private String origin;
 
     /**
      * Generates a {@link JsonObject} containing all relevant {@link CurrencyTransaction} information.
@@ -56,12 +52,11 @@ public class CurrencyTransaction extends TableModelAutoId implements JsonSeriali
     @Override
     public JsonObject serialize() {
         return JsonBuilder.create("id", this.getId())
-                .add("timestamp", this.getTimeStamp())
-                .add("source_id", this.getUserSource().getId())
-                .add("SendAmount", this.getSendAmount())
-                .add("destination_id", this.getUserDestination().getId())
-                .add("usage", this.getPurpose())
-                .add("origin", this.getOrigin())
+                .add("timestamp", this.getTimestamp())
+                .add("source_id", this.getSource().getId())
+                .add("destination_id", this.getDestination().getId())
+                .add("amount", this.getAmount())
+                .add("purpose", this.getPurpose())
                 .build();
     }
 }
