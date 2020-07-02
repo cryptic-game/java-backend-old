@@ -12,24 +12,23 @@ import net.cryptic_game.backend.base.json.JsonUtils;
 
 import java.lang.reflect.Type;
 import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 
-@Deprecated
-public final class ZonedDateTimeAdapter implements JsonSerializer<ZonedDateTime>, JsonDeserializer<ZonedDateTime> {
+public final class OffsetDateTimeAdapter implements JsonSerializer<OffsetDateTime>, JsonDeserializer<OffsetDateTime> {
 
     @Override
-    public JsonElement serialize(final ZonedDateTime src, final Type typeOfSrc, final JsonSerializationContext context) {
+    public JsonElement serialize(final OffsetDateTime src, final Type typeOfSrc, final JsonSerializationContext context) {
         return JsonUtils.toJson(src.toInstant());
     }
 
     @Override
-    public ZonedDateTime deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context) throws JsonParseException {
+    public OffsetDateTime deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context) throws JsonParseException {
         try {
             if (json.isJsonPrimitive()) {
-                return ZonedDateTime.ofInstant(JsonUtils.fromJson(json, Instant.class), ZoneOffset.UTC);
+                return OffsetDateTime.ofInstant(JsonUtils.fromJson(json, Instant.class), ZoneOffset.UTC);
             } else {
-                throw new JsonParseException("Unable to parse a non \"" + JsonPrimitive.class.getName() + "\" into a \"" + ZonedDateTime.class.getName() + "\".");
+                throw new JsonParseException("Unable to parse a non \"" + JsonPrimitive.class.getName() + "\" into a \"" + OffsetDateTime.class.getName() + "\".");
             }
         } catch (JsonTypeMappingException e) {
             throw new JsonParseException(e);

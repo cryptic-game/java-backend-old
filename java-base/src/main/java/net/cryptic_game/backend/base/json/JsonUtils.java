@@ -8,11 +8,13 @@ import com.google.gson.JsonElement;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.json.types.InstantTypeAdapter;
+import net.cryptic_game.backend.base.json.types.OffsetDateTimeAdapter;
 import net.cryptic_game.backend.base.json.types.ZonedDateTimeAdapter;
 
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.function.Function;
@@ -28,6 +30,7 @@ public final class JsonUtils {
             .setExclusionStrategies(new JsonExclusionStrategy())
             .registerTypeHierarchyAdapter(JsonSerializable.class, new JsonSerializableSerializer())
             .registerTypeHierarchyAdapter(Instant.class, new InstantTypeAdapter())
+            .registerTypeHierarchyAdapter(OffsetDateTime.class, new OffsetDateTimeAdapter())
             .registerTypeHierarchyAdapter(ZonedDateTime.class, new ZonedDateTimeAdapter())
             .create();
 
