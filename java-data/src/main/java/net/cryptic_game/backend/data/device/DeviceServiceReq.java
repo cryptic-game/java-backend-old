@@ -22,15 +22,15 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "device_service_req")
 @Data
-public class DeviceServiceReq extends TableModelAutoId implements JsonSerializable {
+public final class DeviceServiceReq extends TableModelAutoId implements JsonSerializable {
 
     @ManyToOne
-    @JoinColumn(name = "service", updatable = true, nullable = true)
+    @JoinColumn(name = "service_id", updatable = true, nullable = true)
     @Type(type = "uuid-char")
     private Service service;
 
     @ManyToOne
-    @JoinColumn(name = "device", updatable = true, nullable = true) // updatable?
+    @JoinColumn(name = "device_id", updatable = true, nullable = true) // updatable?
     @Type(type = "uuid-char")
     private Device device;
 
@@ -57,8 +57,8 @@ public class DeviceServiceReq extends TableModelAutoId implements JsonSerializab
     @Override
     public JsonObject serialize() {
         return JsonBuilder.create("id", this.getId())
-                .add("device", this.getDevice().getId())
-                .add("service", this.getService().getId())
+                .add("device_id", this.getDevice().getId())
+                .add("service_id", this.getService().getId())
                 .add("allocated_cpu", this.getAllocatedCPU())
                 .add("allocated_ram", this.getAllocatedRAM())
                 .add("allocated_gpu", this.getAllocatedGPU())

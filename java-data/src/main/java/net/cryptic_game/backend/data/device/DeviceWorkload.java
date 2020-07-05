@@ -23,7 +23,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "device_workload")
 @Data
-public class DeviceWorkload extends TableModel implements JsonSerializable, Serializable {
+public final class DeviceWorkload extends TableModel implements JsonSerializable, Serializable {
 
     @Id
     @ManyToOne
@@ -68,7 +68,7 @@ public class DeviceWorkload extends TableModel implements JsonSerializable, Seri
      */
     @Override
     public JsonObject serialize() {
-        return JsonBuilder.create("device", this.getDevice().getId())
+        return JsonBuilder.create("device_id", this.getDevice().getId())
                 .add("performance_cpu", this.getPerformanceCPU())
                 .add("performance_gpu", this.getPerformanceGPU())
                 .add("performance_ram", this.getPerformanceRAM())

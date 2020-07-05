@@ -15,7 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.Duration;
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 /**
@@ -26,7 +26,7 @@ import java.util.List;
 @Entity
 @Table(name = "device_access")
 @Data
-public class DeviceAccess extends TableModelAutoId implements JsonSerializable {
+public final class DeviceAccess extends TableModelAutoId implements JsonSerializable {
 
     @ManyToOne
     @JoinColumn(name = "device_id", nullable = false, updatable = false)
@@ -39,10 +39,10 @@ public class DeviceAccess extends TableModelAutoId implements JsonSerializable {
     private User user;
 
     @Column(name = "granted", nullable = false, updatable = false)
-    private ZonedDateTime accessGranted;
+    private OffsetDateTime granted;
 
     @Column(name = "expire", nullable = false, updatable = false)
-    private ZonedDateTime expire;
+    private OffsetDateTime expire;
 
     @Column(name = "valid", nullable = false, updatable = true)
     private boolean valid;
@@ -54,17 +54,17 @@ public class DeviceAccess extends TableModelAutoId implements JsonSerializable {
      * @param device the {@link Device}
      * @return true if the {@link User} has got access | otherwise false
      */
-    public static boolean hasUserAccessToDevice(final User user, final Device device) {
+    public static boolean hasAccess(final User user, final Device device) {
         try (Session sqlSession = SQL_CONNECTION.openSession()) {
-            return sqlSession
-                    .createQuery("select object (a) from DeviceAccess a where "
-                            + "a.user = :user and "
-                            + "a.device = :device and "
-                            + "a.valid = true and "
-                            + "a.expire > :currentDate", DeviceAccess.class)
+            return sqlSession.createQuery("select object (a) from DeviceAccess a where "
+                    + "a.user = :user and "
+                    + "a.device = :device and "
+                    + "a.valid = true and "
+                    + "a.expire > :currentDate", DeviceAccess.class)
                     .setParameter("user", user)
                     .setParameter("device", device)
-                    .setParameter("currentDate", ZonedDateTime.now())
+                    .setParameter("currentDate", OffsetDateTime.now())
+                    .setMaxResults(1)
                     .getResultList().size() > 0;
         }
     }
@@ -78,19 +78,14 @@ public class DeviceAccess extends TableModelAutoId implements JsonSerializable {
      * @return the resulting {@link DeviceAccess}
      */
     public static DeviceAccess grantAccessToDevice(final User user, final Device device, final Duration duration) {
-        Session sqlSession = SQL_CONNECTION.openSession();
-
-        DeviceAccess access = new DeviceAccess();
+        final DeviceAccess access = new DeviceAccess();
         access.setUser(user);
         access.setDevice(device);
-        access.setAccessGranted(ZonedDateTime.now());
+        access.setGranted(OffsetDateTime.now());
         access.setValid(true);
-        access.setExpire(ZonedDateTime.now().plus(duration));
+        access.setExpire(OffsetDateTime.now().plus(duration));
 
-        sqlSession.beginTransaction();
-        sqlSession.save(access);
-        sqlSession.getTransaction().commit();
-        sqlSession.close();
+        access.saveOrUpdate();
         return access;
     }
 
@@ -102,10 +97,10 @@ public class DeviceAccess extends TableModelAutoId implements JsonSerializable {
      */
     public static List<DeviceAccess> getAccessesToDevice(final Device device) {
         try (Session sqlSession = SQL_CONNECTION.openSession()) {
-            return sqlSession
-                    .createQuery("select object (a) from DeviceAccess a where a.device = :device and a.valid = true and a.expire > :currentDate", DeviceAccess.class)
+            return sqlSession.createQuery("select object (a) from DeviceAccess a where a.device = :device "
+                    + "and a.valid = true and a.expire > :currentDate", DeviceAccess.class)
                     .setParameter("device", device)
-                    .setParameter("currentDate", ZonedDateTime.now())
+                    .setParameter("currentDate", OffsetDateTime.now())
                     .getResultList();
         }
     }
@@ -118,11 +113,11 @@ public class DeviceAccess extends TableModelAutoId implements JsonSerializable {
     @Override
     public JsonObject serialize() {
         return JsonBuilder.create("id", this.getId())
-                .add("target_device", getDevice().getId())
-                .add("device", getUser().getId())
-                .add("granted", getAccessGranted())
-                .add("expire", getExpire())
-                .add("valid", isValid())
+                .add("device_id", this.getDevice().getId())
+                .add("user_id", this.getUser().getId())
+                .add("granted", this.getGranted())
+                .add("expire", this.getExpire())
+                .add("valid", this.isValid())
                 .build();
     }
 }

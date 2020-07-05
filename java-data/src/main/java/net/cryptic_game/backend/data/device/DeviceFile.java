@@ -23,24 +23,24 @@ import java.util.List;
 @Entity
 @Table(name = "device_file")
 @Data
-public class DeviceFile extends TableModelAutoId implements JsonSerializable {
+public final class DeviceFile extends TableModelAutoId implements JsonSerializable {
 
     @ManyToOne
     @JoinColumn(name = "device_id", nullable = false, updatable = false)
     @Type(type = "uuid-char")
     private Device device;
 
-    @Column(name = "filename", nullable = false, updatable = true)
+    @Column(name = "name", nullable = false, updatable = true)
     private String name;
 
-    @Column(name = "content", nullable = false, updatable = true)
+    @Column(name = "content", nullable = false, updatable = true, length = 2048)
     private String content;
 
     @Column(name = "directory", nullable = false, updatable = false)
     private boolean directory;
 
     @ManyToOne
-    @JoinColumn(name = "parent_dir_id", nullable = true, updatable = true)
+    @JoinColumn(name = "parent_directory_id", nullable = true, updatable = true)
     @Type(type = "uuid-char")
     private DeviceFile parentDirectory;
 
@@ -55,8 +55,6 @@ public class DeviceFile extends TableModelAutoId implements JsonSerializable {
      * @return the created {@link DeviceFile}
      */
     private static DeviceFile createFile(final Device device, final String name, final String contents, final boolean isDirectory, final DeviceFile parentDir) {
-        final Session sqlSession = SQL_CONNECTION.openSession();
-
         final DeviceFile file = new DeviceFile();
         file.setDevice(device);
         file.setName(name);
@@ -64,10 +62,7 @@ public class DeviceFile extends TableModelAutoId implements JsonSerializable {
         file.setDirectory(isDirectory);
         file.setParentDirectory(parentDir);
 
-        sqlSession.beginTransaction();
-        sqlSession.save(file);
-        sqlSession.getTransaction().commit();
-        sqlSession.close();
+        file.saveOrUpdate();
         return file;
     }
 
@@ -104,8 +99,7 @@ public class DeviceFile extends TableModelAutoId implements JsonSerializable {
      */
     public static List<DeviceFile> getFilesByDevice(final Device device) {
         try (Session sqlSession = SQL_CONNECTION.openSession()) {
-            return sqlSession
-                    .createQuery("select object (f) from DeviceFile f where f.device = :device", DeviceFile.class)
+            return sqlSession.createQuery("select object (f) from DeviceFile f where f.device = :device", DeviceFile.class)
                     .setParameter("device", device)
                     .getResultList();
         }
@@ -119,11 +113,11 @@ public class DeviceFile extends TableModelAutoId implements JsonSerializable {
     @Override
     public JsonObject serialize() {
         return JsonBuilder.create("id", this.getId())
-                .add("device", this.getDevice().getId())
+                .add("device_id", this.getDevice().getId())
                 .add("name", this.getName())
-                .add("contents", this.getContent())
+                .add("content", this.getContent())
                 .add("is_directory", this.isDirectory())
-                .add("parent_dir", this.getParentDirectory() == null ? "null" : this.getParentDirectory().getId().toString())
+                .add("parent_directory_id", this.getParentDirectory() == null ? null : this.getParentDirectory().getId())
                 .build();
     }
 }

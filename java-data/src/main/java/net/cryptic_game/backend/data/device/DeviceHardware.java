@@ -23,7 +23,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "device_hardware")
 @Data
-public class DeviceHardware extends TableModelAutoId implements JsonSerializable {
+public final class DeviceHardware extends TableModelAutoId implements JsonSerializable {
 
     @ManyToOne
     @JoinColumn(name = "device_id", updatable = false, nullable = false)
@@ -37,7 +37,7 @@ public class DeviceHardware extends TableModelAutoId implements JsonSerializable
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", updatable = false, nullable = false)
-    private HardwareType type;
+    private DeviceHardwareType type;
 
     /**
      * Generates a {@link JsonObject} containing all relevant {@link DeviceHardware} information.
@@ -47,13 +47,9 @@ public class DeviceHardware extends TableModelAutoId implements JsonSerializable
     @Override
     public JsonObject serialize() {
         return JsonBuilder.create("id", this.getId())
-                .add("device", this.getDevice().getId())
-                .add("element", this.getElement().getId())
+                .add("device_id", this.getDevice().getId())
+                .add("element_id", this.getElement().getId())
                 .add("type", this.getType().toString())
                 .build();
-    }
-
-    public enum HardwareType {
-        PROCESSOR, MAINBOARD, RAM, COOLER, GRAPHIC_CARD, DISK, POWER_PACK, CASE
     }
 }
