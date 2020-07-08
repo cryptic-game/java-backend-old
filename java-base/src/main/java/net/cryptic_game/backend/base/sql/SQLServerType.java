@@ -6,10 +6,6 @@ import org.hibernate.dialect.MariaDB102Dialect;
 import org.hibernate.dialect.MariaDB103Dialect;
 import org.hibernate.dialect.MariaDB10Dialect;
 import org.hibernate.dialect.MariaDB53Dialect;
-import org.hibernate.dialect.MySQL55Dialect;
-import org.hibernate.dialect.MySQL57Dialect;
-import org.hibernate.dialect.MySQL5Dialect;
-import org.hibernate.dialect.MySQL8Dialect;
 import org.hibernate.dialect.PostgreSQL10Dialect;
 import org.hibernate.dialect.PostgreSQL81Dialect;
 import org.hibernate.dialect.PostgreSQL82Dialect;
@@ -51,15 +47,6 @@ import java.sql.Driver;
  *             <li>{@code myriadb_10_3}: 10.3</li>
  *         </ul>
  *     </li>
- *     <li>
- *          MySQL
- *          <ul>
- *              <li>{@code mysql_5_0}: 5.0</li>
- *              <li>{@code mysql_5_5}: 5.5</li>
- *              <li>{@code mysql_5_7}: 5.7</li>
- *              <li>{@code mysql_8_0}: 8.0</li>
- *          </ul>
- *      </li>
  * </ul>
  */
 public enum SQLServerType {
@@ -78,11 +65,6 @@ public enum SQLServerType {
     MARIADB_10_0("mariadb_10_0", "mariadb", org.mariadb.jdbc.Driver.class, MariaDB10Dialect.class),
     MARIADB_10_2("mariadb_10_2", "mariadb", org.mariadb.jdbc.Driver.class, MariaDB102Dialect.class),
     MARIADB_10_3("mariadb_10_3", "mariadb", org.mariadb.jdbc.Driver.class, MariaDB103Dialect.class),
-
-    MYSQL_5_0("mysql_5_0", "mysql", com.mysql.cj.jdbc.Driver.class, MySQL5Dialect.class),
-    MYSQL_5_5("mysql_5_5", "mysql", com.mysql.cj.jdbc.Driver.class, MySQL55Dialect.class),
-    MYSQL_5_7("mysql_5_7", "mysql", com.mysql.cj.jdbc.Driver.class, MySQL57Dialect.class),
-    MYSQL_8_0("mysql_8_0", "mysql", com.mysql.cj.jdbc.Driver.class, MySQL8Dialect.class),
 
     H2("h2", "h2", org.h2.Driver.class, H2Dialect.class),
 
