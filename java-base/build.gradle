@@ -16,7 +16,7 @@ dependencies {
     api 'org.fusesource.jansi:jansi:1.18'
 
     // Network
-    api 'io.netty:netty-all:4.1.50.Final'
+    api 'io.netty:netty-all:4.1.51.Final'
 
     // Json
     api 'com.google.code.gson:gson:2.8.6'
