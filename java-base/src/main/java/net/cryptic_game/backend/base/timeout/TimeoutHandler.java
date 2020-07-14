@@ -2,54 +2,47 @@ package net.cryptic_game.backend.base.timeout;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 @Slf4j
-public final class TimeoutHandler implements Runnable {
+public final class TimeoutHandler extends TimerTask {
 
-    private static final long TICK = 1000; // milliseconds
+    private static final long TICK = 5000;
 
+    private final Timer timer;
     private final Set<Timeout> timeouts;
     private boolean running;
 
     public TimeoutHandler() {
-        this.timeouts = new HashSet<>();
+        this.timer = new Timer();
+        this.timeouts = new LinkedHashSet<>();
         this.running = false;
     }
 
     private void start() {
-        new Thread(this, "timeout").start();
+        this.timer.scheduleAtFixedRate(this, TICK, TICK);
+        this.running = true;
+    }
+
+    private void stop() {
+        this.timer.cancel();
+        this.running = false;
     }
 
     @Override
     public void run() {
-        while (this.running) {
-            this.doTick(System.currentTimeMillis());
-
-            try {
-                Thread.sleep(TICK);
-            } catch (InterruptedException e) {
-                log.error("Error while waiting for next timer tick.", e);
-            }
+        final long currentTime = System.currentTimeMillis();
+        synchronized (this.timeouts) {
+            this.timeouts.removeIf(timeout -> timeout.doTick(currentTime));
         }
-    }
-
-    public void doTick(final long currentTime) {
-        final Iterator<Timeout> iterator = this.timeouts.iterator();
-        iterator.forEachRemaining(tick -> {
-            if (tick.doTick(currentTime)) {
-                iterator.remove();
-            }
-        });
+        if (this.timeouts.isEmpty()) this.stop();
     }
 
     public void addTimeout(final long ms, final Runnable runnable) {
         this.timeouts.add(new Timeout(ms, runnable));
-        if (this.timeouts.size() != 0) {
-            this.running = true;
-            this.start();
-        }
+        if (!this.running) this.start();
     }
 }

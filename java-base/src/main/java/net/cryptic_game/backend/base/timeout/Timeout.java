@@ -14,14 +14,10 @@ class Timeout {
     }
 
     boolean doTick(final long currentTime) {
-        if (this.isReached(currentTime)) {
+        if (this.reached <= currentTime) {
             this.runnable.run();
             return true;
         }
         return false;
-    }
-
-    private boolean isReached(final long currentTime) {
-        return this.reached <= currentTime;
     }
 }
