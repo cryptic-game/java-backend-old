@@ -26,7 +26,7 @@ import java.util.List;
 @Entity
 @Table(name = "network_member")
 @Data
-public class NetworkMember extends TableModel implements JsonSerializable {
+public final class NetworkMember extends TableModel implements JsonSerializable {
 
     @EmbeddedId
     private MemberKey key;
@@ -46,11 +46,7 @@ public class NetworkMember extends TableModel implements JsonSerializable {
         networkMember.setNetwork(network);
         networkMember.setDevice(device);
 
-        final Session sqlSession = SQL_CONNECTION.openSession();
-        sqlSession.beginTransaction();
-        sqlSession.save(networkMember);
-        sqlSession.getTransaction().commit();
-        sqlSession.close();
+        network.saveOrUpdate();
         return networkMember;
     }
 
@@ -77,23 +73,19 @@ public class NetworkMember extends TableModel implements JsonSerializable {
      * @return A {@link List} containing the fetched {@link NetworkMember}'s
      */
     public static List<NetworkMember> getMembershipsOfDevice(final Device device) {
-        final Session sqlSession = SQL_CONNECTION.openSession();
-        final List<NetworkMember> networkMembers = sqlSession
-                .createQuery("select object (n) from NetworkMember as n where n.key.device = :device", NetworkMember.class)
-                .setParameter("device", device)
-                .getResultList();
-        sqlSession.close();
-        return networkMembers;
+        try (Session sqlSession = SQL_CONNECTION.openSession()) {
+            return sqlSession.createQuery("select object (n) from NetworkMember as n where n.key.device = :device", NetworkMember.class)
+                    .setParameter("device", device)
+                    .getResultList();
+        }
     }
 
     public static List<NetworkMember> getMembershipsOfNetwork(final Network network) {
-        final Session sqlSession = SQL_CONNECTION.openSession();
-        final List<NetworkMember> networkMembers = sqlSession
-                .createQuery("select object (n) from NetworkMember as n where n.key.network = :network", NetworkMember.class)
-                .setParameter("network", network)
-                .getResultList();
-        sqlSession.close();
-        return networkMembers;
+        try (Session sqlSession = SQL_CONNECTION.openSession()) {
+            return sqlSession.createQuery("select object (n) from NetworkMember as n where n.key.network = :network", NetworkMember.class)
+                    .setParameter("network", network)
+                    .getResultList();
+        }
     }
 
     /**

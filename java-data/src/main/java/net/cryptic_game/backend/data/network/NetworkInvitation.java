@@ -28,7 +28,7 @@ import java.util.List;
 @Entity
 @Table(name = "network_invitation")
 @Data
-public class NetworkInvitation extends TableModel implements JsonSerializable {
+public final class NetworkInvitation extends TableModel implements JsonSerializable {
 
     @EmbeddedId
     private InvitationKey key;
@@ -52,11 +52,7 @@ public class NetworkInvitation extends TableModel implements JsonSerializable {
         networkInvitation.setDevice(device);
         networkInvitation.setInviter(inviter);
 
-        final Session session = SQL_CONNECTION.openSession();
-        session.beginTransaction();
-        session.save(networkInvitation);
-        session.getTransaction().commit();
-        session.close();
+        networkInvitation.saveOrUpdate();
         return networkInvitation;
     }
 
@@ -68,10 +64,9 @@ public class NetworkInvitation extends TableModel implements JsonSerializable {
      * @return The instance of the fetched {@link NetworkInvitation} if it exists | null if the entity does not exist
      */
     public static NetworkInvitation getInvitation(final Network network, final Device device) {
-        final Session sqlSession = SQL_CONNECTION.openSession();
-        NetworkInvitation networkInvitation = sqlSession.find(NetworkInvitation.class, new NetworkInvitation.InvitationKey(network, device));
-        sqlSession.close();
-        return networkInvitation;
+        try (Session sqlSession = SQL_CONNECTION.openSession()) {
+            return sqlSession.find(NetworkInvitation.class, new NetworkInvitation.InvitationKey(network, device));
+        }
     }
 
     /**
@@ -82,21 +77,18 @@ public class NetworkInvitation extends TableModel implements JsonSerializable {
      */
     public static List<NetworkInvitation> getInvitationsOfDevice(final Device device) {
         try (Session sqlSession = SQL_CONNECTION.openSession()) {
-            return sqlSession
-                    .createQuery("select object (n) from NetworkInvitation as n where n.key.device = :device", NetworkInvitation.class)
+            return sqlSession.createQuery("select object (n) from NetworkInvitation as n where n.key.device = :device", NetworkInvitation.class)
                     .setParameter("device", device)
                     .getResultList();
         }
     }
 
     public static List<NetworkInvitation> getInvitationsOfNetwork(final Network network) {
-        final Session sqlSession = SQL_CONNECTION.openSession();
-        final List<NetworkInvitation> networkInvitations = sqlSession
-                .createQuery("select object (n) from NetworkInvitation as n where n.key.network = :network", NetworkInvitation.class)
-                .setParameter("network", network)
-                .getResultList();
-        sqlSession.close();
-        return networkInvitations;
+        try (Session sqlSession = SQL_CONNECTION.openSession()) {
+            return sqlSession.createQuery("select object (n) from NetworkInvitation as n where n.key.network = :network", NetworkInvitation.class)
+                    .setParameter("network", network)
+                    .getResultList();
+        }
     }
 
     /**
