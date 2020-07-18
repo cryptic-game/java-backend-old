@@ -34,7 +34,7 @@ public final class Device extends TableModelAutoId implements JsonSerializable {
     @Type(type = "uuid-char")
     private User owner;
 
-    @Column(name = "powered_on", updatable = true, nullable = false, columnDefinition = "TINYINT")
+    @Column(name = "powered_on", updatable = true, nullable = false)
     private boolean poweredOn;
 
     /**

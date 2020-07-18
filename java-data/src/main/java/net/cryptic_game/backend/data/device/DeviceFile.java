@@ -36,7 +36,7 @@ public class DeviceFile extends TableModelAutoId implements JsonSerializable {
     @Column(name = "content", nullable = false, updatable = true)
     private String content;
 
-    @Column(name = "directory", nullable = false, updatable = false, columnDefinition = "TINYINT")
+    @Column(name = "directory", nullable = false, updatable = false)
     private boolean directory;
 
     @ManyToOne

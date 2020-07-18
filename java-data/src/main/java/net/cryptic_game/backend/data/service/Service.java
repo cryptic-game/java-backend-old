@@ -33,7 +33,7 @@ public class Service extends TableModelAutoId implements JsonSerializable {
     @Column(name = "name", updatable = true, nullable = true)
     private String name;
 
-    @Column(name = "running", updatable = true, nullable = true, columnDefinition = "TINYINT")
+    @Column(name = "running", updatable = true, nullable = true)
     private boolean running;
 
     @Column(name = "running_port", updatable = true, nullable = true)
