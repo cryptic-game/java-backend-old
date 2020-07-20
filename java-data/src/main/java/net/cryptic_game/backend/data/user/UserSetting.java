@@ -28,7 +28,7 @@ import java.util.List;
 @Entity
 @Table(name = "user_settings")
 @Data
-public class UserSetting extends TableModel implements JsonSerializable {
+public final class UserSetting extends TableModel implements JsonSerializable {
 
     @EmbeddedId
     private UserSettingKey key;
@@ -45,9 +45,9 @@ public class UserSetting extends TableModel implements JsonSerializable {
      */
     public static UserSetting getSetting(final User user, final String key) {
         try (Session sqlSession = SQL_CONNECTION.openSession()) {
-            List<UserSetting> settings = sqlSession.createQuery("select object(s) from UserSetting as s where s.key.user.id = :userId "
+            List<UserSetting> settings = sqlSession.createQuery("select object(s) from UserSetting as s where s.key.user = :user "
                     + "and s.key.key = :key", UserSetting.class)
-                    .setParameter("userId", user.getId())
+                    .setParameter("user", user)
                     .setParameter("key", key)
                     .getResultList();
             if (settings.size() > 0) return settings.get(0);
@@ -63,8 +63,8 @@ public class UserSetting extends TableModel implements JsonSerializable {
      */
     public static List<UserSetting> getSettings(final User user) {
         try (Session sqlSession = SQL_CONNECTION.openSession()) {
-            return sqlSession.createQuery("select object(s) from UserSetting as s where s.key.user.id = :userId ", UserSetting.class)
-                    .setParameter("userId", user.getId())
+            return sqlSession.createQuery("select object(s) from UserSetting as s where s.key.user = :user ", UserSetting.class)
+                    .setParameter("user", user)
                     .getResultList();
         }
     }

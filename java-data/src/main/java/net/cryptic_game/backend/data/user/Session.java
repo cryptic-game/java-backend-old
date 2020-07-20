@@ -14,7 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.Duration;
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
@@ -27,7 +27,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "session")
 @Data
-public class Session extends TableModelAutoId implements JsonSerializable {
+public final class Session extends TableModelAutoId implements JsonSerializable {
 
     private static final Duration EXPIRE = Duration.of(AppBootstrap.getInstance().getConfig().getSessionExpire(), ChronoUnit.DAYS);
 
@@ -44,10 +44,10 @@ public class Session extends TableModelAutoId implements JsonSerializable {
     private String deviceName;
 
     @Column(name = "expire", nullable = false, updatable = false)
-    private ZonedDateTime expire;
+    private OffsetDateTime expire;
 
     @Column(name = "last_active", nullable = false, updatable = true)
-    private ZonedDateTime lastActive;
+    private OffsetDateTime lastActive;
 
     /**
      * Creates a new {@link Session}.
@@ -62,15 +62,10 @@ public class Session extends TableModelAutoId implements JsonSerializable {
         session.setUser(user);
         session.setToken(token);
         session.setDeviceName(deviceName);
-        session.setExpire(ZonedDateTime.now().plus(EXPIRE));
-        session.setLastActive(ZonedDateTime.now());
+        session.setExpire(OffsetDateTime.now().plus(EXPIRE));
+        session.setLastActive(OffsetDateTime.now());
 
-        final org.hibernate.Session sqlSession = SQL_CONNECTION.openSession();
-        sqlSession.beginTransaction();
-        sqlSession.save(session);
-        sqlSession.getTransaction().commit();
-        sqlSession.close();
-
+        session.saveOrUpdate();
         return session;
     }
 
@@ -92,8 +87,8 @@ public class Session extends TableModelAutoId implements JsonSerializable {
      */
     public static List<Session> getByUser(final User user) {
         try (org.hibernate.Session sqlSession = SQL_CONNECTION.openSession()) {
-            return sqlSession.createQuery("select object (s) from Session as s where s.user.id = :userId", Session.class)
-                    .setParameter("userId", user.getId())
+            return sqlSession.createQuery("select object (s) from Session as s where s.user = :user", Session.class)
+                    .setParameter("user", user)
                     .getResultList();
         }
     }
@@ -104,13 +99,13 @@ public class Session extends TableModelAutoId implements JsonSerializable {
      * @param user The {@link User} whose {@link Session}s are to be deleted.
      */
     public static void deleteExpiredSessions(final User user) {
-        final org.hibernate.Session sqlSession = SQL_CONNECTION.openSession();
-        sqlSession.beginTransaction();
-        sqlSession.createQuery("delete from Session as s where s.expire < :date")
-                .setParameter("date", ZonedDateTime.now())
-                .executeUpdate();
-        sqlSession.getTransaction().commit();
-        sqlSession.close();
+        try (org.hibernate.Session sqlSession = SQL_CONNECTION.openSession()) {
+            sqlSession.beginTransaction();
+            sqlSession.createQuery("delete from Session as s where s.expire < :date")
+                    .setParameter("date", OffsetDateTime.now())
+                    .executeUpdate();
+            sqlSession.getTransaction().commit();
+        }
     }
 
     /**
@@ -119,7 +114,7 @@ public class Session extends TableModelAutoId implements JsonSerializable {
      * @return True if the {@link Session} is valid | false if it is not
      */
     public boolean isValid() {
-        return ZonedDateTime.now().isBefore(this.getExpire());
+        return OffsetDateTime.now().isBefore(this.getExpire());
     }
 
     /**
@@ -130,7 +125,7 @@ public class Session extends TableModelAutoId implements JsonSerializable {
     @Override
     public JsonObject serialize() {
         return JsonBuilder.create("id", this.getId())
-                .add("user", this.getId())
+                .add("user_id", this.getId())
                 .add("device_name", this.getDeviceName())
                 .add("valid", this.isValid())
                 .add("expire", this.getExpire())

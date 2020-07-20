@@ -12,7 +12,7 @@ import net.cryptic_game.backend.base.utils.ValidationUtils;
 import net.cryptic_game.backend.data.user.Session;
 import net.cryptic_game.backend.data.user.User;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 public final class WebSocketUserEndpoints extends ApiEndpointCollection {
@@ -108,8 +108,9 @@ public final class WebSocketUserEndpoints extends ApiEndpointCollection {
         }
 
         client.add(session);
-        session.setLastActive(ZonedDateTime.now());
-        session.getUser().setLast(ZonedDateTime.now());
+        final OffsetDateTime now = OffsetDateTime.now();
+        session.setLastActive(now);
+        session.getUser().setLast(now);
         session.getUser().saveOrUpdate();
         session.saveOrUpdate();
 
