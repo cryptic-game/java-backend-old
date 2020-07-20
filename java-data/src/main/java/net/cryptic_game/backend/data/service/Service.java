@@ -23,20 +23,20 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "service_service")
 @Data
-public class Service extends TableModelAutoId implements JsonSerializable {
+public final class Service extends TableModelAutoId implements JsonSerializable {
 
     @ManyToOne
-    @JoinColumn(name = "device", updatable = true, nullable = false)
+    @JoinColumn(name = "device_id", updatable = false, nullable = false)
     @Type(type = "uuid-char")
     private Device device;
 
-    @Column(name = "name", updatable = true, nullable = true)
+    @Column(name = "name", updatable = true, nullable = false)
     private String name;
 
-    @Column(name = "running", updatable = true, nullable = true)
+    @Column(name = "running", updatable = true, nullable = false)
     private boolean running;
 
-    @Column(name = "running_port", updatable = true, nullable = true)
+    @Column(name = "running_port", updatable = true, nullable = false)
     private int runningPort;
 
     @ManyToOne
@@ -54,9 +54,9 @@ public class Service extends TableModelAutoId implements JsonSerializable {
         return JsonBuilder.create("id", this.getId())
                 .add("device_id", this.getDevice().getId())
                 .add("name", this.getName())
-                .add("isRunning", this.isRunning())
-                .add("runningPort", this.getRunningPort())
-                .add("user", this.getUser().getId())
+                .add("is_running", this.isRunning())
+                .add("running_port", this.getRunningPort())
+                .add("user_id", this.getUser().getId())
                 .build();
     }
 }

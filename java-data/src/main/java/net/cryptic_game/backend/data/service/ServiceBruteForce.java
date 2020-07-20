@@ -22,17 +22,17 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "service_brute_force")
 @Data
-public class ServiceBruteForce extends TableModelAutoId implements JsonSerializable {
+public final class ServiceBruteForce extends TableModelAutoId implements JsonSerializable {
 
-    @Column(name = "started", updatable = false, nullable = true) // updatable?
+    @Column(name = "started", updatable = false, nullable = false)
     private int started;
 
     @ManyToOne
-    @JoinColumn(name = "target_service", updatable = true, nullable = true)
+    @JoinColumn(name = "target_service_id", updatable = false, nullable = false)
     @Type(type = "uuid-char")
     private Service targetService;
 
-    @Column(name = "progress", updatable = true, nullable = true)
+    @Column(name = "progress", updatable = true, nullable = false)
     private float progress;
 
     /**
@@ -44,7 +44,7 @@ public class ServiceBruteForce extends TableModelAutoId implements JsonSerializa
     public JsonObject serialize() {
         return JsonBuilder.create("id", this.getId())
                 .add("started", this.getStarted())
-                .add("targetService", this.getTargetService().getId())
+                .add("target_service_id", this.getTargetService().getId())
                 .add("progress", this.getProgress())
                 .build();
     }
