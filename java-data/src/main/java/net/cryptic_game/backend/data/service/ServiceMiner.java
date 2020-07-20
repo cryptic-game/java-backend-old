@@ -22,17 +22,17 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "service_miner")
 @Data
-public class ServiceMiner extends TableModelAutoId implements JsonSerializable {
+public final class ServiceMiner extends TableModelAutoId implements JsonSerializable {
 
     @ManyToOne
-    @JoinColumn(name = "wallet", nullable = true, updatable = true)
+    @JoinColumn(name = "wallet_id", nullable = false, updatable = true)
     @Type(type = "uuid-char")
     private CurrencyWallet wallet;
 
-    @Column(name = "started", updatable = false, nullable = true)
+    @Column(name = "started", updatable = true, nullable = false)
     private int started;
 
-    @Column(name = "power", updatable = true, nullable = true)
+    @Column(name = "power", updatable = true, nullable = false)
     private float power;
 
     /**
@@ -43,7 +43,7 @@ public class ServiceMiner extends TableModelAutoId implements JsonSerializable {
     @Override
     public JsonObject serialize() {
         return JsonBuilder.create("id", this.getId())
-                .add("wallet", this.getWallet().getId())
+                .add("wallet_id", this.getWallet().getId())
                 .add("started", this.getStarted())
                 .add("power", this.getPower())
                 .build();

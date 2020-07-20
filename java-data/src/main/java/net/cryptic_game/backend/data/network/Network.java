@@ -14,7 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,7 +26,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "network_network")
 @Data
-public class Network extends TableModelAutoId implements JsonSerializable {
+public final class Network extends TableModelAutoId implements JsonSerializable {
 
     @Column(name = "name", updatable = true, nullable = false, unique = true)
     private String name;
@@ -40,7 +40,7 @@ public class Network extends TableModelAutoId implements JsonSerializable {
     private boolean isPublic;
 
     @Column(name = "created", updatable = false, nullable = false)
-    private ZonedDateTime created;
+    private OffsetDateTime created;
 
     /**
      * Creates a new {@link Network}.
@@ -51,19 +51,13 @@ public class Network extends TableModelAutoId implements JsonSerializable {
      * @return The instance of the created {@link Network}
      */
     public static Network createNetwork(final String name, final Device owner, final boolean isPublic) {
-        final ZonedDateTime now = ZonedDateTime.now();
-
         final Network network = new Network();
         network.setName(name);
         network.setOwner(owner);
         network.setPublic(isPublic);
-        network.setCreated(now);
+        network.setCreated(OffsetDateTime.now());
 
-        final Session sqlSession = SQL_CONNECTION.openSession();
-        sqlSession.beginTransaction();
-        sqlSession.save(network);
-        sqlSession.getTransaction().commit();
-        sqlSession.close();
+        network.saveOrUpdate();
         return network;
     }
 
@@ -84,15 +78,11 @@ public class Network extends TableModelAutoId implements JsonSerializable {
      * @return The instance of the fetched {@link Network} if it exists | null if the entity does not exist
      */
     public static Network getByName(final String name) {
-        final Session sqlSession = SQL_CONNECTION.openSession();
-        final List<Network> networks = sqlSession
-                .createQuery("select object (n) from Network as n where n.name = :name", Network.class)
-                .setParameter("name", name)
-                .getResultList();
-        sqlSession.close();
-
-        if (!networks.isEmpty()) return networks.get(0);
-        return null;
+        try (Session sqlSession = SQL_CONNECTION.openSession()) {
+            return sqlSession.createQuery("select object (n) from Network as n where n.name = :name", Network.class)
+                    .setParameter("name", name)
+                    .getResultStream().findFirst().orElse(null);
+        }
     }
 
     /**
@@ -102,13 +92,11 @@ public class Network extends TableModelAutoId implements JsonSerializable {
      * @return A {@link List} containing the fetched {@link Network}'s
      */
     public static List<Network> getNetworksOwnedByDevice(final Device device) {
-        final Session sqlSession = SQL_CONNECTION.openSession();
-        final List<Network> networks = sqlSession
-                .createQuery("select object (n) from Network as n where n.owner = :device", Network.class)
-                .setParameter("device", device)
-                .getResultList();
-        sqlSession.close();
-        return networks;
+        try (Session sqlSession = SQL_CONNECTION.openSession()) {
+            return sqlSession.createQuery("select object (n) from Network as n where n.owner = :device", Network.class)
+                    .setParameter("device", device)
+                    .getResultList();
+        }
     }
 
     /**
@@ -117,12 +105,10 @@ public class Network extends TableModelAutoId implements JsonSerializable {
      * @return A {@link List} containing the fetched {@link Network}'s
      */
     public static List<Network> getPublicNetworks() {
-        final Session sqlSession = SQL_CONNECTION.openSession();
-        final List<Network> networks = sqlSession
-                .createQuery("select object (n) from Network as n where n._public = true", Network.class)
-                .getResultList();
-        sqlSession.close();
-        return networks;
+        try (Session sqlSession = SQL_CONNECTION.openSession()) {
+            return sqlSession.createQuery("select object (n) from Network as n where n.isPublic = true", Network.class)
+                    .getResultList();
+        }
     }
 
     /**

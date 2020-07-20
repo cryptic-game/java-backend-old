@@ -42,7 +42,7 @@ public final class NetworkInvitationEndpoints extends ApiEndpointCollection {
         }
 
         if (invitation.isRequest()) {
-            if (!invitation.getNetwork().getOwner().hasUserAccess(user)) {
+            if (!invitation.getNetwork().getOwner().hasAccess(user)) {
                 return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
             }
 
@@ -50,7 +50,7 @@ public final class NetworkInvitationEndpoints extends ApiEndpointCollection {
                 return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
             }
         } else {
-            if (!device.hasUserAccess(user)) {
+            if (!device.hasAccess(user)) {
                 return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
             }
 
@@ -86,7 +86,7 @@ public final class NetworkInvitationEndpoints extends ApiEndpointCollection {
         }
 
         if (invitation.isRequest()) {
-            if (!invitation.getNetwork().getOwner().hasUserAccess(user)) {
+            if (!invitation.getNetwork().getOwner().hasAccess(user)) {
                 return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
             }
 
@@ -94,7 +94,7 @@ public final class NetworkInvitationEndpoints extends ApiEndpointCollection {
                 return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
             }
         } else {
-            if (!device.hasUserAccess(user)) {
+            if (!device.hasAccess(user)) {
                 return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
             }
 
@@ -129,7 +129,7 @@ public final class NetworkInvitationEndpoints extends ApiEndpointCollection {
         }
 
         if (invitation.isRequest()) {
-            if (!device.hasUserAccess(user)) {
+            if (!device.hasAccess(user)) {
                 return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
             }
 
@@ -137,7 +137,7 @@ public final class NetworkInvitationEndpoints extends ApiEndpointCollection {
                 return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
             }
         } else {
-            if (!invitation.getNetwork().getOwner().hasUserAccess(user)) {
+            if (!invitation.getNetwork().getOwner().hasAccess(user)) {
                 return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
             }
 
@@ -162,7 +162,7 @@ public final class NetworkInvitationEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "NETWORK");
         }
 
-        if (!network.getOwner().hasUserAccess(user)) {
+        if (!network.getOwner().hasAccess(user)) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
         }
 
@@ -197,7 +197,7 @@ public final class NetworkInvitationEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "DEVICE");
         }
 
-        if (!device.hasUserAccess(user)) {
+        if (!device.hasAccess(user)) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
         }
 

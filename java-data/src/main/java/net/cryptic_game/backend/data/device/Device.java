@@ -6,7 +6,6 @@ import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.data.user.User;
-import org.hibernate.Session;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
@@ -46,17 +45,12 @@ public final class Device extends TableModelAutoId implements JsonSerializable {
      * @return The instance of the created {@link Device}
      */
     public static Device createDevice(final String name, final User owner, final boolean poweredOn) {
-        final Session sqlSession = SQL_CONNECTION.openSession();
-
         final Device device = new Device();
         device.setName(name);
         device.setOwner(owner);
         device.setPoweredOn(poweredOn);
 
-        sqlSession.beginTransaction();
-        sqlSession.save(device);
-        sqlSession.getTransaction().commit();
-        sqlSession.close();
+        device.saveOrUpdate();
         return device;
     }
 
@@ -70,8 +64,8 @@ public final class Device extends TableModelAutoId implements JsonSerializable {
         return getById(Device.class, id);
     }
 
-    public boolean hasUserAccess(final User user) {
-        return getOwner().equals(user) || DeviceAccess.hasUserAccessToDevice(user, this);
+    public boolean hasAccess(final User user) {
+        return getOwner().equals(user) || DeviceAccess.hasAccess(user, this);
     }
 
     /**

@@ -10,8 +10,7 @@ import org.hibernate.Session;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.time.ZonedDateTime;
-import java.util.List;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 /**
@@ -22,7 +21,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "user")
 @Data
-public class User extends TableModelAutoId {
+public final class User extends TableModelAutoId {
 
     @Column(name = "username", updatable = true, nullable = false, unique = true)
     private String username;
@@ -32,10 +31,10 @@ public class User extends TableModelAutoId {
     private String passwordHash;
 
     @Column(name = "created", updatable = false, nullable = false)
-    private ZonedDateTime created;
+    private OffsetDateTime created;
 
     @Column(name = "last", updatable = true, nullable = false)
-    private ZonedDateTime last;
+    private OffsetDateTime last;
 
     /**
      * Create a {@link User} with the given user data.
@@ -45,7 +44,7 @@ public class User extends TableModelAutoId {
      * @return The instance of the created {@link User}
      */
     public static User createUser(final String username, final String password) {
-        final ZonedDateTime now = ZonedDateTime.now();
+        final OffsetDateTime now = OffsetDateTime.now();
 
         final User user = new User();
         user.setUsername(username);
@@ -53,11 +52,7 @@ public class User extends TableModelAutoId {
         user.setLast(now);
         user.setPassword(password);
 
-        final Session session = SQL_CONNECTION.openSession();
-        session.beginTransaction();
-        session.save(user);
-        session.getTransaction().commit();
-        session.close();
+        user.saveOrUpdate();
         return user;
     }
 
@@ -78,15 +73,11 @@ public class User extends TableModelAutoId {
      * @return The instance of the fetched {@link User} if it exists | null if the {@link User} does not exist
      */
     public static User getByUsername(final String username) {
-        final Session session = SQL_CONNECTION.openSession();
-        final List<User> users = session
-                .createQuery("select object (u) from User as u where u.username = :username", User.class)
-                .setParameter("username", username)
-                .getResultList();
-        session.close();
-
-        if (!users.isEmpty()) return users.get(0);
-        return null;
+        try (Session session = SQL_CONNECTION.openSession()) {
+            return session.createQuery("select object (u) from User as u where u.username = :username", User.class)
+                    .setParameter("username", username)
+                    .getResultStream().findFirst().orElse(null);
+        }
     }
 
     /**

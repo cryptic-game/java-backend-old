@@ -3,17 +3,20 @@ package net.cryptic_game.backend.data.chat;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * This enum defines the type of a chat notification.
+ *
+ * @since 0.3.0
+ */
 @Getter
 @RequiredArgsConstructor
 public enum ChatAction {
 
-    MEMBER_JOIN("member-join"),
-    MEMBER_LEAVE("member-leave"),
+    MEMBER_JOIN,
+    MEMBER_LEAVE,
 
-    SEND_MESSAGE("send-message"),
-    WHISPER_MESSAGE("whisper-message"),
+    SEND_MESSAGE,
+    WHISPER_MESSAGE,
 
-    CHANNEL_DELETE("channel-delete");
-
-    private final String value;
+    CHANNEL_DELETE
 }
