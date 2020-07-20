@@ -22,10 +22,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "inventory")
 @Data
-public class Inventory extends TableModelAutoId implements JsonSerializable {
+public final class Inventory extends TableModelAutoId implements JsonSerializable {
 
-    @Column(name = "element_name", updatable = true, nullable = true) // updatable?
-    private String elementName;
+    @Column(name = "size", updatable = true, nullable = false)
+    private int size;
 
     @ManyToOne
     @JoinColumn(name = "owner", updatable = false, nullable = false)
@@ -40,7 +40,7 @@ public class Inventory extends TableModelAutoId implements JsonSerializable {
     @Override
     public JsonObject serialize() {
         return JsonBuilder.create("id", this.getId())
-                .add("element_name", this.getElementName())
+                .add("size", this.getSize())
                 .add("owner", this.getOwner().getId())
                 .build();
     }
