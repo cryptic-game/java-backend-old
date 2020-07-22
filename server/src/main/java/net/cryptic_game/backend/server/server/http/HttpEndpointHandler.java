@@ -18,7 +18,7 @@ public final class HttpEndpointHandler {
 
     public HttpEndpointHandler() {
         this.apiCollections = new HashSet<>();
-        this.apiList = new ApiEndpointList(null);
+        this.apiList = new ApiEndpointList();
     }
 
     public void postInit() {

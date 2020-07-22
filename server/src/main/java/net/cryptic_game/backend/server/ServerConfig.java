@@ -11,18 +11,12 @@ import net.cryptic_game.backend.base.config.ConfigValue;
 @Setter(AccessLevel.NONE)
 public class ServerConfig {
 
-    @ConfigValue("websocket_host")
-    private String websocketHost = "0.0.0.0";
-
-    @ConfigValue("websocket_port")
-    private int websocketPort = 80;
-
     @ConfigValue("http_host")
     private String httpHost = "0.0.0.0";
 
     @ConfigValue("http_port")
-    private int httpPort = 8080;
+    private int httpPort = 80;
 
-    @ConfigValue("playground_address")
-    private String playgroundAddress = "127.0.0.1";
+    @ConfigValue("websocket_address")
+    private String websocketAddress = "127.0.0.1:80/ws";
 }

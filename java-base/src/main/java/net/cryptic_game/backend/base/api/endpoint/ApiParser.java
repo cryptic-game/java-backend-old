@@ -1,9 +1,6 @@
 package net.cryptic_game.backend.base.api.endpoint;
 
 import com.google.gson.JsonElement;
-import net.cryptic_game.backend.base.json.JsonBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -14,6 +11,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import net.cryptic_game.backend.base.json.JsonBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class ApiParser {
 
@@ -75,12 +76,11 @@ public final class ApiParser {
                 .add("endpointCollections", endpointCollections.stream()
                         .peek(collection -> collection.setEndpoints(collection.getEndpoints().entrySet()
                                 .stream()
-                                .map(entry -> {
+                                .peek(entry -> {
                                     final ApiEndpointData endpointData = entry.getValue().copy();
                                     final String[] name = endpointData.getName().split("/");
                                     endpointData.setName(name[name.length - 1]);
                                     entry.setValue(endpointData);
-                                    return entry;
                                 }).peek(entry -> entry.getValue().setParameters(entry.getValue().getParameters()
                                         .stream()
                                         .filter(parameter -> parameter.getSpecial().equals(ApiParameterSpecialType.NORMAL))

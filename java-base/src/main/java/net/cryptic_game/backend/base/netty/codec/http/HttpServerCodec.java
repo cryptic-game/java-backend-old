@@ -6,11 +6,11 @@ import net.cryptic_game.backend.base.netty.codec.NettyCodecInitializer;
 import java.util.HashMap;
 import java.util.Map;
 
-class HttpServerCodec implements NettyCodec {
+public class HttpServerCodec implements NettyCodec {
 
     private final Map<String, HttpLocationProvider<?>> locationProviders;
 
-    HttpServerCodec() {
+    public HttpServerCodec() {
         this.locationProviders = new HashMap<>();
     }
 
@@ -27,7 +27,7 @@ class HttpServerCodec implements NettyCodec {
      * @see HttpLocationProvider
      * @see HttpLocation
      */
-    void addLocationProvider(final String path, final HttpLocationProvider<?> provider) {
+    public void addLocationProvider(final String path, final HttpLocationProvider<?> provider) {
         this.locationProviders.put(path.startsWith("/") ? path.toLowerCase() : "/" + path.toLowerCase(), provider);
     }
 }

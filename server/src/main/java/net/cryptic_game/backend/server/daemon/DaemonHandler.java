@@ -88,7 +88,7 @@ public final class DaemonHandler {
         if (JsonUtils.fromJson(JsonUtils.fromJson(json.get("info"), JsonObject.class).get("code"), int.class) == ApiResponseType.INTERNAL_SERVER_ERROR.getCode()) {
             final ApiResponseType type = ApiResponseType.BAD_GATEWAY;
             info.add("code", type.getCode());
-            info.add("name", type.getName());
+            info.add("name", type.name());
         }
         ApiUtils.response(respond.getChannel(), respond.getTag(), info.build(), json.get("data"));
     }

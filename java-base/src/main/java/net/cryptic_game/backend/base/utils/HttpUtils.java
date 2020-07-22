@@ -5,17 +5,15 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.DefaultFileRegion;
-import io.netty.handler.codec.http.DefaultHttpContent;
 import io.netty.handler.codec.http.DefaultHttpResponse;
+import io.netty.handler.codec.http.DefaultLastHttpContent;
 import io.netty.handler.codec.http.HttpChunkedInput;
-import io.netty.handler.codec.http.HttpContent;
 import io.netty.handler.codec.http.HttpHeaderNames;
 import io.netty.handler.codec.http.HttpMessage;
 import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.codec.http.HttpResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpUtil;
-import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.codec.http.LastHttpContent;
 import io.netty.handler.ssl.SslHandler;
 import io.netty.handler.stream.ChunkedFile;
@@ -115,7 +113,7 @@ public final class HttpUtils {
      * @param ctx      the {@link ChannelHandlerContext} to which the message should be send
      * @param request  the request from the {@link ChannelHandlerContext} (Client)
      * @param file     the {@link File} which should be send to the {@link ChannelHandlerContext} (Client)
-     * @param onlyHead only send the {@link HttpResponse} without the {@link HttpContent}. This is needed at {@link io.netty.handler.codec.http.HttpMethod#HEAD}
+     * @param onlyHead only send the {@link HttpResponse} without the {@link LastHttpContent}. This is needed at {@link io.netty.handler.codec.http.HttpMethod#HEAD}
      * @throws IOException if there is an error while reading the file
      */
     public static void sendFile(final ChannelHandlerContext ctx, final HttpRequest request, final File file, final boolean onlyHead) throws IOException {
@@ -131,7 +129,7 @@ public final class HttpUtils {
         final long length = randomAccessFile.length();
         final boolean keepAlive = HttpUtil.isKeepAlive(request);
 
-        final HttpResponse response = new DefaultHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK);
+        final HttpResponse response = new DefaultHttpResponse(request.protocolVersion(), HttpResponseStatus.OK);
         HttpUtil.setContentLength(response, length);
         setContentTypeHeader(response, file);
         setDateAndCacheHeaders(response, file);
@@ -225,7 +223,7 @@ public final class HttpUtils {
      * @param newUri  the new uri to witch the client should be redirected
      */
     public static void sendRedirect(final ChannelHandlerContext ctx, final HttpRequest request, final String newUri) {
-        final HttpResponse response = new DefaultHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.TEMPORARY_REDIRECT);
+        final HttpResponse response = new DefaultHttpResponse(request.protocolVersion(), HttpResponseStatus.TEMPORARY_REDIRECT);
         response.headers().set(HttpHeaderNames.LOCATION, newUri);
         sendAndCleanupConnection(ctx, request, response, null);
     }
@@ -237,7 +235,7 @@ public final class HttpUtils {
      * @param request the {@link HttpRequest} from the {@link ChannelHandlerContext}
      */
     public static void sendNotModified(final ChannelHandlerContext ctx, final HttpRequest request) {
-        final HttpResponse response = new DefaultHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.NOT_MODIFIED);
+        final HttpResponse response = new DefaultHttpResponse(request.protocolVersion(), HttpResponseStatus.NOT_MODIFIED);
         setDateHeader(response);
         sendAndCleanupConnection(ctx, request, response, null);
     }
@@ -259,12 +257,12 @@ public final class HttpUtils {
      * @param ctx     the {@link ChannelHandlerContext} to which the message should be send
      * @param request the request from the {@link ChannelHandlerContext} (Client)
      * @param status  the status which should be send to the {@link ChannelHandlerContext} (Client)
-     * @param body    if the status code should be send also via the {@link HttpContent} (Http Body)
+     * @param body    if the status code should be send also via the {@link LastHttpContent} (Http Body)
      */
     public static void sendStatus(final ChannelHandlerContext ctx, final HttpRequest request, final HttpResponseStatus status, final boolean body) {
-        final HttpResponse response = new DefaultHttpResponse(HttpVersion.HTTP_1_1, status);
+        final HttpResponse response = new DefaultHttpResponse(request.protocolVersion(), status);
         if (body) setContentTypeHeader(request, "text/plain; charset=" + StandardCharsets.UTF_8.toString());
-        sendAndCleanupConnection(ctx, request, response, body ? new DefaultHttpContent(Unpooled.copiedBuffer(status.toString() + "\r\n", CharsetUtil.UTF_8)) : null);
+        sendAndCleanupConnection(ctx, request, response, body ? new DefaultLastHttpContent(Unpooled.copiedBuffer(status.toString(), CharsetUtil.UTF_8)) : null);
     }
 
     /**
@@ -275,18 +273,10 @@ public final class HttpUtils {
      * @param response the response which should be send to the {@link ChannelHandlerContext} (Client)
      * @param content  the content which should be send to the {@link ChannelHandlerContext} (Client)
      */
-    public static void sendAndCleanupConnection(final ChannelHandlerContext ctx, final HttpRequest request, final HttpResponse response, final HttpContent content) {
-        final boolean keepAlive = HttpUtil.isKeepAlive(request);
-
+    public static void sendAndCleanupConnection(final ChannelHandlerContext ctx, final HttpRequest request, final HttpResponse response, final LastHttpContent content) {
         HttpUtil.setContentLength(response, content == null ? 0 : content.content().readableBytes());
-        HttpUtil.setKeepAlive(response, keepAlive);
 
-        final ChannelFuture channelFuture;
-        if (content == null) channelFuture = ctx.write(response);
-        else {
-            ctx.write(response);
-            channelFuture = ctx.write(content);
-        }
-        if (!keepAlive) channelFuture.addListener(ChannelFutureListener.CLOSE);
+        ctx.write(response);
+        ctx.write(content == null ? LastHttpContent.EMPTY_LAST_CONTENT : content);
     }
 }

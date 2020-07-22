@@ -4,20 +4,11 @@ import net.cryptic_game.backend.base.api.endpoint.ApiEndpoint;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
-import net.cryptic_game.backend.server.daemon.DaemonHandler;
 
 public final class HttpInfoEndpoint extends ApiEndpointCollection {
 
-    private final DaemonHandler daemonHandler;
-
-    public HttpInfoEndpoint(final DaemonHandler daemonHandler) {
+    public HttpInfoEndpoint() {
         super("info", "todo");
-        this.daemonHandler = daemonHandler;
-    }
-
-    @ApiEndpoint("status")
-    public ApiResponse status() {
-        return new ApiResponse(ApiResponseType.OK, this.daemonHandler.getDaemons());
     }
 
     @ApiEndpoint("online")
@@ -27,6 +18,6 @@ public final class HttpInfoEndpoint extends ApiEndpointCollection {
 
     @ApiEndpoint("leaderboard")
     public ApiResponse leaderboard() {
-        return new ApiResponse(ApiResponseType.NOT_IMPLEMENTED);
+        return new ApiResponse(ApiResponseType.OK);
     }
 }
