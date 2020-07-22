@@ -1,5 +1,4 @@
-# FROM adoptopenjdk:11-jdk-hotspot AS builder
-FROM adoptopenjdk/openjdk11:debian-nightly AS builder
+FROM adoptopenjdk:11-jdk-hotspot AS builder
 
 ARG GRADLE_USER=gradle
 ARG GRADLE_GROUP=gradle
