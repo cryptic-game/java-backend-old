@@ -1,14 +1,14 @@
 {
-  "extends": [
-    "config:base"
-  ],
-  "reviewers": [
-    "JannikEmmerich",
-    "MarcelCoding"
-  ],
-  "labels": [
-    "dependencies"
-  ],
-  "branchName": "{{{branchPrefix}}}{{{managerBranchPrefix}}}{{{branchTopic}}}",
-  "branchPrefix": "dependencies/"
+    "extends": [
+        "config:base"
+    ],
+    "reviewers": [
+        "JannikEmmerich",
+        "MarcelCoding"
+    ],
+    "labels": [
+        "dependencies"
+    ],
+    "branchName": "{{{branchPrefix}}}{{{managerBranchPrefix}}}{{{branchTopic}}}",
+    "branchPrefix": "dependencies/"
 }
