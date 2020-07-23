@@ -32,9 +32,13 @@ public final class ApiResponse implements JsonSerializable {
     }
 
     public ApiResponse(final ApiResponseType responseType, final String message, final Object data) {
+        this(responseType, message, JsonUtils.toJson(data));
+    }
+
+    public ApiResponse(final ApiResponseType responseType, final String message, final JsonElement data) {
         this.responseType = responseType;
         this.message = message;
-        this.data = JsonUtils.toJson(data);
+        this.data = data;
     }
 
     @Override

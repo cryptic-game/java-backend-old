@@ -7,12 +7,12 @@ import io.netty.handler.ssl.SslContext;
 import net.cryptic_game.backend.base.netty.EventLoopGroupHandler;
 import net.cryptic_game.backend.base.netty.codec.NettyCodecHandler;
 
-import java.net.SocketAddress;
+import java.net.InetSocketAddress;
 
 public final class NettyInetServer extends NettyServer {
 
 
-    public NettyInetServer(final String id, final SocketAddress address, final SslContext sslContext,
+    public NettyInetServer(final String id, final InetSocketAddress address, final SslContext sslContext,
                            final NettyCodecHandler codecHandler, final EventLoopGroupHandler eventLoopGroupHandler) {
         super(id, address, sslContext, codecHandler, eventLoopGroupHandler);
     }

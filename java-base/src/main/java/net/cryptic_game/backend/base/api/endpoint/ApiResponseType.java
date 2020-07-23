@@ -46,6 +46,13 @@ public enum ApiResponseType implements JsonSerializable {
         this.error = error;
     }
 
+    public static ApiResponseType getByCode(final int code) {
+        for (ApiResponseType value : ApiResponseType.values()) {
+            if (value.getCode() == code) return value;
+        }
+        return null;
+    }
+
     @NotNull
     @Override
     public JsonElement serialize() {

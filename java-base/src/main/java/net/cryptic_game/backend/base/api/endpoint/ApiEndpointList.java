@@ -1,20 +1,19 @@
 package net.cryptic_game.backend.base.api.endpoint;
 
+import net.cryptic_game.backend.base.api.ApiException;
+import net.cryptic_game.backend.base.api.client.ApiClient;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import net.cryptic_game.backend.base.api.ApiException;
-import net.cryptic_game.backend.base.api.client.ApiClient;
-
 public final class ApiEndpointList {
 
     private final Map<String, ApiEndpointCollectionData> collections;
     private final Map<String, ApiEndpointData> endpoints;
     private final Set<ApiClient> clients;
-
 
     public ApiEndpointList() {
         this.collections = new HashMap<>();

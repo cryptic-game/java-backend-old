@@ -35,4 +35,7 @@ dependencies {
 
     // Temporally
     api 'com.sun.activation:javax.activation:1.2.0'
+
+    //HTTP Client
+    api 'com.squareup.okhttp3:okhttp:4.8.0'
 }

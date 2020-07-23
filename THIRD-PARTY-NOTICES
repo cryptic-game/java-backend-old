@@ -65,6 +65,11 @@ Licensor:  Sentry
 Website:   https://sentry.io/
 License:   BSD 3-clause
 
+Component: OkHttp
+Licensor:  Square Open Source
+Website:   https://square.github.io/okhttp/
+License:   Apache License 2.0
+
 --------------------------------------------------------------------------------
 LGPL 2.1 (hibernate-orm, MariaDB)
 
@@ -898,7 +903,7 @@ Exhibit B - “Incompatible With Secondary Licenses” Notice
 This Source Code Form is “Incompatible With Secondary Licenses”, as defined by
 the Mozilla Public License, v. 2.0.
 --------------------------------------------------------------------------------
-Apache License 2.0 (log4j, Jansi, Netty, Gson, snakeyaml, bcrypt)
+Apache License 2.0 (log4j, Jansi, Netty, Gson, snakeyaml, bcrypt, OkHttp)
 
                                  Apache License
                            Version 2.0, January 2004
