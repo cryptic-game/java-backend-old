@@ -1,6 +1,5 @@
 package net.cryptic_game.backend.endpoints;
 
-import net.cryptic_game.backend.base.api.client.ApiClient;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpoint;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.endpoint.ApiParameter;
@@ -29,9 +28,8 @@ public final class TestEndpoints extends ApiEndpointCollection {
     }*/
 
     @ApiEndpoint("notification")
-    public ApiResponse notification(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client,
-                                    @ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId) {
-        DaemonUtils.notifyUser(client.getChannel(), userId, "test", JsonBuilder.create("foo", "bar"));
+    public ApiResponse notification(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId) {
+        DaemonUtils.notifyUser(userId, "test", JsonBuilder.create("foo", "bar"));
         return new ApiResponse(ApiResponseType.OK);
     }
 }

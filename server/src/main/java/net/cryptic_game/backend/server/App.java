@@ -14,6 +14,7 @@ import net.cryptic_game.backend.base.netty.server.NettyInetServer;
 import net.cryptic_game.backend.base.netty.server.NettyServerHandler;
 import net.cryptic_game.backend.server.daemon.DaemonHandler;
 import net.cryptic_game.backend.server.server.http.HttpEndpointHandler;
+import net.cryptic_game.backend.server.server.http.endpoints.HttpDaemonEndpoints;
 import net.cryptic_game.backend.server.server.http.endpoints.HttpInfoEndpoint;
 import net.cryptic_game.backend.server.server.playground.PlaygroundLocationProvider;
 import net.cryptic_game.backend.server.server.websocket.WebSocketEndpointHandler;
@@ -67,6 +68,7 @@ public final class App extends AppBootstrap {
         this.webSocketEndpointHandler.postInit();
 
         this.httpEndpointHandler.addApiCollection(new HttpInfoEndpoint());
+        this.httpEndpointHandler.addApiCollection(new HttpDaemonEndpoints(this.webSocketEndpointHandler.getApiList().getClients()));
         this.httpEndpointHandler.postInit();
     }
 
@@ -74,7 +76,8 @@ public final class App extends AppBootstrap {
     protected void init() {
         final HttpServerCodec httpServerCodec = new HttpServerCodec();
         httpServerCodec.addLocationProvider("api", new RestApiLocationProvider(this.httpEndpointHandler.getApiList().getEndpoints()));
-        httpServerCodec.addLocationProvider("ws", new WebSocketLocationProvider(this.webSocketEndpointHandler.getApiList().getEndpoints()));
+        httpServerCodec.addLocationProvider("ws", new WebSocketLocationProvider(this.webSocketEndpointHandler.getApiList().getEndpoints(),
+                this.webSocketEndpointHandler.getApiList().getClients()::add));
         if (!this.getConfig().isProductive())
             httpServerCodec.addLocationProvider("playground", new PlaygroundLocationProvider(SERVER_CONFIG.getWebsocketAddress(),
                     this.webSocketEndpointHandler.getApiList().getCollections().values()));

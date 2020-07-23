@@ -9,6 +9,7 @@ import net.cryptic_game.backend.base.netty.codec.NettyCodecHandler;
 import net.cryptic_game.backend.base.netty.codec.http.HttpServerCodec;
 import net.cryptic_game.backend.base.netty.server.NettyInetServer;
 import net.cryptic_game.backend.base.netty.server.NettyServerHandler;
+import net.cryptic_game.backend.base.utils.DaemonUtils;
 import net.cryptic_game.backend.daemon.api.DaemonEndpointHandler;
 import net.cryptic_game.backend.daemon.api.DaemonInfoEndpoints;
 import org.reflections.Reflections;
@@ -36,6 +37,7 @@ public final class App extends AppBootstrap {
 
     @Override
     protected void preInit() {
+        DaemonUtils.setServerUrl(DAEMON_CONFIG.getServerUrl());
         this.daemonEndpointHandler = new DaemonEndpointHandler();
     }
 

@@ -22,22 +22,28 @@ import net.cryptic_game.backend.base.netty.codec.http.HttpLocation;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.function.Consumer;
 
 @EqualsAndHashCode
 public final class WebSocketLocation extends HttpLocation<WebSocketFrame> {
 
     private static final Charset CHARSET = StandardCharsets.UTF_8;
     private final Map<String, ApiEndpointData> endpoints;
+    private final Consumer<ApiClient> clientAddedConsumer;
     private ApiClient client;
 
-    public WebSocketLocation(final Map<String, ApiEndpointData> endpoints) {
+    public WebSocketLocation(final Map<String, ApiEndpointData> endpoints, final Consumer<ApiClient> clientAddedConsumer) {
         super(new HttpObjectAggregator(65536), new WebSocketServerProtocolHandler("/"));
         this.endpoints = endpoints;
+        this.clientAddedConsumer = clientAddedConsumer;
     }
 
     @Override
     protected void channelRead0(final ChannelHandlerContext ctx, final WebSocketFrame msg) throws Exception {
-        if (client == null) this.client = new ApiClient(ctx.channel());
+        if (client == null) {
+            this.client = new ApiClient(ctx.channel());
+            this.clientAddedConsumer.accept(this.client);
+        }
 
         JsonObject json = null;
         ApiResponse apiResponse = null;

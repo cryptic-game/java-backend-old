@@ -2,13 +2,14 @@ package net.cryptic_game.backend.base.utils;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import io.netty.channel.Channel;
+import lombok.Setter;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollectionData;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointData;
 import net.cryptic_game.backend.base.api.endpoint.ApiParameterSpecialType;
 import net.cryptic_game.backend.base.daemon.Daemon;
 import net.cryptic_game.backend.base.daemon.DaemonEndpointCollectionData;
 import net.cryptic_game.backend.base.daemon.DaemonEndpointData;
+import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -22,12 +23,15 @@ import java.util.stream.Collectors;
 
 public final class DaemonUtils {
 
+    @Setter
+    private static String serverUrl;
+
     private DaemonUtils() {
         throw new UnsupportedOperationException();
     }
 
-    public static void notifyUser(@NotNull final Channel channel, @NotNull final UUID user, @NotNull final String topic, @Nullable final Object data) {
-        throw new UnsupportedOperationException();
+    public static void notifyUser(@NotNull final UUID user, @NotNull final String topic, @Nullable final Object data) {
+        HttpClientUtils.sendAsyncRequest(serverUrl + "/daemon/notify", JsonBuilder.create("user_id", user).add("topic", topic).add("data", data).build());
     }
 
     @NotNull

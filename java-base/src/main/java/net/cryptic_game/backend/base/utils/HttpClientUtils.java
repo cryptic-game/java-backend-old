@@ -48,6 +48,18 @@ public final class HttpClientUtils {
         return CLIENT.newCall(request).execute();
     }
 
+    public static void sendAsyncRequest(@NotNull final String url, @NotNull final JsonElement json) {
+        sendAsyncRequest(url, json, new ApiCallback() {
+            @Override
+            public void onFailure(@NotNull final IOException e) {
+            }
+
+            @Override
+            public void onResponse(@NotNull final ApiResponse response) {
+            }
+        });
+    }
+
     public static void sendAsyncRequest(@NotNull final String url, @NotNull final ApiCallback callback) {
         sendAsyncRequest(new Request.Builder().url(url).build(), callback);
     }
