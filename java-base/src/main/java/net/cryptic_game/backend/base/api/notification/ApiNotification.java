@@ -14,13 +14,9 @@ public final class ApiNotification implements JsonSerializable {
     private final String topic;
     private final JsonElement data;
 
-    private ApiNotification(final String topic, final Object object) {
+    public ApiNotification(final String topic, final Object object) {
         this.topic = topic;
         this.data = JsonUtils.toJson(object);
-    }
-
-    public static ApiNotification create(final String topic, final Object object) {
-        return new ApiNotification(topic, object);
     }
 
     public void send(final Channel channel) {

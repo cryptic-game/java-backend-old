@@ -12,3 +12,9 @@ application {
     applicationName = 'java-daemon'
     mainClassName = 'net.cryptic_game.backend.daemon.App'
 }
+
+task start(type: JavaExec) {
+    classpath fileTree("${buildDir}/install/java-daemon/lib").matching { include "*.jar" }.files
+    main "net.cryptic_game.backend.daemon.App"
+    workingDir file(projectDir)
+}

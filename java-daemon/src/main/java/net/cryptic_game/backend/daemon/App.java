@@ -1,13 +1,17 @@
 package net.cryptic_game.backend.daemon;
 
-import io.netty.channel.Channel;
-import io.netty.channel.unix.DomainSocketAddress;
 import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.AppBootstrap;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
-import net.cryptic_game.backend.base.netty.client.NettyClientHandler;
-import net.cryptic_game.backend.daemon.api.DaemonEndpointHandler;
-import net.cryptic_game.backend.daemon.client.daemon.DaemonClientCodec;
+import net.cryptic_game.backend.base.api.endpoint.ApiEndpointHandler;
+import net.cryptic_game.backend.base.api.netty.rest.RestApiLocationProvider;
+import net.cryptic_game.backend.base.netty.EventLoopGroupHandler;
+import net.cryptic_game.backend.base.netty.codec.NettyCodecHandler;
+import net.cryptic_game.backend.base.netty.codec.http.HttpServerCodec;
+import net.cryptic_game.backend.base.netty.server.NettyInetServer;
+import net.cryptic_game.backend.base.netty.server.NettyServerHandler;
+import net.cryptic_game.backend.base.utils.DaemonUtils;
+import net.cryptic_game.backend.daemon.api.DaemonInfoEndpoints;
 import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
@@ -18,23 +22,22 @@ public final class App extends AppBootstrap {
 
     private static final DaemonConfig DAEMON_CONFIG = new DaemonConfig();
 
-    private NettyClientHandler clientHandler;
-    private DaemonEndpointHandler daemonEndpointHandler;
-    private DaemonBootstrapper daemonBootstrapper;
+    private NettyServerHandler serverHandler;
+    private EventLoopGroupHandler eventLoopGroupHandler;
+    private ApiEndpointHandler daemonEndpointHandler;
 
     public App(final String[] args) {
         super(args, DAEMON_CONFIG, "Java-Daemon");
     }
 
     public static void main(final String[] args) {
-        log.info("Bootstrapping Java Daemon...");
         new App(args);
     }
 
     @Override
     protected void preInit() {
-        this.daemonEndpointHandler = new DaemonEndpointHandler();
-        this.daemonBootstrapper = new DaemonBootstrapper(this.getName(), this.daemonEndpointHandler);
+        DaemonUtils.setServerUrl(DAEMON_CONFIG.getServerUrl());
+        this.daemonEndpointHandler = new ApiEndpointHandler();
     }
 
     @Override
@@ -46,26 +49,25 @@ public final class App extends AppBootstrap {
                 e.printStackTrace();
             }
         }
+        this.daemonEndpointHandler.addApiCollection(new DaemonInfoEndpoints(this.daemonEndpointHandler));
         this.daemonEndpointHandler.postInit();
     }
 
     @Override
     protected void init() {
-        this.clientHandler = new NettyClientHandler();
+        this.serverHandler = new NettyServerHandler();
+        this.eventLoopGroupHandler = new EventLoopGroupHandler();
 
-        final boolean useUnixSocket = this.getConfig().isUseUnixSocket();
-        this.clientHandler.addClient("daemon",
-                useUnixSocket ? new DomainSocketAddress(this.getConfig().getUnixSocketPath()) : new InetSocketAddress("localhost", 4012),
-                useUnixSocket, new DaemonClientCodec(this.daemonEndpointHandler), this::onConnect);
+        final HttpServerCodec httpServerCodec = new HttpServerCodec();
+        httpServerCodec.addLocationProvider("/", new RestApiLocationProvider(this.daemonEndpointHandler.getApiList().getEndpoints()));
+
+        this.serverHandler.addServer(new NettyInetServer("daemon",
+                new InetSocketAddress(DAEMON_CONFIG.getHttpHost(), DAEMON_CONFIG.getHttpPort()),
+                null, new NettyCodecHandler(httpServerCodec), this.eventLoopGroupHandler));
     }
 
     @Override
     protected void start() {
-        this.clientHandler.start();
-    }
-
-    public void onConnect(final Channel channel) {
-        log.info("Sending request for registering on the server.");
-        this.daemonBootstrapper.sendRegisterPackage(channel);
+        this.serverHandler.start();
     }
 }

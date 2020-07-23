@@ -1,86 +1,86 @@
 package net.cryptic_game.backend.base.netty.server;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelOption;
+import io.netty.channel.ServerChannel;
 import io.netty.channel.epoll.Epoll;
-import io.netty.channel.epoll.EpollServerDomainSocketChannel;
-import io.netty.channel.epoll.EpollServerSocketChannel;
-import io.netty.channel.kqueue.KQueueServerDomainSocketChannel;
-import io.netty.channel.socket.nio.NioServerSocketChannel;
-import lombok.Getter;
+import io.netty.handler.ssl.SslContext;
+import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.netty.EventLoopGroupHandler;
-import net.cryptic_game.backend.base.netty.NettyCodec;
-import net.cryptic_game.backend.base.netty.NettyCodecInitializer;
 import net.cryptic_game.backend.base.netty.NettyInitializer;
+import net.cryptic_game.backend.base.netty.codec.NettyCodecHandler;
 
 import java.net.SocketAddress;
-import java.util.List;
 
+@RequiredArgsConstructor
+@EqualsAndHashCode
 @Slf4j
-public final class NettyServer {
+public abstract class NettyServer implements AutoCloseable {
 
     private static final boolean EPOLL = Epoll.isAvailable();
-
-    @Getter
-    private final String name;
+    private final String id;
     private final SocketAddress address;
-    private final boolean unixSocket;
-
+    private final SslContext sslContext;
+    private final NettyCodecHandler codecHandler;
     private final EventLoopGroupHandler eventLoopGroupHandler;
-    private final List<NettyCodecInitializer<?>> nettyInitializers;
 
+    private Thread thread;
     private Channel channel;
 
-    public NettyServer(final String name,
-                       final SocketAddress address,
-                       final boolean unixSocket,
-                       final EventLoopGroupHandler eventLoopGroupHandler,
-                       final NettyCodec<?> nettyCodec) {
-        this.name = name;
-        this.address = address;
-        this.unixSocket = unixSocket;
+    protected abstract Class<? extends ServerChannel> getServerChannelType(boolean epoll);
 
-        this.eventLoopGroupHandler = eventLoopGroupHandler;
-        this.nettyInitializers = nettyCodec.getInitializers();
-    }
-
-    protected void stop() {
-        if (this.channel != null) this.channel.close();
-    }
-
+    /**
+     * Starts the current server.
+     */
     public void start() {
-        if ((this.channel == null || !this.channel.isOpen()))
-            new Thread(() -> {
-                try {
-                    this.channel = new ServerBootstrap()
-                            .option(ChannelOption.SO_BACKLOG, 1024)
-                            .group(this.eventLoopGroupHandler.getBossGroup(), this.eventLoopGroupHandler.getWorkGroup())
-                            .channel(this.unixSocket ? (EPOLL ? EpollServerDomainSocketChannel.class : KQueueServerDomainSocketChannel.class)
-                                    : (EPOLL ? EpollServerSocketChannel.class : NioServerSocketChannel.class))
-                            .childHandler(new NettyInitializer(null, this.nettyInitializers))
-                            .bind(this.address)
-                            .sync()
-                            .channel();
+        this.close();
+        this.thread = new Thread(() -> {
+            try {
+                this.channel = new ServerBootstrap()
+                        .option(ChannelOption.SO_BACKLOG, 1024)
+                        .option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
+                        .group(this.eventLoopGroupHandler.getBossGroup(), this.eventLoopGroupHandler.getWorkGroup())
+                        .channel(this.getServerChannelType(EPOLL))
+                        .childHandler(new NettyInitializer(this.sslContext, this.codecHandler.getInitializers()))
+                        .bind(this.address)
+                        .sync()
+                        .channel();
 
-                    log.info("This Server \"" + this.getName() + "\" is now listening on " + this.address + ".");
+                log.info("Server {} is now listening on {}.", this.id, this.channel.localAddress());
 
-                    this.channel.closeFuture().sync();
-                } catch (Exception e) {
-                    log.error("The server \"{}\" was unexpectedly closed. {}", this.getName(), e.toString());
-                }
-                log.info("Restarting in 20 seconds.");
+                this.channel.closeFuture().sync();
+            } catch (Exception e) {
+                log.error("Server " + this.id + " crashed. Restarting in 20 seconds.", e);
+
                 try {
-                    Thread.sleep(1000 * 20); // 20 seconds
+                    Thread.sleep(20000);
                 } catch (InterruptedException ignored) {
                 }
-                this.restart();
-            }, this.getName()).start();
+                this.start();
+
+            } finally {
+                this.close();
+            }
+        }, "server-" + this.id);
+        this.thread.start();
     }
 
-    private void restart() {
-        this.stop();
-        this.start();
+    /**
+     * Closes the current server.
+     */
+    @Override
+    public void close() {
+        if (this.channel != null) {
+            if (this.channel.isOpen()) this.channel.close();
+            this.channel = null;
+        }
+        if (this.thread != null) {
+            this.thread.interrupt();
+            this.thread = null;
+        }
     }
 }

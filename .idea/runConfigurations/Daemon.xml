@@ -10,12 +10,14 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value="run" />
+          <option value="start" />
         </list>
       </option>
       <option name="vmOptions" value="" />
     </ExternalSystemSettings>
     <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-    <method v="2" />
+    <method v="2">
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="Build Daemon" run_configuration_type="GradleRunConfiguration" />
+    </method>
   </configuration>
 </component>

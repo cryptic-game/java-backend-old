@@ -1,70 +1,63 @@
 package net.cryptic_game.backend.base.api.endpoint;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import net.cryptic_game.backend.base.json.JsonBuilder;
+import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.json.JsonUtils;
 
-import java.util.Objects;
+@EqualsAndHashCode
+@Getter
+@ToString
+@AllArgsConstructor
+public final class ApiResponse implements JsonSerializable {
 
-public final class ApiResponse {
-
-    private final ApiResponseType type;
+    private final ApiResponseType responseType;
     private final String message;
-    private final Object data;
+    private final JsonElement data;
+    @Setter
+    private String tag;
 
-    public ApiResponse(final ApiResponseType type) {
-        this(type, null, null);
+    public ApiResponse(final ApiResponseType responseCode) {
+        this(responseCode, null, null);
     }
 
-    public ApiResponse(final ApiResponseType type, final String message) {
-        this(type, message, null);
+    public ApiResponse(final ApiResponseType responseCode, final String message) {
+        this(responseCode, message, null);
     }
 
-    public ApiResponse(final ApiResponseType type, final Object data) {
-        this(type, null, data);
+    public ApiResponse(final ApiResponseType responseCode, final Object data) {
+        this(responseCode, null, data);
     }
 
-    public ApiResponse(final ApiResponseType type, final String message, final Object data) {
-        this.type = type;
-        this.message = message;
-        this.data = data;
+    public ApiResponse(final ApiResponseType responseType, final String message, final Object data) {
+        this(responseType, message, JsonUtils.toJson(data));
     }
 
-    public boolean hasMessage() {
-        return this.message != null;
-    }
-
-    public boolean hasData() {
-        return this.data != null;
-    }
-
-    public JsonElement getData() {
-        return JsonUtils.toJson(this.data);
-    }
-
-    public ApiResponseType getType() {
-        return this.type;
-    }
-
-    public String getMessage() {
-        return this.message;
+    public ApiResponse(final ApiResponseType responseType, final String message, final JsonElement data) {
+        this(responseType, message, data, null);
     }
 
     @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ApiResponse)) return false;
-        ApiResponse that = (ApiResponse) o;
-        return getType() == that.getType()
-                && Objects.equals(getMessage(), that.getMessage())
-                && Objects.equals(getData(), that.getData());
+    public JsonElement serialize() {
+        return this.serialize(false);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getType(), getMessage(), getData());
-    }
+    public JsonElement serialize(final boolean small) {
+        final JsonBuilder info = small
+                ? JsonBuilder.create("error", this.responseType.isError())
+                .add("message", this.message != null, () -> this.message)
+                : JsonBuilder.create("tag", this.getTag())
+                .add("status", this.getResponseType())
+                .add("message", this.message != null, this::getMessage);
 
-    public String toString() {
-        return "ApiResponse(type=" + this.getType() + ", message=" + this.getMessage() + ", data=" + this.getData() + ")";
+        return JsonBuilder.create("info", info)
+                .add("data", !(this.data instanceof JsonNull), this::getData)
+                .build();
     }
 }

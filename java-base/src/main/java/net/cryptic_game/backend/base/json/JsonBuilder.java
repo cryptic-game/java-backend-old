@@ -29,8 +29,8 @@ import java.util.concurrent.Callable;
  * @see JsonSerializable
  * @see JsonObject
  */
-@Slf4j
 @EqualsAndHashCode
+@Slf4j
 public final class JsonBuilder implements JsonSerializable {
 
     private final JsonObject json;
@@ -53,35 +53,75 @@ public final class JsonBuilder implements JsonSerializable {
      */
     @Deprecated
     public static JsonBuilder create() {
-        return new JsonBuilder(new JsonObject());
+        return create(new JsonObject());
     }
 
     /**
      * Creates a {@link JsonBuilder} without any data.
      *
-     * @param object the existing {@link JsonObject} ore any {@link JsonSerializable}, e.g.
+     * @param json the existing {@link JsonObject}
+     * @return the JsonBuilder
+     * @see JsonBuilder#create(String, Object)
+     */
+    public static JsonBuilder create(final JsonObject json) {
+        return new JsonBuilder(json);
+    }
+
+    /**
+     * Creates a {@link JsonBuilder} without any data.
+     *
+     * @param object the data, represented in a {@link JsonObject}
      * @return the JsonBuilder
      * @see JsonBuilder#create(String, Object)
      */
     public static JsonBuilder create(final Object object) {
-        return new JsonBuilder(JsonUtils.toJson(object).getAsJsonObject());
+        return new JsonBuilder(JsonUtils.fromJson(JsonUtils.toJson(object), JsonObject.class));
     }
 
     /**
      * Creates a {@link JsonBuilder} with one Key, Value pair.
      *
-     * @param key   the key of the pair.
-     * @param value the value of the pair.
+     * @param key   the key of the pair
+     * @param value the value of the pair
      * @return the JsonBuilder
      */
     public static JsonBuilder create(final String key, final Object value) {
         return JsonBuilder.create().add(key, value);
     }
 
+    /**
+     * Creates a {@link JsonBuilder} with one Key, Value pair.
+     *
+     * @param key        the key of the pair
+     * @param value      the value of the pair
+     * @param value2Call a alternative value if @{code value} is {@code null}
+     * @return the JsonBuilder
+     */
     public static JsonBuilder create(final String key, final Object value, final Callable<Object> value2Call) {
         return JsonBuilder.create().add(key, value, value2Call);
     }
 
+    /**
+     * Creates a {@link JsonBuilder} with one Key, Value pair.
+     *
+     * @param key       the key of the pair
+     * @param condition witch value shuld be added
+     * @param valueCall the value of the pair
+     * @return the JsonBuilder
+     */
+    public static JsonBuilder create(final String key, final boolean condition, final Callable<Object> valueCall) {
+        return JsonBuilder.create().add(key, condition, valueCall);
+    }
+
+    /**
+     * Creates a {@link JsonBuilder} with one Key, Value pair.
+     *
+     * @param key        the key of the pair
+     * @param condition  if the value should be added
+     * @param value1Call the value of the pair
+     * @param value2Call the alternative value of the pair
+     * @return the JsonBuilder
+     */
     public static JsonBuilder create(final String key, final boolean condition, final Callable<Object> value1Call, final Callable<Object> value2Call) {
         return JsonBuilder.create().add(key, condition, value1Call, value2Call);
     }
@@ -93,7 +133,7 @@ public final class JsonBuilder implements JsonSerializable {
      *
      * @param key   the key of the pair
      * @param value the value of the pair
-     * @return a instance if this to call other functions without saving {@link JsonBuilder} to a variable.
+     * @return a instance if this to call other functions without saving {@link JsonBuilder} to a variable
      */
     public JsonBuilder add(final String key, final Object value) {
         this.json.add(key, JsonUtils.toJson(value));
@@ -113,7 +153,7 @@ public final class JsonBuilder implements JsonSerializable {
         if (condition) try {
             return this.add(key, valueCall.call());
         } catch (Exception e) {
-            log.error("Error while calling second value.", e);
+            log.error("Error while calling value.", e);
         }
         return this;
     }
@@ -130,7 +170,7 @@ public final class JsonBuilder implements JsonSerializable {
     /**
      * Converts this to an {@link JsonObject}.
      *
-     * @return an {@link JsonObject} with the values from this.
+     * @return an {@link JsonObject} with the values from this
      * @see JsonBuilder#toString()
      */
     public JsonObject build() {
@@ -140,7 +180,7 @@ public final class JsonBuilder implements JsonSerializable {
     /**
      * Converts this to an {@link JsonObject}.
      *
-     * @return an {@link JsonObject} with the values from this.
+     * @return an {@link JsonObject} with the values from this
      * @see JsonBuilder#build()
      * @deprecated use {@link JsonBuilder#build()}
      */
@@ -153,7 +193,7 @@ public final class JsonBuilder implements JsonSerializable {
     /**
      * Converts this to a Json-{@link String}.
      *
-     * @return a Json-{@link String} with the values from this.
+     * @return a Json-{@link String} with the values from this
      * @see JsonObject
      * @see JsonBuilder#build()
      */

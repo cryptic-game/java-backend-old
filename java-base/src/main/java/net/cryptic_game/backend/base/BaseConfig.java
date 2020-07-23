@@ -39,18 +39,9 @@ public final class BaseConfig {
     @ConfigValue("session_expire")
     private int sessionExpire = 14;
 
-    @ConfigValue("response_timeout")
-    private int responseTimeout = 20;
-
     @ConfigValue(value = "log_level", comment = "Available LogLevel's: OFF, FATAL, ERROR, WARN, INFO, DEBUG, TRACE & ALL")
     private String logLevel = Level.WARN.toString();
 
     @ConfigValue(value = "sentry_dsn", comment = "To disable Sentry leave this empty.")
     private String sentryDsn = "";
-
-    @ConfigValue("use_unix_socket")
-    private boolean useUnixSocket = true;
-
-    @ConfigValue("unix_socket_path")
-    private String unixSocketPath = "/var/run/cryptic.sock";
 }

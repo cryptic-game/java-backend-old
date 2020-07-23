@@ -19,16 +19,10 @@ public final class ApiExecutor {
         throw new UnsupportedOperationException();
     }
 
-    public static ApiResponse execute(final Map<String, ApiEndpointData> endpoints, final JsonObject request, final ApiClient client, final String tag) {
-        if (!request.has("endpoint")) return new ApiResponse(ApiResponseType.BAD_REQUEST, "MISSING_ENDPOINT");
-        else {
-            final ApiEndpointData endpoint = endpoints.get(JsonUtils.fromJson(request.get("endpoint"), String.class));
-            if (endpoint == null) return new ApiResponse(ApiResponseType.NOT_FOUND, "ENDPOINT");
-            else return executeMethod(endpoint,
-                    JsonUtils.fromJson(request.get("data"), JsonObject.class),
-                    client,
-                    tag);
-        }
+    public static ApiResponse execute(final Map<String, ApiEndpointData> endpoints, final String endpointName, final JsonObject data, final ApiClient client, final String tag) {
+        final ApiEndpointData endpoint = endpoints.get(endpointName);
+        if (endpoint == null) return new ApiResponse(ApiResponseType.NOT_FOUND, "ENDPOINT");
+        else return executeMethod(endpoint, data, client, tag);
     }
 
     private static ApiResponse executeMethod(final ApiEndpointData methodData, final JsonObject data, final ApiClient client, final String tag) {

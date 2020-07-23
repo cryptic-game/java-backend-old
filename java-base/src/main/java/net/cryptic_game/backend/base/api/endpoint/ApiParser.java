@@ -75,12 +75,11 @@ public final class ApiParser {
                 .add("endpointCollections", endpointCollections.stream()
                         .peek(collection -> collection.setEndpoints(collection.getEndpoints().entrySet()
                                 .stream()
-                                .map(entry -> {
+                                .peek(entry -> {
                                     final ApiEndpointData endpointData = entry.getValue().copy();
                                     final String[] name = endpointData.getName().split("/");
                                     endpointData.setName(name[name.length - 1]);
                                     entry.setValue(endpointData);
-                                    return entry;
                                 }).peek(entry -> entry.getValue().setParameters(entry.getValue().getParameters()
                                         .stream()
                                         .filter(parameter -> parameter.getSpecial().equals(ApiParameterSpecialType.NORMAL))
