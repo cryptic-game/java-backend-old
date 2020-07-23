@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.server.server.http.endpoints;
+package net.cryptic_game.backend.server.server.http;
 
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpoint;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
@@ -18,6 +18,6 @@ public final class HttpInfoEndpoint extends ApiEndpointCollection {
 
     @ApiEndpoint("leaderboard")
     public ApiResponse leaderboard() {
-        return new ApiResponse(ApiResponseType.OK);
+        return new ApiResponse(ApiResponseType.NOT_IMPLEMENTED);
     }
 }

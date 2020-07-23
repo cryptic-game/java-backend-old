@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.AppBootstrap;
 import net.cryptic_game.backend.base.api.client.ApiClient;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointData;
+import net.cryptic_game.backend.base.api.endpoint.ApiEndpointHandler;
 import net.cryptic_game.backend.base.api.netty.rest.RestApiLocationProvider;
 import net.cryptic_game.backend.base.api.netty.websocket.WebSocketLocationProvider;
 import net.cryptic_game.backend.base.netty.EventLoopGroupHandler;
@@ -13,14 +14,12 @@ import net.cryptic_game.backend.base.netty.codec.http.HttpServerCodec;
 import net.cryptic_game.backend.base.netty.server.NettyInetServer;
 import net.cryptic_game.backend.base.netty.server.NettyServerHandler;
 import net.cryptic_game.backend.server.daemon.DaemonHandler;
-import net.cryptic_game.backend.server.server.http.HttpEndpointHandler;
-import net.cryptic_game.backend.server.server.http.endpoints.HttpDaemonEndpoints;
-import net.cryptic_game.backend.server.server.http.endpoints.HttpInfoEndpoint;
+import net.cryptic_game.backend.server.server.http.HttpDaemonEndpoints;
+import net.cryptic_game.backend.server.server.http.HttpInfoEndpoint;
 import net.cryptic_game.backend.server.server.playground.PlaygroundLocationProvider;
-import net.cryptic_game.backend.server.server.websocket.WebSocketEndpointHandler;
-import net.cryptic_game.backend.server.server.websocket.endpoints.WebSocketDaemonEndpoints;
-import net.cryptic_game.backend.server.server.websocket.endpoints.WebSocketInfoEndpoints;
-import net.cryptic_game.backend.server.server.websocket.endpoints.WebSocketUserEndpoints;
+import net.cryptic_game.backend.server.server.websocket.WebSocketDaemonEndpoints;
+import net.cryptic_game.backend.server.server.websocket.WebSocketInfoEndpoints;
+import net.cryptic_game.backend.server.server.websocket.WebSocketUserEndpoints;
 
 import java.net.InetSocketAddress;
 
@@ -29,8 +28,8 @@ public final class App extends AppBootstrap {
 
     private static final ServerConfig SERVER_CONFIG = new ServerConfig();
 
-    private WebSocketEndpointHandler webSocketEndpointHandler;
-    private HttpEndpointHandler httpEndpointHandler;
+    private ApiEndpointHandler webSocketEndpointHandler;
+    private ApiEndpointHandler httpEndpointHandler;
 
     private EventLoopGroupHandler eventLoopGroupHandler;
     private NettyServerHandler serverHandler;
@@ -42,14 +41,13 @@ public final class App extends AppBootstrap {
     }
 
     public static void main(final String[] args) {
-        log.info("Bootstrapping Java Server...");
         new App(args);
     }
 
     @Override
     protected void preInit() {
-        this.webSocketEndpointHandler = new WebSocketEndpointHandler();
-        this.httpEndpointHandler = new HttpEndpointHandler();
+        this.webSocketEndpointHandler = new ApiEndpointHandler();
+        this.httpEndpointHandler = new ApiEndpointHandler();
         this.eventLoopGroupHandler = new EventLoopGroupHandler();
         this.serverHandler = new NettyServerHandler();
         this.daemonHandler = new DaemonHandler(this.webSocketEndpointHandler.getApiList());

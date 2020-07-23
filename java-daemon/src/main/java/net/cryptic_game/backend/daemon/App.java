@@ -3,6 +3,7 @@ package net.cryptic_game.backend.daemon;
 import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.AppBootstrap;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
+import net.cryptic_game.backend.base.api.endpoint.ApiEndpointHandler;
 import net.cryptic_game.backend.base.api.netty.rest.RestApiLocationProvider;
 import net.cryptic_game.backend.base.netty.EventLoopGroupHandler;
 import net.cryptic_game.backend.base.netty.codec.NettyCodecHandler;
@@ -10,7 +11,6 @@ import net.cryptic_game.backend.base.netty.codec.http.HttpServerCodec;
 import net.cryptic_game.backend.base.netty.server.NettyInetServer;
 import net.cryptic_game.backend.base.netty.server.NettyServerHandler;
 import net.cryptic_game.backend.base.utils.DaemonUtils;
-import net.cryptic_game.backend.daemon.api.DaemonEndpointHandler;
 import net.cryptic_game.backend.daemon.api.DaemonInfoEndpoints;
 import org.reflections.Reflections;
 
@@ -24,21 +24,20 @@ public final class App extends AppBootstrap {
 
     private NettyServerHandler serverHandler;
     private EventLoopGroupHandler eventLoopGroupHandler;
-    private DaemonEndpointHandler daemonEndpointHandler;
+    private ApiEndpointHandler daemonEndpointHandler;
 
     public App(final String[] args) {
         super(args, DAEMON_CONFIG, "Java-Daemon");
     }
 
     public static void main(final String[] args) {
-        log.info("Bootstrapping Java Daemon...");
         new App(args);
     }
 
     @Override
     protected void preInit() {
         DaemonUtils.setServerUrl(DAEMON_CONFIG.getServerUrl());
-        this.daemonEndpointHandler = new DaemonEndpointHandler();
+        this.daemonEndpointHandler = new ApiEndpointHandler();
     }
 
     @Override

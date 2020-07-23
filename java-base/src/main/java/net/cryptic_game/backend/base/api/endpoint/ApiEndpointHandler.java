@@ -1,22 +1,20 @@
-package net.cryptic_game.backend.server.server.websocket;
+package net.cryptic_game.backend.base.api.endpoint;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.api.ApiException;
-import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
-import net.cryptic_game.backend.base.api.endpoint.ApiEndpointList;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Slf4j
-public final class WebSocketEndpointHandler {
+public final class ApiEndpointHandler {
 
     @Getter
     private final ApiEndpointList apiList;
     private Set<ApiEndpointCollection> apiCollections;
 
-    public WebSocketEndpointHandler() {
+    public ApiEndpointHandler() {
         this.apiCollections = new HashSet<>();
         this.apiList = new ApiEndpointList();
     }

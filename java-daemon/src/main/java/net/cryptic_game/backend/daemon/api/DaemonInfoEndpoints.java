@@ -2,6 +2,7 @@ package net.cryptic_game.backend.daemon.api;
 
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpoint;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
+import net.cryptic_game.backend.base.api.endpoint.ApiEndpointHandler;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
 
@@ -9,10 +10,10 @@ import java.util.stream.Collectors;
 
 public final class DaemonInfoEndpoints extends ApiEndpointCollection {
 
-    private final DaemonEndpointHandler daemonEndpointHandler;
+    private final ApiEndpointHandler daemonEndpointHandler;
     private ApiResponse endpointsResponse;
 
-    public DaemonInfoEndpoints(final DaemonEndpointHandler daemonEndpointHandler) {
+    public DaemonInfoEndpoints(final ApiEndpointHandler daemonEndpointHandler) {
         super("daemon", "Informational endpoints about the daemon.");
         this.daemonEndpointHandler = daemonEndpointHandler;
     }

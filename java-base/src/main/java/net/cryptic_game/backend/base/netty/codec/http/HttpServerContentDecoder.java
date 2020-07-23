@@ -66,12 +66,12 @@ class HttpServerContentDecoder extends MessageToMessageDecoder<HttpRequest> {
     }
 
     @Override
-    public void exceptionCaught(final ChannelHandlerContext ctx, final Throwable cause) throws Exception {
+    public void exceptionCaught(final ChannelHandlerContext ctx, final Throwable cause) {
         log.error("Error while processing channel \"" + ctx.channel().toString() + "\".", cause);
     }
 
     private Map.Entry<String, HttpLocation<?>> getLocation(final String path) {
-        for (Map.Entry<String, HttpLocationProvider<?>> locationProvider : this.locationProviders.entrySet()) {
+        for (final Map.Entry<String, HttpLocationProvider<?>> locationProvider : this.locationProviders.entrySet()) {
             if (path.startsWith(locationProvider.getKey())) {
                 return new AbstractMap.SimpleEntry<>(locationProvider.getKey(), locationProvider.getValue().getLocation());
             }

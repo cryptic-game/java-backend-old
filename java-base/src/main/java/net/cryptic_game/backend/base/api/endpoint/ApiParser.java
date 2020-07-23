@@ -1,6 +1,9 @@
 package net.cryptic_game.backend.base.api.endpoint;
 
 import com.google.gson.JsonElement;
+import net.cryptic_game.backend.base.json.JsonBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -11,10 +14,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import net.cryptic_game.backend.base.json.JsonBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public final class ApiParser {
 

@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.server.server.websocket.endpoints;
+package net.cryptic_game.backend.server.server.websocket;
 
 import net.cryptic_game.backend.base.api.client.ApiClient;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpoint;

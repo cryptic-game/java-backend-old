@@ -17,7 +17,6 @@ import java.net.URI;
 public final class PlaygroundLocation extends HttpLocation<HttpRequest> {
 
     private static final String BASE_DIR = new File("www").getAbsolutePath();
-
     private final LastHttpContent content;
 
     @Override
@@ -27,10 +26,8 @@ public final class PlaygroundLocation extends HttpLocation<HttpRequest> {
             return;
         }
 
-        final URI uri = new URI(msg.uri());
-        String path = uri.getPath();
-        if (path.endsWith("/")) path += "index.html";
-        final File file = new File(BASE_DIR + path).getAbsoluteFile();
+        final String path = new URI(msg.uri()).getPath();
+        final File file = new File(BASE_DIR + (path.endsWith("/") ? path + "index.html" : path)).getAbsoluteFile();
         final boolean head = msg.method().equals(HttpMethod.HEAD);
 
         if (file.getPath().toLowerCase().endsWith(File.separator + "playground.json")) {

@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.server.server.http.endpoints;
+package net.cryptic_game.backend.server.server.http;
 
 import com.google.gson.JsonElement;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
@@ -25,11 +25,12 @@ public final class HttpDaemonEndpoints extends ApiEndpointCollection {
     }
 
     //TODO Redis implementation
-    @ApiEndpoint("notify")
+    @ApiEndpoint(value = "notify", description = "Send a notification to all sessions of a user.")
     public ApiResponse notify(@ApiParameter("user_id") final UUID userId,
                               @ApiParameter("topic") final String topic,
                               @ApiParameter("data") final JsonElement data) {
-        Set<ApiClient> userClients = this.clients.stream().filter(client -> {
+
+        final Set<ApiClient> userClients = this.clients.stream().filter(client -> {
             final Session session = client.get(Session.class);
             return session != null && session.getUser().getId().equals(userId);
         }).collect(Collectors.toUnmodifiableSet());

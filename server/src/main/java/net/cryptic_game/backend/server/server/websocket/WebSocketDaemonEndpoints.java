@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.server.server.websocket.endpoints;
+package net.cryptic_game.backend.server.server.websocket;
 
 import com.google.gson.JsonObject;
 import io.netty.buffer.Unpooled;
