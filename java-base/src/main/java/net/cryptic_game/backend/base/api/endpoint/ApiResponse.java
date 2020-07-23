@@ -2,15 +2,19 @@ package net.cryptic_game.backend.base.api.endpoint;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.json.JsonUtils;
 
 @EqualsAndHashCode
 @Getter
+@ToString
+@AllArgsConstructor
 public final class ApiResponse implements JsonSerializable {
 
     private final ApiResponseType responseType;
@@ -36,9 +40,7 @@ public final class ApiResponse implements JsonSerializable {
     }
 
     public ApiResponse(final ApiResponseType responseType, final String message, final JsonElement data) {
-        this.responseType = responseType;
-        this.message = message;
-        this.data = data;
+        this(responseType, message, data, null);
     }
 
     @Override

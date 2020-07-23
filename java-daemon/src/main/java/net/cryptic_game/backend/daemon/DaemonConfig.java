@@ -15,5 +15,5 @@ public class DaemonConfig {
     private String httpHost = "0.0.0.0";
 
     @ConfigValue("http_port")
-    private int httpPort = 80;
+    private int httpPort = 8080;
 }

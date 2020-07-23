@@ -11,3 +11,9 @@ application {
     applicationName = 'server'
     mainClassName = 'net.cryptic_game.backend.server.App'
 }
+
+task start(type: JavaExec) {
+    classpath fileTree("${buildDir}/install/server/lib").matching { include "*.jar" }.files
+    main "net.cryptic_game.backend.server.App"
+    workingDir file(projectDir)
+}

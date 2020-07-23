@@ -1,8 +1,5 @@
 package net.cryptic_game.backend.daemon;
 
-import java.lang.reflect.InvocationTargetException;
-import java.net.InetSocketAddress;
-
 import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.AppBootstrap;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
@@ -15,6 +12,9 @@ import net.cryptic_game.backend.base.netty.server.NettyServerHandler;
 import net.cryptic_game.backend.daemon.api.DaemonEndpointHandler;
 import net.cryptic_game.backend.daemon.api.DaemonInfoEndpoints;
 import org.reflections.Reflections;
+
+import java.lang.reflect.InvocationTargetException;
+import java.net.InetSocketAddress;
 
 @Slf4j
 public final class App extends AppBootstrap {

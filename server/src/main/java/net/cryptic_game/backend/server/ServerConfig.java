@@ -17,6 +17,9 @@ public class ServerConfig {
     @ConfigValue("http_port")
     private int httpPort = 80;
 
+    @ConfigValue("java_daemon_address")
+    private String javaDaemonAddress = "http://127.0.0.1:8080";
+
     @ConfigValue("websocket_address")
     private String websocketAddress = "127.0.0.1:80/ws";
 }

@@ -10,6 +10,7 @@ import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import lombok.EqualsAndHashCode;
+import net.cryptic_game.backend.base.api.client.ApiClient;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointData;
 import net.cryptic_game.backend.base.api.endpoint.ApiExecutor;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
@@ -27,6 +28,7 @@ public final class WebSocketLocation extends HttpLocation<WebSocketFrame> {
 
     private static final Charset CHARSET = StandardCharsets.UTF_8;
     private final Map<String, ApiEndpointData> endpoints;
+    private ApiClient client;
 
     public WebSocketLocation(final Map<String, ApiEndpointData> endpoints) {
         super(new HttpObjectAggregator(65536), new WebSocketServerProtocolHandler("/"));
@@ -35,6 +37,8 @@ public final class WebSocketLocation extends HttpLocation<WebSocketFrame> {
 
     @Override
     protected void channelRead0(final ChannelHandlerContext ctx, final WebSocketFrame msg) throws Exception {
+        if (client == null) this.client = new ApiClient(ctx.channel());
+
         JsonObject json = null;
         ApiResponse apiResponse = null;
 
@@ -55,7 +59,7 @@ public final class WebSocketLocation extends HttpLocation<WebSocketFrame> {
 
             if (tag == null) apiResponse = new ApiResponse(ApiResponseType.BAD_REQUEST, "MISSING_TAG");
             else if (endpoint == null) apiResponse = new ApiResponse(ApiResponseType.BAD_REQUEST, "MISSING_ENDPOINT");
-            else apiResponse = ApiExecutor.execute(this.endpoints, endpoint, data == null ? new JsonObject() : data, null, tag); //TODO: client
+            else apiResponse = ApiExecutor.execute(this.endpoints, endpoint, data == null ? new JsonObject() : data, this.client, tag);
 
             if (apiResponse != null) apiResponse.setTag(tag);
         }
