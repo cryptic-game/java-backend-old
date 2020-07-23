@@ -20,7 +20,7 @@ public final class DaemonEndpointHandler {
 
     public DaemonEndpointHandler() {
         this.apiCollections = new HashSet<>();
-        this.apiList = new ApiEndpointList(null);
+        this.apiList = new ApiEndpointList();
     }
 
     public void postInit() {
