@@ -4,8 +4,8 @@ plugins {
 
 dependencies {
     // Database
-    api 'org.hibernate:hibernate-core:5.4.18.Final'
-    implementation 'org.hibernate:hibernate-hikaricp:5.4.18.Final'
+    api 'org.hibernate:hibernate-core:5.4.19.Final'
+    implementation 'org.hibernate:hibernate-hikaricp:5.4.19.Final'
     implementation 'org.mariadb.jdbc:mariadb-java-client:2.6.2'
     implementation 'org.postgresql:postgresql:42.2.14'
     implementation 'com.h2database:h2:1.4.200'
