@@ -37,7 +37,7 @@ dependencies {
     api 'com.sun.activation:javax.activation:1.2.0'
 
     // Http Client
-    api 'com.squareup.okhttp3:okhttp:4.8.0'
+    api 'com.squareup.okhttp3:okhttp:4.8.1'
 
     // Annotations
     api 'org.jetbrains:annotations:19.0.0'
