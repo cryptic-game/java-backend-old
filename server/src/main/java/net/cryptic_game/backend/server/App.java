@@ -50,9 +50,9 @@ public final class App extends AppBootstrap {
         this.httpEndpointHandler = new ApiEndpointHandler();
         this.eventLoopGroupHandler = new EventLoopGroupHandler();
         this.serverHandler = new NettyServerHandler();
-        this.daemonHandler = new DaemonHandler(this.webSocketEndpointHandler.getApiList());
+        this.daemonHandler = new DaemonHandler(this.webSocketEndpointHandler.getApiList(), this.getConfig().getApiToken());
         try {
-            this.daemonHandler.setSend(new WebSocketDaemonEndpoints(),
+            this.daemonHandler.setSend(new WebSocketDaemonEndpoints(this.getConfig().getApiToken()),
                     WebSocketDaemonEndpoints.class.getDeclaredMethod("send", ApiClient.class, String.class, ApiEndpointData.class, JsonObject.class));
         } catch (NoSuchMethodException e) {
             log.error("Error while setting daemon endpoint handling method.", e);

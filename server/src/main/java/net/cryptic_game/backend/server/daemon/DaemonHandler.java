@@ -1,6 +1,7 @@
 package net.cryptic_game.backend.server.daemon;
 
 import com.google.gson.JsonArray;
+import io.netty.handler.codec.http.HttpHeaderNames;
 import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollectionData;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointList;
@@ -10,6 +11,7 @@ import net.cryptic_game.backend.base.daemon.Daemon;
 import net.cryptic_game.backend.base.json.JsonUtils;
 import net.cryptic_game.backend.base.utils.DaemonUtils;
 import net.cryptic_game.backend.base.utils.HttpClientUtils;
+import okhttp3.Request;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -22,13 +24,15 @@ import java.util.stream.Collectors;
 public final class DaemonHandler {
 
     private final ApiEndpointList endpointList;
+    private final String apiToken;
 
     private Object daemonSendObject;
     private Method daemonSendMethod;
     private List<ApiParameterData> daemonSendMethodParameters;
 
-    public DaemonHandler(final ApiEndpointList endpointList) {
+    public DaemonHandler(final ApiEndpointList endpointList, final String apiToken) {
         this.endpointList = endpointList;
+        this.apiToken = apiToken;
     }
 
     public void registerDaemon(final String name, final String url) {
@@ -42,7 +46,9 @@ public final class DaemonHandler {
     private boolean handleDaemonRegisterRequest(final String name, final String url) {
         try {
             this.addEndpointCollections(DaemonUtils.parseDaemonEndpoints(new Daemon(name, url),
-                    JsonUtils.fromJson(HttpClientUtils.sendRequest(url + "/daemon/endpoints").getData(), JsonArray.class)));
+                    JsonUtils.fromJson(HttpClientUtils.getApiResponse(HttpClientUtils.sendReqeust(
+                            new Request.Builder().url(url + "/daemon/endpoints").header(HttpHeaderNames.AUTHORIZATION.toString(), this.apiToken)
+                                    .build())).getData(), JsonArray.class)));
 
             log.info("Successfully registered daemon {} at {}.", name, url);
             return false;

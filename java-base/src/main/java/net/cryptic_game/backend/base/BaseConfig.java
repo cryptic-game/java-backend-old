@@ -44,4 +44,7 @@ public final class BaseConfig {
 
     @ConfigValue(value = "sentry_dsn", comment = "To disable Sentry leave this empty.")
     private String sentryDsn = "";
+
+    @ConfigValue(value = "api_token", comment = "A secret token that is used to make the daemon endpoints only available to the server.")
+    private String apiToken = "";
 }

@@ -84,7 +84,7 @@ public final class HttpClientUtils {
     }
 
     @NotNull
-    private static ApiResponse getApiResponse(@NotNull final Response response) throws IOException {
+    public static ApiResponse getApiResponse(@NotNull final Response response) throws IOException {
         final ResponseBody responseBody = response.body();
         if (responseBody == null) return new ApiResponse(ApiResponseType.getByCode(response.code()));
 

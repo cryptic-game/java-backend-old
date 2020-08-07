@@ -17,9 +17,6 @@ public class DaemonConfig {
     @ConfigValue("http_port")
     private int httpPort = 8080;
 
-    @ConfigValue("api_token")
-    private String apiToken = "";
-
     @ConfigValue("server_url")
     private String serverUrl = "http://127.0.0.1:80/api";
 }

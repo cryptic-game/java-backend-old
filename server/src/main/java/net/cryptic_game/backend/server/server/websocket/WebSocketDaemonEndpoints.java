@@ -2,7 +2,9 @@ package net.cryptic_game.backend.server.server.websocket;
 
 import com.google.gson.JsonObject;
 import io.netty.buffer.Unpooled;
+import io.netty.handler.codec.http.HttpHeaderNames;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.api.client.ApiClient;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointData;
@@ -15,6 +17,8 @@ import net.cryptic_game.backend.base.daemon.DaemonEndpointData;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.utils.HttpClientUtils;
 import net.cryptic_game.backend.data.user.Session;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -25,9 +29,12 @@ import java.nio.charset.StandardCharsets;
  * No {@link net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection}!
  */
 @Slf4j
+@RequiredArgsConstructor
 public final class WebSocketDaemonEndpoints {
 
     private static final Charset CHARSET = StandardCharsets.UTF_8;
+    private static final String AUTHORIZATION_HEADER = HttpHeaderNames.AUTHORIZATION.toString();
+    private final String apiToken;
 
     public ApiResponse send(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client,
                             @ApiParameter(value = "tag", special = ApiParameterSpecialType.TAG) final String tag,
@@ -45,7 +52,12 @@ public final class WebSocketDaemonEndpoints {
             final Daemon daemon = daemonEndpoint.getDaemon();
             final String url = daemon.getUrl() + "/" + endpoint.getName();
 
-            HttpClientUtils.sendAsyncRequest(url, JsonBuilder.create(data).add("user_id", session.getUser().getId()).build(), new HttpClientUtils.ApiCallback() {
+            HttpClientUtils.sendAsyncRequest(new Request.Builder()
+                    .url(url)
+                    .header(AUTHORIZATION_HEADER, this.apiToken)
+                    .post(RequestBody.create(JsonBuilder.create(data).add("user_id", session.getUser().getId()).build().toString(), HttpClientUtils.JSON))
+                    .build(), new HttpClientUtils.ApiCallback() {
+
                 @Override
                 public void onFailure(final @NotNull IOException e) {
                     log.warn("Unable to connect to daemon {} at {}: {}", daemon.getName(), url, e.getMessage());

@@ -61,7 +61,7 @@ public final class App extends AppBootstrap {
         final HttpServerCodec httpServerCodec = new HttpServerCodec();
         httpServerCodec.addLocationProvider("/", new RestApiLocationProvider(
                 this.daemonEndpointHandler.getApiList().getEndpoints(),
-                DAEMON_CONFIG.getApiToken()));
+                this.getConfig().getApiToken()));
 
         this.serverHandler.addServer(new NettyInetServer("daemon",
                 new InetSocketAddress(DAEMON_CONFIG.getHttpHost(), DAEMON_CONFIG.getHttpPort()),
