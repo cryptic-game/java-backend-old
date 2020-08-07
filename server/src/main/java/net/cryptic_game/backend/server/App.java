@@ -73,7 +73,7 @@ public final class App extends AppBootstrap {
     @Override
     protected void init() {
         final HttpServerCodec httpServerCodec = new HttpServerCodec();
-        httpServerCodec.addLocationProvider("api", new RestApiLocationProvider(this.httpEndpointHandler.getApiList().getEndpoints()));
+        httpServerCodec.addLocationProvider("api", new RestApiLocationProvider(this.httpEndpointHandler.getApiList().getEndpoints(), null));
         httpServerCodec.addLocationProvider("ws", new WebSocketLocationProvider(this.webSocketEndpointHandler.getApiList().getEndpoints(),
                 this.webSocketEndpointHandler.getApiList().getClients()::add));
         if (!this.getConfig().isProductive())

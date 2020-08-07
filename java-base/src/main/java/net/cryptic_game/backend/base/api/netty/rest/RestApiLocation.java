@@ -8,6 +8,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.DefaultHttpResponse;
 import io.netty.handler.codec.http.DefaultLastHttpContent;
 import io.netty.handler.codec.http.FullHttpRequest;
+import io.netty.handler.codec.http.HttpHeaderNames;
 import io.netty.handler.codec.http.HttpHeaderValues;
 import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpObjectAggregator;
@@ -31,14 +32,26 @@ public final class RestApiLocation extends HttpLocation<FullHttpRequest> {
 
     private static final Charset CHARSET = StandardCharsets.UTF_8;
     private final Map<String, ApiEndpointData> endpoints;
+    private final boolean useApiToken;
+    private final String apiToken;
 
-    public RestApiLocation(final Map<String, ApiEndpointData> endpoints) {
+    public RestApiLocation(final Map<String, ApiEndpointData> endpoints, final String apiToken) {
         super(new HttpObjectAggregator(65536));
         this.endpoints = endpoints;
+        this.useApiToken = apiToken != null && !apiToken.isBlank();
+        this.apiToken = apiToken;
     }
 
     @Override
     protected void channelRead0(final ChannelHandlerContext ctx, final FullHttpRequest msg) throws Exception {
+        if (this.useApiToken) {
+            final String givenApiToken = msg.headers().get(HttpHeaderNames.AUTHORIZATION);
+            if (givenApiToken == null || !givenApiToken.equals(this.apiToken)) {
+                HttpUtils.sendStatus(ctx, msg, HttpResponseStatus.UNAUTHORIZED);
+                return;
+            }
+        }
+
         if (!(msg.method().equals(HttpMethod.POST) || msg.method().equals(HttpMethod.GET))) {
             HttpUtils.sendStatus(ctx, msg, HttpResponseStatus.METHOD_NOT_ALLOWED);
             return;
