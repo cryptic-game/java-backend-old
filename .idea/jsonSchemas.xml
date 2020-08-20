@@ -35,6 +35,9 @@
                   <Item>
                     <option name="path" value=".github/workflows/docker.yaml" />
                   </Item>
+                  <Item>
+                    <option name="path" value=".github/workflows/build.yaml" />
+                  </Item>
                 </list>
               </option>
             </SchemaInfo>

@@ -76,7 +76,7 @@ public final class UserSetting extends TableModel implements JsonSerializable {
      */
     @Override
     public JsonObject serialize() {
-        return JsonBuilder.create("key", this.getKey())
+        return JsonBuilder.create("key", this.getKey().getKey())
                 .add("value", this.getValue())
                 .build();
     }
