@@ -149,4 +149,10 @@ public final class ChatChannelEndpoints extends ApiEndpointCollection {
 
         return new ApiResponse(ApiResponseType.OK);
     }
+
+    @ApiEndpoint("channels")
+    public ApiResponse getChannels(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId) {
+        User user = User.getById(userId);
+        return new ApiResponse(ApiResponseType.OK, ChatChannelAccess.getChannels(user));
+    }
 }
