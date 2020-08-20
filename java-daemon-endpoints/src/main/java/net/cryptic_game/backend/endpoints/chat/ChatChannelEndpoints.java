@@ -62,6 +62,7 @@ public final class ChatChannelEndpoints extends ApiEndpointCollection {
         }
 
         channel.setName(newName);
+        channel.saveOrUpdate();
         return new ApiResponse(ApiResponseType.OK, channel);
     }
 
