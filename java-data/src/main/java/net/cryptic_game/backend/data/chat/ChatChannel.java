@@ -2,10 +2,12 @@ package net.cryptic_game.backend.data.chat;
 
 import lombok.Data;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
+import org.hibernate.Session;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -18,7 +20,9 @@ import java.util.UUID;
 @Data
 public final class ChatChannel extends TableModelAutoId {
 
-    @Column(name = "name", updatable = true, nullable = false)
+    public static final int MAX_NAME_LENGTH = 32;
+
+    @Column(name = "name", updatable = true, nullable = false, length = MAX_NAME_LENGTH)
     private String name;
 
     /**
@@ -36,16 +40,6 @@ public final class ChatChannel extends TableModelAutoId {
     }
 
     /**
-     * Deletes also the {@link ChatMessage}s and the {@link ChatChannelAccess}s from that channel.
-     */
-    @Override
-    public void delete() {
-        ChatMessage.getMessages(this).forEach(ChatMessage::delete);
-        ChatChannelAccess.getChannelAccesses(this).forEach(ChatChannelAccess::delete);
-        super.delete();
-    }
-
-    /**
      * Returns a {@link ChatChannel} by it's UUID.
      *
      * @param id the {@link UUID} of the Channel
@@ -53,5 +47,27 @@ public final class ChatChannel extends TableModelAutoId {
      */
     public static ChatChannel getById(final UUID id) {
         return getById(ChatChannel.class, id);
+    }
+
+    /**
+     * Returns a {@link List} of all existing {@link ChatChannel}s.
+     *
+     * @return the {@link List} containg all existing {@link ChatChannel}s
+     */
+    public static List<ChatChannel> getChannels() {
+        try (Session sqlSession = SQL_CONNECTION.openSession()) {
+            return sqlSession.createQuery("select object (c) from ChatChannel c", ChatChannel.class)
+                    .getResultList();
+        }
+    }
+
+    /**
+     * Deletes also the {@link ChatMessage}s and the {@link ChatChannelAccess}s from that channel.
+     */
+    @Override
+    public void delete() {
+        ChatMessage.getMessages(this).forEach(ChatMessage::delete);
+        ChatChannelAccess.getChannelAccesses(this).forEach(ChatChannelAccess::delete);
+        super.delete();
     }
 }

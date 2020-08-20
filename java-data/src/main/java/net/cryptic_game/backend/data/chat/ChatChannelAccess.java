@@ -89,6 +89,7 @@ public final class ChatChannelAccess extends TableModelAutoId implements JsonSer
 
     /**
      * Returns a {@link List} of all {@link ChatChannelAccess}es from on {@link ChatChannel}.
+     *
      * @param channel the {@link ChatChannel}
      * @return the {@link List} with the {@link ChatChannelAccess}es
      */

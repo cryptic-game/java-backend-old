@@ -30,6 +30,8 @@ import java.util.UUID;
 @Data
 public final class ChatMessage extends TableModelAutoId implements JsonSerializable {
 
+    public static final int MAX_MESSAGE_LENGTH = 1024;
+
     @ManyToOne
     @JoinColumn(name = "user_id", updatable = false, nullable = false)
     @Type(type = "uuid-char")
@@ -120,6 +122,10 @@ public final class ChatMessage extends TableModelAutoId implements JsonSerializa
         }
     }
 
+    public static ChatMessage getById(final UUID id) {
+        return getById(ChatMessage.class, id);
+    }
+
     /**
      * Generates a {@link JsonObject} containing all relevant {@link ChatMessage} information.
      *
@@ -127,11 +133,10 @@ public final class ChatMessage extends TableModelAutoId implements JsonSerializa
      */
     @Override
     public JsonObject serialize() {
-        UUID targetId = this.target == null ? null : this.getTarget().getId();
         return JsonBuilder.create("id", this.getId())
                 .add("channel_id", this.getChannel().getId())
                 .add("user_id", this.getUser().getId())
-                .add("target_id", targetId)
+                .add("target_id", this.target == null ? null : this.getTarget().getId())
                 .add("text", this.getText())
                 .add("timestamp", this.timestamp)
                 .build();

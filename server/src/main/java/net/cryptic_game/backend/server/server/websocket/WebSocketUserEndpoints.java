@@ -201,9 +201,6 @@ public final class WebSocketUserEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "USER_NOT_FOUND");
         }
 
-        return new ApiResponse(ApiResponseType.OK, JsonBuilder.create("id", user.getId())
-                .add("name", user.getUsername())
-                .add("created", user.getCreated())
-                .add("last", user.getLast()));
+        return new ApiResponse(ApiResponseType.OK, user.serializePublic());
     }
 }
