@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Entity representing a chat message entry in the database.
@@ -92,7 +93,7 @@ public final class ChatMessage extends TableModelAutoId implements JsonSerializa
      * @param to      the end {@link OffsetDateTime}
      * @return the {@link List} of {@link ChatMessage}s
      */
-    public List<ChatMessage> getMessages(final ChatChannel channel, final User user, final OffsetDateTime from, final OffsetDateTime to) {
+    public static List<ChatMessage> getMessages(final ChatChannel channel, final User user, final OffsetDateTime from, final OffsetDateTime to) {
         try (Session sqlSession = SQL_CONNECTION.openSession()) {
             return sqlSession.createQuery("select object (m) from ChatMessage m where m.channel = :channel "
                     + "and m.timestamp between :from and :to "
@@ -112,11 +113,13 @@ public final class ChatMessage extends TableModelAutoId implements JsonSerializa
      */
     @Override
     public JsonObject serialize() {
+        UUID targetId = this.target == null ? null : this.getTarget().getId();
         return JsonBuilder.create("id", this.getId())
                 .add("channel_id", this.getChannel().getId())
                 .add("user_id", this.getUser().getId())
-                .add("target_id", this.getTarget().getId())
+                .add("target_id", targetId)
                 .add("text", this.getText())
+                .add("timestamp", this.timestamp)
                 .build();
     }
 }
