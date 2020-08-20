@@ -36,6 +36,16 @@ public final class ChatChannel extends TableModelAutoId {
     }
 
     /**
+     * Deletes also the {@link ChatMessage}s and the {@link ChatChannelAccess}s from that channel.
+     */
+    @Override
+    public void delete() {
+        ChatMessage.getMessages(this).forEach(ChatMessage::delete);
+        ChatChannelAccess.getChannelAccesses(this).forEach(ChatChannelAccess::delete);
+        super.delete();
+    }
+
+    /**
      * Returns a {@link ChatChannel} by it's UUID.
      *
      * @param id the {@link UUID} of the Channel
