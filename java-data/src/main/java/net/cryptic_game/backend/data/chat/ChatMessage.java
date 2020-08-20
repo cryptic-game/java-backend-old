@@ -107,6 +107,20 @@ public final class ChatMessage extends TableModelAutoId implements JsonSerializa
     }
 
     /**
+     * Returns a {@link List} of all {@link ChatMessage}s from on {@link ChatChannel}.
+     *
+     * @param channel the {@link ChatChannel} whose {@link ChatMessage}s will be returned
+     * @return the {@link List} of {@link ChatMessage}s
+     */
+    public static List<ChatMessage> getMessages(final ChatChannel channel) {
+        try (Session sqlSession = SQL_CONNECTION.openSession()) {
+            return sqlSession.createQuery("select object (m) from ChatMessage m where m.channel = :channel ", ChatMessage.class)
+                    .setParameter("channel", channel)
+                    .getResultList();
+        }
+    }
+
+    /**
      * Generates a {@link JsonObject} containing all relevant {@link ChatMessage} information.
      *
      * @return The generated {@link JsonObject}
