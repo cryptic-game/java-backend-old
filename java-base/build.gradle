@@ -7,7 +7,7 @@ dependencies {
     api 'org.hibernate:hibernate-core:5.4.20.Final'
     implementation 'org.hibernate:hibernate-hikaricp:5.4.20.Final'
     implementation 'org.mariadb.jdbc:mariadb-java-client:2.6.2'
-    implementation 'org.postgresql:postgresql:42.2.15'
+    implementation 'org.postgresql:postgresql:42.2.16'
     implementation 'com.h2database:h2:1.4.200'
 
     // Logger
