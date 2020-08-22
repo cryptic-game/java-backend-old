@@ -16,8 +16,6 @@
       <option name="vmOptions" value="" />
     </ExternalSystemSettings>
     <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-    <method v="2">
-      <option name="RunConfigurationTask" enabled="true" run_configuration_name="Build Server" run_configuration_type="GradleRunConfiguration" />
-    </method>
+    <method v="2" />
   </configuration>
 </component>

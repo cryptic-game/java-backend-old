@@ -38,6 +38,9 @@
                   <Item>
                     <option name="path" value=".github/workflows/build.yaml" />
                   </Item>
+                  <Item>
+                    <option name="path" value=".github/workflows/gradle-wrapper-validation.yaml" />
+                  </Item>
                 </list>
               </option>
             </SchemaInfo>

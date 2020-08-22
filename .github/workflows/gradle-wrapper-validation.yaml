@@ -2,7 +2,7 @@ name: Validate Gradle Wrapper
 
 on:
   push:
-    paths-ignore: ['**.md']
+    paths: ['**.jar']
 
 jobs:
   validation:
