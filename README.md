@@ -45,12 +45,12 @@ To test the things you have changed you have to execute the Gradle Task 'run'.
 
 Server:
 ````sh
-./gradlew :server:run
+./gradlew :server:start
 ````
 
 Java-Daemon:
 ````sh
-./gradlew :java-daemon:run
+./gradlew :java-daemon:start
 ````
 
 After the first run you will find a `config.yaml` in the directories `java-server` and `java-daemon`, where you can customize your development environment. 
