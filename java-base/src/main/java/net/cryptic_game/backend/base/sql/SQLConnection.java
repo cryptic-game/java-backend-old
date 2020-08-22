@@ -52,6 +52,8 @@ public final class SQLConnection {
         settings.put("connection.autoReconnectForPools", "true");
         settings.put("connection.is-connection-validation-required", "true");
         settings.put(Environment.JDBC_TIME_ZONE, "UTC");
+        settings.put("hibernate.hikari.connectionTimeout", "10000"); // 10 seconds
+        settings.put("hibernate.hikari.initializationFailTimeout", "30000"); // 30 seconds
 
         if (debug) {
             settings.put(Environment.SHOW_SQL, "true");
