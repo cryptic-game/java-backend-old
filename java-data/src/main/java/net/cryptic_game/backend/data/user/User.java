@@ -1,6 +1,8 @@
 package net.cryptic_game.backend.data.user;
 
+import com.google.gson.JsonObject;
 import lombok.Data;
+import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonTransient;
 import net.cryptic_game.backend.base.sql.models.TableModel;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
@@ -106,5 +108,12 @@ public final class User extends TableModelAutoId {
     public void delete() {
         net.cryptic_game.backend.data.user.Session.getByUser(this).forEach(TableModel::delete);
         super.delete();
+    }
+
+    public JsonObject serializePublic() {
+        return JsonBuilder.create("id", this.getId())
+                .add("username", this.getUsername())
+                .add("created", this.getCreated())
+                .build();
     }
 }

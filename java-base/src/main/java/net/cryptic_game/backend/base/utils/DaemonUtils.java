@@ -30,6 +30,10 @@ public final class DaemonUtils {
         throw new UnsupportedOperationException();
     }
 
+    public static void notifyUser(@NotNull final UUID user, @NotNull final Enum<?> topic, @Nullable final Object data) {
+        notifyUser(user, topic.name(), data);
+    }
+
     public static void notifyUser(@NotNull final UUID user, @NotNull final String topic, @Nullable final Object data) {
         HttpClientUtils.sendAsyncRequest(serverUrl + "/daemon/notify", JsonBuilder.create("user_id", user).add("topic", topic).add("data", data).build());
     }

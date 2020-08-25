@@ -73,6 +73,35 @@ public final class ChatChannelAccess extends TableModelAutoId implements JsonSer
     }
 
     /**
+     * Returns a {@link List} of {@link ChatChannel}s, which contains the {@link User}.
+     *
+     * @param user the {@link User}, whose {@link ChatChannel}s will be returned
+     * @return the {@link List} of {@link ChatChannel}s
+     */
+    public static List<ChatChannel> getChannels(final User user) {
+        try (Session sqlSession = SQL_CONNECTION.openSession()) {
+            return sqlSession.createQuery("select object (c) from ChatChannel c where c in "
+                    + "(select ca.channel from ChatChannelAccess ca where ca.user = :user)", ChatChannel.class)
+                    .setParameter("user", user)
+                    .getResultList();
+        }
+    }
+
+    /**
+     * Returns a {@link List} of all {@link ChatChannelAccess}es from on {@link ChatChannel}.
+     *
+     * @param channel the {@link ChatChannel}
+     * @return the {@link List} with the {@link ChatChannelAccess}es
+     */
+    public static List<ChatChannelAccess> getChannelAccesses(final ChatChannel channel) {
+        try (Session sqlSession = SQL_CONNECTION.openSession()) {
+            return sqlSession.createQuery("select object (ca) from ChatChannelAccess ca where ca.channel = :channel", ChatChannelAccess.class)
+                    .setParameter("channel", channel)
+                    .getResultList();
+        }
+    }
+
+    /**
      * Returns a {@link List} of {@link User}s, who are in a {@link ChatChannel}.
      *
      * @param channel the {@link ChatChannel} where to get the {@link User}s from
