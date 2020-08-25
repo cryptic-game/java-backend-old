@@ -52,12 +52,13 @@ public final class Session extends TableModelAutoId implements JsonSerializable 
     /**
      * Creates a new {@link Session}.
      *
+     * @param sqlSession the sql session
      * @param user       {@link User} of the {@link Session}
      * @param token      token of the {@link Session}
      * @param deviceName device name of the {@link Session}
      * @return The instance of the created {@link Session}
      */
-    public static Session createSession(final User user, final UUID token, final String deviceName) {
+    public static Session createSession(final org.hibernate.Session sqlSession, final User user, final UUID token, final String deviceName) {
         final Session session = new Session();
         session.setUser(user);
         session.setToken(token);
@@ -65,47 +66,44 @@ public final class Session extends TableModelAutoId implements JsonSerializable 
         session.setExpire(OffsetDateTime.now().plus(EXPIRE));
         session.setLastActive(OffsetDateTime.now());
 
-        session.saveOrUpdate();
+        session.saveOrUpdate(sqlSession);
         return session;
     }
 
     /**
      * Fetches the {@link Session} with the given id.
      *
+     * @param sqlSession the sql session
      * @param id The id of the {@link Session}
      * @return The instance of the fetched {@link Session} if it exists | null if the entity does not exist
      */
-    public static Session getById(final UUID id) {
-        return getById(Session.class, id);
+    public static Session getById(final org.hibernate.Session sqlSession, final UUID id) {
+        return getById(sqlSession, Session.class, id);
     }
 
     /**
      * Fetches all {@link Session}s of a specific {@link User}.
      *
+     * @param sqlSession the sql session
      * @param user The user whose {@link Session}s are to be fetched
      * @return {@link List} containing {@link Session}s
      */
-    public static List<Session> getByUser(final User user) {
-        try (org.hibernate.Session sqlSession = SQL_CONNECTION.openSession()) {
-            return sqlSession.createQuery("select object (s) from Session as s where s.user = :user", Session.class)
-                    .setParameter("user", user)
-                    .getResultList();
-        }
+    public static List<Session> getByUser(final org.hibernate.Session sqlSession, final User user) {
+        return sqlSession.createQuery("select object (s) from Session as s where s.user = :user", Session.class)
+                .setParameter("user", user)
+                .getResultList();
     }
 
     /**
      * Deletes all expired and invalid {@link Session}s of a {@link User}.
      *
+     * @param sqlSession the sql session
      * @param user The {@link User} whose {@link Session}s are to be deleted.
      */
-    public static void deleteExpiredSessions(final User user) {
-        try (org.hibernate.Session sqlSession = SQL_CONNECTION.openSession()) {
-            sqlSession.beginTransaction();
+    public static void deleteExpiredSessions(final org.hibernate.Session sqlSession, final User user) {
             sqlSession.createQuery("delete from Session as s where s.expire < :date")
                     .setParameter("date", OffsetDateTime.now())
                     .executeUpdate();
-            sqlSession.getTransaction().commit();
-        }
     }
 
     /**

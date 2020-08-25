@@ -25,15 +25,13 @@ public abstract class TableModelAutoId extends TableModel {
     /**
      * Fetches the entity with the given id.
      *
+     * @param session     The sql session
      * @param id          The id of the entity
      * @param entityClass Model class of the entity
      * @param <T>         Model type of the entity
      * @return The instance of the fetched entity if it exists | null if the entity does not exist
      */
-    public static <T extends TableModelAutoId> T getById(final Class<T> entityClass, final UUID id) {
-        final Session session = SQL_CONNECTION.openSession();
-        final T entity = session.find(entityClass, id);
-        session.close();
-        return entity;
+    public static <T extends TableModelAutoId> T getById(final Session session, final Class<T> entityClass, final UUID id) {
+        return session.find(entityClass, id);
     }
 }

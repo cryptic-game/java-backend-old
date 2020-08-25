@@ -56,25 +56,27 @@ public final class ChatMessage extends TableModelAutoId implements JsonSerializa
     /**
      * Creates a new {@link ChatMessage} without a target (no whipser).
      *
+     * @param session the sql session
      * @param channel the {@link ChatChannel} where the {@link ChatMessage} will be sent
      * @param user    the {@link User} who sends the {@link ChatMessage}
      * @param text    the content of the {@link ChatMessage}
      * @return the sent {@link ChatMessage}
      */
-    public static ChatMessage create(final ChatChannel channel, final User user, final String text) {
-        return create(channel, user, null, text);
+    public static ChatMessage create(final Session session, final ChatChannel channel, final User user, final String text) {
+        return create(session, channel, user, null, text);
     }
 
     /**
      * Creates a new {@link ChatMessage}.
      *
+     * @param session the sql session
      * @param channel the {@link ChatChannel} where the {@link ChatMessage} will be sent
      * @param user    the {@link User} who sends the {@link ChatMessage}
      * @param target  the {@link User} who receives the {@link ChatMessage}
      * @param text    the content of the {@link ChatMessage}
      * @return the sent {@link ChatMessage}
      */
-    public static ChatMessage create(final ChatChannel channel, final User user, final User target, final String text) {
+    public static ChatMessage create(final Session session, final ChatChannel channel, final User user, final User target, final String text) {
         final ChatMessage message = new ChatMessage();
         message.setUser(user);
         message.setChannel(channel);
@@ -82,48 +84,46 @@ public final class ChatMessage extends TableModelAutoId implements JsonSerializa
         message.setText(text);
         message.setTarget(target);
 
-        message.saveOrUpdate();
+        message.saveOrUpdate(session);
         return message;
     }
 
     /**
      * Returns a {@link List} of {@link ChatMessage}s sent in a {@link ChatChannel}.
      *
+     * @param session the sql session
      * @param channel the {@link ChatChannel} where the {@link ChatMessage}s were sent
      * @param user    the {@link User} of the request
      * @param offset  the offset of the {@link ChatMessage}s
      * @param count   the count of the {@link ChatMessage}s
      * @return the {@link List} of {@link ChatMessage}s
      */
-    public static List<ChatMessage> getMessages(final ChatChannel channel, final User user, final int offset, final int count) {
-        try (Session sqlSession = SQL_CONNECTION.openSession()) {
-            return sqlSession.createQuery("select object (m) from ChatMessage m where m.channel = :channel "
-                    + "and (m.target is null or m.target = :user or m.user = :user) "
-                    + "order by m.timestamp desc", ChatMessage.class)
-                    .setParameter("channel", channel)
-                    .setParameter("user", user)
-                    .setFirstResult(offset)
-                    .setMaxResults(count)
-                    .getResultList();
-        }
+    public static List<ChatMessage> getMessages(final Session session, final ChatChannel channel, final User user, final int offset, final int count) {
+        return session.createQuery("select object (m) from ChatMessage m where m.channel = :channel "
+                + "and (m.target is null or m.target = :user or m.user = :user) "
+                + "order by m.timestamp desc", ChatMessage.class)
+                .setParameter("channel", channel)
+                .setParameter("user", user)
+                .setFirstResult(offset)
+                .setMaxResults(count)
+                .getResultList();
     }
 
     /**
      * Returns a {@link List} of all {@link ChatMessage}s from on {@link ChatChannel}.
      *
+     * @param session the sql session
      * @param channel the {@link ChatChannel} whose {@link ChatMessage}s will be returned
      * @return the {@link List} of {@link ChatMessage}s
      */
-    public static List<ChatMessage> getMessages(final ChatChannel channel) {
-        try (Session sqlSession = SQL_CONNECTION.openSession()) {
-            return sqlSession.createQuery("select object (m) from ChatMessage m where m.channel = :channel ", ChatMessage.class)
-                    .setParameter("channel", channel)
-                    .getResultList();
-        }
+    public static List<ChatMessage> getMessages(final Session session, final ChatChannel channel) {
+        return session.createQuery("select object (m) from ChatMessage m where m.channel = :channel ", ChatMessage.class)
+                .setParameter("channel", channel)
+                .getResultList();
     }
 
-    public static ChatMessage getById(final UUID id) {
-        return getById(ChatMessage.class, id);
+    public static ChatMessage getById(final Session session, final UUID id) {
+        return getById(session, ChatMessage.class, id);
     }
 
     /**
