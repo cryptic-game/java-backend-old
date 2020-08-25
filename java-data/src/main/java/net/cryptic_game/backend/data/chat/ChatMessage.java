@@ -91,19 +91,19 @@ public final class ChatMessage extends TableModelAutoId implements JsonSerializa
      *
      * @param channel the {@link ChatChannel} where the {@link ChatMessage}s were sent
      * @param user    the {@link User} of the request
-     * @param from    the start {@link OffsetDateTime}
-     * @param to      the end {@link OffsetDateTime}
+     * @param offset  the offset of the {@link ChatMessage}s
+     * @param count   the count of the {@link ChatMessage}s
      * @return the {@link List} of {@link ChatMessage}s
      */
-    public static List<ChatMessage> getMessages(final ChatChannel channel, final User user, final OffsetDateTime from, final OffsetDateTime to) {
+    public static List<ChatMessage> getMessages(final ChatChannel channel, final User user, final int offset, final int count) {
         try (Session sqlSession = SQL_CONNECTION.openSession()) {
             return sqlSession.createQuery("select object (m) from ChatMessage m where m.channel = :channel "
-                    + "and m.timestamp between :from and :to "
-                    + "and (m.target is null or m.target = :user or m.user = :user)", ChatMessage.class)
+                    + "and (m.target is null or m.target = :user or m.user = :user) "
+                    + "order by m.timestamp desc", ChatMessage.class)
                     .setParameter("channel", channel)
-                    .setParameter("from", from)
-                    .setParameter("to", to)
                     .setParameter("user", user)
+                    .setFirstResult(offset)
+                    .setMaxResults(count)
                     .getResultList();
         }
     }

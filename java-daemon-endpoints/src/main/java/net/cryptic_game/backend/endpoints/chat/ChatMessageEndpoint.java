@@ -13,7 +13,6 @@ import net.cryptic_game.backend.data.chat.ChatChannelAccess;
 import net.cryptic_game.backend.data.chat.ChatMessage;
 import net.cryptic_game.backend.data.user.User;
 
-import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -120,8 +119,8 @@ public final class ChatMessageEndpoint extends ApiEndpointCollection {
     @ApiEndpoint("list")
     public ApiResponse getMessages(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
                                    @ApiParameter("chat_id") final UUID channelId,
-                                   @ApiParameter("begin") final OffsetDateTime begin,
-                                   @ApiParameter("end") final OffsetDateTime end) {
+                                   @ApiParameter("offset") final int offset,
+                                   @ApiParameter("count") final int count) {
         final User user = User.getById(userId);
         final ChatChannel channel = ChatChannel.getById(channelId);
 
@@ -133,6 +132,6 @@ public final class ChatMessageEndpoint extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.UNAUTHORIZED, "ACCESS_DENIED");
         }
 
-        return new ApiResponse(ApiResponseType.OK, ChatMessage.getMessages(channel, user, begin, end));
+        return new ApiResponse(ApiResponseType.OK, ChatMessage.getMessages(channel, user, offset, count));
     }
 }
