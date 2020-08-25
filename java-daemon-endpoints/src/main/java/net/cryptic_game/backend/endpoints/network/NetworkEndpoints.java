@@ -22,7 +22,7 @@ public final class NetworkEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("get")
     public ApiResponse get(@ApiParameter(value = "network_id", optional = true) final UUID networkId,
-                           @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final Session session,
+                           @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION) final Session session,
 
                            @ApiParameter(value = "name", optional = true) final String name) {
         if (networkId == null && name == null) {
@@ -38,7 +38,7 @@ public final class NetworkEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("public")
-    public ApiResponse getPublic(@ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final Session session) {
+    public ApiResponse getPublic(@ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION) final Session session) {
         return new ApiResponse(ApiResponseType.OK, Network.getPublicNetworks(session));
     }
 
@@ -78,7 +78,7 @@ public final class NetworkEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("members")
     public ApiResponse members(@ApiParameter("network_id") final UUID networkId,
-                               @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final Session session
+                               @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION) final Session session
                                ) {
         final Network network = Network.getById(session, networkId);
 
@@ -91,7 +91,7 @@ public final class NetworkEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("list")
     public ApiResponse list(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
-                            @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final Session session,
+                            @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION) final Session session,
                             @ApiParameter("device_id") final UUID deviceId) {
         final User user = User.getById(session, userId);
         final Device device = Device.getById(session, deviceId);

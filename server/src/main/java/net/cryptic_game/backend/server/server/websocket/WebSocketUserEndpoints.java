@@ -91,7 +91,7 @@ public final class WebSocketUserEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("session")
     public ApiResponse session(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client,
-                               @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final org.hibernate.Session sqlSession,
+                               @ApiParameter(value = "sqlSession", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final org.hibernate.Session sqlSession,
                                @ApiParameter("session") final UUID sessionId,
                                @ApiParameter("token") final UUID token) {
         Session session = client.get(Session.class);
@@ -122,7 +122,7 @@ public final class WebSocketUserEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("change_password")
     public ApiResponse changePassword(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client,
-                                      @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final org.hibernate.Session sqlSession,
+                                      @ApiParameter(value = "sqlSession", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final org.hibernate.Session sqlSession,
                                       @ApiParameter("password") final String password,
                                       @ApiParameter("new") final String newPassword) {
         Session session = client.get(Session.class);
@@ -148,7 +148,7 @@ public final class WebSocketUserEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("logout")
     public ApiResponse logout(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client,
-                              @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final org.hibernate.Session sqlSession,
+                              @ApiParameter(value = "sqlSession", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final org.hibernate.Session sqlSession,
 
                               @ApiParameter(value = "session", optional = true) final UUID sessionId) {
         Session session = client.get(Session.class);
@@ -175,7 +175,7 @@ public final class WebSocketUserEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("delete")
     public ApiResponse delete(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client,
-                              @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final org.hibernate.Session sqlSession,
+                              @ApiParameter(value = "sqlSession", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final org.hibernate.Session sqlSession,
 
                               @ApiParameter("password") final String password) {
         Session session = client.get(Session.class);
@@ -197,7 +197,7 @@ public final class WebSocketUserEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("get")
     public ApiResponse get(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client,
-                           @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final org.hibernate.Session sqlSession,
+                           @ApiParameter(value = "sqlSession", special = ApiParameterSpecialType.SQL_SESSION) final org.hibernate.Session sqlSession,
                            @ApiParameter("id") final UUID userId) {
         final Session session = client.get(Session.class);
         if (session == null || !session.isValid()) {
