@@ -47,6 +47,7 @@ public final class DeviceFile extends TableModelAutoId implements JsonSerializab
     /**
      * Creates a {@link DeviceFile} and returns itself.
      *
+     * @param session the sql session
      * @param device      the {@link DeviceFile}  where the file will be added
      * @param name        the name of the {@link DeviceFile}
      * @param contents    the content of the {@link DeviceFile}
@@ -54,7 +55,8 @@ public final class DeviceFile extends TableModelAutoId implements JsonSerializab
      * @param parentDir   the parent-directory as {@link DeviceFile}
      * @return the created {@link DeviceFile}
      */
-    private static DeviceFile createFile(final Device device, final String name, final String contents, final boolean isDirectory, final DeviceFile parentDir) {
+    private static DeviceFile createFile(final Session session, final Device device, final String name, final String contents,
+                                         final boolean isDirectory, final DeviceFile parentDir) {
         final DeviceFile file = new DeviceFile();
         file.setDevice(device);
         file.setName(name);
@@ -62,47 +64,48 @@ public final class DeviceFile extends TableModelAutoId implements JsonSerializab
         file.setDirectory(isDirectory);
         file.setParentDirectory(parentDir);
 
-        file.saveOrUpdate();
+        file.saveOrUpdate(session);
         return file;
     }
 
     /**
      * Creates a {@link DeviceFile} and returns itself as file, not directory.
      *
+     * @param session the sql session
      * @param device    the {@link DeviceFile}  where the file will be added
      * @param name      the name of the {@link DeviceFile}
      * @param contents  the content of the {@link DeviceFile}
      * @param parentDir the parent-directory as {@link DeviceFile}
      * @return the created {@link DeviceFile}
      */
-    public static DeviceFile createFile(final Device device, final String name, final String contents, final DeviceFile parentDir) {
-        return createFile(device, name, contents, false, parentDir);
+    public static DeviceFile createFile(final Session session, final Device device, final String name, final String contents, final DeviceFile parentDir) {
+        return createFile(session, device, name, contents, false, parentDir);
     }
 
     /**
      * Creates a {@link DeviceFile} and returns itself as directory.
      *
+     * @param session the sql session
      * @param device    the {@link DeviceFile}  where the file will be added
      * @param name      the name of the {@link DeviceFile}
      * @param parentDir the parent-directory as {@link DeviceFile}
      * @return the created {@link DeviceFile}
      */
-    public static DeviceFile createDirectory(final Device device, final String name, final DeviceFile parentDir) {
-        return createFile(device, name, "", true, parentDir);
+    public static DeviceFile createDirectory(final Session session, final Device device, final String name, final DeviceFile parentDir) {
+        return createFile(session, device, name, "", true, parentDir);
     }
 
     /**
      * Returns a list of all {@link DeviceFile} of a {@link Device}.
      *
+     * @param session the sql session
      * @param device the {@link Device} where you want all {@link DeviceFile}
      * @return the {@link List} of all {@link DeviceFile} of a {@link Device}
      */
-    public static List<DeviceFile> getFilesByDevice(final Device device) {
-        try (Session sqlSession = SQL_CONNECTION.openSession()) {
-            return sqlSession.createQuery("select object (f) from DeviceFile f where f.device = :device", DeviceFile.class)
-                    .setParameter("device", device)
-                    .getResultList();
-        }
+    public static List<DeviceFile> getFilesByDevice(final Session session, final Device device) {
+        return session.createQuery("select object (f) from DeviceFile f where f.device = :device", DeviceFile.class)
+                .setParameter("device", device)
+                .getResultList();
     }
 
     /**
