@@ -10,9 +10,10 @@ import java.util.Map;
 public final class RestApiLocationProvider implements HttpLocationProvider<RestApiLocation> {
 
     private final Map<String, ApiEndpointData> endpoints;
+    private final String apiToken;
 
     @Override
     public RestApiLocation getLocation() {
-        return new RestApiLocation(this.endpoints);
+        return new RestApiLocation(this.endpoints, apiToken);
     }
 }
