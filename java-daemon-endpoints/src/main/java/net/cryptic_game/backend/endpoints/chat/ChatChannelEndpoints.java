@@ -69,7 +69,7 @@ public final class ChatChannelEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("info")
-    public ApiResponse info(@ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final Session session,
+    public ApiResponse info(@ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION) final Session session,
                             @ApiParameter("channel_id") final UUID channelId) {
         final ChatChannel channel = ChatChannel.getById(session, channelId);
 
@@ -82,7 +82,7 @@ public final class ChatChannelEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("members")
     public ApiResponse getMembers(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
-                                  @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final Session session,
+                                  @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION) final Session session,
                                   @ApiParameter("channel_id") final UUID channelId) {
         final User user = User.getById(session, userId);
         final ChatChannel channel = ChatChannel.getById(session, channelId);
@@ -159,7 +159,7 @@ public final class ChatChannelEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("list")
     public ApiResponse list(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
-                            @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final Session session,
+                            @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION) final Session session,
                             @ApiParameter(value = "public", optional = true) final boolean isPublic) {
         if (isPublic) {
             return new ApiResponse(ApiResponseType.OK, ChatChannel.getChannels(session));

@@ -122,7 +122,7 @@ public final class ChatMessageEndpoint extends ApiEndpointCollection {
 
     @ApiEndpoint("list")
     public ApiResponse getMessages(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
-                                   @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final Session session,
+                                   @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION) final Session session,
                                    @ApiParameter("chat_id") final UUID channelId,
                                    @ApiParameter("offset") final int offset,
                                    @ApiParameter("count") final int count) {

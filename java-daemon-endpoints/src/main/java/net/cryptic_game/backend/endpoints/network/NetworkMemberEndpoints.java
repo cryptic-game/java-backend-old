@@ -23,7 +23,7 @@ public final class NetworkMemberEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("members")
     public ApiResponse member(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
-                              @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final Session session,
+                              @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION) final Session session,
 
                               @ApiParameter("device_id") final UUID deviceId) {
         final User user = User.getById(session, userId);
@@ -46,7 +46,7 @@ public final class NetworkMemberEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("invitations")
     public ApiResponse invitations(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
-                                   @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final Session session,
+                                   @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION) final Session session,
                                    @ApiParameter("device_id") final UUID deviceId) {
         final User user = User.getById(session, userId);
         final Device device = Device.getById(session, deviceId);
