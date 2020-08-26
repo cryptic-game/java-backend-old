@@ -34,7 +34,7 @@ public final class NetworkMember extends TableModel implements JsonSerializable 
     /**
      * Creates a new {@link NetworkMember}.
      *
-     * @param session the sql session
+     * @param session the sql {@link Session} with transaction
      * @param network {@link Network} of the {@link NetworkMember}
      * @param device  {@link Device} of the {@link NetworkMember}
      * @return The instance of the created {@link NetworkMember}
@@ -54,7 +54,7 @@ public final class NetworkMember extends TableModel implements JsonSerializable 
     /**
      * Fetches the {@link NetworkMember} with the given key.
      *
-     * @param session the sql session
+     * @param session the sql {@link Session}
      * @param network {@link Network} of the {@link NetworkMember}
      * @param device  {@link Device} of the {@link NetworkMember}
      * @return The instance of the fetched {@link NetworkMember} if it exists | null if the entity does not exist
@@ -69,7 +69,7 @@ public final class NetworkMember extends TableModel implements JsonSerializable 
     /**
      * Fetches the {@link NetworkMember} of the give {@link Device}.
      *
-     * @param session the sql session
+     * @param session the sql {@link Session}
      * @param device {@link Device} of the {@link NetworkMember}
      * @return A {@link List} containing the fetched {@link NetworkMember}'s
      */

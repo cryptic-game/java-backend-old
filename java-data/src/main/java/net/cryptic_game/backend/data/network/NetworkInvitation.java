@@ -41,7 +41,7 @@ public final class NetworkInvitation extends TableModel implements JsonSerializa
     /**
      * Creates a new {@link NetworkInvitation}.
      *
-     * @param session the sql session
+     * @param session the sql {@link Session} with transaction
      * @param network {@link Network} of the {@link NetworkInvitation}
      * @param device  {@link Device} of the {@link NetworkInvitation}
      * @param inviter Inviter {@link Device} of the {@link NetworkInvitation} | null if the {@link NetworkInvitation} is a request
@@ -60,7 +60,7 @@ public final class NetworkInvitation extends TableModel implements JsonSerializa
     /**
      * Fetches the {@link NetworkInvitation} with the given key.
      *
-     * @param session the sql session
+     * @param session the sql {@link Session}
      * @param network {@link Network} of the {@link NetworkInvitation}
      * @param device  {@link Device} of the {@link NetworkInvitation}
      * @return The instance of the fetched {@link NetworkInvitation} if it exists | null if the entity does not exist
@@ -72,7 +72,7 @@ public final class NetworkInvitation extends TableModel implements JsonSerializa
     /**
      * Fetches the {@link NetworkInvitation}s with the given device.
      *
-     * @param session the sql session
+     * @param session the sql {@link Session}
      * @param device {@link Device} of the {@link NetworkInvitation}
      * @return A {@link List} with the fetched {@link NetworkInvitation}s
      */

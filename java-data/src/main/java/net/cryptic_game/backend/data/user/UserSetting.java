@@ -39,7 +39,7 @@ public final class UserSetting extends TableModel implements JsonSerializable {
     /**
      * Fetches a {@link UserSetting}.
      *
-     * @param session the sql session
+     * @param session the sql {@link Session}
      * @param user {@link User} of the {@link UserSetting}
      * @param key  Key of the {@link UserSetting}
      * @return Fetched {@link UserSetting}
@@ -57,7 +57,7 @@ public final class UserSetting extends TableModel implements JsonSerializable {
     /**
      * Fetches all {@link UserSetting}s of a {@link User}.
      *
-     * @param session the sql session
+     * @param session the sql {@link Session}
      * @param user {@link User} of the {@link UserSetting}
      * @return Fetched {@link UserSetting}s
      */

@@ -40,7 +40,7 @@ public final class Device extends TableModelAutoId implements JsonSerializable {
     /**
      * Creates a new {@link Device}.
      *
-     * @param session the sql session
+     * @param session   the sql {@link Session} with transaction
      * @param name      Name of the {@link Device}
      * @param owner     Owner of the {@link Device}
      * @param poweredOn Power state of the {@link Device}
@@ -59,7 +59,7 @@ public final class Device extends TableModelAutoId implements JsonSerializable {
     /**
      * Fetches the {@link Device} with the given id.
      *
-     * @param session the sql session
+     * @param session the sql {@link Session}
      * @param id The id of the {@link Device}
      * @return The instance of the fetched {@link Device} if it exists | null if the entity does not exist
      */

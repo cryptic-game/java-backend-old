@@ -45,7 +45,7 @@ public final class Network extends TableModelAutoId implements JsonSerializable 
     /**
      * Creates a new {@link Network}.
      *
-     * @param session the sql session
+     * @param session the sql {@link Session} with transaction
      * @param name     Name of the {@link Network}
      * @param owner    Owner of the {@link Network}
      * @param isPublic Public state of the {@link Network}
@@ -65,7 +65,7 @@ public final class Network extends TableModelAutoId implements JsonSerializable 
     /**
      * Fetches the {@link Network} with the given id.
      *
-     * @param session the sql session
+     * @param session the sql {@link Session}
      * @param id The id of the {@link Network}
      * @return The instance of the fetched {@link Network} if it exists | null if the entity does not exist
      */
@@ -89,7 +89,7 @@ public final class Network extends TableModelAutoId implements JsonSerializable 
     /**
      * Fetches all {@link Network}'s owned by the give {@link Device}.
      *
-     * @param session the sql session
+     * @param session the sql {@link Session}
      * @param device The {@link Device}
      * @return A {@link List} containing the fetched {@link Network}'s
      */
@@ -102,7 +102,7 @@ public final class Network extends TableModelAutoId implements JsonSerializable 
     /**
      * Fetches all public {@link Network}'s.
      *
-     * @param session the sql session
+     * @param session the sql {@link Session}
      * @return A {@link List} containing the fetched {@link Network}'s
      */
     public static List<Network> getPublicNetworks(final Session session) {
