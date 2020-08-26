@@ -107,7 +107,9 @@ public final class User extends TableModelAutoId {
      */
     @Override
     public void delete(final Session session) {
-        net.cryptic_game.backend.data.user.Session.getByUser(session, this).forEach(i -> i.delete(session));
+        session.createQuery("delete from Session s where s.user = :user")
+                .setParameter("user", this)
+                .executeUpdate();
         super.delete(session);
     }
 
