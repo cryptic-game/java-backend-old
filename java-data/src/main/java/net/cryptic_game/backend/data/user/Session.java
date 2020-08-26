@@ -52,7 +52,7 @@ public final class Session extends TableModelAutoId implements JsonSerializable 
     /**
      * Creates a new {@link Session}.
      *
-     * @param sqlSession the sql session
+     * @param sqlSession the sql {@link org.hibernate.Session} with transaction
      * @param user       {@link User} of the {@link Session}
      * @param token      token of the {@link Session}
      * @param deviceName device name of the {@link Session}
@@ -73,7 +73,7 @@ public final class Session extends TableModelAutoId implements JsonSerializable 
     /**
      * Fetches the {@link Session} with the given id.
      *
-     * @param sqlSession the sql session
+     * @param sqlSession the sql {@link org.hibernate.Session}
      * @param id The id of the {@link Session}
      * @return The instance of the fetched {@link Session} if it exists | null if the entity does not exist
      */
@@ -84,7 +84,7 @@ public final class Session extends TableModelAutoId implements JsonSerializable 
     /**
      * Fetches all {@link Session}s of a specific {@link User}.
      *
-     * @param sqlSession the sql session
+     * @param sqlSession the sql {@link org.hibernate.Session}
      * @param user The user whose {@link Session}s are to be fetched
      * @return {@link List} containing {@link Session}s
      */
@@ -97,7 +97,7 @@ public final class Session extends TableModelAutoId implements JsonSerializable 
     /**
      * Deletes all expired and invalid {@link Session}s of a {@link User}.
      *
-     * @param sqlSession the sql session
+     * @param sqlSession the sql {@link org.hibernate.Session} with transaction
      * @param user The {@link User} whose {@link Session}s are to be deleted.
      */
     public static void deleteExpiredSessions(final org.hibernate.Session sqlSession, final User user) {

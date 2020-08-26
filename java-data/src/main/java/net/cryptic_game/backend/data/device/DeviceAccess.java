@@ -50,7 +50,7 @@ public final class DeviceAccess extends TableModelAutoId implements JsonSerializ
     /**
      * Checks if a {@link User} has got access to the {@link Device}.
      *
-     * @param session the sql session
+     * @param session the sql {@link Session}
      * @param user   the {@link User}
      * @param device the {@link Device}
      * @return true if the {@link User} has got access | otherwise false
@@ -71,7 +71,7 @@ public final class DeviceAccess extends TableModelAutoId implements JsonSerializ
     /**
      * Grants access for a {@link User} to a {@link Device}.
      *
-     * @param session the sql session
+     * @param session the sql {@link Session} with transaction
      * @param user     the {@link User}
      * @param device   the {@link Device}
      * @param duration the {@link Duration} how long the {@link User} has got access
@@ -92,7 +92,7 @@ public final class DeviceAccess extends TableModelAutoId implements JsonSerializ
     /**
      * Returns a {@link List} of {@link DeviceAccess}es, so accesses for a {@link Device}.
      *
-     * @param session the sql session
+     * @param session the sql {@link Session}
      * @param device the {@link Device}
      * @return the {@link List} of {@link DeviceAccess}
      */

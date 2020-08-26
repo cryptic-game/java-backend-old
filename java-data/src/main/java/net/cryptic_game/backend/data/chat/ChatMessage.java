@@ -56,7 +56,7 @@ public final class ChatMessage extends TableModelAutoId implements JsonSerializa
     /**
      * Creates a new {@link ChatMessage} without a target (no whipser).
      *
-     * @param session the sql session
+     * @param session the sql {@link Session} with transaction
      * @param channel the {@link ChatChannel} where the {@link ChatMessage} will be sent
      * @param user    the {@link User} who sends the {@link ChatMessage}
      * @param text    the content of the {@link ChatMessage}
@@ -69,7 +69,7 @@ public final class ChatMessage extends TableModelAutoId implements JsonSerializa
     /**
      * Creates a new {@link ChatMessage}.
      *
-     * @param session the sql session
+     * @param session the sql {@link Session} with transaction
      * @param channel the {@link ChatChannel} where the {@link ChatMessage} will be sent
      * @param user    the {@link User} who sends the {@link ChatMessage}
      * @param target  the {@link User} who receives the {@link ChatMessage}
@@ -91,7 +91,7 @@ public final class ChatMessage extends TableModelAutoId implements JsonSerializa
     /**
      * Returns a {@link List} of {@link ChatMessage}s sent in a {@link ChatChannel}.
      *
-     * @param session the sql session
+     * @param session the sql {@link Session}
      * @param channel the {@link ChatChannel} where the {@link ChatMessage}s were sent
      * @param user    the {@link User} of the request
      * @param offset  the offset of the {@link ChatMessage}s
@@ -112,7 +112,7 @@ public final class ChatMessage extends TableModelAutoId implements JsonSerializa
     /**
      * Returns a {@link List} of all {@link ChatMessage}s from on {@link ChatChannel}.
      *
-     * @param session the sql session
+     * @param session the sql {@link Session}
      * @param channel the {@link ChatChannel} whose {@link ChatMessage}s will be returned
      * @return the {@link List} of {@link ChatMessage}s
      */

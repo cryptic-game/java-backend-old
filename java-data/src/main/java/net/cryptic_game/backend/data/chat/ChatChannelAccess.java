@@ -40,7 +40,7 @@ public final class ChatChannelAccess extends TableModelAutoId implements JsonSer
     /**
      * Joins a {@link User} to a {@link ChatChannel} and returns the {@link ChatChannelAccess}.
      *
-     * @param session the sql session
+     * @param session the sql {@link Session} with transaction
      * @param user    the {@link User} who join
      * @param channel the {@link ChatChannel} where to join
      * @return the resulting {@link ChatChannelAccess}
@@ -57,7 +57,7 @@ public final class ChatChannelAccess extends TableModelAutoId implements JsonSer
     /**
      * Get the {@link ChatChannelAccess} of a {@link User} to a {@link ChatChannel}.
      *
-     * @param session the sql session
+     * @param session the sql {@link Session}
      * @param user    the {@link User}
      * @param channel the {@link ChatChannel}
      * @return the {@link ChatChannelAccess} if found | otherwise {@code null}
@@ -75,7 +75,7 @@ public final class ChatChannelAccess extends TableModelAutoId implements JsonSer
     /**
      * Returns a {@link List} of {@link ChatChannel}s, which contains the {@link User}.
      *
-     * @param session the sql session
+     * @param session the sql {@link Session}
      * @param user the {@link User}, whose {@link ChatChannel}s will be returned
      * @return the {@link List} of {@link ChatChannel}s
      */
@@ -89,7 +89,7 @@ public final class ChatChannelAccess extends TableModelAutoId implements JsonSer
     /**
      * Returns a {@link List} of all {@link ChatChannelAccess}es from on {@link ChatChannel}.
      *
-     * @param session the sql session
+     * @param session the sql {@link Session}
      * @param channel the {@link ChatChannel}
      * @return the {@link List} with the {@link ChatChannelAccess}es
      */
@@ -102,7 +102,7 @@ public final class ChatChannelAccess extends TableModelAutoId implements JsonSer
     /**
      * Returns a {@link List} of {@link User}s, who are in a {@link ChatChannel}.
      *
-     * @param session the sql session
+     * @param session the sql {@link Session}
      * @param channel the {@link ChatChannel} where to get the {@link User}s from
      * @return the {@link List} of {@link User}s in the {@link ChatChannel}
      */
