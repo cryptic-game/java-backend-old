@@ -76,7 +76,7 @@ public final class ChatChannelAccess extends TableModelAutoId implements JsonSer
      * Returns a {@link List} of {@link ChatChannel}s, which contains the {@link User}.
      *
      * @param session the sql {@link Session}
-     * @param user the {@link User}, whose {@link ChatChannel}s will be returned
+     * @param user    the {@link User}, whose {@link ChatChannel}s will be returned
      * @return the {@link List} of {@link ChatChannel}s
      */
     public static List<ChatChannel> getChannels(final Session session, final User user) {

@@ -99,7 +99,7 @@ public final class DeviceFile extends TableModelAutoId implements JsonSerializab
      * Returns a list of all {@link DeviceFile} of a {@link Device}.
      *
      * @param session the sql {@link Session}
-     * @param device the {@link Device} where you want all {@link DeviceFile}
+     * @param device  the {@link Device} where you want all {@link DeviceFile}
      * @return the {@link List} of all {@link DeviceFile} of a {@link Device}
      */
     public static List<DeviceFile> getFilesByDevice(final Session session, final Device device) {

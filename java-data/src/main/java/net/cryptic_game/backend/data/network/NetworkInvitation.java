@@ -66,14 +66,14 @@ public final class NetworkInvitation extends TableModel implements JsonSerializa
      * @return The instance of the fetched {@link NetworkInvitation} if it exists | null if the entity does not exist
      */
     public static NetworkInvitation getInvitation(final Session session, final Network network, final Device device) {
-            return session.find(NetworkInvitation.class, new NetworkInvitation.InvitationKey(network, device));
+        return session.find(NetworkInvitation.class, new NetworkInvitation.InvitationKey(network, device));
     }
 
     /**
      * Fetches the {@link NetworkInvitation}s with the given device.
      *
      * @param session the sql {@link Session}
-     * @param device {@link Device} of the {@link NetworkInvitation}
+     * @param device  {@link Device} of the {@link NetworkInvitation}
      * @return A {@link List} with the fetched {@link NetworkInvitation}s
      */
     public static List<NetworkInvitation> getInvitationsOfDevice(final Session session, final Device device) {

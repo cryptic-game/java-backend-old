@@ -79,7 +79,7 @@ public final class NetworkEndpoints extends ApiEndpointCollection {
     @ApiEndpoint("members")
     public ApiResponse members(@ApiParameter("network_id") final UUID networkId,
                                @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION) final Session session
-                               ) {
+    ) {
         final Network network = Network.getById(session, networkId);
 
         if (network == null) {

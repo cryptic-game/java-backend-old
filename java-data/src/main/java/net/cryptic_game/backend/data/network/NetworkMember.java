@@ -70,7 +70,7 @@ public final class NetworkMember extends TableModel implements JsonSerializable 
      * Fetches the {@link NetworkMember} of the give {@link Device}.
      *
      * @param session the sql {@link Session}
-     * @param device {@link Device} of the {@link NetworkMember}
+     * @param device  {@link Device} of the {@link NetworkMember}
      * @return A {@link List} containing the fetched {@link NetworkMember}'s
      */
     public static List<NetworkMember> getMembershipsOfDevice(final Session session, final Device device) {

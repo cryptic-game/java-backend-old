@@ -51,8 +51,8 @@ public final class DeviceAccess extends TableModelAutoId implements JsonSerializ
      * Checks if a {@link User} has got access to the {@link Device}.
      *
      * @param session the sql {@link Session}
-     * @param user   the {@link User}
-     * @param device the {@link Device}
+     * @param user    the {@link User}
+     * @param device  the {@link Device}
      * @return true if the {@link User} has got access | otherwise false
      */
     public static boolean hasAccess(final Session session, final User user, final Device device) {
@@ -71,7 +71,7 @@ public final class DeviceAccess extends TableModelAutoId implements JsonSerializ
     /**
      * Grants access for a {@link User} to a {@link Device}.
      *
-     * @param session the sql {@link Session} with transaction
+     * @param session  the sql {@link Session} with transaction
      * @param user     the {@link User}
      * @param device   the {@link Device}
      * @param duration the {@link Duration} how long the {@link User} has got access
@@ -93,15 +93,15 @@ public final class DeviceAccess extends TableModelAutoId implements JsonSerializ
      * Returns a {@link List} of {@link DeviceAccess}es, so accesses for a {@link Device}.
      *
      * @param session the sql {@link Session}
-     * @param device the {@link Device}
+     * @param device  the {@link Device}
      * @return the {@link List} of {@link DeviceAccess}
      */
     public static List<DeviceAccess> getAccessesToDevice(final Session session, final Device device) {
-            return session.createQuery("select object (a) from DeviceAccess a where a.device = :device "
-                    + "and a.valid = true and a.expire > :currentDate", DeviceAccess.class)
-                    .setParameter("device", device)
-                    .setParameter("currentDate", OffsetDateTime.now())
-                    .getResultList();
+        return session.createQuery("select object (a) from DeviceAccess a where a.device = :device "
+                + "and a.valid = true and a.expire > :currentDate", DeviceAccess.class)
+                .setParameter("device", device)
+                .setParameter("currentDate", OffsetDateTime.now())
+                .getResultList();
     }
 
     /**

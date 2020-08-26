@@ -60,7 +60,7 @@ public final class Device extends TableModelAutoId implements JsonSerializable {
      * Fetches the {@link Device} with the given id.
      *
      * @param session the sql {@link Session}
-     * @param id The id of the {@link Device}
+     * @param id      The id of the {@link Device}
      * @return The instance of the fetched {@link Device} if it exists | null if the entity does not exist
      */
     public static Device getById(final Session session, final UUID id) {

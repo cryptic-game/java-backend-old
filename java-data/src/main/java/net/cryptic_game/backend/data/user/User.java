@@ -40,7 +40,7 @@ public final class User extends TableModelAutoId {
     /**
      * Create a {@link User} with the given user data.
      *
-     * @param session the sql {@link Session} with transaction
+     * @param session  the sql {@link Session} with transaction
      * @param username The username of the new user
      * @param password The password of the new user
      * @return The instance of the created {@link User}
@@ -62,7 +62,7 @@ public final class User extends TableModelAutoId {
      * Fetches the {@link User} with the given id.
      *
      * @param session the sql {@link Session}
-     * @param id The id of the {@link User}
+     * @param id      The id of the {@link User}
      * @return The instance of the fetched {@link User} if it exists | null if the entity does not exist
      */
     public static User getById(final Session session, final UUID id) {
@@ -72,7 +72,7 @@ public final class User extends TableModelAutoId {
     /**
      * Fetches the {@link User} with the give name.
      *
-     * @param session the sql {@link Session}
+     * @param session  the sql {@link Session}
      * @param username The username of the user
      * @return The instance of the fetched {@link User} if it exists | null if the {@link User} does not exist
      */
@@ -103,7 +103,7 @@ public final class User extends TableModelAutoId {
 
     /**
      * @param session the sql {@link Session} with transaction
-     * Deletes the {@link User}.
+     *                Deletes the {@link User}.
      */
     @Override
     public void delete(final Session session) {

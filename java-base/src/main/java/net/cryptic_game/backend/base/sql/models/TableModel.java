@@ -32,6 +32,7 @@ public abstract class TableModel {
 
     /**
      * Deletes this entity.
+     *
      * @param session the session
      */
     public void delete(final Session session) {

@@ -29,7 +29,7 @@ public final class ChatChannel extends TableModelAutoId {
      * Creates a new {@link ChatChannel} with a given name.
      *
      * @param session the sql {@link Session} with transaction
-     * @param name the name of the channel
+     * @param name    the name of the channel
      * @return the newly generated channel
      */
     public static ChatChannel createChannel(final Session session, final String name) {
@@ -44,7 +44,7 @@ public final class ChatChannel extends TableModelAutoId {
      * Returns a {@link ChatChannel} by it's UUID.
      *
      * @param session the sql {@link Session}
-     * @param id the {@link UUID} of the Channel
+     * @param id      the {@link UUID} of the Channel
      * @return the {@link ChatChannel} which got the {@link UUID}
      */
     public static ChatChannel getById(final Session session, final UUID id) {
@@ -64,7 +64,7 @@ public final class ChatChannel extends TableModelAutoId {
 
     /**
      * @param session the sql {@link Session} with transaction
-     * Deletes also the {@link ChatMessage}s and the {@link ChatChannelAccess}s from that channel.
+     *                Deletes also the {@link ChatMessage}s and the {@link ChatChannelAccess}s from that channel.
      */
     @Override
     public void delete(final Session session) {
