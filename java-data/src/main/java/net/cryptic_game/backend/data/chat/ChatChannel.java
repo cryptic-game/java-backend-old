@@ -68,8 +68,12 @@ public final class ChatChannel extends TableModelAutoId {
      */
     @Override
     public void delete(final Session session) {
-        ChatMessage.getMessages(session, this).forEach(i -> i.delete(session));
-        ChatChannelAccess.getChannelAccesses(session, this).forEach(i -> i.delete(session));
+        session.createQuery("delete from ChatMessage as m where m.channel = :channel")
+                .setParameter("channel", this)
+                .executeUpdate();
+        session.createQuery("delete from ChatChannelAccess as ca where ca.channel = :channel")
+                .setParameter("channel", this)
+                .executeUpdate();
         super.delete(session);
     }
 }
