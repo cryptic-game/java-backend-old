@@ -11,6 +11,7 @@ import net.cryptic_game.backend.data.network.Network;
 import net.cryptic_game.backend.data.network.NetworkInvitation;
 import net.cryptic_game.backend.data.network.NetworkMember;
 import net.cryptic_game.backend.data.user.User;
+import org.hibernate.Session;
 
 import java.util.UUID;
 
@@ -22,15 +23,17 @@ public final class NetworkMemberEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("members")
     public ApiResponse member(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
+                              @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION) final Session session,
+
                               @ApiParameter("device_id") final UUID deviceId) {
-        final User user = User.getById(userId);
-        final Device device = Device.getById(deviceId);
+        final User user = User.getById(session, userId);
+        final Device device = Device.getById(session, deviceId);
 
         if (device == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "DEVICE");
         }
 
-        if (!device.hasAccess(user)) {
+        if (!device.hasAccess(session, user)) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
         }
 
@@ -38,20 +41,21 @@ public final class NetworkMemberEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
         }
 
-        return new ApiResponse(ApiResponseType.OK, NetworkMember.getMembershipsOfDevice(device));
+        return new ApiResponse(ApiResponseType.OK, NetworkMember.getMembershipsOfDevice(session, device));
     }
 
     @ApiEndpoint("invitations")
     public ApiResponse invitations(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
+                                   @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION) final Session session,
                                    @ApiParameter("device_id") final UUID deviceId) {
-        final User user = User.getById(userId);
-        final Device device = Device.getById(deviceId);
+        final User user = User.getById(session, userId);
+        final Device device = Device.getById(session, deviceId);
 
         if (device == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "DEVICE");
         }
 
-        if (!device.hasAccess(user)) {
+        if (!device.hasAccess(session, user)) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
         }
 
@@ -59,22 +63,23 @@ public final class NetworkMemberEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
         }
 
-        return new ApiResponse(ApiResponseType.OK, NetworkInvitation.getInvitationsOfDevice(device));
+        return new ApiResponse(ApiResponseType.OK, NetworkInvitation.getInvitationsOfDevice(session, device));
     }
 
     @ApiEndpoint("leave")
     public ApiResponse leave(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
+                             @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final Session session,
                              @ApiParameter("device_id") final UUID deviceId,
                              @ApiParameter("network_id") final UUID id) {
-        final User user = User.getById(userId);
-        final Device device = Device.getById(deviceId);
-        final Network network = Network.getById(id);
+        final User user = User.getById(session, userId);
+        final Device device = Device.getById(session, deviceId);
+        final Network network = Network.getById(session, id);
 
         if (device == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "DEVICE");
         }
 
-        if (!device.hasAccess(user)) {
+        if (!device.hasAccess(session, user)) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
         }
 
@@ -90,11 +95,11 @@ public final class NetworkMemberEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.UNAUTHORIZED, "CAN_NOT_LEAVE_OWN_NETWORK");
         }
 
-        final NetworkMember member = NetworkMember.getMember(network, device);
+        final NetworkMember member = NetworkMember.getMember(session, network, device);
         if (member == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "MEMBER");
         }
-        member.delete();
+        member.delete(session);
         return new ApiResponse(ApiResponseType.OK);
     }
 }

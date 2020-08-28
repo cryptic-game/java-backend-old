@@ -28,46 +28,52 @@ public final class ChatChannel extends TableModelAutoId {
     /**
      * Creates a new {@link ChatChannel} with a given name.
      *
-     * @param name the name of the channel
+     * @param session the sql {@link Session} with transaction
+     * @param name    the name of the channel
      * @return the newly generated channel
      */
-    public static ChatChannel createChannel(final String name) {
+    public static ChatChannel createChannel(final Session session, final String name) {
         final ChatChannel channel = new ChatChannel();
         channel.setName(name);
 
-        channel.saveOrUpdate();
+        channel.saveOrUpdate(session);
         return channel;
     }
 
     /**
      * Returns a {@link ChatChannel} by it's UUID.
      *
-     * @param id the {@link UUID} of the Channel
+     * @param session the sql {@link Session}
+     * @param id      the {@link UUID} of the Channel
      * @return the {@link ChatChannel} which got the {@link UUID}
      */
-    public static ChatChannel getById(final UUID id) {
-        return getById(ChatChannel.class, id);
+    public static ChatChannel getById(final Session session, final UUID id) {
+        return getById(session, ChatChannel.class, id);
     }
 
     /**
      * Returns a {@link List} of all existing {@link ChatChannel}s.
      *
+     * @param session the sql {@link Session}
      * @return the {@link List} containg all existing {@link ChatChannel}s
      */
-    public static List<ChatChannel> getChannels() {
-        try (Session sqlSession = SQL_CONNECTION.openSession()) {
-            return sqlSession.createQuery("select object (c) from ChatChannel c", ChatChannel.class)
-                    .getResultList();
-        }
+    public static List<ChatChannel> getChannels(final Session session) {
+        return session.createQuery("select object (c) from ChatChannel c", ChatChannel.class)
+                .getResultList();
     }
 
     /**
-     * Deletes also the {@link ChatMessage}s and the {@link ChatChannelAccess}s from that channel.
+     * @param session the sql {@link Session} with transaction
+     *                Deletes also the {@link ChatMessage}s and the {@link ChatChannelAccess}s from that channel.
      */
     @Override
-    public void delete() {
-        ChatMessage.getMessages(this).forEach(ChatMessage::delete);
-        ChatChannelAccess.getChannelAccesses(this).forEach(ChatChannelAccess::delete);
-        super.delete();
+    public void delete(final Session session) {
+        session.createQuery("delete from ChatMessage as m where m.channel = :channel")
+                .setParameter("channel", this)
+                .executeUpdate();
+        session.createQuery("delete from ChatChannelAccess as ca where ca.channel = :channel")
+                .setParameter("channel", this)
+                .executeUpdate();
+        super.delete(session);
     }
 }

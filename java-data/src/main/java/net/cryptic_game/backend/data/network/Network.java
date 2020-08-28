@@ -45,70 +45,69 @@ public final class Network extends TableModelAutoId implements JsonSerializable 
     /**
      * Creates a new {@link Network}.
      *
+     * @param session  the sql {@link Session} with transaction
      * @param name     Name of the {@link Network}
      * @param owner    Owner of the {@link Network}
      * @param isPublic Public state of the {@link Network}
      * @return The instance of the created {@link Network}
      */
-    public static Network createNetwork(final String name, final Device owner, final boolean isPublic) {
+    public static Network createNetwork(final Session session, final String name, final Device owner, final boolean isPublic) {
         final Network network = new Network();
         network.setName(name);
         network.setOwner(owner);
         network.setPublic(isPublic);
         network.setCreated(OffsetDateTime.now());
 
-        network.saveOrUpdate();
+        network.saveOrUpdate(session);
         return network;
     }
 
     /**
      * Fetches the {@link Network} with the given id.
      *
-     * @param id The id of the {@link Network}
+     * @param session the sql {@link Session}
+     * @param id      The id of the {@link Network}
      * @return The instance of the fetched {@link Network} if it exists | null if the entity does not exist
      */
-    public static Network getById(final UUID id) {
-        return getById(Network.class, id);
+    public static Network getById(final Session session, final UUID id) {
+        return getById(session, Network.class, id);
     }
 
     /**
      * Fetches the {@link Network} with the given name.
      *
-     * @param name The name of the {@link Network}
+     * @param session the sql session
+     * @param name    The name of the {@link Network}
      * @return The instance of the fetched {@link Network} if it exists | null if the entity does not exist
      */
-    public static Network getByName(final String name) {
-        try (Session sqlSession = SQL_CONNECTION.openSession()) {
-            return sqlSession.createQuery("select object (n) from Network as n where n.name = :name", Network.class)
-                    .setParameter("name", name)
-                    .getResultStream().findFirst().orElse(null);
-        }
+    public static Network getByName(final Session session, final String name) {
+        return session.createQuery("select object (n) from Network as n where n.name = :name", Network.class)
+                .setParameter("name", name)
+                .getResultStream().findFirst().orElse(null);
     }
 
     /**
      * Fetches all {@link Network}'s owned by the give {@link Device}.
      *
-     * @param device The {@link Device}
+     * @param session the sql {@link Session}
+     * @param device  The {@link Device}
      * @return A {@link List} containing the fetched {@link Network}'s
      */
-    public static List<Network> getNetworksOwnedByDevice(final Device device) {
-        try (Session sqlSession = SQL_CONNECTION.openSession()) {
-            return sqlSession.createQuery("select object (n) from Network as n where n.owner = :device", Network.class)
-                    .setParameter("device", device)
-                    .getResultList();
-        }
+    public static List<Network> getNetworksOwnedByDevice(final Session session, final Device device) {
+        return session.createQuery("select object (n) from Network as n where n.owner = :device", Network.class)
+                .setParameter("device", device)
+                .getResultList();
     }
 
     /**
      * Fetches all public {@link Network}'s.
      *
+     * @param session the sql {@link Session}
      * @return A {@link List} containing the fetched {@link Network}'s
      */
-    public static List<Network> getPublicNetworks() {
-        try (Session sqlSession = SQL_CONNECTION.openSession()) {
-            return sqlSession.createQuery("select object (n) from Network as n where n.isPublic = true", Network.class)
-                    .getResultList();
-        }
+    public static List<Network> getPublicNetworks(final Session session) {
+        return session.createQuery("select object (n) from Network as n where n.isPublic = true", Network.class)
+                .getResultList();
     }
 
     /**

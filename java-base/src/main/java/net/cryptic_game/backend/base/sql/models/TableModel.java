@@ -26,22 +26,16 @@ public abstract class TableModel {
     @Column(name = "version")
     private long version;
 
-    public final void saveOrUpdate() {
-        final Session session = SQL_CONNECTION.openSession();
-        session.beginTransaction();
+    public final void saveOrUpdate(final Session session) {
         session.saveOrUpdate(this);
-        session.getTransaction().commit();
-        session.close();
     }
 
     /**
      * Deletes this entity.
+     *
+     * @param session the session
      */
-    public void delete() {
-        final Session session = SQL_CONNECTION.openSession();
-        session.beginTransaction();
+    public void delete(final Session session) {
         session.delete(this);
-        session.getTransaction().commit();
-        session.close();
     }
 }

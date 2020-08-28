@@ -34,58 +34,55 @@ public final class NetworkMember extends TableModel implements JsonSerializable 
     /**
      * Creates a new {@link NetworkMember}.
      *
+     * @param session the sql {@link Session} with transaction
      * @param network {@link Network} of the {@link NetworkMember}
      * @param device  {@link Device} of the {@link NetworkMember}
      * @return The instance of the created {@link NetworkMember}
      */
-    public static NetworkMember createMember(final Network network, final Device device) {
-        NetworkMember existingMember = getMember(network, device);
+    public static NetworkMember createMember(final Session session, final Network network, final Device device) {
+        NetworkMember existingMember = getMember(session, network, device);
         if (existingMember != null) return existingMember;
 
         final NetworkMember networkMember = new NetworkMember();
         networkMember.setNetwork(network);
         networkMember.setDevice(device);
 
-        network.saveOrUpdate();
+        network.saveOrUpdate(session);
         return networkMember;
     }
 
     /**
      * Fetches the {@link NetworkMember} with the given key.
      *
+     * @param session the sql {@link Session}
      * @param network {@link Network} of the {@link NetworkMember}
      * @param device  {@link Device} of the {@link NetworkMember}
      * @return The instance of the fetched {@link NetworkMember} if it exists | null if the entity does not exist
      */
-    public static NetworkMember getMember(final Network network, final Device device) {
-        try (Session sqlSession = SQL_CONNECTION.openSession()) {
-            final MemberKey primaryKey = new MemberKey();
-            primaryKey.setNetwork(network);
-            primaryKey.setDevice(device);
-            return sqlSession.find(NetworkMember.class, primaryKey);
-        }
+    public static NetworkMember getMember(final Session session, final Network network, final Device device) {
+        final MemberKey primaryKey = new MemberKey();
+        primaryKey.setNetwork(network);
+        primaryKey.setDevice(device);
+        return session.find(NetworkMember.class, primaryKey);
     }
 
     /**
      * Fetches the {@link NetworkMember} of the give {@link Device}.
      *
-     * @param device {@link Device} of the {@link NetworkMember}
+     * @param session the sql {@link Session}
+     * @param device  {@link Device} of the {@link NetworkMember}
      * @return A {@link List} containing the fetched {@link NetworkMember}'s
      */
-    public static List<NetworkMember> getMembershipsOfDevice(final Device device) {
-        try (Session sqlSession = SQL_CONNECTION.openSession()) {
-            return sqlSession.createQuery("select object (n) from NetworkMember as n where n.key.device = :device", NetworkMember.class)
-                    .setParameter("device", device)
-                    .getResultList();
-        }
+    public static List<NetworkMember> getMembershipsOfDevice(final Session session, final Device device) {
+        return session.createQuery("select object (n) from NetworkMember as n where n.key.device = :device", NetworkMember.class)
+                .setParameter("device", device)
+                .getResultList();
     }
 
-    public static List<NetworkMember> getMembershipsOfNetwork(final Network network) {
-        try (Session sqlSession = SQL_CONNECTION.openSession()) {
-            return sqlSession.createQuery("select object (n) from NetworkMember as n where n.key.network = :network", NetworkMember.class)
-                    .setParameter("network", network)
-                    .getResultList();
-        }
+    public static List<NetworkMember> getMembershipsOfNetwork(final Session session, final Network network) {
+        return session.createQuery("select object (n) from NetworkMember as n where n.key.network = :network", NetworkMember.class)
+                .setParameter("network", network)
+                .getResultList();
     }
 
     /**

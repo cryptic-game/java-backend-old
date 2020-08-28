@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import lombok.Data;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonTransient;
-import net.cryptic_game.backend.base.sql.models.TableModel;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.base.utils.SecurityUtils;
 import org.hibernate.Session;
@@ -41,11 +40,12 @@ public final class User extends TableModelAutoId {
     /**
      * Create a {@link User} with the given user data.
      *
+     * @param session  the sql {@link Session} with transaction
      * @param username The username of the new user
      * @param password The password of the new user
      * @return The instance of the created {@link User}
      */
-    public static User createUser(final String username, final String password) {
+    public static User createUser(final Session session, final String username, final String password) {
         final OffsetDateTime now = OffsetDateTime.now();
 
         final User user = new User();
@@ -54,32 +54,32 @@ public final class User extends TableModelAutoId {
         user.setLast(now);
         user.setPassword(password);
 
-        user.saveOrUpdate();
+        user.saveOrUpdate(session);
         return user;
     }
 
     /**
      * Fetches the {@link User} with the given id.
      *
-     * @param id The id of the {@link User}
+     * @param session the sql {@link Session}
+     * @param id      The id of the {@link User}
      * @return The instance of the fetched {@link User} if it exists | null if the entity does not exist
      */
-    public static User getById(final UUID id) {
-        return getById(User.class, id);
+    public static User getById(final Session session, final UUID id) {
+        return getById(session, User.class, id);
     }
 
     /**
      * Fetches the {@link User} with the give name.
      *
+     * @param session  the sql {@link Session}
      * @param username The username of the user
      * @return The instance of the fetched {@link User} if it exists | null if the {@link User} does not exist
      */
-    public static User getByUsername(final String username) {
-        try (Session session = SQL_CONNECTION.openSession()) {
-            return session.createQuery("select object (u) from User as u where u.username = :username", User.class)
-                    .setParameter("username", username)
-                    .getResultStream().findFirst().orElse(null);
-        }
+    public static User getByUsername(final Session session, final String username) {
+        return session.createQuery("select object (u) from User as u where u.username = :username", User.class)
+                .setParameter("username", username)
+                .getResultStream().findFirst().orElse(null);
     }
 
     /**
@@ -102,12 +102,15 @@ public final class User extends TableModelAutoId {
     }
 
     /**
-     * Deletes the {@link User}.
+     * @param session the sql {@link Session} with transaction
+     *                Deletes the {@link User}.
      */
     @Override
-    public void delete() {
-        net.cryptic_game.backend.data.user.Session.getByUser(this).forEach(TableModel::delete);
-        super.delete();
+    public void delete(final Session session) {
+        session.createQuery("delete from Session s where s.user = :user")
+                .setParameter("user", this)
+                .executeUpdate();
+        super.delete(session);
     }
 
     public JsonObject serializePublic() {

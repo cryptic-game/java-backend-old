@@ -12,6 +12,7 @@ import net.cryptic_game.backend.data.chat.ChatAction;
 import net.cryptic_game.backend.data.chat.ChatChannel;
 import net.cryptic_game.backend.data.chat.ChatChannelAccess;
 import net.cryptic_game.backend.data.user.User;
+import org.hibernate.Session;
 
 import java.util.List;
 import java.util.UUID;
@@ -24,22 +25,24 @@ public final class ChatChannelEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("create")
     public ApiResponse create(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
+                              @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final Session session,
                               @ApiParameter(value = "name") final String channelName) {
         if (channelName.length() > ChatChannel.MAX_NAME_LENGTH) {
             return new ApiResponse(ApiResponseType.BAD_REQUEST, "NAME_TOO_LONG");
         }
 
-        final ChatChannel newChannel = ChatChannel.createChannel(channelName);
-        ChatChannelAccess.create(User.getById(userId), newChannel);
+        final ChatChannel newChannel = ChatChannel.createChannel(session, channelName);
+        ChatChannelAccess.create(session, User.getById(session, userId), newChannel);
         return new ApiResponse(ApiResponseType.OK, newChannel);
     }
 
     @ApiEndpoint("rename")
     public ApiResponse rename(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
+                              @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final Session session,
                               @ApiParameter("channel_id") final UUID channelId,
                               @ApiParameter("new_name") final String newName) {
-        final User user = User.getById(userId);
-        final ChatChannel channel = ChatChannel.getById(channelId);
+        final User user = User.getById(session, userId);
+        final ChatChannel channel = ChatChannel.getById(session, channelId);
 
         if (channel == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "CHANNEL_NOT_FOUND");
@@ -49,14 +52,14 @@ public final class ChatChannelEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.BAD_REQUEST, "NAME_TOO_LONG");
         }
 
-        final List<User> members = ChatChannelAccess.getMembers(channel);
+        final List<User> members = ChatChannelAccess.getMembers(session, channel);
 
         if (!members.contains(user)) {
             return new ApiResponse(ApiResponseType.UNAUTHORIZED, "ACCESS_DENIED");
         }
 
         channel.setName(newName);
-        channel.saveOrUpdate();
+        channel.saveOrUpdate(session);
 
         for (User member : members) {
             if (member.equals(user)) continue;
@@ -66,8 +69,9 @@ public final class ChatChannelEndpoints extends ApiEndpointCollection {
     }
 
     @ApiEndpoint("info")
-    public ApiResponse info(@ApiParameter("channel_id") final UUID channelId) {
-        final ChatChannel channel = ChatChannel.getById(channelId);
+    public ApiResponse info(@ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION) final Session session,
+                            @ApiParameter("channel_id") final UUID channelId) {
+        final ChatChannel channel = ChatChannel.getById(session, channelId);
 
         if (channel == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "CHANNEL_NOT_FOUND");
@@ -78,15 +82,16 @@ public final class ChatChannelEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("members")
     public ApiResponse getMembers(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
+                                  @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION) final Session session,
                                   @ApiParameter("channel_id") final UUID channelId) {
-        final User user = User.getById(userId);
-        final ChatChannel channel = ChatChannel.getById(channelId);
+        final User user = User.getById(session, userId);
+        final ChatChannel channel = ChatChannel.getById(session, channelId);
 
         if (channel == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "CHANNEL_NOT_FOUND");
         }
 
-        final List<User> members = ChatChannelAccess.getMembers(channel);
+        final List<User> members = ChatChannelAccess.getMembers(session, channel);
 
         if (!members.contains(user)) {
             return new ApiResponse(ApiResponseType.UNAUTHORIZED, "ACCESS_DENIED");
@@ -97,15 +102,16 @@ public final class ChatChannelEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("join")
     public ApiResponse join(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
+                            @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final Session session,
                             @ApiParameter("channel_id") final UUID channelId) {
-        final User user = User.getById(userId);
-        final ChatChannel channel = ChatChannel.getById(channelId);
+        final User user = User.getById(session, userId);
+        final ChatChannel channel = ChatChannel.getById(session, channelId);
 
         if (channel == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "CHANNEL_NOT_FOUND");
         }
 
-        final List<User> members = ChatChannelAccess.getMembers(channel);
+        final List<User> members = ChatChannelAccess.getMembers(session, channel);
 
         if (members.contains(user)) {
             return new ApiResponse(ApiResponseType.ALREADY_EXISTS, "ALREADY_IN_CHANNEL");
@@ -116,35 +122,36 @@ public final class ChatChannelEndpoints extends ApiEndpointCollection {
             DaemonUtils.notifyUser(member.getId(), ChatAction.MEMBER_JOIN, userJson);
         }
 
-        return new ApiResponse(ApiResponseType.OK, ChatChannelAccess.create(user, channel));
+        return new ApiResponse(ApiResponseType.OK, ChatChannelAccess.create(session, user, channel));
     }
 
     @ApiEndpoint("leave")
     public ApiResponse leave(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
+                             @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final Session session,
                              @ApiParameter("channel_id") final UUID channelId) {
-        final User user = User.getById(userId);
-        final ChatChannel channel = ChatChannel.getById(channelId);
+        final User user = User.getById(session, userId);
+        final ChatChannel channel = ChatChannel.getById(session, channelId);
 
         if (channel == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "CHANNEL_NOT_FOUND");
         }
 
-        ChatChannelAccess channelAccess = ChatChannelAccess.get(user, channel);
+        ChatChannelAccess channelAccess = ChatChannelAccess.get(session, user, channel);
 
         if (channelAccess == null) {
             return new ApiResponse(ApiResponseType.BAD_REQUEST, "NOT_IN_CHANNEL");
         }
 
-        channelAccess.delete();
+        channelAccess.delete(session);
 
-        final List<User> members = ChatChannelAccess.getMembers(channel);
+        final List<User> members = ChatChannelAccess.getMembers(session, channel);
 
         for (User member : members) {
             DaemonUtils.notifyUser(member.getId(), ChatAction.MEMBER_LEAVE, user.serializePublic());
         }
 
         if (members.size() == 0) {
-            channel.delete();
+            channel.delete(session);
         }
 
         return new ApiResponse(ApiResponseType.OK);
@@ -152,12 +159,13 @@ public final class ChatChannelEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("list")
     public ApiResponse list(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
+                            @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION) final Session session,
                             @ApiParameter(value = "public", optional = true) final boolean isPublic) {
         if (isPublic) {
-            return new ApiResponse(ApiResponseType.OK, ChatChannel.getChannels());
+            return new ApiResponse(ApiResponseType.OK, ChatChannel.getChannels(session));
         } else {
-            User user = User.getById(userId);
-            return new ApiResponse(ApiResponseType.OK, ChatChannelAccess.getChannels(user));
+            User user = User.getById(session, userId);
+            return new ApiResponse(ApiResponseType.OK, ChatChannelAccess.getChannels(session, user));
         }
     }
 }

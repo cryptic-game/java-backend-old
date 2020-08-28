@@ -6,6 +6,7 @@ import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.data.user.User;
+import org.hibernate.Session;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
@@ -39,33 +40,35 @@ public final class Device extends TableModelAutoId implements JsonSerializable {
     /**
      * Creates a new {@link Device}.
      *
+     * @param session   the sql {@link Session} with transaction
      * @param name      Name of the {@link Device}
      * @param owner     Owner of the {@link Device}
      * @param poweredOn Power state of the {@link Device}
      * @return The instance of the created {@link Device}
      */
-    public static Device createDevice(final String name, final User owner, final boolean poweredOn) {
+    public static Device createDevice(final Session session, final String name, final User owner, final boolean poweredOn) {
         final Device device = new Device();
         device.setName(name);
         device.setOwner(owner);
         device.setPoweredOn(poweredOn);
 
-        device.saveOrUpdate();
+        device.saveOrUpdate(session);
         return device;
     }
 
     /**
      * Fetches the {@link Device} with the given id.
      *
-     * @param id The id of the {@link Device}
+     * @param session the sql {@link Session}
+     * @param id      The id of the {@link Device}
      * @return The instance of the fetched {@link Device} if it exists | null if the entity does not exist
      */
-    public static Device getById(final UUID id) {
-        return getById(Device.class, id);
+    public static Device getById(final Session session, final UUID id) {
+        return getById(session, Device.class, id);
     }
 
-    public boolean hasAccess(final User user) {
-        return getOwner().equals(user) || DeviceAccess.hasAccess(user, this);
+    public boolean hasAccess(final Session session, final User user) {
+        return getOwner().equals(user) || DeviceAccess.hasAccess(session, user, this);
     }
 
     /**

@@ -23,6 +23,7 @@ public final class WebSocketUserEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("login")
     public ApiResponse login(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client,
+                             @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final org.hibernate.Session sqlSession,
                              @ApiParameter("username") final String username,
                              @ApiParameter("password") final String password,
                              @ApiParameter("device_name") final String deviceName) {
@@ -35,7 +36,7 @@ public final class WebSocketUserEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_USERNAME");
         }
 
-        final User user = User.getByUsername(username);
+        final User user = User.getByUsername(sqlSession, username);
 
         if (user == null) {
             return new ApiResponse(ApiResponseType.UNAUTHORIZED, "INVALID_USERNAME");
@@ -45,11 +46,11 @@ public final class WebSocketUserEndpoints extends ApiEndpointCollection {
         }
 
         final UUID token = UUID.randomUUID();
-        session = Session.createSession(user, token, deviceName);
+        session = Session.createSession(sqlSession, user, token, deviceName);
 
         client.add(session);
 
-        Session.deleteExpiredSessions(user);
+        Session.deleteExpiredSessions(sqlSession, user);
 
         return new ApiResponse(ApiResponseType.OK, JsonBuilder.create("session", session.getId())
                 .add("token", token));
@@ -57,6 +58,7 @@ public final class WebSocketUserEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("register")
     public ApiResponse register(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client,
+                                @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final org.hibernate.Session sqlSession,
                                 @ApiParameter("username") final String username,
                                 @ApiParameter("password") final String password,
                                 @ApiParameter("device_name") final String deviceName) {
@@ -73,13 +75,13 @@ public final class WebSocketUserEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_PASSWORD");
         }
 
-        if (User.getByUsername(username) != null) {
+        if (User.getByUsername(sqlSession, username) != null) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "USER_ALREADY_EXISTS");
         }
 
         final UUID token = UUID.randomUUID();
-        final User user = User.createUser(username, password);
-        session = Session.createSession(user, token, deviceName);
+        final User user = User.createUser(sqlSession, username, password);
+        session = Session.createSession(sqlSession, user, token, deviceName);
         client.add(session);
 
         return new ApiResponse(ApiResponseType.OK, JsonBuilder.create("session", session.getId())
@@ -89,6 +91,7 @@ public final class WebSocketUserEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("session")
     public ApiResponse session(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client,
+                               @ApiParameter(value = "sqlSession", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final org.hibernate.Session sqlSession,
                                @ApiParameter("session") final UUID sessionId,
                                @ApiParameter("token") final UUID token) {
         Session session = client.get(Session.class);
@@ -96,7 +99,7 @@ public final class WebSocketUserEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "ALREADY_LOGGED_IN");
         }
 
-        session = Session.getById(sessionId);
+        session = Session.getById(sqlSession, sessionId);
         if (session == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "INVALID_SESSION");
         }
@@ -111,14 +114,15 @@ public final class WebSocketUserEndpoints extends ApiEndpointCollection {
         final OffsetDateTime now = OffsetDateTime.now();
         session.setLastActive(now);
         session.getUser().setLast(now);
-        session.getUser().saveOrUpdate();
-        session.saveOrUpdate();
+        session.getUser().saveOrUpdate(sqlSession);
+        session.saveOrUpdate(sqlSession);
 
         return new ApiResponse(ApiResponseType.OK);
     }
 
     @ApiEndpoint("change_password")
     public ApiResponse changePassword(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client,
+                                      @ApiParameter(value = "sqlSession", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final org.hibernate.Session sqlSession,
                                       @ApiParameter("password") final String password,
                                       @ApiParameter("new") final String newPassword) {
         Session session = client.get(Session.class);
@@ -137,13 +141,15 @@ public final class WebSocketUserEndpoints extends ApiEndpointCollection {
         }
 
         user.setPassword(newPassword);
-        user.saveOrUpdate();
+        user.saveOrUpdate(sqlSession);
 
         return new ApiResponse(ApiResponseType.OK);
     }
 
     @ApiEndpoint("logout")
     public ApiResponse logout(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client,
+                              @ApiParameter(value = "sqlSession", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final org.hibernate.Session sqlSession,
+
                               @ApiParameter(value = "session", optional = true) final UUID sessionId) {
         Session session = client.get(Session.class);
         if (session == null || !session.isValid()) {
@@ -151,24 +157,26 @@ public final class WebSocketUserEndpoints extends ApiEndpointCollection {
         }
 
         if (sessionId == null) {
-            session.delete();
+            session.delete(sqlSession);
             client.remove(Session.class);
             return new ApiResponse(ApiResponseType.OK);
         }
 
-        session = Session.getById(sessionId);
+        session = Session.getById(sqlSession, sessionId);
 
         if (session == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "SESSION_NOT_FOUND");
         }
 
-        session.delete();
+        session.delete(sqlSession);
 
         return new ApiResponse(ApiResponseType.OK);
     }
 
     @ApiEndpoint("delete")
     public ApiResponse delete(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client,
+                              @ApiParameter(value = "sqlSession", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final org.hibernate.Session sqlSession,
+
                               @ApiParameter("password") final String password) {
         Session session = client.get(Session.class);
         if (session == null || !session.isValid()) {
@@ -182,20 +190,21 @@ public final class WebSocketUserEndpoints extends ApiEndpointCollection {
         }
 
         client.remove(Session.class);
-        user.delete();
+        user.delete(sqlSession);
 
         return new ApiResponse(ApiResponseType.OK);
     }
 
     @ApiEndpoint("get")
     public ApiResponse get(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client,
+                           @ApiParameter(value = "sqlSession", special = ApiParameterSpecialType.SQL_SESSION) final org.hibernate.Session sqlSession,
                            @ApiParameter("id") final UUID userId) {
         final Session session = client.get(Session.class);
         if (session == null || !session.isValid()) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "NOT_LOGGED_IN");
         }
 
-        final User user = User.getById(userId);
+        final User user = User.getById(sqlSession, userId);
 
         if (user == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "USER_NOT_FOUND");
