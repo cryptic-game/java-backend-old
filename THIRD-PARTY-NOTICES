@@ -65,9 +65,19 @@ Licensor:  Sentry
 Website:   https://sentry.io/
 License:   BSD 3-clause
 
+Component: JetBrains Java Annotations
+Licensor:  JetBrains
+Website:   https://github.com/JetBrains/java-annotations/
+License:   Apache License 2.0
+
 Component: OkHttp
 Licensor:  Square Open Source
 Website:   https://square.github.io/okhttp/
+License:   Apache License 2.0
+
+Component: micrometer
+Licensor:  VMware, Inc
+Website:   https://micrometer.io/
 License:   Apache License 2.0
 
 --------------------------------------------------------------------------------
@@ -903,7 +913,7 @@ Exhibit B - “Incompatible With Secondary Licenses” Notice
 This Source Code Form is “Incompatible With Secondary Licenses”, as defined by
 the Mozilla Public License, v. 2.0.
 --------------------------------------------------------------------------------
-Apache License 2.0 (log4j, Jansi, Netty, Gson, snakeyaml, bcrypt, OkHttp)
+Apache License 2.0 (log4j, Jansi, Netty, Gson, snakeyaml, bcrypt, JetBrains Java Annotations, OkHttp, micrometer)
 
                                  Apache License
                            Version 2.0, January 2004
