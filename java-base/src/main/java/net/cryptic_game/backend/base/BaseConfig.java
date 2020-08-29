@@ -36,7 +36,7 @@ public final class BaseConfig {
     @ConfigValue("productive")
     private boolean productive = true;
 
-    @ConfigValue("session_expire")
+    @ConfigValue(value = "session_expire", comment = "days")
     private int sessionExpire = 14;
 
     @ConfigValue(value = "log_level", comment = "Available LogLevel's: OFF, FATAL, ERROR, WARN, INFO, DEBUG, TRACE & ALL")
@@ -47,4 +47,10 @@ public final class BaseConfig {
 
     @ConfigValue(value = "api_token", comment = "A secret token that is used to make the daemon endpoints only available to the server.")
     private String apiToken = "";
+
+    @ConfigValue("influx_uri")
+    private String influxUri = "";
+
+    @ConfigValue(value = "influx_step", comment = "Influx step duration in seconds")
+    private int influxStep = 10;
 }

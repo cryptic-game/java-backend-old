@@ -1,5 +1,9 @@
 package net.cryptic_game.backend.base;
 
+import io.micrometer.core.instrument.Clock;
+import io.micrometer.core.instrument.Metrics;
+import io.micrometer.influx.InfluxConfig;
+import io.micrometer.influx.InfluxMeterRegistry;
 import io.sentry.Sentry;
 import io.sentry.SentryClient;
 import lombok.Getter;
@@ -13,12 +17,14 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.config.LoggerConfig;
+import org.jetbrains.annotations.NotNull;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.PrintStream;
 import java.sql.SQLException;
+import java.time.Duration;
 
 public abstract class AppBootstrap {
 
@@ -60,6 +66,7 @@ public abstract class AppBootstrap {
         LOG.info("Starting {}...", name);
 
         this.initSentry();
+        if (!this.config.getInfluxUri().isBlank()) this.setUpMicrometer();
 
         this.preInit();
         this.initApi();
@@ -129,5 +136,31 @@ public abstract class AppBootstrap {
         final LoggerConfig loggerConfig = ctx.getConfiguration().getLoggerConfig(LogManager.ROOT_LOGGER_NAME);
         loggerConfig.setLevel(level);
         ctx.updateLoggers();
+    }
+
+    private void setUpMicrometer() {
+        final InfluxConfig influxConfig = new InfluxConfig() {
+
+            @Override
+            public @NotNull String db() {
+                return name.toLowerCase();
+            }
+
+            @Override
+            public @NotNull String uri() {
+                return config.getInfluxUri();
+            }
+
+            @Override
+            public @NotNull Duration step() {
+                return Duration.ofSeconds(config.getInfluxStep());
+            }
+
+            @Override
+            public String get(final @NotNull String key) {
+                return null;
+            }
+        };
+        Metrics.addRegistry(InfluxMeterRegistry.builder(influxConfig).clock(Clock.SYSTEM).build());
     }
 }

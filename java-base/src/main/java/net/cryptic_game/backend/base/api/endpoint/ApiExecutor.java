@@ -1,6 +1,7 @@
 package net.cryptic_game.backend.base.api.endpoint;
 
 import com.google.gson.JsonObject;
+import io.micrometer.core.instrument.Metrics;
 import net.cryptic_game.backend.base.AppBootstrap;
 import net.cryptic_game.backend.base.api.ApiException;
 import net.cryptic_game.backend.base.api.client.ApiClient;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public final class ApiExecutor {
 
@@ -36,13 +38,18 @@ public final class ApiExecutor {
             boolean transactional = hasSqlSession && sqlSessionParameter.getSpecial().equals(ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL);
             try {
                 if (transactional) sqlSession.beginTransaction();
-                return (ApiResponse) methodData.getMethod().invoke(methodData.getObject(), getParameters(methodData.getParameters(),
-                        methodData.isNormalParameters(),
-                        data == null ? new JsonObject() : data,
-                        client,
-                        tag,
-                        methodData,
-                        sqlSession));
+                final long start = System.currentTimeMillis();
+                try {
+                    return (ApiResponse) methodData.getMethod().invoke(methodData.getObject(), getParameters(methodData.getParameters(),
+                            methodData.isNormalParameters(),
+                            data == null ? new JsonObject() : data,
+                            client,
+                            tag,
+                            methodData,
+                            sqlSession));
+                } finally {
+                    Metrics.timer(methodData.getName()).record(System.currentTimeMillis() - start, TimeUnit.MILLISECONDS);
+                }
             } finally {
                 if (hasSqlSession) {
                     if (transactional) {

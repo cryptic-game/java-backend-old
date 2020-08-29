@@ -15,7 +15,7 @@ application {
 
 task start(type: JavaExec) {
     dependsOn installDist
-    classpath fileTree("${buildDir}/install/java-daemon/lib").matching { include "*.jar" }.files
+    classpath fileTree("${buildDir}/install/java-daemon/lib").matching { "*.jar" }.files
     main "net.cryptic_game.backend.daemon.App"
     workingDir file(projectDir)
 }

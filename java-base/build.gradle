@@ -41,4 +41,9 @@ dependencies {
 
     // Annotations
     api 'org.jetbrains:annotations:20.0.0'
+
+    // Metrics
+    api 'io.micrometer:micrometer-core:1.5.4'
+    implementation 'io.micrometer:micrometer-registry-influx:1.5.4'
+
 }
