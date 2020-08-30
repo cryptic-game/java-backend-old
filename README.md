@@ -9,8 +9,11 @@
     <a style="text-decoration:none" href="https://github.com/cryptic-game/java-backend-dev/actions">
         <img alt="Build" src="https://img.shields.io/github/workflow/status/cryptic-game/java-backend-dev/Build/master?style=flat-square">
     </a>
-    <a style="text-decoration:none" href="https://hub.docker.com/r/crypticcp/cryptic-backend">
-        <img alt="DockerHub" src="https://img.shields.io/docker/pulls/crypticcp/cryptic-backend?style=flat-square">
+    <a style="text-decoration:none" href="https://hub.docker.com/r/crypticcp/server">
+        <img alt="DockerHub - Server" src="https://img.shields.io/docker/pulls/crypticcp/server?style=flat-square&label=DockerHub%20-%20Server">
+    </a>
+    <a style="text-decoration:none" href="https://hub.docker.com/r/crypticcp/java-daemon">
+        <img alt="DockerHub - Java Daemon" src="https://img.shields.io/docker/pulls/crypticcp/java-daemon?style=flat-square&label=DockerHub%20-%20Java%20Daemon">
     </a>
 </p>
 <p align="center">
