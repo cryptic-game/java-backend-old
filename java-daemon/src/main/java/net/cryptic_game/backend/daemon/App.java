@@ -1,15 +1,13 @@
 package net.cryptic_game.backend.daemon;
 
 import lombok.extern.slf4j.Slf4j;
-import net.cryptic_game.backend.base.AppBootstrap;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointHandler;
 import net.cryptic_game.backend.base.api.netty.rest.RestApiLocationProvider;
-import net.cryptic_game.backend.base.netty.EventLoopGroupHandler;
+import net.cryptic_game.backend.base.netty.EventLoopGroupService;
 import net.cryptic_game.backend.base.netty.codec.NettyCodecHandler;
 import net.cryptic_game.backend.base.netty.codec.http.HttpServerCodec;
-import net.cryptic_game.backend.base.netty.server.NettyInetServer;
-import net.cryptic_game.backend.base.netty.server.NettyServerHandler;
+import net.cryptic_game.backend.base.netty.server.NettyServerService;
 import net.cryptic_game.backend.base.utils.DaemonUtils;
 import net.cryptic_game.backend.daemon.api.DaemonInfoEndpoints;
 import org.reflections.Reflections;
@@ -22,8 +20,8 @@ public final class App extends AppBootstrap {
 
     private static final DaemonConfig DAEMON_CONFIG = new DaemonConfig();
 
-    private NettyServerHandler serverHandler;
-    private EventLoopGroupHandler eventLoopGroupHandler;
+    private NettyServerService serverHandler;
+    private EventLoopGroupService eventLoopGroupService;
     private ApiEndpointHandler daemonEndpointHandler;
 
     public App(final String[] args) {
@@ -55,8 +53,8 @@ public final class App extends AppBootstrap {
 
     @Override
     protected void init() {
-        this.serverHandler = new NettyServerHandler();
-        this.eventLoopGroupHandler = new EventLoopGroupHandler();
+        this.serverHandler = new NettyServerService();
+        this.eventLoopGroupService = new EventLoopGroupService();
 
         final HttpServerCodec httpServerCodec = new HttpServerCodec();
         httpServerCodec.addLocationProvider("/", new RestApiLocationProvider(
@@ -65,7 +63,7 @@ public final class App extends AppBootstrap {
 
         this.serverHandler.addServer(new NettyInetServer("daemon",
                 new InetSocketAddress(DAEMON_CONFIG.getHttpHost(), DAEMON_CONFIG.getHttpPort()),
-                null, new NettyCodecHandler(httpServerCodec), this.eventLoopGroupHandler));
+                null, new NettyCodecHandler(httpServerCodec), this.eventLoopGroupService));
     }
 
     @Override

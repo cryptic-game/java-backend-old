@@ -16,7 +16,7 @@ import net.cryptic_game.backend.base.daemon.Daemon;
 import net.cryptic_game.backend.base.daemon.DaemonEndpointData;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.utils.HttpClientUtils;
-import net.cryptic_game.backend.data.user.Session;
+import net.cryptic_game.backend.data.entities.user.Session;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import org.jetbrains.annotations.NotNull;

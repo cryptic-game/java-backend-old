@@ -9,8 +9,8 @@ import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.utils.ValidationUtils;
-import net.cryptic_game.backend.data.user.Session;
-import net.cryptic_game.backend.data.user.User;
+import net.cryptic_game.backend.data.entities.user.Session;
+import net.cryptic_game.backend.data.entities.user.User;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;

@@ -7,7 +7,7 @@ import net.cryptic_game.backend.base.api.endpoint.ApiParameter;
 import net.cryptic_game.backend.base.api.endpoint.ApiParameterSpecialType;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
-import net.cryptic_game.backend.data.user.Session;
+import net.cryptic_game.backend.data.entities.user.Session;
 
 public final class WebSocketInfoEndpoints extends ApiEndpointCollection {
 
@@ -22,7 +22,7 @@ public final class WebSocketInfoEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("info")
     public ApiResponse info(@ApiParameter(value = "client", special = ApiParameterSpecialType.CLIENT) final ApiClient client) {
-        Session session = client.get(Session.class);
+        final Session session = client.get(Session.class);
         if (session == null || !session.isValid()) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "NOT_LOGGED_IN");
         }

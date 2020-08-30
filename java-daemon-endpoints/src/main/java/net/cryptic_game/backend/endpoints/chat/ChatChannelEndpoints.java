@@ -8,10 +8,10 @@ import net.cryptic_game.backend.base.api.endpoint.ApiParameterSpecialType;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
 import net.cryptic_game.backend.base.utils.DaemonUtils;
-import net.cryptic_game.backend.data.chat.ChatAction;
-import net.cryptic_game.backend.data.chat.ChatChannel;
-import net.cryptic_game.backend.data.chat.ChatChannelAccess;
-import net.cryptic_game.backend.data.user.User;
+import net.cryptic_game.backend.data.entities.chat.ChatAction;
+import net.cryptic_game.backend.data.entities.chat.ChatChannel;
+import net.cryptic_game.backend.data.entities.chat.ChatChannelAccess;
+import net.cryptic_game.backend.data.entities.user.User;
 import org.hibernate.Session;
 
 import java.util.List;

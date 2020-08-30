@@ -3,18 +3,19 @@ plugins {
 }
 
 dependencies {
-    implementation project(':java-base')
-    implementation project(':java-data')
+    implementation(project(':java-base'))
+    implementation(project(':java-data'))
+    annotationProcessor("org.springframework:spring-context-indexer:5.2.8.RELEASE")
 }
 
 application {
     applicationName = 'server'
-    mainClassName = 'net.cryptic_game.backend.server.App'
+    mainClassName = 'net.cryptic_game.backend.base.Bootstrap'
 }
 
 task start(type: JavaExec) {
     dependsOn installDist
     classpath fileTree("${buildDir}/install/server/lib").matching { "*.jar" }.files
-    main "net.cryptic_game.backend.server.App"
+    main "net.cryptic_game.backend.base.Bootstrap"
     workingDir file(projectDir)
 }

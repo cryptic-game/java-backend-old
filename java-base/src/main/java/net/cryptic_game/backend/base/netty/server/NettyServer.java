@@ -6,32 +6,36 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.ServerChannel;
 import io.netty.channel.epoll.Epoll;
+import io.netty.channel.epoll.EpollServerSocketChannel;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.ssl.SslContext;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.cryptic_game.backend.base.netty.EventLoopGroupHandler;
+import net.cryptic_game.backend.base.netty.EventLoopGroupService;
 import net.cryptic_game.backend.base.netty.NettyInitializer;
 import net.cryptic_game.backend.base.netty.codec.NettyCodecHandler;
 
 import java.net.SocketAddress;
 
-@RequiredArgsConstructor
-@EqualsAndHashCode
 @Slf4j
-public abstract class NettyServer implements AutoCloseable {
+@EqualsAndHashCode
+@RequiredArgsConstructor
+public class NettyServer implements AutoCloseable {
 
     private static final boolean EPOLL = Epoll.isAvailable();
     private final String id;
     private final SocketAddress address;
     private final SslContext sslContext;
     private final NettyCodecHandler codecHandler;
-    private final EventLoopGroupHandler eventLoopGroupHandler;
+    private final EventLoopGroupService eventLoopGroupService;
 
     private Thread thread;
     private Channel channel;
 
-    protected abstract Class<? extends ServerChannel> getServerChannelType(boolean epoll);
+    protected Class<? extends ServerChannel> getServerChannelType() {
+        return EPOLL ? EpollServerSocketChannel.class : NioServerSocketChannel.class;
+    }
 
     /**
      * Starts the current server.
@@ -43,8 +47,8 @@ public abstract class NettyServer implements AutoCloseable {
                 this.channel = new ServerBootstrap()
                         .option(ChannelOption.SO_BACKLOG, 1024)
                         .option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
-                        .group(this.eventLoopGroupHandler.getBossGroup(), this.eventLoopGroupHandler.getWorkGroup())
-                        .channel(this.getServerChannelType(EPOLL))
+                        .group(this.eventLoopGroupService.getBossGroup(), this.eventLoopGroupService.getWorkGroup())
+                        .channel(this.getServerChannelType())
                         .childHandler(new NettyInitializer(this.sslContext, this.codecHandler.getInitializers()))
                         .bind(this.address)
                         .sync()

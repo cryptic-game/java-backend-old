@@ -9,7 +9,8 @@ import net.cryptic_game.backend.base.api.endpoint.ApiParameter;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
 import net.cryptic_game.backend.base.api.notification.ApiNotification;
-import net.cryptic_game.backend.data.user.Session;
+import net.cryptic_game.backend.data.entities.user.Session;
+import org.springframework.stereotype.Component;
 
 import java.util.Set;
 import java.util.UUID;

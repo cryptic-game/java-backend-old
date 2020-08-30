@@ -2,17 +2,18 @@ package net.cryptic_game.backend.server;
 
 import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
-import net.cryptic_game.backend.base.AppBootstrap;
+import net.cryptic_game.backend.base.BaseConfig;
+import net.cryptic_game.backend.base.Bootstrap;
 import net.cryptic_game.backend.base.api.client.ApiClient;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointData;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointHandler;
 import net.cryptic_game.backend.base.api.netty.rest.RestApiLocationProvider;
 import net.cryptic_game.backend.base.api.netty.websocket.WebSocketLocationProvider;
-import net.cryptic_game.backend.base.netty.EventLoopGroupHandler;
+import net.cryptic_game.backend.base.netty.EventLoopGroupService;
 import net.cryptic_game.backend.base.netty.codec.NettyCodecHandler;
 import net.cryptic_game.backend.base.netty.codec.http.HttpServerCodec;
-import net.cryptic_game.backend.base.netty.server.NettyInetServer;
-import net.cryptic_game.backend.base.netty.server.NettyServerHandler;
+import net.cryptic_game.backend.base.netty.server.NettyServer;
+import net.cryptic_game.backend.base.netty.server.NettyServerService;
 import net.cryptic_game.backend.server.daemon.DaemonHandler;
 import net.cryptic_game.backend.server.server.http.HttpDaemonEndpoints;
 import net.cryptic_game.backend.server.server.http.HttpInfoEndpoint;
@@ -20,75 +21,51 @@ import net.cryptic_game.backend.server.server.playground.PlaygroundLocationProvi
 import net.cryptic_game.backend.server.server.websocket.WebSocketDaemonEndpoints;
 import net.cryptic_game.backend.server.server.websocket.WebSocketInfoEndpoints;
 import net.cryptic_game.backend.server.server.websocket.WebSocketUserEndpoints;
+import org.springframework.context.annotation.Configuration;
 
 import java.net.InetSocketAddress;
 
 @Slf4j
-public final class App extends AppBootstrap {
+@Configuration
+public class App {
 
-    private static final ServerConfig SERVER_CONFIG = new ServerConfig();
+    public App(final Bootstrap bootstrap,
+               final BaseConfig baseConfig,
+               final ServerConfig config,
+               final NettyServerService serverHandler,
+               final EventLoopGroupService eventLoopGroupService) {
 
-    private ApiEndpointHandler webSocketEndpointHandler;
-    private ApiEndpointHandler httpEndpointHandler;
+        final ApiEndpointHandler webSocketEndpointHandler = new ApiEndpointHandler();
+        final ApiEndpointHandler httpEndpointHandler = new ApiEndpointHandler();
+        final DaemonHandler daemonHandler = new DaemonHandler(webSocketEndpointHandler.getApiList(), baseConfig.getApiToken());
 
-    private EventLoopGroupHandler eventLoopGroupHandler;
-    private NettyServerHandler serverHandler;
+        webSocketEndpointHandler.addApiCollection(new WebSocketUserEndpoints());
+        webSocketEndpointHandler.addApiCollection(new WebSocketInfoEndpoints());
+        webSocketEndpointHandler.postInit();
 
-    private DaemonHandler daemonHandler;
+        httpEndpointHandler.addApiCollection(new HttpInfoEndpoint());
+        httpEndpointHandler.addApiCollection(new HttpDaemonEndpoints(webSocketEndpointHandler.getApiList().getClients()));
+        httpEndpointHandler.postInit();
 
-    public App(final String[] args) {
-        super(args, SERVER_CONFIG, "Java-Server");
-    }
-
-    public static void main(final String[] args) {
-        new App(args);
-    }
-
-    @Override
-    protected void preInit() {
-        this.webSocketEndpointHandler = new ApiEndpointHandler();
-        this.httpEndpointHandler = new ApiEndpointHandler();
-        this.eventLoopGroupHandler = new EventLoopGroupHandler();
-        this.serverHandler = new NettyServerHandler();
-        this.daemonHandler = new DaemonHandler(this.webSocketEndpointHandler.getApiList(), this.getConfig().getApiToken());
         try {
-            this.daemonHandler.setSend(new WebSocketDaemonEndpoints(this.getConfig().getApiToken()),
+            daemonHandler.setSend(new WebSocketDaemonEndpoints(baseConfig.getApiToken()),
                     WebSocketDaemonEndpoints.class.getDeclaredMethod("send", ApiClient.class, String.class, ApiEndpointData.class, JsonObject.class));
         } catch (NoSuchMethodException e) {
             log.error("Error while setting daemon endpoint handling method.", e);
         }
-    }
 
-    @Override
-    protected void initApi() {
-        this.webSocketEndpointHandler.addApiCollection(new WebSocketUserEndpoints());
-        this.webSocketEndpointHandler.addApiCollection(new WebSocketInfoEndpoints());
-        this.webSocketEndpointHandler.postInit();
-
-        this.httpEndpointHandler.addApiCollection(new HttpInfoEndpoint());
-        this.httpEndpointHandler.addApiCollection(new HttpDaemonEndpoints(this.webSocketEndpointHandler.getApiList().getClients()));
-        this.httpEndpointHandler.postInit();
-    }
-
-    @Override
-    protected void init() {
         final HttpServerCodec httpServerCodec = new HttpServerCodec();
-        httpServerCodec.addLocationProvider("api", new RestApiLocationProvider(this.httpEndpointHandler.getApiList().getEndpoints(), null));
-        httpServerCodec.addLocationProvider("ws", new WebSocketLocationProvider(this.webSocketEndpointHandler.getApiList().getEndpoints(),
-                this.webSocketEndpointHandler.getApiList().getClients()::add));
-        if (!this.getConfig().isProductive())
-            httpServerCodec.addLocationProvider("playground", new PlaygroundLocationProvider(SERVER_CONFIG.getWebsocketAddress(),
-                    this.webSocketEndpointHandler.getApiList().getCollections().values()));
-        this.serverHandler.addServer(new NettyInetServer("http",
-                new InetSocketAddress(SERVER_CONFIG.getHttpHost(), SERVER_CONFIG.getHttpPort()),
-                null, new NettyCodecHandler(httpServerCodec), this.eventLoopGroupHandler));
+        httpServerCodec.addLocationProvider("api", new RestApiLocationProvider(httpEndpointHandler.getApiList().getEndpoints(), null));
+        httpServerCodec.addLocationProvider("ws", new WebSocketLocationProvider(webSocketEndpointHandler.getApiList().getEndpoints(),
+                webSocketEndpointHandler.getApiList().getClients()::add));
+        if (bootstrap.isDebug())
+            httpServerCodec.addLocationProvider("playground", new PlaygroundLocationProvider(config.getWebsocketAddress(),
+                    webSocketEndpointHandler.getApiList().getCollections().values()));
+
+        serverHandler.addServer(new NettyServer("http",
+                new InetSocketAddress(config.getHttpHost(), config.getHttpPort()),
+                null, new NettyCodecHandler(), eventLoopGroupService));
+
+        daemonHandler.registerDaemon("java-daemon", config.getJavaDaemonAddress());
     }
-
-    @Override
-    protected void start() {
-        this.serverHandler.start();
-        this.daemonHandler.registerDaemon("java-daemon", SERVER_CONFIG.getJavaDaemonAddress());
-    }
-
-
 }
