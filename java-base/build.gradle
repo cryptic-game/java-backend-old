@@ -40,7 +40,7 @@ dependencies {
     api 'com.squareup.okhttp3:okhttp:4.8.1'
 
     // Annotations
-    api 'org.jetbrains:annotations:20.0.0'
+    api 'org.jetbrains:annotations:20.1.0'
 
     // Metrics
     api 'io.micrometer:micrometer-core:1.5.4'
