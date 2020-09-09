@@ -16,10 +16,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
-import java.util.List;
-import java.util.UUID;
-
 /**
  * Entity representing a chat message entry in the database.
  *
@@ -77,53 +73,16 @@ public final class ChatMessage extends TableModelAutoId implements JsonSerializa
      * @return the sent {@link ChatMessage}
      */
     public static ChatMessage create(final Session session, final ChatChannel channel, final User user, final User target, final String text) {
-        final ChatMessage message = new ChatMessage();
+        /*final ChatMessage message = new ChatMessage();
         message.setUser(user);
         message.setChannel(channel);
         message.setTimestamp(OffsetDateTime.now(ZoneOffset.UTC));
         message.setText(text);
         message.setTarget(target);
 
-        message.saveOrUpdate(session);
-        return message;
-    }
-
-    /**
-     * Returns a {@link List} of {@link ChatMessage}s sent in a {@link ChatChannel}.
-     *
-     * @param session the sql {@link Session}
-     * @param channel the {@link ChatChannel} where the {@link ChatMessage}s were sent
-     * @param user    the {@link User} of the request
-     * @param offset  the offset of the {@link ChatMessage}s
-     * @param count   the count of the {@link ChatMessage}s
-     * @return the {@link List} of {@link ChatMessage}s
-     */
-    public static List<ChatMessage> getMessages(final Session session, final ChatChannel channel, final User user, final int offset, final int count) {
-        return session.createQuery("select object (m) from ChatMessage m where m.channel = :channel "
-                + "and (m.target is null or m.target = :user or m.user = :user) "
-                + "order by m.timestamp desc", ChatMessage.class)
-                .setParameter("channel", channel)
-                .setParameter("user", user)
-                .setFirstResult(offset)
-                .setMaxResults(count)
-                .getResultList();
-    }
-
-    /**
-     * Returns a {@link List} of all {@link ChatMessage}s from on {@link ChatChannel}.
-     *
-     * @param session the sql {@link Session}
-     * @param channel the {@link ChatChannel} whose {@link ChatMessage}s will be returned
-     * @return the {@link List} of {@link ChatMessage}s
-     */
-    public static List<ChatMessage> getMessages(final Session session, final ChatChannel channel) {
-        return session.createQuery("select object (m) from ChatMessage m where m.channel = :channel ", ChatMessage.class)
-                .setParameter("channel", channel)
-                .getResultList();
-    }
-
-    public static ChatMessage getById(final Session session, final UUID id) {
-        return getById(session, ChatMessage.class, id);
+        message.saveOrUpdate(session);*/
+        return null;
+        //FIXME
     }
 
     /**

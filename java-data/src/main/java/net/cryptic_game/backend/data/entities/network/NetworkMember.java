@@ -16,7 +16,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Entity representing a network member entry in the database.
@@ -40,49 +39,16 @@ public final class NetworkMember extends TableModel implements JsonSerializable 
      * @return The instance of the created {@link NetworkMember}
      */
     public static NetworkMember createMember(final Session session, final Network network, final Device device) {
-        NetworkMember existingMember = getMember(session, network, device);
+        /*NetworkMember existingMember = getMember(session, network, device);
         if (existingMember != null) return existingMember;
 
         final NetworkMember networkMember = new NetworkMember();
         networkMember.setNetwork(network);
         networkMember.setDevice(device);
 
-        network.saveOrUpdate(session);
-        return networkMember;
-    }
-
-    /**
-     * Fetches the {@link NetworkMember} with the given key.
-     *
-     * @param session the sql {@link Session}
-     * @param network {@link Network} of the {@link NetworkMember}
-     * @param device  {@link Device} of the {@link NetworkMember}
-     * @return The instance of the fetched {@link NetworkMember} if it exists | null if the entity does not exist
-     */
-    public static NetworkMember getMember(final Session session, final Network network, final Device device) {
-        final MemberKey primaryKey = new MemberKey();
-        primaryKey.setNetwork(network);
-        primaryKey.setDevice(device);
-        return session.find(NetworkMember.class, primaryKey);
-    }
-
-    /**
-     * Fetches the {@link NetworkMember} of the give {@link Device}.
-     *
-     * @param session the sql {@link Session}
-     * @param device  {@link Device} of the {@link NetworkMember}
-     * @return A {@link List} containing the fetched {@link NetworkMember}'s
-     */
-    public static List<NetworkMember> getMembershipsOfDevice(final Session session, final Device device) {
-        return session.createQuery("select object (n) from NetworkMember as n where n.key.device = :device", NetworkMember.class)
-                .setParameter("device", device)
-                .getResultList();
-    }
-
-    public static List<NetworkMember> getMembershipsOfNetwork(final Session session, final Network network) {
-        return session.createQuery("select object (n) from NetworkMember as n where n.key.network = :network", NetworkMember.class)
-                .setParameter("network", network)
-                .getResultList();
+        network.saveOrUpdate(session);*/
+        return null;
+        //FIXME
     }
 
     /**
