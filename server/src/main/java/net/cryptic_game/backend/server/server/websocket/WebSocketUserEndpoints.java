@@ -67,7 +67,7 @@ public final class WebSocketUserEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "ALREADY_LOGGED_IN");
         }
 
-        if (username.length() > 256) {
+        if (!username.matches("^[a-zA-Z0-9\\-_.]{2,32}$")) {
             return new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_USERNAME");
         }
 
