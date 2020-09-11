@@ -22,7 +22,7 @@ dependencies {
     api 'com.google.code.gson:gson:2.8.6'
 
     // Yaml
-    implementation 'org.yaml:snakeyaml:1.26'
+    implementation 'org.yaml:snakeyaml:1.27'
 
     // BCrypt
     api 'at.favre.lib:bcrypt:0.9.0'
