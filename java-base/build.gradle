@@ -38,9 +38,6 @@ dependencies {
     api('org.springframework.security:spring-security-core:5.4.0')
     api('org.bouncycastle:bcpkix-jdk15on:1.66')
 
-    /* Temporally */
-    api('com.sun.activation:javax.activation:1.2.0')
-
     /* Http Client */
     api('com.squareup.okhttp3:okhttp:4.9.0')
 
