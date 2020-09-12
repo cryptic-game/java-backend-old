@@ -21,6 +21,5 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, UUID> 
             + "order by m.timestamp desc")
     List<ChatMessage> getMessages(ChatChannel chatChannel, User user, Pageable pageable);
 
-    @Transactional
     void deleteAllByChannel(ChatChannel channel);
 }

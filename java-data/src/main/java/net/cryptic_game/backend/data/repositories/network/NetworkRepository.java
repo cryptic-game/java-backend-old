@@ -14,5 +14,5 @@ public interface NetworkRepository extends JpaRepository<Network, UUID> {
 
     List<Network> findAllByOwner(Device owner);
 
-    List<Network> findAllByPublicTrue();
+    List<Network> findAllByIsPublicIsTrue();
 }

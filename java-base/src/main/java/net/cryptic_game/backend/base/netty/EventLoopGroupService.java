@@ -4,7 +4,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.epoll.Epoll;
 import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
-import lombok.Data;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 

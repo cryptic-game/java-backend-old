@@ -14,7 +14,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.util.UUID;
 
 /**
  * Entity representing a device entry in the database.
@@ -52,19 +51,8 @@ public final class Device extends TableModelAutoId implements JsonSerializable {
         device.setOwner(owner);
         device.setPoweredOn(poweredOn);
 
-        device.saveOrUpdate(session);
+        //device.saveOrUpdate(session);
         return device;
-    }
-
-    /**
-     * Fetches the {@link Device} with the given id.
-     *
-     * @param session the sql {@link Session}
-     * @param id      The id of the {@link Device}
-     * @return The instance of the fetched {@link Device} if it exists | null if the entity does not exist
-     */
-    public static Device getById(final Session session, final UUID id) {
-        return getById(session, Device.class, id);
     }
 
     public boolean hasAccess(final Session session, final User user) {

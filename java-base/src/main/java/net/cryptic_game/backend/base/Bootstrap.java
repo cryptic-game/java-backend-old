@@ -44,7 +44,7 @@ public class Bootstrap {
         this.contextHandler.scan("net.cryptic_game");
         Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown, "shutdown"));
 
-        if (this.contextHandler.refresh()) this.shutdown();
+        if (!this.contextHandler.refresh()) this.shutdown();
     }
 
     public static void main(final String[] args) {

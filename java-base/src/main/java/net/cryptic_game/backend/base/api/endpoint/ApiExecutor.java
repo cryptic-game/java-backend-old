@@ -51,7 +51,7 @@ public final class ApiExecutor {
     ) throws ApiException {
         int size = 0;
         for (final ApiParameterData parameter : parameters) {
-            if (parameter.getSpecial().equals(ApiParameterSpecialType.NORMAL) || parameter.getSpecial().equals(ApiParameterSpecialType.USER)) {
+            if (parameter.getSpecial().equals(ApiParameterSpecialType.NORMAL)) {
                 if (normalParameters) size++;
             } else size++;
         }
@@ -83,17 +83,6 @@ public final class ApiExecutor {
                     break;
                 case DATA:
                     objects[current] = data;
-                    break;
-                case USER:
-                    if (!parameter.isOptional() && (!data.has(parameter.getName()) || data.get(parameter.getName()).isJsonNull())) {
-                        throw new ApiException("Parameter \"" + parameter.getName() + "\" is missing.");
-                    } else if (normalParameters) {
-                        try {
-                            objects[current] = JsonUtils.fromJson(data.get(parameter.getName()), parameter.getJavaType());
-                        } catch (JsonTypeMappingException e) {
-                            throw new ApiException("Invalid format of parameter \"" + parameter.getName() + "\".", e);
-                        }
-                    }
                     break;
                 default:
                     throw new IllegalArgumentException(parameter.getSpecial().toString());

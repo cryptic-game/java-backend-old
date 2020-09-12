@@ -2,16 +2,13 @@ package net.cryptic_game.backend.data.entities.user;
 
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import org.hibernate.annotations.Type;
-import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,8 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.Duration;
 import java.time.OffsetDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -68,7 +63,7 @@ public final class Session extends TableModelAutoId implements JsonSerializable 
         session.setExpire(OffsetDateTime.now().plus(Duration.ofDays(14)));
         session.setLastActive(OffsetDateTime.now());
 
-        session.saveOrUpdate(sqlSession);
+        //session.saveOrUpdate(sqlSession);
         return session;
     }
 
@@ -103,7 +98,6 @@ public final class Session extends TableModelAutoId implements JsonSerializable 
     public JsonObject serialize() {
         return JsonBuilder.create("id", this.getId())
                 .add("user_id", this.getId())
-                .add("device_name", this.getDeviceName())
                 .add("valid", this.isValid())
                 .add("expire", this.getExpire())
                 .add("last_active", this.getLastActive())

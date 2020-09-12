@@ -64,7 +64,7 @@ public final class DeviceFile extends TableModelAutoId implements JsonSerializab
         file.setDirectory(isDirectory);
         file.setParentDirectory(parentDir);
 
-        file.saveOrUpdate(session);
+        //file.saveOrUpdate(session);
         return file;
     }
 

@@ -85,7 +85,7 @@ public final class DeviceAccess extends TableModelAutoId implements JsonSerializ
         access.setValid(true);
         access.setExpire(OffsetDateTime.now().plus(duration));
 
-        access.saveOrUpdate(session);
+        //access.saveOrUpdate(session);
         return access;
     }
 

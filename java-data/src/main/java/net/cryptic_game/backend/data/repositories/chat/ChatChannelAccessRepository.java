@@ -17,15 +17,13 @@ public interface ChatChannelAccessRepository extends JpaRepository<ChatChannelAc
 
     List<ChatChannelAccess> findAllByChannel(ChatChannel channel);
 
-    @Query("select object (ca.user) from ChatChannelAccess as ca where ca.channel = ?1")
+    @Query("select ca.user from ChatChannelAccess as ca where ca.channel = ?1")
     List<User> getMembers(ChatChannel channel);
 
-    @Query("select object (ca.channel) from ChatChannelAccess as ca where ca.user = ?1")
+    @Query("select ca.channel from ChatChannelAccess as ca where ca.user = ?1")
     List<ChatChannel> getChannels(User user);
 
-    @Transactional
     void deleteAllByChannel(ChatChannel channel);
 
-    @Transactional
     void deleteAllByUser(User user);
 }

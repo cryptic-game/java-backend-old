@@ -21,25 +21,27 @@ import net.cryptic_game.backend.server.server.playground.PlaygroundLocationProvi
 import net.cryptic_game.backend.server.server.websocket.WebSocketDaemonEndpoints;
 import net.cryptic_game.backend.server.server.websocket.WebSocketInfoEndpoints;
 import net.cryptic_game.backend.server.server.websocket.WebSocketUserEndpoints;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
 
 import java.net.InetSocketAddress;
 
 @Slf4j
 @Configuration
-public class App {
+public class ServerBootstrap {
 
-    public App(final Bootstrap bootstrap,
-               final BaseConfig baseConfig,
-               final ServerConfig config,
-               final NettyServerService serverHandler,
-               final EventLoopGroupService eventLoopGroupService) {
+    public ServerBootstrap(final Bootstrap bootstrap,
+                           final BaseConfig baseConfig,
+                           final ServerConfig config,
+                           final ApplicationContext context,
+                           final NettyServerService serverService,
+                           final EventLoopGroupService eventLoopGroupService) {
 
         final ApiEndpointHandler webSocketEndpointHandler = new ApiEndpointHandler();
         final ApiEndpointHandler httpEndpointHandler = new ApiEndpointHandler();
         final DaemonHandler daemonHandler = new DaemonHandler(webSocketEndpointHandler.getApiList(), baseConfig.getApiToken());
 
-        webSocketEndpointHandler.addApiCollection(new WebSocketUserEndpoints());
+        webSocketEndpointHandler.addApiCollection(context.getBean(WebSocketUserEndpoints.class));
         webSocketEndpointHandler.addApiCollection(new WebSocketInfoEndpoints());
         webSocketEndpointHandler.postInit();
 
@@ -62,9 +64,9 @@ public class App {
             httpServerCodec.addLocationProvider("playground", new PlaygroundLocationProvider(config.getWebsocketAddress(),
                     webSocketEndpointHandler.getApiList().getCollections().values()));
 
-        serverHandler.addServer(new NettyServer("http",
+        serverService.addServer(new NettyServer("http",
                 new InetSocketAddress(config.getHttpHost(), config.getHttpPort()),
-                null, new NettyCodecHandler(), eventLoopGroupService));
+                null, new NettyCodecHandler(httpServerCodec), eventLoopGroupService));
 
         daemonHandler.registerDaemon("java-daemon", config.getJavaDaemonAddress());
     }

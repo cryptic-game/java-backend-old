@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.OffsetDateTime;
+
 /**
  * Entity representing a chat message entry in the database.
  *
