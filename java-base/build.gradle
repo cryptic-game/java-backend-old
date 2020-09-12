@@ -28,28 +28,26 @@ dependencies {
     runtimeOnly('org.mariadb.jdbc:mariadb-java-client:2.7.0')
     runtimeOnly('com.h2database:h2:1.4.200')
 
-    // Network
+    /* Network */
     api('io.netty:netty-all:4.1.52.Final')
 
-    // Json
+    /* Json */
     api('com.google.code.gson:gson:2.8.6')
 
-    // BCrypt
-    api('at.favre.lib:bcrypt:0.9.0')
+    /* Spring Security */
+    api('org.springframework.security:spring-security-core:5.4.0')
+    api('org.bouncycastle:bcpkix-jdk15on:1.66')
 
-    // Reflections
-    api('org.reflections:reflections:0.9.12')
-
-    // Temporally
+    /* Temporally */
     api('com.sun.activation:javax.activation:1.2.0')
 
-    // Http Client
+    /* Http Client */
     api('com.squareup.okhttp3:okhttp:4.9.0')
 
-    // Annotations
-    api('org.jetbrains:annotations:20.1.0')
+    /* Annotations */
+    compileOnly('org.jetbrains:annotations:20.1.0')
 
-    // Metrics
+    /* Metrics */
     api('io.micrometer:micrometer-core:1.5.5')
     implementation('io.micrometer:micrometer-registry-influx:1.5.5')
 }

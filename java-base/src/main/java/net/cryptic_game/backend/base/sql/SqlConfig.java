@@ -12,13 +12,13 @@ class SqlConfig {
     @Value("${SQL_SERVER_LOCATION:postgresql://localhost:5432}")
     private String location;
 
-    @Value("${SQL_SERVER_DATABASE:nova}")
+    @Value("${SQL_SERVER_DATABASE:cryptic}")
     private String database;
 
-    @Value("${SQL_SERVER_USERNAME:nova}")
+    @Value("${SQL_SERVER_USERNAME:cryptic}")
     private String username;
 
-    @Value("${SQL_SERVER_PASSWORD:nova}")
+    @Value("${SQL_SERVER_PASSWORD:cryptic}")
     private String password;
 
     @Value("${SQL_SHOW_STATEMENTS:false}")
