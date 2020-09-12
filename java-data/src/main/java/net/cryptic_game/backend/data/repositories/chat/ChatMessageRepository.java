@@ -6,7 +6,6 @@ import net.cryptic_game.backend.data.entities.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import javax.transaction.Transactional;
 import java.awt.print.Pageable;
 import java.util.List;
 import java.util.UUID;

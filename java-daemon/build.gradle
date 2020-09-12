@@ -11,12 +11,12 @@ dependencies {
 
 application {
     applicationName = 'java-daemon'
-    mainClassName = 'net.cryptic_game.backend.daemon.App'
+    mainClassName = 'net.cryptic_game.backend.base.Bootstrap'
 }
 
 task start(type: JavaExec) {
     dependsOn installDist
     classpath fileTree("${buildDir}/install/java-daemon/lib").matching { "*.jar" }.files
-    main "net.cryptic_game.backend.daemon.App"
+    main "net.cryptic_game.backend.base.Bootstrap"
     workingDir file(projectDir)
 }

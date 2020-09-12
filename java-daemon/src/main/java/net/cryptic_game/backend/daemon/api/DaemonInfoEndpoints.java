@@ -5,9 +5,11 @@ import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointHandler;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
+import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 
+@Component
 public final class DaemonInfoEndpoints extends ApiEndpointCollection {
 
     private final ApiEndpointHandler daemonEndpointHandler;
