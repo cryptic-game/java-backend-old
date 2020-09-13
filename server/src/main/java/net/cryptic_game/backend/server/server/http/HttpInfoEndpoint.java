@@ -4,7 +4,9 @@ import net.cryptic_game.backend.base.api.endpoint.ApiEndpoint;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
+import org.springframework.stereotype.Component;
 
+@Component
 public final class HttpInfoEndpoint extends ApiEndpointCollection {
 
     public HttpInfoEndpoint() {

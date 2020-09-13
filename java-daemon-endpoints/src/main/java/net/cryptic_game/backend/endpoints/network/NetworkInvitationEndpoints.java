@@ -6,11 +6,11 @@ import net.cryptic_game.backend.base.api.endpoint.ApiParameter;
 import net.cryptic_game.backend.base.api.endpoint.ApiParameterSpecialType;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
-import net.cryptic_game.backend.data.entities.device.Device;
-import net.cryptic_game.backend.data.entities.network.Network;
-import net.cryptic_game.backend.data.entities.network.NetworkInvitation;
-import net.cryptic_game.backend.data.entities.network.NetworkMember;
-import net.cryptic_game.backend.data.entities.user.User;
+import net.cryptic_game.backend.data.sql.entities.device.Device;
+import net.cryptic_game.backend.data.sql.entities.network.Network;
+import net.cryptic_game.backend.data.sql.entities.network.NetworkInvitation;
+import net.cryptic_game.backend.data.sql.entities.network.NetworkMember;
+import net.cryptic_game.backend.data.sql.entities.user.User;
 import org.hibernate.Session;
 
 import java.util.UUID;

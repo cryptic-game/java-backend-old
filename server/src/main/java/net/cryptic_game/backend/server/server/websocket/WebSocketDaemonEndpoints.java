@@ -16,7 +16,7 @@ import net.cryptic_game.backend.base.daemon.Daemon;
 import net.cryptic_game.backend.base.daemon.DaemonEndpointData;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.utils.HttpClientUtils;
-import net.cryptic_game.backend.data.entities.user.Session;
+import net.cryptic_game.backend.data.redis.entities.Session;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import org.jetbrains.annotations.NotNull;
@@ -43,7 +43,7 @@ public final class WebSocketDaemonEndpoints {
 
         final Session session = client.get(Session.class);
 
-        if (!(session != null && session.isValid())) {
+        if (session == null) {
             return new ApiResponse(ApiResponseType.UNAUTHORIZED, "INVALID_SESSION");
         }
 
@@ -55,7 +55,7 @@ public final class WebSocketDaemonEndpoints {
             HttpClientUtils.sendAsyncRequest(new Request.Builder()
                     .url(url)
                     .header(AUTHORIZATION_HEADER, this.apiToken)
-                    .post(RequestBody.create(JsonBuilder.create(data).add("user_id", session.getUser().getId()).build().toString(), HttpClientUtils.JSON))
+                    .post(RequestBody.create(JsonBuilder.create(data).add("user_id", session.getUserId()).build().toString(), HttpClientUtils.JSON))
                     .build(), new HttpClientUtils.ApiCallback() {
 
                 @Override

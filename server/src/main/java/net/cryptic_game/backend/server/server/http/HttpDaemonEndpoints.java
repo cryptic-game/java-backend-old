@@ -9,12 +9,14 @@ import net.cryptic_game.backend.base.api.endpoint.ApiParameter;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
 import net.cryptic_game.backend.base.api.notification.ApiNotification;
-import net.cryptic_game.backend.data.entities.user.Session;
+import net.cryptic_game.backend.data.redis.entities.Session;
+import org.springframework.stereotype.Component;
 
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Component
 public final class HttpDaemonEndpoints extends ApiEndpointCollection {
 
     private final Set<ApiClient> clients;
@@ -32,7 +34,7 @@ public final class HttpDaemonEndpoints extends ApiEndpointCollection {
 
         final Set<ApiClient> userClients = this.clients.stream().filter(client -> {
             final Session session = client.get(Session.class);
-            return session != null && session.getUser().getId().equals(userId);
+            return session != null && session.getUserId().equals(userId);
         }).collect(Collectors.toUnmodifiableSet());
 
         if (userClients.size() == 0) return new ApiResponse(ApiResponseType.NOT_FOUND, "USER_CLIENT");

@@ -6,8 +6,8 @@ import net.cryptic_game.backend.base.api.endpoint.ApiParameter;
 import net.cryptic_game.backend.base.api.endpoint.ApiParameterSpecialType;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
-import net.cryptic_game.backend.data.entities.user.User;
-import net.cryptic_game.backend.data.entities.user.UserSetting;
+import net.cryptic_game.backend.data.sql.entities.user.User;
+import net.cryptic_game.backend.data.sql.entities.user.UserSetting;
 import org.hibernate.Session;
 
 import java.util.UUID;

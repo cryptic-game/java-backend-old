@@ -42,11 +42,11 @@ public class ServerBootstrap {
         final DaemonHandler daemonHandler = new DaemonHandler(webSocketEndpointHandler.getApiList(), baseConfig.getApiToken());
 
         webSocketEndpointHandler.addApiCollection(context.getBean(WebSocketUserEndpoints.class));
-        webSocketEndpointHandler.addApiCollection(new WebSocketInfoEndpoints());
+        webSocketEndpointHandler.addApiCollection(context.getBean(WebSocketInfoEndpoints.class));
         webSocketEndpointHandler.postInit();
 
-        httpEndpointHandler.addApiCollection(new HttpInfoEndpoint());
-        httpEndpointHandler.addApiCollection(new HttpDaemonEndpoints(webSocketEndpointHandler.getApiList().getClients()));
+        httpEndpointHandler.addApiCollection(context.getBean(HttpInfoEndpoint.class));
+        httpEndpointHandler.addApiCollection(context.getBean(HttpDaemonEndpoints.class, webSocketEndpointHandler.getApiList().getClients()));
         httpEndpointHandler.postInit();
 
         try {
