@@ -152,19 +152,18 @@ public final class WebSocketUserEndpoints extends ApiEndpointCollection {
         }
 
         if (sessionId == null) {
-            //session.delete(sqlSession);
+            this.sessionRepository.delete(session);
             client.remove(Session.class);
             return new ApiResponse(ApiResponseType.OK);
         }
 
-        //session = Session.getById(sqlSession, sessionId);
+        session = this.sessionRepository.findById(sessionId).orElse(null);
 
         if (session == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "SESSION_NOT_FOUND");
         }
 
-        // session.delete(sqlSession);
-
+        this.sessionRepository.delete(session);
         return new ApiResponse(ApiResponseType.OK);
     }
 
@@ -183,7 +182,7 @@ public final class WebSocketUserEndpoints extends ApiEndpointCollection {
         }
 
         client.remove(Session.class);
-        //user.delete(sqlSession);
+        this.userRepository.delete(user);
 
         return new ApiResponse(ApiResponseType.OK);
     }
@@ -196,8 +195,7 @@ public final class WebSocketUserEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "NOT_LOGGED_IN");
         }
 
-        //TODO
-        final User user = null;
+        final User user = this.userRepository.findById(userId).orElse(null);
 
         if (user == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "USER_NOT_FOUND");
