@@ -18,10 +18,6 @@ public class ContextHandler {
         return this.applicationContext.getBean(clazz);
     }
 
-    public void scan(final String... basePackages) {
-        this.applicationContext.scan(basePackages);
-    }
-
     public void register(final Class<?>... classes) {
         if (classes.length != 0) this.applicationContext.register(classes);
     }

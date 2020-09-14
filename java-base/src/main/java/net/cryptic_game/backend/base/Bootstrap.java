@@ -6,12 +6,14 @@ import net.cryptic_game.backend.base.context.ContextHandler;
 import net.cryptic_game.backend.base.logging.LogLevel;
 import net.cryptic_game.backend.base.logging.LoggingHandler;
 import net.cryptic_game.backend.base.logging.logback.LogbackHandler;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.io.File;
 import java.util.List;
 
 @Slf4j
 @Getter
+@ComponentScan("net.cryptic_game")
 public class Bootstrap {
 
     private static final List<String> BANNER = List.of(
@@ -41,7 +43,6 @@ public class Bootstrap {
         this.loadConfig();
 
         this.contextHandler = new ContextHandler(Bootstrap.class, this);
-        this.contextHandler.scan("net.cryptic_game");
         Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown, "shutdown"));
 
         if (!this.contextHandler.refresh()) this.shutdown();
