@@ -11,6 +11,7 @@
         <module name="cryptic-backend.java-data.test" />
         <module name="cryptic-backend.server.test" />
         <module name="cryptic-backend.java-daemon.test" />
+        <module name="cryptic-backend.admin-panel.test" />
         <module name="cryptic-backend.java-base.test" />
         <module name="cryptic-backend.java-daemon-endpoints.test" />
       </profile>
@@ -22,6 +23,7 @@
         </processorPath>
         <module name="cryptic-backend.java-daemon.main" />
         <module name="cryptic-backend.java-base.main" />
+        <module name="cryptic-backend.admin-panel.main" />
         <module name="cryptic-backend.java-daemon-endpoints.main" />
         <module name="cryptic-backend.java-data.main" />
         <module name="cryptic-backend.server.main" />

@@ -83,7 +83,7 @@ public class SqlConfiguration {
 
         final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter);
-        entityManagerFactoryBean.setPackagesToScan("net.cryptic_game.backend.data.sql.entities");
+        entityManagerFactoryBean.setPackagesToScan("net.cryptic_game.backend");
         entityManagerFactoryBean.setDataSource(this.dataSource());
         //entityManagerFactoryBean.setJpaProperties(properties);
 
