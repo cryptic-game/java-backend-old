@@ -6,7 +6,6 @@ import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.data.sql.entities.user.User;
-import org.hibernate.Session;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
@@ -35,29 +34,6 @@ public final class Device extends TableModelAutoId implements JsonSerializable {
 
     @Column(name = "powered_on", updatable = true, nullable = false)
     private boolean poweredOn;
-
-    /**
-     * Creates a new {@link Device}.
-     *
-     * @param session   the sql {@link Session} with transaction
-     * @param name      Name of the {@link Device}
-     * @param owner     Owner of the {@link Device}
-     * @param poweredOn Power state of the {@link Device}
-     * @return The instance of the created {@link Device}
-     */
-    public static Device createDevice(final Session session, final String name, final User owner, final boolean poweredOn) {
-        final Device device = new Device();
-        device.setName(name);
-        device.setOwner(owner);
-        device.setPoweredOn(poweredOn);
-
-        //device.saveOrUpdate(session);
-        return device;
-    }
-
-    public boolean hasAccess(final Session session, final User user) {
-        return getOwner().equals(user) || DeviceAccess.hasAccess(session, user, this);
-    }
 
     /**
      * Generates a {@link JsonObject} containing all relevant {@link Device} information.
