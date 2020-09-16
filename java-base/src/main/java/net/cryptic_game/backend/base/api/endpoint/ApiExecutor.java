@@ -62,6 +62,7 @@ public final class ApiExecutor {
         for (final ApiParameterData parameter : parameters) {
             switch (parameter.getSpecial()) {
                 case NORMAL:
+                case USER:
                     if (!parameter.isOptional() && (!data.has(parameter.getName()) || data.get(parameter.getName()).isJsonNull())) {
                         throw new ApiException("Parameter \"" + parameter.getName() + "\" is missing.");
                     } else if (normalParameters) {

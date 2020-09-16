@@ -46,7 +46,7 @@ public class ServerBootstrap {
         webSocketEndpointHandler.postInit();
 
         httpEndpointHandler.addApiCollection(context.getBean(HttpInfoEndpoint.class));
-        httpEndpointHandler.addApiCollection(context.getBean(HttpDaemonEndpoints.class, webSocketEndpointHandler.getApiList().getClients()));
+        httpEndpointHandler.addApiCollection(context.getBean(HttpDaemonEndpoints.class, webSocketEndpointHandler.getApiList().getClients(), baseConfig.getApiToken()));
         httpEndpointHandler.postInit();
 
         try {

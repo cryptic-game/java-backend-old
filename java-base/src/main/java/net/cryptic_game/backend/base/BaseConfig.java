@@ -8,6 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 @Config
 public final class BaseConfig {
 
-    @Value("${API_TOKEN}")
+    @Value("${API_TOKEN:}")
     private String apiToken;
 }

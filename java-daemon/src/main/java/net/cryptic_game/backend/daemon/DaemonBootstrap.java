@@ -11,6 +11,7 @@ import net.cryptic_game.backend.base.netty.codec.http.HttpServerCodec;
 import net.cryptic_game.backend.base.netty.server.NettyServer;
 import net.cryptic_game.backend.base.netty.server.NettyServerService;
 import net.cryptic_game.backend.base.utils.DaemonUtils;
+import net.cryptic_game.backend.daemon.api.DaemonInfoEndpoints;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
 
@@ -29,6 +30,7 @@ public class DaemonBootstrap {
         DaemonUtils.setServerAddress(daemonConfig.getServerAddress());
 
         final ApiEndpointHandler daemonEndpointHandler = new ApiEndpointHandler();
+        daemonEndpointHandler.addApiCollection(context.getBean(DaemonInfoEndpoints.class, daemonEndpointHandler));
         context.getBeansOfType(ApiEndpointCollection.class).forEach((name, collection) -> daemonEndpointHandler.addApiCollection(collection));
         daemonEndpointHandler.postInit();
 

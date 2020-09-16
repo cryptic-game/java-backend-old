@@ -6,5 +6,6 @@ public enum ApiParameterSpecialType {
     TAG,
     CLIENT,
     ENDPOINT,
-    DATA
+    DATA,
+    USER
 }
