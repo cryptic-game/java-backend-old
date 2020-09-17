@@ -43,7 +43,7 @@ dependencies {
     api 'org.jetbrains:annotations:20.1.0'
 
     // Metrics
-    api 'io.micrometer:micrometer-core:1.5.4'
+    api 'io.micrometer:micrometer-core:1.5.5'
     implementation 'io.micrometer:micrometer-registry-influx:1.5.4'
 
 }
