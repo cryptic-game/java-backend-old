@@ -11,6 +11,7 @@ import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
 import org.springframework.stereotype.Component;
 
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Component
@@ -25,8 +26,8 @@ public class TeamMemberEndpoints extends ApiEndpointCollection {
         this.teamDepartmentRepository = teamDepartmentRepository;
     }
 
-    @ApiEndpoint("get")
-    public ApiResponse get(@ApiParameter(value = "department_id", optional = true) final UUID departmentId) {
+    @ApiEndpoint("list")
+    public ApiResponse list(@ApiParameter(value = "department_id", optional = true) final UUID departmentId) {
         if (departmentId == null) return new ApiResponse(ApiResponseType.OK, this.teamMemberRepository.findAll());
         return new ApiResponse(ApiResponseType.OK, this.teamMemberRepository.findAllByDepartmentId(departmentId));
     }
@@ -34,7 +35,8 @@ public class TeamMemberEndpoints extends ApiEndpointCollection {
     @ApiEndpoint("add")
     public ApiResponse add(@ApiParameter("name") final String name,
                            @ApiParameter("github_id") final long githubId,
-                           @ApiParameter("department_id") final UUID departmentId) {
+                           @ApiParameter("department_id") final UUID departmentId,
+                           @ApiParameter("joined") final OffsetDateTime joined) {
         if (this.teamMemberRepository.findByName(name).isPresent() || this.teamMemberRepository.findByGithubId(githubId).isPresent()) {
             return new ApiResponse(ApiResponseType.BAD_REQUEST, "MEMBER_ALREADY_EXISTS");
         }
@@ -42,7 +44,7 @@ public class TeamMemberEndpoints extends ApiEndpointCollection {
         final TeamDepartment department = this.teamDepartmentRepository.findById(departmentId).orElse(null);
         if (department == null) return new ApiResponse(ApiResponseType.NOT_FOUND, "DEPARTMENT_NOT_FOUND");
 
-        return new ApiResponse(ApiResponseType.OK, this.teamMemberRepository.createTeamMember(name, githubId, department));
+        return new ApiResponse(ApiResponseType.OK, this.teamMemberRepository.createTeamMember(name, githubId, department, joined));
     }
 
     @ApiEndpoint("delete")

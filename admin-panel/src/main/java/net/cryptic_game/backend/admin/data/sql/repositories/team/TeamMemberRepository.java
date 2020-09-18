@@ -17,7 +17,7 @@ public interface TeamMemberRepository extends JpaRepository<TeamMember, UUID> {
 
     Optional<TeamMember> findByGithubId(long githubName);
 
-    default TeamMember createTeamMember(final String name, final long githubId, final TeamDepartment department) {
-        return this.save(new TeamMember(name, githubId, department, OffsetDateTime.now()));
+    default TeamMember createTeamMember(final String name, final long githubId, final TeamDepartment department, final OffsetDateTime joined) {
+        return this.save(new TeamMember(name, githubId, department, joined));
     }
 }

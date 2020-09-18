@@ -24,8 +24,8 @@ public class TeamDepartmentEndpoints extends ApiEndpointCollection {
         this.teamMemberRepository = teamMemberRepository;
     }
 
-    @ApiEndpoint("get")
-    public ApiResponse get() {
+    @ApiEndpoint("list")
+    public ApiResponse list() {
         return new ApiResponse(ApiResponseType.OK, this.teamDepartmentRepository.findAll());
     }
 
