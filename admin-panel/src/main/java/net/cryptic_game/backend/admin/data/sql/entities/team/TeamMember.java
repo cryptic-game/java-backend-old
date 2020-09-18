@@ -28,8 +28,8 @@ public class TeamMember extends TableModelAutoId implements JsonSerializable {
     @Column(name = "name", updatable = true, nullable = false, unique = true)
     private String name;
 
-    @Column(name = "github_name", updatable = true, nullable = false, unique = true)
-    private String githubName;
+    @Column(name = "github_id", updatable = true, nullable = false, unique = true)
+    private long githubId;
 
     @ManyToOne
     @Type(type = "uuid-char")
@@ -41,10 +41,11 @@ public class TeamMember extends TableModelAutoId implements JsonSerializable {
 
     @Override
     public JsonElement serialize() {
-        return JsonBuilder.create("name", this.name)
-                .add("github_name", this.githubName)
-                .add("department_id", this.department.getId())
-                .add("joined", this.joined)
+        return JsonBuilder.create("id", this.getId())
+                .add("name", this.getName())
+                .add("github_id", this.getGithubId())
+                .add("department_id", this.getDepartment().getId())
+                .add("joined", this.getJoined())
                 .build();
     }
 }

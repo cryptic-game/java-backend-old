@@ -33,16 +33,16 @@ public class TeamMemberEndpoints extends ApiEndpointCollection {
 
     @ApiEndpoint("add")
     public ApiResponse add(@ApiParameter("name") final String name,
-                           @ApiParameter("github_name") final String githubName,
+                           @ApiParameter("github_id") final long githubId,
                            @ApiParameter("department_id") final UUID departmentId) {
-        if (this.teamMemberRepository.findByName(name).isPresent() || this.teamMemberRepository.findByGithubName(githubName).isPresent()) {
+        if (this.teamMemberRepository.findByName(name).isPresent() || this.teamMemberRepository.findByGithubId(githubId).isPresent()) {
             return new ApiResponse(ApiResponseType.BAD_REQUEST, "MEMBER_ALREADY_EXISTS");
         }
 
         final TeamDepartment department = this.teamDepartmentRepository.findById(departmentId).orElse(null);
         if (department == null) return new ApiResponse(ApiResponseType.NOT_FOUND, "DEPARTMENT_NOT_FOUND");
 
-        return new ApiResponse(ApiResponseType.OK, this.teamMemberRepository.createTeamMember(name, githubName, department));
+        return new ApiResponse(ApiResponseType.OK, this.teamMemberRepository.createTeamMember(name, githubId, department));
     }
 
     @ApiEndpoint("delete")
