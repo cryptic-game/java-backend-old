@@ -1,6 +1,9 @@
 package net.cryptic_game.backend.data.sql.entities.chat;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import org.hibernate.Session;
 
@@ -14,8 +17,11 @@ import javax.persistence.Table;
  * @since 0.3.0
  */
 @Entity
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "chat_channel")
-@Data
 public final class ChatChannel extends TableModelAutoId {
 
     public static final int MAX_NAME_LENGTH = 32;

@@ -1,12 +1,15 @@
 package net.cryptic_game.backend.data.sql.entities.network;
 
 import com.google.gson.JsonObject;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModel;
 import net.cryptic_game.backend.data.sql.entities.device.Device;
-import org.hibernate.Session;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Embeddable;
@@ -23,33 +26,15 @@ import java.io.Serializable;
  * @since 0.3.0
  */
 @Entity
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "network_member")
-@Data
 public final class NetworkMember extends TableModel implements JsonSerializable {
 
     @EmbeddedId
     private MemberKey key;
-
-    /**
-     * Creates a new {@link NetworkMember}.
-     *
-     * @param session the sql {@link Session} with transaction
-     * @param network {@link Network} of the {@link NetworkMember}
-     * @param device  {@link Device} of the {@link NetworkMember}
-     * @return The instance of the created {@link NetworkMember}
-     */
-    public static NetworkMember createMember(final Session session, final Network network, final Device device) {
-        /*NetworkMember existingMember = getMember(session, network, device);
-        if (existingMember != null) return existingMember;
-
-        final NetworkMember networkMember = new NetworkMember();
-        networkMember.setNetwork(network);
-        networkMember.setDevice(device);
-
-        network.saveOrUpdate(session);*/
-        return null;
-        //FIXME
-    }
 
     /**
      * Returns the {@link Network} of the {@link NetworkMember}.

@@ -1,7 +1,10 @@
 package net.cryptic_game.backend.data.sql.entities.chat;
 
 import com.google.gson.JsonObject;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
@@ -20,8 +23,11 @@ import javax.persistence.Table;
  * @since 0.3.0
  */
 @Entity
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "chat_channel_access")
-@Data
 @Slf4j
 public final class ChatChannelAccess extends TableModelAutoId implements JsonSerializable {
 

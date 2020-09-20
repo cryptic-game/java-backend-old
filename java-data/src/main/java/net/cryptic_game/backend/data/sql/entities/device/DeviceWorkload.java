@@ -1,7 +1,10 @@
 package net.cryptic_game.backend.data.sql.entities.device;
 
 import com.google.gson.JsonObject;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModel;
@@ -21,8 +24,11 @@ import java.io.Serializable;
  * @since 0.3.0
  */
 @Entity
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "device_workload")
-@Data
 public final class DeviceWorkload extends TableModel implements JsonSerializable, Serializable {
 
     @Id

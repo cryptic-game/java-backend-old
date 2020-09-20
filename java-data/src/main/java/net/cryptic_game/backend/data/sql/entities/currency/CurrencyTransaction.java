@@ -2,7 +2,10 @@ package net.cryptic_game.backend.data.sql.entities.currency;
 
 
 import com.google.gson.JsonObject;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
@@ -21,8 +24,11 @@ import java.time.OffsetDateTime;
  * @since 0.3.0
  */
 @Entity
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "currency_transaction")
-@Data
 public final class CurrencyTransaction extends TableModelAutoId implements JsonSerializable {
 
     @Column(name = "timestamp", updatable = false, nullable = false)

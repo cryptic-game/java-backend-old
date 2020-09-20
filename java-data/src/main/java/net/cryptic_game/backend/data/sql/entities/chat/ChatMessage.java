@@ -1,7 +1,10 @@
 package net.cryptic_game.backend.data.sql.entities.chat;
 
 import com.google.gson.JsonObject;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
@@ -23,8 +26,11 @@ import java.time.OffsetDateTime;
  * @since 0.3.0
  */
 @Entity
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "chat_message")
-@Data
 public final class ChatMessage extends TableModelAutoId implements JsonSerializable {
 
     public static final int MAX_MESSAGE_LENGTH = 1024;

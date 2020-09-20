@@ -3,12 +3,13 @@ package net.cryptic_game.backend.data.sql.entities.network;
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModel;
 import net.cryptic_game.backend.data.sql.entities.device.Device;
-import org.hibernate.Session;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Embeddable;
@@ -25,8 +26,11 @@ import java.io.Serializable;
  * @since 0.3.0
  */
 @Entity
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "network_invitation")
-@Data
 public final class NetworkInvitation extends TableModel implements JsonSerializable {
 
     @EmbeddedId
@@ -36,26 +40,6 @@ public final class NetworkInvitation extends TableModel implements JsonSerializa
     @JoinColumn(name = "inviter_id", nullable = true, updatable = false)
     @Type(type = "uuid-char")
     private Device inviter;
-
-    /**
-     * Creates a new {@link NetworkInvitation}.
-     *
-     * @param session the sql {@link Session} with transaction
-     * @param network {@link Network} of the {@link NetworkInvitation}
-     * @param device  {@link Device} of the {@link NetworkInvitation}
-     * @param inviter Inviter {@link Device} of the {@link NetworkInvitation} | null if the {@link NetworkInvitation} is a request
-     * @return The Instance of the created {@link NetworkInvitation}
-     */
-    public static NetworkInvitation createInvitation(final Session session, final Network network, final Device device, final Device inviter) {
-        /*final NetworkInvitation networkInvitation = new NetworkInvitation();
-        networkInvitation.setNetwork(network);
-        networkInvitation.setDevice(device);
-        networkInvitation.setInviter(inviter);
-
-        networkInvitation.saveOrUpdate(session);*/
-        return null;
-        //FIXME
-    }
 
     /**
      * Returns the {@link Network} of the {@link NetworkInvitation}.
