@@ -28,7 +28,7 @@ import java.time.OffsetDateTime;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user")
+@Table(name = "user_user")
 @Cacheable
 public final class User extends TableModelAutoId {
 
