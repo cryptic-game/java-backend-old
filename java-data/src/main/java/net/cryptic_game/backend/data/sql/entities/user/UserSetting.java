@@ -61,7 +61,7 @@ public final class UserSetting extends TableModel implements JsonSerializable {
     public static class UserSettingKey implements Serializable {
 
         @ManyToOne
-        @JoinColumn(name = "user", updatable = false, nullable = false)
+        @JoinColumn(name = "user_id", updatable = false, nullable = false)
         @Type(type = "uuid-char")
         private User user;
 
