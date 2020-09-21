@@ -14,8 +14,8 @@ import java.util.UUID;
 public interface DeviceAccessRepository extends JpaRepository<DeviceAccess, UUID> {
 
     @Query("select object (da) from DeviceAccess da where "
-            + "da.user = ?1 and "
-            + "da.device = ?2 and "
+            + "da.user = ?2 and "
+            + "da.device = ?1 and "
             + "da.valid = true and "
             + "da.expire > ?3")
     List<DeviceAccess> hasAccess(Device device, User user, OffsetDateTime now);

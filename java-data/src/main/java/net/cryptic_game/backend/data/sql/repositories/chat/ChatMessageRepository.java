@@ -4,7 +4,9 @@ import net.cryptic_game.backend.data.sql.entities.chat.ChatChannel;
 import net.cryptic_game.backend.data.sql.entities.chat.ChatMessage;
 import net.cryptic_game.backend.data.sql.entities.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.awt.print.Pageable;
 import java.util.List;
@@ -20,5 +22,7 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, UUID> 
             + "order by m.timestamp desc")
     List<ChatMessage> getMessages(ChatChannel chatChannel, User user, Pageable pageable);
 
+    @Transactional
+    @Modifying
     void deleteAllByChannel(ChatChannel channel);
 }

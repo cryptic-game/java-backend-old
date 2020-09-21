@@ -4,7 +4,9 @@ import net.cryptic_game.backend.data.sql.entities.chat.ChatChannel;
 import net.cryptic_game.backend.data.sql.entities.chat.ChatChannelAccess;
 import net.cryptic_game.backend.data.sql.entities.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +24,11 @@ public interface ChatChannelAccessRepository extends JpaRepository<ChatChannelAc
     @Query("select ca.channel from ChatChannelAccess as ca where ca.user = ?1")
     List<ChatChannel> getChannels(User user);
 
+    @Transactional
+    @Modifying
     void deleteAllByChannel(ChatChannel channel);
 
+    @Transactional
+    @Modifying
     void deleteAllByUser(User user);
 }
