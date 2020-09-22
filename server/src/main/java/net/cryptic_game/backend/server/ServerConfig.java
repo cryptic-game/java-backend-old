@@ -21,6 +21,6 @@ class ServerConfig {
     @Value("${PYTHON_DAEMON_ADDRESS:http://localhost:8082}")
     private String pythonDaemonAddress;
 
-    @Value("${WEBSOCKET_ADDRESS:127.0.0.1:8080/ws}")
+    @Value("${WEBSOCKET_ADDRESS:ws://127.0.0.1:8080/ws/}")
     private String websocketAddress;
 }

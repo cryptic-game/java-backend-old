@@ -71,7 +71,7 @@ public final class ApiParser {
     }
 
     public static JsonElement toPlayground(final String address, final Collection<ApiEndpointCollectionData> endpointCollections) {
-        return JsonBuilder.create("apiUrl", "ws://" + address + "/")
+        return JsonBuilder.create("apiUrl", address)
                 .add("endpointCollections", endpointCollections.stream()
                         .peek(collection -> collection.setEndpoints(collection.getEndpoints().entrySet()
                                 .stream()
