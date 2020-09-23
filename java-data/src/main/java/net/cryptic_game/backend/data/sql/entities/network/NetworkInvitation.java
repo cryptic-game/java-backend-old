@@ -2,7 +2,6 @@ package net.cryptic_game.backend.data.sql.entities.network;
 
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Entity representing a network invitation entry in the database.
@@ -104,12 +104,27 @@ public final class NetworkInvitation extends TableModel implements JsonSerializa
                 .build();
     }
 
+    @Override
+    public boolean equals(final Object obj) {
+        if (obj == this) return true;
+        if (!(obj instanceof NetworkInvitation)) return false;
+        NetworkInvitation element = (NetworkInvitation) obj;
+        return element.getKey().equals(this.getKey());
+    }
+
+    @Override
+    public int hashCode() {
+        return getKey().hashCode();
+    }
+
+
     /**
      * Key of the {@link NetworkInvitation} entity.
      */
     @SuppressWarnings("JpaDataSourceORMInspection")
     @Embeddable
-    @Data
+    @Getter
+    @Setter
     @NoArgsConstructor
     @AllArgsConstructor
     public static class InvitationKey implements Serializable {
@@ -123,5 +138,27 @@ public final class NetworkInvitation extends TableModel implements JsonSerializa
         @JoinColumn(name = "device_id", nullable = false, updatable = false)
         @Type(type = "uuid-char")
         private Device device;
+
+        /**
+         * Checks if the key has an equal network and device.
+         *
+         * @param obj the object to check
+         * @return returns true if the objects have the same identifiers
+         */
+        @Override
+        public boolean equals(final Object obj) {
+            if (obj == this) return true;
+            if (!(obj instanceof InvitationKey)) return false;
+            InvitationKey element = (InvitationKey) obj;
+            return this.network.equals(element.network) && this.device.equals(element.device);
+        }
+
+        /**
+         * @return the hashcode
+         */
+        @Override
+        public int hashCode() {
+            return Objects.hash(device, network);
+        }
     }
 }

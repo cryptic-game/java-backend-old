@@ -19,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Entity representing a network member entry in the database.
@@ -88,6 +89,19 @@ public final class NetworkMember extends TableModel implements JsonSerializable 
                 .build();
     }
 
+    @Override
+    public boolean equals(final Object obj) {
+        if (obj == this) return true;
+        if (!(obj instanceof NetworkMember)) return false;
+        NetworkMember element = (NetworkMember) obj;
+        return element.getKey().equals(this.getKey());
+    }
+
+    @Override
+    public int hashCode() {
+        return getKey().hashCode();
+    }
+
     /**
      * Key of the {@link NetworkMember} entity.
      */
@@ -105,5 +119,29 @@ public final class NetworkMember extends TableModel implements JsonSerializable 
         @JoinColumn(name = "device_id", nullable = false, updatable = false)
         @Type(type = "uuid-char")
         private Device device;
+
+
+        /**
+         * Checks if the key has an equal network and device.
+         *
+         * @param obj the object to check
+         * @return returns true if the objects have the same identifiers
+         */
+        @Override
+        public boolean equals(final Object obj) {
+            if (obj == this) return true;
+            if (!(obj instanceof MemberKey)) return false;
+            MemberKey element = (MemberKey) obj;
+            return this.network.equals(element.network) && this.device.equals(element.device);
+        }
+
+
+        /**
+         * @return the hashcode
+         */
+        @Override
+        public int hashCode() {
+            return Objects.hash(device, network);
+        }
     }
 }
