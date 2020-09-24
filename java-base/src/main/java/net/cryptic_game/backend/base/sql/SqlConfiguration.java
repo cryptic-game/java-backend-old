@@ -33,6 +33,11 @@ public class SqlConfiguration {
         this.config = config;
     }
 
+    /**
+     * Creates a {@link DataSource}.
+     *
+     * @return The {@link DataSource}
+     */
     @Bean
     DataSource dataSource() {
         final HikariConfig config = new HikariConfig();
@@ -60,8 +65,13 @@ public class SqlConfiguration {
         }
     }
 
+    /**
+     * Creates a {@link LocalContainerEntityManagerFactoryBean}.
+     *
+     * @return The {@link LocalContainerEntityManagerFactoryBean}
+     */
     @Bean
-    LocalContainerEntityManagerFactoryBean entityManagerFactory(final DataSource dataSource) {
+    LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         final HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
         jpaVendorAdapter.setShowSql(this.config.isShowStatements());
         jpaVendorAdapter.setGenerateDdl(true);
@@ -80,6 +90,12 @@ public class SqlConfiguration {
         return entityManagerFactoryBean;
     }
 
+    /**
+     * Creates a {@link PlatformTransactionManager}.
+     *
+     * @param entityManagerFactory The {@link EntityManagerFactory} create {@link PlatformTransactionManager}
+     * @return The {@link PlatformTransactionManager}
+     */
     @Bean
     PlatformTransactionManager transactionManager(final EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);

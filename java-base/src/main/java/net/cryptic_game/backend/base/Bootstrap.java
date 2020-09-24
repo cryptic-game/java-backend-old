@@ -14,7 +14,7 @@ import java.util.List;
 @Slf4j
 @Getter
 @ComponentScan("net.cryptic_game")
-public class Bootstrap {
+public final class Bootstrap {
 
     private static final List<String> BANNER = List.of(
             "  _____                  _   _        ____             _                  _",

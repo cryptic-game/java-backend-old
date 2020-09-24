@@ -13,6 +13,12 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 @EnableRedisRepositories(basePackages = "net.cryptic_game.backend.data.redis.repositories")
 public class RedisConfiguration {
 
+    /**
+     * Creates a {@link RedisConnectionFactory}.
+     *
+     * @param redisConfig The config the generate the {@link RedisConnectionFactory} from
+     * @return The {@link RedisConnectionFactory}
+     */
     @Bean
     public RedisConnectionFactory connectionFactory(final RedisConfig redisConfig) {
         final RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration(redisConfig.getHostname(), redisConfig.getPort());
@@ -20,6 +26,12 @@ public class RedisConfiguration {
         return new LettuceConnectionFactory(configuration);
     }
 
+    /**
+     * Creates a {@link RedisTemplate}.
+     *
+     * @param connectionFactory A {@link RedisConnectionFactory}
+     * @return The {@link RedisTemplate}
+     */
     @Bean
     public RedisTemplate<String, Object> redisTemplate(final RedisConnectionFactory connectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
@@ -27,6 +39,12 @@ public class RedisConfiguration {
         return redisTemplate;
     }
 
+    /**
+     * Creates a {@link StringRedisTemplate}.
+     *
+     * @param connectionFactory A {@link RedisConnectionFactory}
+     * @return The {@link StringRedisTemplate}
+     */
     @Bean
     public StringRedisTemplate stringRedisTemplate(final RedisConnectionFactory connectionFactory) {
         return new StringRedisTemplate(connectionFactory);

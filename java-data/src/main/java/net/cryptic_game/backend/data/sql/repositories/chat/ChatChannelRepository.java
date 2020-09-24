@@ -13,4 +13,12 @@ public interface ChatChannelRepository extends JpaRepository<ChatChannel, UUID> 
 
         return this.save(chatChannel);
     }
+
+    /*@Transactional
+    @Modifying
+    @Query("delete from ChatMessage as m where m.channel = ?1;" +
+            "delete from ChatChannelAccess as ca where ca.channel = ?1")
+    default void delete(ChatChannel channel) {
+        deleteById(channel.getId());
+    }*/
 }

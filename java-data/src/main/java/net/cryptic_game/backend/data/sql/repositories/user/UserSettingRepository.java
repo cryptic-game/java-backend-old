@@ -12,7 +12,7 @@ import java.util.UUID;
 @Repository
 public interface UserSettingRepository extends JpaRepository<UserSetting, UUID> {
 
-    List<UserSetting> findAllByKeyUser(final User user);
+    List<UserSetting> findAllByKeyUser(User user);
 
-    Optional<UserSetting> findByKeyUserAndKeyKey(final User user, final String key);
+    Optional<UserSetting> findByKeyUserAndKeyKey(User user, String key);
 }

@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
-import org.hibernate.Session;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,18 +27,4 @@ public final class ChatChannel extends TableModelAutoId {
 
     @Column(name = "name", updatable = true, nullable = false, length = MAX_NAME_LENGTH)
     private String name;
-
-    /**
-     * @param session the sql {@link Session} with transaction
-     *                Deletes also the {@link ChatMessage}s and the {@link ChatChannelAccess}s from that channel.
-     */
-    public void delete(final Session session) {
-        session.createQuery("delete from ChatMessage as m where m.channel = :channel")
-                .setParameter("channel", this)
-                .executeUpdate();
-        session.createQuery("delete from ChatChannelAccess as ca where ca.channel = :channel")
-                .setParameter("channel", this)
-                .executeUpdate();
-// TODO: FIX ME
-    }
 }

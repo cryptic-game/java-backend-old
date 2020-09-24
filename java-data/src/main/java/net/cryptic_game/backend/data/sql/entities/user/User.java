@@ -10,7 +10,6 @@ import net.cryptic_game.backend.base.json.JsonTransient;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.base.utils.SecurityUtils;
 import net.cryptic_game.backend.data.Constants;
-import org.hibernate.Session;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -44,27 +43,6 @@ public final class User extends TableModelAutoId {
 
     @Column(name = "last", updatable = true, nullable = false)
     private OffsetDateTime last;
-
-    /**
-     * Create a {@link User} with the given user data.
-     *
-     * @param session  the sql {@link Session} with transaction
-     * @param username The username of the new user
-     * @param password The password of the new user
-     * @return The instance of the created {@link User}
-     */
-    public static User createUser(final Session session, final String username, final String password) {
-        final OffsetDateTime now = OffsetDateTime.now();
-
-        final User user = new User();
-        user.setUsername(username);
-        user.setCreated(now);
-        user.setLast(now);
-        user.setPassword(password);
-
-        // TODO: FIXME
-        return user;
-    }
 
     /**
      * Set a new password for the given {@link User}.

@@ -21,7 +21,7 @@ import java.net.SocketAddress;
 @Slf4j
 @EqualsAndHashCode
 @RequiredArgsConstructor
-public class NettyServer implements AutoCloseable {
+public final class NettyServer implements AutoCloseable {
 
     private static final boolean EPOLL = Epoll.isAvailable();
     private final String id;
