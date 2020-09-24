@@ -23,7 +23,7 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "admin_team_member")
-public class TeamMember extends TableModelAutoId implements JsonSerializable {
+public final class TeamMember extends TableModelAutoId implements JsonSerializable {
 
     @Column(name = "name", updatable = true, nullable = false, unique = true)
     private String name;

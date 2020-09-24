@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 @Component
-public class TeamDepartmentEndpoints extends ApiEndpointCollection {
+public final class TeamDepartmentEndpoints extends ApiEndpointCollection {
 
     private final TeamDepartmentRepository teamDepartmentRepository;
     private final TeamMemberRepository teamMemberRepository;

@@ -15,7 +15,7 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Component
-public class TeamMemberEndpoints extends ApiEndpointCollection {
+public final class TeamMemberEndpoints extends ApiEndpointCollection {
 
     private final TeamMemberRepository teamMemberRepository;
     private final TeamDepartmentRepository teamDepartmentRepository;
