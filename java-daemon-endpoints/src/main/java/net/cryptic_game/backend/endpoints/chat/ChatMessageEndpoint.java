@@ -9,27 +9,43 @@ import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
 import net.cryptic_game.backend.base.utils.DaemonUtils;
 import net.cryptic_game.backend.data.sql.entities.chat.ChatAction;
 import net.cryptic_game.backend.data.sql.entities.chat.ChatChannel;
-import net.cryptic_game.backend.data.sql.entities.chat.ChatChannelAccess;
 import net.cryptic_game.backend.data.sql.entities.chat.ChatMessage;
 import net.cryptic_game.backend.data.sql.entities.user.User;
-import org.hibernate.Session;
+import net.cryptic_game.backend.data.sql.repositories.chat.ChatChannelAccessRepository;
+import net.cryptic_game.backend.data.sql.repositories.chat.ChatChannelRepository;
+import net.cryptic_game.backend.data.sql.repositories.chat.ChatMessageRepository;
+import net.cryptic_game.backend.data.sql.repositories.user.UserRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.UUID;
 
+@Component
 public final class ChatMessageEndpoint extends ApiEndpointCollection {
 
-    public ChatMessageEndpoint() {
+    private final UserRepository userRepository;
+    private final ChatChannelRepository channelRepository;
+    private final ChatChannelAccessRepository channelAccessRepository;
+    private final ChatMessageRepository messageRepository;
+
+    public ChatMessageEndpoint(final UserRepository userRepository,
+                               final ChatChannelRepository channelRepository,
+                               final ChatChannelAccessRepository channelAccessRepository,
+                               final ChatMessageRepository messageRepository) {
         super("chat/message", "send/whisper/delete/list messages");
+        this.userRepository = userRepository;
+        this.channelRepository = channelRepository;
+        this.channelAccessRepository = channelAccessRepository;
+        this.messageRepository = messageRepository;
     }
 
     @ApiEndpoint("send")
     public ApiResponse send(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
-                            @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final Session session,
                             @ApiParameter("channel_id") final UUID channelId,
                             @ApiParameter("message") final String message) {
-        final User user = User.getById(session, userId);
-        final ChatChannel channel = ChatChannel.getById(session, channelId);
+        final User user = userRepository.findById(userId).orElse(null);
+        final ChatChannel channel = channelRepository.findById(channelId).orElse(null);
 
         if (channel == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "CHANNEL_NOT_FOUND");
@@ -39,13 +55,13 @@ public final class ChatMessageEndpoint extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.BAD_REQUEST, "MESSAGE_TOO_LONG");
         }
 
-        final List<User> members = ChatChannelAccess.getMembers(session, channel);
+        final List<User> members = channelAccessRepository.getMembers(channel);
 
         if (!members.contains(user)) {
             return new ApiResponse(ApiResponseType.UNAUTHORIZED, "ACCESS_DENIED");
         }
 
-        final ChatMessage msg = ChatMessage.create(session, channel, user, message);
+        final ChatMessage msg = messageRepository.create(user, channel, message, null);
 
         for (User member : members) {
             if (member.equals(user)) continue;
@@ -57,13 +73,12 @@ public final class ChatMessageEndpoint extends ApiEndpointCollection {
 
     @ApiEndpoint("whisper")
     public ApiResponse whisper(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
-                               @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final Session session,
                                @ApiParameter("channel_id") final UUID channelId,
                                @ApiParameter("message") final String message,
                                @ApiParameter("target") final UUID targetId) {
-        final User user = User.getById(session, userId);
-        final ChatChannel channel = ChatChannel.getById(session, channelId);
-        final User target = User.getById(session, targetId);
+        final User user = userRepository.findById(userId).orElse(null);
+        final ChatChannel channel = channelRepository.findById(channelId).orElse(null);
+        final User target = userRepository.findById(targetId).orElse(null);
 
         if (channel == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "CHANNEL_NOT_FOUND");
@@ -77,7 +92,7 @@ public final class ChatMessageEndpoint extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.BAD_REQUEST, "MESSAGE_TOO_LONG");
         }
 
-        final List<User> members = ChatChannelAccess.getMembers(session, channel);
+        final List<User> members = channelAccessRepository.getMembers(channel);
 
         if (!members.contains(user)) {
             return new ApiResponse(ApiResponseType.UNAUTHORIZED, "ACCESS_DENIED");
@@ -87,17 +102,16 @@ public final class ChatMessageEndpoint extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "TARGET_NOT_IN_CHANNEL");
         }
 
-        final ChatMessage msg = ChatMessage.create(session, channel, user, target, message);
+        final ChatMessage msg = messageRepository.create(user, channel, message, target);
         DaemonUtils.notifyUser(target.getId(), ChatAction.WHISPER_MESSAGE, msg);
         return new ApiResponse(ApiResponseType.OK, msg);
     }
 
     @ApiEndpoint("delete")
     public ApiResponse delete(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
-                              @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final Session session,
                               @ApiParameter("message_id") final UUID msgId) {
-        final User user = User.getById(session, userId);
-        final ChatMessage message = ChatMessage.getById(session, msgId);
+        final User user = userRepository.findById(userId).orElse(null);
+        final ChatMessage message = messageRepository.findById(msgId).orElse(null);
 
         if (message == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "MESSAGE_NOT_FOUND");
@@ -108,7 +122,7 @@ public final class ChatMessageEndpoint extends ApiEndpointCollection {
         }
 
         if (message.getTarget() == null) {
-            for (User member : ChatChannelAccess.getMembers(session, message.getChannel())) {
+            for (User member : channelAccessRepository.getMembers(message.getChannel())) {
                 if (user.equals(member)) continue;
                 DaemonUtils.notifyUser(member.getId(), ChatAction.MESSAGE_DELETED, message);
             }
@@ -116,27 +130,25 @@ public final class ChatMessageEndpoint extends ApiEndpointCollection {
             DaemonUtils.notifyUser(message.getTarget().getId(), ChatAction.MESSAGE_DELETED, message);
         }
 
-        message.delete(session);
+        messageRepository.delete(message);
         return new ApiResponse(ApiResponseType.OK);
     }
 
     @ApiEndpoint("list")
     public ApiResponse getMessages(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
-                                   @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION) final Session session,
                                    @ApiParameter("chat_id") final UUID channelId,
-                                   @ApiParameter("offset") final int offset,
-                                   @ApiParameter("count") final int count) {
-        final User user = User.getById(session, userId);
-        final ChatChannel channel = ChatChannel.getById(session, channelId);
+                                   @ApiParameter("page") final int page,
+                                   @ApiParameter("page_size") final int pageSize) {
+        final User user = userRepository.findById(userId).orElse(null);
+        final ChatChannel channel = channelRepository.findById(channelId).orElse(null);
 
         if (channel == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "CHANNEL_NOT_FOUND");
         }
 
-        if (ChatChannelAccess.get(session, user, channel) == null) {
+        if (channelAccessRepository.findByUserAndChannel(user, channel).isEmpty()) {
             return new ApiResponse(ApiResponseType.UNAUTHORIZED, "ACCESS_DENIED");
         }
-
-        return new ApiResponse(ApiResponseType.OK, ChatMessage.getMessages(session, channel, user, offset, count));
+        return new ApiResponse(ApiResponseType.OK, messageRepository.getMessages(channel, user, PageRequest.of(page, pageSize)));
     }
 }
