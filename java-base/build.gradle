@@ -6,7 +6,7 @@ dependencies {
     // Database
     api 'org.hibernate:hibernate-core:5.4.21.Final'
     implementation 'org.hibernate:hibernate-hikaricp:5.4.21.Final'
-    implementation 'org.mariadb.jdbc:mariadb-java-client:2.6.2'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.0'
     implementation 'org.postgresql:postgresql:42.2.16'
     implementation 'com.h2database:h2:1.4.200'
 
