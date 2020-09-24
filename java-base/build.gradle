@@ -29,7 +29,7 @@ dependencies {
     runtimeOnly('com.h2database:h2:1.4.200')
 
     /* Network */
-    api(platform('io.projectreactor:reactor-bom:Dysprosium-SR11'))
+    api(platform('io.projectreactor:reactor-bom:Dysprosium-SR12'))
     api('io.projectreactor:reactor-core')
     api('io.projectreactor.netty:reactor-netty')
     api('io.projectreactor.addons:reactor-extra')
