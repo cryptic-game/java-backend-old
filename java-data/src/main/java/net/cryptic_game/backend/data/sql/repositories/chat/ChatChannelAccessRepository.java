@@ -31,4 +31,12 @@ public interface ChatChannelAccessRepository extends JpaRepository<ChatChannelAc
     @Transactional
     @Modifying
     void deleteAllByUser(User user);
+
+    default ChatChannelAccess create(User user, ChatChannel chatChannel) {
+        ChatChannelAccess cca = new ChatChannelAccess();
+        cca.setChannel(chatChannel);
+        cca.setUser(user);
+
+        return this.save(cca);
+    }
 }
