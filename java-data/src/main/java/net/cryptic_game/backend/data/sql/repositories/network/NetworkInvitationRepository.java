@@ -24,6 +24,7 @@ public interface NetworkInvitationRepository extends JpaRepository<NetworkInvita
         networkInvitation.setNetwork(network);
         networkInvitation.setDevice(device);
         networkInvitation.setInviter(inviter);
+
         return this.save(networkInvitation);
     }
 

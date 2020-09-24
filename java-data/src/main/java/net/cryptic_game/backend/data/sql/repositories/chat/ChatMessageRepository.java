@@ -16,10 +16,10 @@ import java.util.UUID;
 
 public interface ChatMessageRepository extends JpaRepository<ChatMessage, UUID> {
 
-    @Query("select object (m) from ChatMessage m where m.channel = ?1 and (m.user = ?2 or m.target = ?2 or m.target = null)")
+    @Query("select m from ChatMessage m where m.channel = ?1 and (m.user = ?2 or m.target = ?2 or m.target = null)")
     List<ChatMessage> getMessages(ChatChannel channel, User user);
 
-    @Query("select object (m) from ChatMessage m where m.channel = ?1 "
+    @Query("select m from ChatMessage m where m.channel = ?1 "
             + "and (m.user = ?2 or m.target = ?2 or m.target = null) "
             + "order by m.timestamp desc")
     List<ChatMessage> getMessages(ChatChannel chatChannel, User user, Pageable pageable);

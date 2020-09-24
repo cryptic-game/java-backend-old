@@ -13,6 +13,7 @@ public interface DeviceRepository extends JpaRepository<Device, UUID> {
         device.setName(name);
         device.setOwner(owner);
         device.setPoweredOn(poweredOn);
+
         return this.save(device);
     }
 }

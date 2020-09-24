@@ -23,6 +23,7 @@ public interface NetworkRepository extends JpaRepository<Network, UUID> {
         network.setOwner(owner);
         network.setPublic(isPublic);
         network.setCreated(OffsetDateTime.now());
+
         return this.save(network);
     }
 }

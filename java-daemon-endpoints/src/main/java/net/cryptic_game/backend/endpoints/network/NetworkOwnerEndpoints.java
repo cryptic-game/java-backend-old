@@ -48,14 +48,14 @@ public final class NetworkOwnerEndpoints extends ApiEndpointCollection {
     @ApiEndpoint("list")
     public ApiResponse list(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
                             @ApiParameter("device_id") final UUID deviceId) {
-        final User user = userRepository.findById(userId).orElse(null);
-        final Device device = deviceRepository.findById(deviceId).orElse(null);
+        final User user = this.userRepository.findById(userId).orElse(null);
+        final Device device = this.deviceRepository.findById(deviceId).orElse(null);
 
         if (device == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "DEVICE");
         }
 
-        if (!deviceAccessRepository.hasAccess(device, user)) {
+        if (!this.deviceAccessRepository.hasAccess(device, user)) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
         }
 
@@ -63,20 +63,20 @@ public final class NetworkOwnerEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
         }
 
-        return new ApiResponse(ApiResponseType.OK, networkRepository.findAllByOwner(device));
+        return new ApiResponse(ApiResponseType.OK, this.networkRepository.findAllByOwner(device));
     }
 
     @ApiEndpoint("invitations")
     public ApiResponse invitations(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
                                    @ApiParameter("network_id") final UUID networkId) {
-        final Network network = networkRepository.findById(networkId).orElse(null);
-        final User user = userRepository.findById(userId).orElse(null);
+        final Network network = this.networkRepository.findById(networkId).orElse(null);
+        final User user = this.userRepository.findById(userId).orElse(null);
 
         if (network == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "NETWORK");
         }
 
-        if (!deviceAccessRepository.hasAccess(network.getOwner(), user)) {
+        if (!this.deviceAccessRepository.hasAccess(network.getOwner(), user)) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
         }
 
@@ -84,22 +84,22 @@ public final class NetworkOwnerEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
         }
 
-        return new ApiResponse(ApiResponseType.OK, networkInvitationRepository.findAllByKeyNetwork(network));
+        return new ApiResponse(ApiResponseType.OK, this.networkInvitationRepository.findAllByKeyNetwork(network));
     }
 
     @ApiEndpoint("kick")
     public ApiResponse kick(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
                             @ApiParameter("network_id") final UUID networkId,
                             @ApiParameter("device_id") final UUID deviceId) {
-        final User user = userRepository.findById(userId).orElse(null);
-        final Network network = networkRepository.findById(networkId).orElse(null);
-        final Device device = deviceRepository.findById(deviceId).orElse(null);
+        final User user = this.userRepository.findById(userId).orElse(null);
+        final Network network = this.networkRepository.findById(networkId).orElse(null);
+        final Device device = this.deviceRepository.findById(deviceId).orElse(null);
 
         if (network == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "NETWORK");
         }
 
-        if (!deviceAccessRepository.hasAccess(network.getOwner(), user)) {
+        if (!this.deviceAccessRepository.hasAccess(network.getOwner(), user)) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
         }
 
@@ -115,27 +115,27 @@ public final class NetworkOwnerEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "DEVICE");
         }
 
-        final NetworkMember networkMember = networkMemberRepository.findByKeyDeviceAndKeyNetwork(device, network).orElse(null);
+        final NetworkMember networkMember = this.networkMemberRepository.findByKeyDeviceAndKeyNetwork(device, network).orElse(null);
 
         if (networkMember == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "MEMBER");
         }
 
-        networkMemberRepository.delete(networkMember);
+        this.networkMemberRepository.delete(networkMember);
         return new ApiResponse(ApiResponseType.OK);
     }
 
     @ApiEndpoint("delete")
     public ApiResponse delete(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
                               @ApiParameter("network_id") final UUID networkId) {
-        User user = userRepository.findById(userId).orElse(null);
-        Network network = networkRepository.findById(networkId).orElse(null);
+        User user = this.userRepository.findById(userId).orElse(null);
+        Network network = this.networkRepository.findById(networkId).orElse(null);
 
         if (network == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "NETWORK");
         }
 
-        if (!deviceAccessRepository.hasAccess(network.getOwner(), user)) {
+        if (!this.deviceAccessRepository.hasAccess(network.getOwner(), user)) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
         }
 
@@ -143,9 +143,9 @@ public final class NetworkOwnerEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
         }
 
-        networkMemberRepository.deleteAllByKeyNetwork(network);
-        networkInvitationRepository.deleteAllByKeyNetwork(network);
-        networkRepository.delete(network);
+        this.networkMemberRepository.deleteAllByKeyNetwork(network);
+        this.networkInvitationRepository.deleteAllByKeyNetwork(network);
+        this.networkRepository.delete(network);
 
         return new ApiResponse(ApiResponseType.OK);
     }

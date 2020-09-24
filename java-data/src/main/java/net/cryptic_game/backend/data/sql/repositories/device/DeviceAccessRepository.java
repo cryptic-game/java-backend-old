@@ -13,7 +13,7 @@ import java.util.UUID;
 
 public interface DeviceAccessRepository extends JpaRepository<DeviceAccess, UUID> {
 
-    @Query("select object (da) from DeviceAccess da where "
+    @Query("select da from DeviceAccess da where "
             + "da.user = ?2 and "
             + "da.device = ?1 and "
             + "da.valid = true and "

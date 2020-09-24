@@ -31,7 +31,7 @@ public final class UserSettingsEndpoints extends ApiEndpointCollection {
     public ApiResponse save(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
                             @ApiParameter("key") final String key,
                             @ApiParameter("value") final String value) {
-        User user = userRepository.findById(userId).orElse(null);
+        User user = this.userRepository.findById(userId).orElse(null);
 
         if (key.length() > 256) {
             return new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_KEY");
@@ -41,26 +41,26 @@ public final class UserSettingsEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_VALUE");
         }
 
-        UserSetting setting = userSettingRepository.findByKeyUserAndKeyKey(user, key).orElse(null);
+        UserSetting setting = this.userSettingRepository.findByKeyUserAndKeyKey(user, key).orElse(null);
         if (setting == null) {
             setting = new UserSetting();
             setting.setKey(new UserSetting.UserSettingKey(user, key));
         }
         setting.setValue(value);
-        userSettingRepository.save(setting);
+        this.userSettingRepository.save(setting);
         return new ApiResponse(ApiResponseType.OK);
     }
 
     @ApiEndpoint(value = "get", description = "Get a user setting")
     public ApiResponse get(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
                            @ApiParameter("key") final String key) {
-        User user = userRepository.findById(userId).orElse(null);
+        User user = this.userRepository.findById(userId).orElse(null);
 
         if (key.length() > 256) {
             return new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_KEY");
         }
 
-        UserSetting setting = userSettingRepository.findByKeyUserAndKeyKey(user, key).orElse(null);
+        UserSetting setting = this.userSettingRepository.findByKeyUserAndKeyKey(user, key).orElse(null);
         if (setting == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "SETTING");
         }
@@ -70,23 +70,23 @@ public final class UserSettingsEndpoints extends ApiEndpointCollection {
     @ApiEndpoint(value = "delete", description = "Delete a user setting")
     public ApiResponse delete(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
                               @ApiParameter("key") final String key) {
-        User user = userRepository.findById(userId).orElse(null);
+        User user = this.userRepository.findById(userId).orElse(null);
 
         if (key.length() > 256) {
             return new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_KEY");
         }
 
-        UserSetting setting = userSettingRepository.findByKeyUserAndKeyKey(user, key).orElse(null);
+        UserSetting setting = this.userSettingRepository.findByKeyUserAndKeyKey(user, key).orElse(null);
         if (setting == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "SETTING");
         }
-        userSettingRepository.delete(setting);
+        this.userSettingRepository.delete(setting);
         return new ApiResponse(ApiResponseType.OK);
     }
 
     @ApiEndpoint(value = "all", description = "Get all user settings")
     public ApiResponse all(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId) {
-        User user = userRepository.findById(userId).orElse(null);
-        return new ApiResponse(ApiResponseType.OK, userSettingRepository.findAllByKeyUser(user));
+        User user = this.userRepository.findById(userId).orElse(null);
+        return new ApiResponse(ApiResponseType.OK, this.userSettingRepository.findAllByKeyUser(user));
     }
 }

@@ -26,6 +26,7 @@ public interface NetworkMemberRepository extends JpaRepository<NetworkMember, UU
         NetworkMember networkMember = new NetworkMember();
         networkMember.setNetwork(network);
         networkMember.setDevice(device);
+
         return this.save(networkMember);
     }
 

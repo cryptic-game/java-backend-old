@@ -49,9 +49,9 @@ public final class NetworkInvitationEndpoints extends ApiEndpointCollection {
     public ApiResponse accept(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
                               @ApiParameter("network_id") final UUID networkId,
                               @ApiParameter("device_id") final UUID deviceId) {
-        final User user = userRepository.findById(userId).orElse(null);
-        final Network network = networkRepository.findById(networkId).orElse(null);
-        final Device device = deviceRepository.findById(deviceId).orElse(null);
+        final User user = this.userRepository.findById(userId).orElse(null);
+        final Network network = this.networkRepository.findById(networkId).orElse(null);
+        final Device device = this.deviceRepository.findById(deviceId).orElse(null);
 
         if (network == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "NETWORK");
@@ -61,13 +61,13 @@ public final class NetworkInvitationEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "DEVICE");
         }
 
-        final NetworkInvitation invitation = networkInvitationRepository.findByKeyNetworkAndKeyDevice(network, device).orElse(null);
+        final NetworkInvitation invitation = this.networkInvitationRepository.findByKeyNetworkAndKeyDevice(network, device).orElse(null);
         if (invitation == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "INVITATION");
         }
 
         if (invitation.isRequest()) {
-            if (!deviceAccessRepository.hasAccess(invitation.getNetwork().getOwner(), user)) {
+            if (!this.deviceAccessRepository.hasAccess(invitation.getNetwork().getOwner(), user)) {
                 return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
             }
 
@@ -75,7 +75,7 @@ public final class NetworkInvitationEndpoints extends ApiEndpointCollection {
                 return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
             }
         } else {
-            if (!deviceAccessRepository.hasAccess(device, user)) {
+            if (!this.deviceAccessRepository.hasAccess(device, user)) {
                 return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
             }
 
@@ -84,8 +84,8 @@ public final class NetworkInvitationEndpoints extends ApiEndpointCollection {
             }
         }
 
-        networkInvitationRepository.delete(invitation);
-        return new ApiResponse(ApiResponseType.OK, networkMemberRepository.create(invitation.getNetwork(), invitation.getDevice()));
+        this.networkInvitationRepository.delete(invitation);
+        return new ApiResponse(ApiResponseType.OK, this.networkMemberRepository.create(invitation.getNetwork(), invitation.getDevice()));
     }
 
 
@@ -93,9 +93,9 @@ public final class NetworkInvitationEndpoints extends ApiEndpointCollection {
     public ApiResponse deny(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
                             @ApiParameter("network_id") final UUID networkId,
                             @ApiParameter("device_id") final UUID deviceId) {
-        final User user = userRepository.findById(userId).orElse(null);
-        final Network network = networkRepository.findById(networkId).orElse(null);
-        final Device device = deviceRepository.findById(deviceId).orElse(null);
+        final User user = this.userRepository.findById(userId).orElse(null);
+        final Network network = this.networkRepository.findById(networkId).orElse(null);
+        final Device device = this.deviceRepository.findById(deviceId).orElse(null);
 
         if (network == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "NETWORK");
@@ -105,13 +105,13 @@ public final class NetworkInvitationEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "DEVICE");
         }
 
-        final NetworkInvitation invitation = networkInvitationRepository.findByKeyNetworkAndKeyDevice(network, device).orElse(null);
+        final NetworkInvitation invitation = this.networkInvitationRepository.findByKeyNetworkAndKeyDevice(network, device).orElse(null);
         if (invitation == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "INVITATION");
         }
 
         if (invitation.isRequest()) {
-            if (!deviceAccessRepository.hasAccess(invitation.getNetwork().getOwner(), user)) {
+            if (!this.deviceAccessRepository.hasAccess(invitation.getNetwork().getOwner(), user)) {
                 return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
             }
 
@@ -119,7 +119,7 @@ public final class NetworkInvitationEndpoints extends ApiEndpointCollection {
                 return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
             }
         } else {
-            if (!deviceAccessRepository.hasAccess(device, user)) {
+            if (!this.deviceAccessRepository.hasAccess(device, user)) {
                 return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
             }
 
@@ -128,7 +128,7 @@ public final class NetworkInvitationEndpoints extends ApiEndpointCollection {
             }
         }
 
-        networkInvitationRepository.delete(invitation);
+        this.networkInvitationRepository.delete(invitation);
         return new ApiResponse(ApiResponseType.OK);
     }
 
@@ -136,9 +136,9 @@ public final class NetworkInvitationEndpoints extends ApiEndpointCollection {
     public ApiResponse revoke(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
                               @ApiParameter("network_id") final UUID networkId,
                               @ApiParameter("device_id") final UUID deviceId) {
-        final User user = userRepository.findById(userId).orElse(null);
-        final Network network = networkRepository.findById(networkId).orElse(null);
-        final Device device = deviceRepository.findById(deviceId).orElse(null);
+        final User user = this.userRepository.findById(userId).orElse(null);
+        final Network network = this.networkRepository.findById(networkId).orElse(null);
+        final Device device = this.deviceRepository.findById(deviceId).orElse(null);
 
         if (network == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "NETWORK");
@@ -148,13 +148,13 @@ public final class NetworkInvitationEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "DEVICE");
         }
 
-        final NetworkInvitation invitation = networkInvitationRepository.findByKeyNetworkAndKeyDevice(network, device).orElse(null);
+        final NetworkInvitation invitation = this.networkInvitationRepository.findByKeyNetworkAndKeyDevice(network, device).orElse(null);
         if (invitation == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "INVITATION");
         }
 
         if (invitation.isRequest()) {
-            if (!deviceAccessRepository.hasAccess(device, user)) {
+            if (!this.deviceAccessRepository.hasAccess(device, user)) {
                 return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
             }
 
@@ -162,7 +162,7 @@ public final class NetworkInvitationEndpoints extends ApiEndpointCollection {
                 return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
             }
         } else {
-            if (!deviceAccessRepository.hasAccess(invitation.getNetwork().getOwner(), user)) {
+            if (!this.deviceAccessRepository.hasAccess(invitation.getNetwork().getOwner(), user)) {
                 return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
             }
 
@@ -171,7 +171,7 @@ public final class NetworkInvitationEndpoints extends ApiEndpointCollection {
             }
         }
 
-        networkInvitationRepository.delete(invitation);
+        this.networkInvitationRepository.delete(invitation);
         return new ApiResponse(ApiResponseType.OK);
     }
 
@@ -179,15 +179,15 @@ public final class NetworkInvitationEndpoints extends ApiEndpointCollection {
     public ApiResponse invite(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
                               @ApiParameter("network_id") final UUID networkId,
                               @ApiParameter("device_id") final UUID deviceId) {
-        final User user = userRepository.findById(userId).orElse(null);
-        final Network network = networkRepository.findById(networkId).orElse(null);
-        final Device device = deviceRepository.findById(deviceId).orElse(null);
+        final User user = this.userRepository.findById(userId).orElse(null);
+        final Network network = this.networkRepository.findById(networkId).orElse(null);
+        final Device device = this.deviceRepository.findById(deviceId).orElse(null);
 
         if (network == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "NETWORK");
         }
 
-        if (!deviceAccessRepository.hasAccess(network.getOwner(), user)) {
+        if (!this.deviceAccessRepository.hasAccess(network.getOwner(), user)) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
         }
 
@@ -195,16 +195,16 @@ public final class NetworkInvitationEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "DEVICE_NOT_FOUND");
         }
 
-        if (networkMemberRepository.findByKeyDeviceAndKeyNetwork(device, network).isPresent()) {
+        if (this.networkMemberRepository.findByKeyDeviceAndKeyNetwork(device, network).isPresent()) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "ALREADY_MEMBER_OF_NETWORK");
         }
 
-        final NetworkInvitation invitation = networkInvitationRepository.findByKeyNetworkAndKeyDevice(network, device).orElse(null);
+        final NetworkInvitation invitation = this.networkInvitationRepository.findByKeyNetworkAndKeyDevice(network, device).orElse(null);
         if (invitation == null) {
-            return new ApiResponse(ApiResponseType.OK, networkInvitationRepository.create(network, device, network.getOwner()));
+            return new ApiResponse(ApiResponseType.OK, this.networkInvitationRepository.create(network, device, network.getOwner()));
         } else if (invitation.isRequest()) {
-            networkInvitationRepository.delete(invitation);
-            return new ApiResponse(ApiResponseType.OK, networkMemberRepository.create(invitation.getNetwork(), invitation.getDevice()));
+            this.networkInvitationRepository.delete(invitation);
+            return new ApiResponse(ApiResponseType.OK, this.networkMemberRepository.create(invitation.getNetwork(), invitation.getDevice()));
         } else {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "INVITATION_ALREADY_EXISTS");
         }
@@ -214,15 +214,15 @@ public final class NetworkInvitationEndpoints extends ApiEndpointCollection {
     public ApiResponse request(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
                                @ApiParameter("device_id") final UUID deviceId,
                                @ApiParameter("network_id") final UUID networkId) {
-        final User user = userRepository.findById(userId).orElse(null);
-        final Device device = deviceRepository.findById(deviceId).orElse(null);
-        final Network network = networkRepository.findById(networkId).orElse(null);
+        final User user = this.userRepository.findById(userId).orElse(null);
+        final Device device = this.deviceRepository.findById(deviceId).orElse(null);
+        final Network network = this.networkRepository.findById(networkId).orElse(null);
 
         if (device == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "DEVICE");
         }
 
-        if (!deviceAccessRepository.hasAccess(device, user)) {
+        if (!this.deviceAccessRepository.hasAccess(device, user)) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
         }
 
@@ -234,18 +234,18 @@ public final class NetworkInvitationEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "NETWORK");
         }
 
-        if (networkMemberRepository.findByKeyDeviceAndKeyNetwork(device, network).isPresent()) {
+        if (this.networkMemberRepository.findByKeyDeviceAndKeyNetwork(device, network).isPresent()) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "ALREADY_MEMBER_OF_NETWORK");
         }
 
-        final NetworkInvitation invitation = networkInvitationRepository.findByKeyNetworkAndKeyDevice(network, device).orElse(null);
+        final NetworkInvitation invitation = this.networkInvitationRepository.findByKeyNetworkAndKeyDevice(network, device).orElse(null);
         if (invitation == null) {
-            return new ApiResponse(ApiResponseType.OK, networkInvitationRepository.create(network, device, null));
+            return new ApiResponse(ApiResponseType.OK, this.networkInvitationRepository.create(network, device, null));
         } else if (invitation.isRequest()) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "REQUEST_ALREADY_EXISTS");
         } else {
-            networkInvitationRepository.delete(invitation);
-            return new ApiResponse(ApiResponseType.OK, networkMemberRepository.create(invitation.getNetwork(), invitation.getDevice()));
+            this.networkInvitationRepository.delete(invitation);
+            return new ApiResponse(ApiResponseType.OK, this.networkMemberRepository.create(invitation.getNetwork(), invitation.getDevice()));
         }
     }
 
