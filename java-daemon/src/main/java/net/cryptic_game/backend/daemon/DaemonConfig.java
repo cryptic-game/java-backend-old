@@ -1,22 +1,20 @@
 package net.cryptic_game.backend.daemon;
 
 import lombok.AccessLevel;
-import lombok.Data;
-import lombok.Setter;
+import lombok.Getter;
 import net.cryptic_game.backend.base.config.Config;
-import net.cryptic_game.backend.base.config.ConfigValue;
+import org.springframework.beans.factory.annotation.Value;
 
-@Config("daemon")
-@Data
-@Setter(AccessLevel.NONE)
-public class DaemonConfig {
+@Config
+@Getter(AccessLevel.PACKAGE)
+class DaemonConfig {
 
-    @ConfigValue("http_host")
-    private String httpHost = "0.0.0.0";
+    @Value("${HTTP_HOST:0.0.0.0}")
+    private String httpHost;
 
-    @ConfigValue("http_port")
-    private int httpPort = 8080;
+    @Value("${HTTP_PORT:8081}")
+    private int httpPort;
 
-    @ConfigValue("server_url")
-    private String serverUrl = "http://127.0.0.1:80/api";
+    @Value("${SERVER_ADDRESS:http://127.0.0.1:8080/api}")
+    private String serverAddress;
 }

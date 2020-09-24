@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public final class DaemonUtils {
 
     @Setter
-    private static String serverUrl;
+    private static String serverAddress;
 
     private DaemonUtils() {
         throw new UnsupportedOperationException();
@@ -35,7 +35,7 @@ public final class DaemonUtils {
     }
 
     public static void notifyUser(@NotNull final UUID user, @NotNull final String topic, @Nullable final Object data) {
-        HttpClientUtils.sendAsyncRequest(serverUrl + "/daemon/notify", JsonBuilder.create("user_id", user).add("topic", topic).add("data", data).build());
+        HttpClientUtils.sendAsyncRequest(serverAddress + "/daemon/notify", JsonBuilder.create("user_id", user).add("topic", topic).add("data", data).build());
     }
 
     @NotNull

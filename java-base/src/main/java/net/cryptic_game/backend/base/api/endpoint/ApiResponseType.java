@@ -58,7 +58,6 @@ public enum ApiResponseType implements JsonSerializable {
     public JsonElement serialize() {
         return JsonBuilder.create("code", this.code)
                 .add("name", this.name())
-                .add("error", this.error)
                 .build();
     }
 }

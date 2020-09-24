@@ -54,6 +54,7 @@ public final class ApiResponse implements JsonSerializable {
                 .add("message", this.message != null, () -> this.message)
                 : JsonBuilder.create("tag", this.getTag())
                 .add("status", this.getResponseType())
+                .add("error", this.responseType.isError())
                 .add("message", this.message != null, this::getMessage);
 
         return JsonBuilder.create("info", info)

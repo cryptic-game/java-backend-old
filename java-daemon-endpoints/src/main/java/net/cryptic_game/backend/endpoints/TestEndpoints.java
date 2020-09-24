@@ -8,9 +8,11 @@ import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.utils.DaemonUtils;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+@Component
 public final class TestEndpoints extends ApiEndpointCollection {
 
     public TestEndpoints() {

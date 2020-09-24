@@ -12,11 +12,11 @@
     "branchName": "{{{branchPrefix}}}{{{managerBranchPrefix}}}{{{branchTopic}}}",
     "branchPrefix": "dependencies/",
     "packageRules": [
-    {
-      "packagePatterns": [
-        "^io\\.freefair\\..+"
-      ],
-      "groupName": "Freefair Gradle Plugins"
-    }
-  ]
+        {
+            "packagePatterns": [
+                "^io\\.freefair\\..+"
+            ],
+            "groupName": "Freefair Gradle Plugins"
+        }
+    ]
 }

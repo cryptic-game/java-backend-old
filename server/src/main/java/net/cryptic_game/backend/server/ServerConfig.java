@@ -1,25 +1,20 @@
 package net.cryptic_game.backend.server;
 
 import lombok.AccessLevel;
-import lombok.Data;
-import lombok.Setter;
+import lombok.Getter;
 import net.cryptic_game.backend.base.config.Config;
-import net.cryptic_game.backend.base.config.ConfigValue;
+import org.springframework.beans.factory.annotation.Value;
 
-@Config("server")
-@Data
-@Setter(AccessLevel.NONE)
-public class ServerConfig {
+@Config
+@Getter(AccessLevel.PACKAGE)
+class ServerConfig {
 
-    @ConfigValue("http_host")
-    private String httpHost = "0.0.0.0";
+    @Value("${HTTP_HOST:0.0.0.0}")
+    private String httpHost;
 
-    @ConfigValue("http_port")
-    private int httpPort = 80;
+    @Value("${HTTP_PORT:8080}")
+    private int httpPort;
 
-    @ConfigValue("java_daemon_address")
-    private String javaDaemonAddress = "http://127.0.0.1:8080";
-
-    @ConfigValue("websocket_address")
-    private String websocketAddress = "127.0.0.1:80/ws";
+    @Value("${WEBSOCKET_ADDRESS:ws://127.0.0.1:8080/ws/}")
+    private String websocketAddress;
 }

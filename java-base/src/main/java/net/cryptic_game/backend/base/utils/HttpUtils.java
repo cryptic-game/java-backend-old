@@ -20,7 +20,6 @@ import io.netty.handler.stream.ChunkedFile;
 import io.netty.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.activation.MimetypesFileTypeMap;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -43,12 +42,6 @@ public final class HttpUtils {
     public static final ZoneOffset HTTP_TIME_ZONE = ZoneOffset.UTC;
     private static final Pattern INSECURE_URI = Pattern.compile(".*[<>&\"].*");
     private static final long HTTP_CACHE_SECONDS = Duration.ofDays(30).toSeconds();
-    private static final MimetypesFileTypeMap MIMETYPES_FILE_TYPE_MAP = new MimetypesFileTypeMap();
-
-    static {
-        MIMETYPES_FILE_TYPE_MAP.addMimeTypes("application/javascript js");
-        MIMETYPES_FILE_TYPE_MAP.addMimeTypes("text/css css");
-    }
 
     private HttpUtils() {
         throw new UnsupportedOperationException();
@@ -180,7 +173,7 @@ public final class HttpUtils {
      * @param file    the file from were the content type should be extracted
      */
     public static void setContentTypeHeader(final HttpMessage message, final File file) {
-        setContentTypeHeader(message, MIMETYPES_FILE_TYPE_MAP.getContentType(file));
+        setContentTypeHeader(message, MimeTypeUtils.getMimeType(file));
     }
 
     /**

@@ -6,33 +6,56 @@ import net.cryptic_game.backend.base.api.endpoint.ApiParameter;
 import net.cryptic_game.backend.base.api.endpoint.ApiParameterSpecialType;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
 import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
-import net.cryptic_game.backend.data.device.Device;
-import net.cryptic_game.backend.data.network.Network;
-import net.cryptic_game.backend.data.network.NetworkInvitation;
-import net.cryptic_game.backend.data.network.NetworkMember;
-import net.cryptic_game.backend.data.user.User;
-import org.hibernate.Session;
+import net.cryptic_game.backend.data.sql.entities.device.Device;
+import net.cryptic_game.backend.data.sql.entities.network.Network;
+import net.cryptic_game.backend.data.sql.entities.network.NetworkMember;
+import net.cryptic_game.backend.data.sql.entities.user.User;
+import net.cryptic_game.backend.data.sql.repositories.device.DeviceAccessRepository;
+import net.cryptic_game.backend.data.sql.repositories.device.DeviceRepository;
+import net.cryptic_game.backend.data.sql.repositories.network.NetworkInvitationRepository;
+import net.cryptic_game.backend.data.sql.repositories.network.NetworkMemberRepository;
+import net.cryptic_game.backend.data.sql.repositories.network.NetworkRepository;
+import net.cryptic_game.backend.data.sql.repositories.user.UserRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+@Component
 public final class NetworkOwnerEndpoints extends ApiEndpointCollection {
 
-    public NetworkOwnerEndpoints() {
+    private final UserRepository userRepository;
+    private final DeviceRepository deviceRepository;
+    private final DeviceAccessRepository deviceAccessRepository;
+    private final NetworkRepository networkRepository;
+    private final NetworkInvitationRepository networkInvitationRepository;
+    private final NetworkMemberRepository networkMemberRepository;
+
+    public NetworkOwnerEndpoints(final UserRepository userRepository,
+                                 final DeviceRepository deviceRepository,
+                                 final DeviceAccessRepository deviceAccessRepository,
+                                 final NetworkRepository networkRepository,
+                                 final NetworkInvitationRepository networkInvitationRepository,
+                                 final NetworkMemberRepository networkMemberRepository) {
         super("network/owner", "todo");
+        this.userRepository = userRepository;
+        this.deviceRepository = deviceRepository;
+        this.deviceAccessRepository = deviceAccessRepository;
+        this.networkRepository = networkRepository;
+        this.networkInvitationRepository = networkInvitationRepository;
+        this.networkMemberRepository = networkMemberRepository;
     }
 
     @ApiEndpoint("list")
     public ApiResponse list(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
-                            @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION) final Session session,
                             @ApiParameter("device_id") final UUID deviceId) {
-        final User user = User.getById(session, userId);
-        final Device device = Device.getById(session, deviceId);
+        final User user = this.userRepository.findById(userId).orElse(null);
+        final Device device = this.deviceRepository.findById(deviceId).orElse(null);
 
         if (device == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "DEVICE");
         }
 
-        if (!device.hasAccess(session, user)) {
+        if (!this.deviceAccessRepository.hasAccess(device, user)) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
         }
 
@@ -40,21 +63,20 @@ public final class NetworkOwnerEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
         }
 
-        return new ApiResponse(ApiResponseType.OK, Network.getNetworksOwnedByDevice(session, device));
+        return new ApiResponse(ApiResponseType.OK, this.networkRepository.findAllByOwner(device));
     }
 
     @ApiEndpoint("invitations")
     public ApiResponse invitations(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
-                                   @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION) final Session session,
                                    @ApiParameter("network_id") final UUID networkId) {
-        final Network network = Network.getById(session, networkId);
-        final User user = User.getById(session, userId);
+        final Network network = this.networkRepository.findById(networkId).orElse(null);
+        final User user = this.userRepository.findById(userId).orElse(null);
 
         if (network == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "NETWORK");
         }
 
-        if (!network.getOwner().hasAccess(session, user)) {
+        if (!this.deviceAccessRepository.hasAccess(network.getOwner(), user)) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
         }
 
@@ -62,23 +84,22 @@ public final class NetworkOwnerEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
         }
 
-        return new ApiResponse(ApiResponseType.OK, NetworkInvitation.getInvitationsOfNetwork(session, network));
+        return new ApiResponse(ApiResponseType.OK, this.networkInvitationRepository.findAllByKeyNetwork(network));
     }
 
     @ApiEndpoint("kick")
     public ApiResponse kick(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
-                            @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final Session session,
                             @ApiParameter("network_id") final UUID networkId,
                             @ApiParameter("device_id") final UUID deviceId) {
-        final User user = User.getById(session, userId);
-        final Network network = Network.getById(session, networkId);
-        final Device device = Device.getById(session, deviceId);
+        final User user = this.userRepository.findById(userId).orElse(null);
+        final Network network = this.networkRepository.findById(networkId).orElse(null);
+        final Device device = this.deviceRepository.findById(deviceId).orElse(null);
 
         if (network == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "NETWORK");
         }
 
-        if (!network.getOwner().hasAccess(session, user)) {
+        if (!this.deviceAccessRepository.hasAccess(network.getOwner(), user)) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
         }
 
@@ -94,28 +115,27 @@ public final class NetworkOwnerEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "DEVICE");
         }
 
-        final NetworkMember networkMember = NetworkMember.getMember(session, network, device);
+        final NetworkMember networkMember = this.networkMemberRepository.findByKeyDeviceAndKeyNetwork(device, network).orElse(null);
 
         if (networkMember == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "MEMBER");
         }
 
-        networkMember.delete(session);
+        this.networkMemberRepository.delete(networkMember);
         return new ApiResponse(ApiResponseType.OK);
     }
 
     @ApiEndpoint("delete")
     public ApiResponse delete(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
-                              @ApiParameter(value = "session", special = ApiParameterSpecialType.SQL_SESSION_TRANSACTIONAL) final Session session,
                               @ApiParameter("network_id") final UUID networkId) {
-        User user = User.getById(session, userId);
-        Network network = Network.getById(session, networkId);
+        User user = this.userRepository.findById(userId).orElse(null);
+        Network network = this.networkRepository.findById(networkId).orElse(null);
 
         if (network == null) {
             return new ApiResponse(ApiResponseType.NOT_FOUND, "NETWORK");
         }
 
-        if (!network.getOwner().hasAccess(session, user)) {
+        if (!this.deviceAccessRepository.hasAccess(network.getOwner(), user)) {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "ACCESS_DENIED");
         }
 
@@ -123,9 +143,9 @@ public final class NetworkOwnerEndpoints extends ApiEndpointCollection {
             return new ApiResponse(ApiResponseType.FORBIDDEN, "DEVICE_NOT_ONLINE");
         }
 
-        NetworkMember.getMembershipsOfNetwork(session, network).forEach(i -> i.delete(session));
-        NetworkInvitation.getInvitationsOfNetwork(session, network).forEach(i -> i.delete(session));
-        network.delete(session);
+        this.networkMemberRepository.deleteAllByKeyNetwork(network);
+        this.networkInvitationRepository.deleteAllByKeyNetwork(network);
+        this.networkRepository.delete(network);
 
         return new ApiResponse(ApiResponseType.OK);
     }

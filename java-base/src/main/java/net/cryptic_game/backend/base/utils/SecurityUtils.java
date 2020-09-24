@@ -1,21 +1,21 @@
 package net.cryptic_game.backend.base.utils;
 
-import at.favre.lib.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public final class SecurityUtils {
 
-    private static final BCrypt.Hasher HASHER = BCrypt.withDefaults();
-    private static final BCrypt.Verifyer VERIFYER = BCrypt.verifyer();
+    public static final PasswordEncoder PASSWORD_ENCODER = new Argon2PasswordEncoder();
 
     private SecurityUtils() {
         throw new UnsupportedOperationException();
     }
 
     public static String hash(final String content) {
-        return HASHER.hashToString(12, content.toCharArray());
+        return PASSWORD_ENCODER.encode(content);
     }
 
     public static boolean verify(final String content, final String hash) {
-        return VERIFYER.verify(content.toCharArray(), hash.toCharArray()).verified;
+        return PASSWORD_ENCODER.matches(content, hash);
     }
 }
