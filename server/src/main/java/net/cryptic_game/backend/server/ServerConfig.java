@@ -15,12 +15,6 @@ class ServerConfig {
     @Value("${HTTP_PORT:8080}")
     private int httpPort;
 
-    @Value("${JAVA_DAEMON_ADDRESS:http://localhost:8081}")
-    private String javaDaemonAddress;
-
-    @Value("${PYTHON_DAEMON_ADDRESS:http://localhost:8082}")
-    private String pythonDaemonAddress;
-
     @Value("${WEBSOCKET_ADDRESS:ws://127.0.0.1:8080/ws/}")
     private String websocketAddress;
 }

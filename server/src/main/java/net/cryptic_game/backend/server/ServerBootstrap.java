@@ -68,6 +68,8 @@ public class ServerBootstrap {
                 new InetSocketAddress(config.getHttpHost(), config.getHttpPort()),
                 null, new NettyCodecHandler(httpServerCodec), eventLoopGroupService));
 
-        daemonHandler.registerDaemon("java-daemon", config.getJavaDaemonAddress());
+        System.getenv().forEach((name, value) -> {
+            if (name.startsWith("DAEMON_")) daemonHandler.registerDaemon(name.substring(7).replace('_', '-').toLowerCase(), value);
+        });
     }
 }
