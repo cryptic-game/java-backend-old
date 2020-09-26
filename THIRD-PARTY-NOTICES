@@ -115,6 +115,11 @@ Licensor:  Eclipse Foundation
 Website:   https://projects.eclipse.org/projects/ee4j.jta
 License:   Eclipse Public License 2.0, GNU General Public License, version 2 with the GNU Classpath Exception
 
+Component: Java JWT
+Licensor:  Java JWT
+Website:   https://github.com/jwtk/jjwt/
+License:   Apache License 2.0
+
 
 --------------------------------------------------------------------------------
 LGPL 2.1 (hibernate-orm, MariaDB)
@@ -949,7 +954,7 @@ Exhibit B - “Incompatible With Secondary Licenses” Notice
 This Source Code Form is “Incompatible With Secondary Licenses”, as defined by
 the Mozilla Public License, v. 2.0.
 --------------------------------------------------------------------------------
-Apache License 2.0 (Jansi, Project Reactor, Lettuce, Gson, JetBrains Java Annotations, OkHttp, micrometer, Spring Framework, Spring Data, Spring Security, HikariCP)
+Apache License 2.0 (Jansi, Project Reactor, Lettuce, Gson, JetBrains Java Annotations, OkHttp, micrometer, Spring Framework, Spring Data, Spring Security, HikariCP, Java JWT)
 
                                  Apache License
                            Version 2.0, January 2004
