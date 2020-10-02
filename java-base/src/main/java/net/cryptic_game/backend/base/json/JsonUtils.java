@@ -5,22 +5,21 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.json.types.InstantTypeAdapter;
 import net.cryptic_game.backend.base.json.types.OffsetDateTimeAdapter;
-import net.cryptic_game.backend.base.json.types.ZonedDateTimeAdapter;
 
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
-import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.function.Function;
 
 @Slf4j
 public final class JsonUtils {
+
+    public static final JsonObject EMPTY_OBJECT = new JsonObject();
 
     @Getter
     private static final Gson GSON = new GsonBuilder()
@@ -31,7 +30,6 @@ public final class JsonUtils {
             .registerTypeHierarchyAdapter(JsonSerializable.class, new JsonSerializableSerializer())
             .registerTypeHierarchyAdapter(Instant.class, new InstantTypeAdapter())
             .registerTypeHierarchyAdapter(OffsetDateTime.class, new OffsetDateTimeAdapter())
-            .registerTypeHierarchyAdapter(ZonedDateTime.class, new ZonedDateTimeAdapter())
             .create();
 
     private JsonUtils() {
@@ -39,9 +37,6 @@ public final class JsonUtils {
     }
 
     public static <T> T fromJson(final JsonElement jsonElement, final Class<T> type) throws JsonTypeMappingException {
-        if (type.isAssignableFrom(LocalDateTime.class) || type.isAssignableFrom(LocalDate.class)) {
-            log.warn("Use \"{}\" instant of \"{}\".", ZonedDateTime.class.getName(), LocalDateTime.class.getName());
-        }
         try {
             return GSON.fromJson(jsonElement, type);
         } catch (Exception e) {
@@ -52,9 +47,6 @@ public final class JsonUtils {
     public static JsonElement toJson(final Object object) throws JsonTypeMappingException {
         if (object instanceof JsonElement) {
             return (JsonElement) object;
-        }
-        if (object instanceof LocalDateTime || object instanceof LocalDate) {
-            log.warn("Use \"{}\" instant of \"{}\".", ZonedDateTime.class.getName(), LocalDateTime.class.getName());
         }
         try {
             return GSON.toJsonTree(object);

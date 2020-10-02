@@ -3,11 +3,14 @@ package net.cryptic_game.backend.base.daemon;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import net.cryptic_game.backend.base.api.endpoint.ApiEndpointData;
-import net.cryptic_game.backend.base.api.endpoint.ApiParameterData;
+import net.cryptic_game.backend.base.api.Group;
+import net.cryptic_game.backend.base.api.data.ApiEndpointData;
+import net.cryptic_game.backend.base.api.data.ApiParameterData;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -16,9 +19,10 @@ public class DaemonEndpointData extends ApiEndpointData {
 
     private Daemon daemon;
 
-    public DaemonEndpointData(final String name, final String description, final Method method, final Object object, final List<ApiParameterData> parameters) {
-        super(name, description, method, object, parameters);
+    public DaemonEndpointData(@NotNull String id, @NotNull Set<Group> groups, @NotNull String description, @NotNull List<ApiParameterData> parameters, boolean enabled, @NotNull Object instance, @NotNull Class<?> clazz, @NotNull Method method) {
+        super(id, groups, description, parameters, enabled, instance, clazz, method);
     }
+
 
 //    public DaemonEndpoint(final JsonObject json, final Daemon daemon) throws IllegalArgumentException {
 //        if (!(json.has("name") && json.has("arguments"))) {
@@ -38,7 +42,7 @@ public class DaemonEndpointData extends ApiEndpointData {
 //            try {
 //                this.arguments.add(new FunctionArgument(argument.getAsJsonObject()));
 //            } catch (IllegalArgumentException e) {
-//                throw new IllegalArgumentException(e.getMessage(), e);
+//                throw new IllegalArgumentException(e.getError(), e);
 //            }
 //        }
 //    }

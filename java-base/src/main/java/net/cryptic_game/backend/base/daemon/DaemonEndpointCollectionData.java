@@ -3,9 +3,9 @@ package net.cryptic_game.backend.base.daemon;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
-import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollectionData;
-import net.cryptic_game.backend.base.api.endpoint.ApiEndpointData;
+import net.cryptic_game.backend.base.api.data.ApiEndpointCollectionData;
+import net.cryptic_game.backend.base.api.data.ApiEndpointData;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
@@ -16,8 +16,8 @@ public class DaemonEndpointCollectionData extends ApiEndpointCollectionData {
 
     private Daemon daemon;
 
-    public DaemonEndpointCollectionData(final String name, final String description, final ApiEndpointCollection object, final Map<String, ApiEndpointData> endpoints) {
-        super(name, description, object, endpoints);
+    public DaemonEndpointCollectionData(@NotNull String id, @NotNull String description, @NotNull Map<String, ApiEndpointData> endpoints) {
+        super(id, description, endpoints);
     }
 
 
@@ -39,7 +39,7 @@ public class DaemonEndpointCollectionData extends ApiEndpointCollectionData {
 //            try {
 //                this.arguments.add(new FunctionArgument(argument.getAsJsonObject()));
 //            } catch (IllegalArgumentException e) {
-//                throw new IllegalArgumentException(e.getMessage(), e);
+//                throw new IllegalArgumentException(e.getError(), e);
 //            }
 //        }
 //    }

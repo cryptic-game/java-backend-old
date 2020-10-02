@@ -3,8 +3,9 @@ package net.cryptic_game.backend.base.utils;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
-import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
+import lombok.extern.slf4j.Slf4j;
+import net.cryptic_game.backend.base.api.data.ApiResponse;
+import net.cryptic_game.backend.base.api.data.ApiResponseStatus;
 import net.cryptic_game.backend.base.json.JsonUtils;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -19,6 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public final class HttpClientUtils {
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
@@ -86,15 +88,19 @@ public final class HttpClientUtils {
     @NotNull
     public static ApiResponse getApiResponse(@NotNull final Response response) throws IOException {
         final ResponseBody responseBody = response.body();
-        if (responseBody == null) return new ApiResponse(ApiResponseType.getByCode(response.code()));
+        final ApiResponseStatus code = ApiResponseStatus.getByCode(response.code());
+        if (code == null) {
+            log.error("Status code {} could not be found.", response.code());
+            return new ApiResponse(ApiResponseStatus.INTERNAL_SERVER_ERROR);
+        }
+        if (responseBody == null) return new ApiResponse(code);
 
         final JsonObject jsonBody = JsonUtils.fromJson(JsonParser.parseString(responseBody.string()), JsonObject.class);
         final JsonObject info = JsonUtils.fromJson(jsonBody.get("info"), JsonObject.class);
 
         return new ApiResponse(
-                ApiResponseType.getByCode(response.code()),
-                info == null ? null : JsonUtils.fromJson(info.get("message"), String.class),
-                JsonUtils.fromJson(jsonBody.get("data"), JsonElement.class)
+                code,
+                info == null ? JsonUtils.fromJson(jsonBody.get("data"), JsonElement.class) : JsonUtils.fromJson(info.get("message"), String.class)
         );
     }
 

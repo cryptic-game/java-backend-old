@@ -1,8 +1,10 @@
 package net.cryptic_game.backend.base.utils;
 
 import com.google.gson.JsonObject;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.SignatureException;
 import net.cryptic_game.backend.base.json.JsonTypeMappingException;
 import net.cryptic_game.backend.base.json.JsonUtils;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
@@ -30,7 +32,7 @@ public final class SecurityUtils {
         return Jwts.builder().setPayload(payload.toString()).signWith(key, SignatureAlgorithm.HS512).compact();
     }
 
-    public static JsonObject parseJwt(final Key key, final String jwt) throws JsonTypeMappingException {
+    public static JsonObject parseJwt(final Key key, final String jwt) throws JsonTypeMappingException, SignatureException, ExpiredJwtException {
         return JsonUtils.fromJson(JsonUtils.toJson(Jwts.parserBuilder().setSigningKey(key).build().parse(jwt).getBody()), JsonObject.class);
     }
 }

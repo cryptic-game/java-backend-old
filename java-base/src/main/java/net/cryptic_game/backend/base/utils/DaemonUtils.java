@@ -3,9 +3,8 @@ package net.cryptic_game.backend.base.utils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lombok.Setter;
-import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollectionData;
-import net.cryptic_game.backend.base.api.endpoint.ApiEndpointData;
-import net.cryptic_game.backend.base.api.endpoint.ApiParameterSpecialType;
+import net.cryptic_game.backend.base.api.data.ApiEndpointCollectionData;
+import net.cryptic_game.backend.base.api.data.ApiEndpointData;
 import net.cryptic_game.backend.base.daemon.Daemon;
 import net.cryptic_game.backend.base.daemon.DaemonEndpointCollectionData;
 import net.cryptic_game.backend.base.daemon.DaemonEndpointData;
@@ -53,12 +52,12 @@ public final class DaemonUtils {
                     .peek(endpoint -> {
                         endpoint.setDaemon(daemon);
                         endpoint.getParameters().forEach(parameter -> {
-                            if (parameter.getSpecial() == null) parameter.setSpecial(ApiParameterSpecialType.NORMAL);
+                            //if (parameter.getType() == null) parameter.set(ApiParameterSpecialType.NORMAL);
                         });
                     })
-                    .collect(Collectors.toMap(ApiEndpointData::getName, endpoint -> endpoint));
+                    .collect(Collectors.toMap(ApiEndpointData::getId, endpoint -> endpoint));
 
-            final DaemonEndpointCollectionData collection = new DaemonEndpointCollectionData(name, description, null, endpoints);
+            final DaemonEndpointCollectionData collection = new DaemonEndpointCollectionData(name, description, endpoints);
             collection.setDaemon(daemon);
             return collection;
         });

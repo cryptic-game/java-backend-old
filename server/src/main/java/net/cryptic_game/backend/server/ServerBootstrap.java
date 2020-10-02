@@ -9,11 +9,9 @@ import net.cryptic_game.backend.base.api.endpoint.ApiEndpointData;
 import net.cryptic_game.backend.base.api.endpoint.ApiEndpointHandler;
 import net.cryptic_game.backend.base.api.netty.rest.RestApiLocationProvider;
 import net.cryptic_game.backend.base.api.netty.websocket.WebSocketLocationProvider;
-import net.cryptic_game.backend.base.netty.EventLoopGroupService;
 import net.cryptic_game.backend.base.netty.codec.NettyCodecHandler;
 import net.cryptic_game.backend.base.netty.codec.http.HttpServerCodec;
 import net.cryptic_game.backend.base.netty.server.NettyServer;
-import net.cryptic_game.backend.base.netty.server.NettyServerService;
 import net.cryptic_game.backend.server.daemon.DaemonHandler;
 import net.cryptic_game.backend.server.server.http.HttpDaemonEndpoints;
 import net.cryptic_game.backend.server.server.http.HttpInfoEndpoint;
@@ -33,9 +31,7 @@ public class ServerBootstrap {
     public ServerBootstrap(final Bootstrap bootstrap,
                            final BaseConfig baseConfig,
                            final ServerConfig config,
-                           final ApplicationContext context,
-                           final NettyServerService serverService,
-                           final EventLoopGroupService eventLoopGroupService) {
+                           final ApplicationContext context) {
 
         final ApiEndpointHandler webSocketEndpointHandler = new ApiEndpointHandler();
         final ApiEndpointHandler httpEndpointHandler = new ApiEndpointHandler();
