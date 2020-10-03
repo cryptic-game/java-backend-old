@@ -17,5 +17,5 @@ public @interface ApiEndpointCollection {
     String id();
 
     @NotNull
-    String[] description();
+    String[] description() default "";
 }

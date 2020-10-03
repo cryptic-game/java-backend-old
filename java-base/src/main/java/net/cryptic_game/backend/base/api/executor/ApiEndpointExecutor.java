@@ -8,6 +8,7 @@ import net.cryptic_game.backend.base.api.data.ApiResponseStatus;
 import net.cryptic_game.backend.base.api.exception.ApiInternalParameterException;
 import net.cryptic_game.backend.base.api.exception.ApiParameterException;
 import org.jetbrains.annotations.NotNull;
+import reactor.core.publisher.Mono;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -19,8 +20,8 @@ final class ApiEndpointExecutor {
     }
 
     @NotNull
-    static ApiResponse execute(@NotNull final ApiContext context, @NotNull final ApiEndpointData endpoint) {
-        if (!endpoint.isEnabled()) return new ApiResponse(ApiResponseStatus.SERVICE_UNAVAILABLE, "ENDPOINT_DISABLED");
+    static Mono<ApiResponse> execute(@NotNull final ApiContext context, @NotNull final ApiEndpointData endpoint) {
+        if (!endpoint.isEnabled()) return Mono.just(new ApiResponse(ApiResponseStatus.SERVICE_UNAVAILABLE, "ENDPOINT_DISABLED"));
 
         Object[] parameters;
 
@@ -28,18 +29,19 @@ final class ApiEndpointExecutor {
             parameters = ApiParameterExecutor.parseParameters(context, endpoint.getParameters());
         } catch (ApiInternalParameterException e) {
             log.error("Unable to parse parameters.", e);
-            return new ApiResponse(ApiResponseStatus.INTERNAL_SERVER_ERROR);
+            return Mono.just(new ApiResponse(ApiResponseStatus.INTERNAL_SERVER_ERROR));
         } catch (ApiParameterException e) {
             if (log.isDebugEnabled()) log.debug("Unable to parse parameters.", e);
-            return new ApiResponse(ApiResponseStatus.BAD_REQUEST, e.getMessage());
+            return Mono.just(new ApiResponse(ApiResponseStatus.BAD_REQUEST, e.getMessage()));
         }
 
         try {
-            final ApiResponse response = (ApiResponse) endpoint.getMethod().invoke(endpoint.getInstance(), parameters);
+            Object o = endpoint.getMethod().invoke(endpoint.getInstance(), parameters);
+            final Mono<ApiResponse> response = o instanceof Mono ? (Mono<ApiResponse>) o : Mono.just((ApiResponse) o);
 
             if (response == null) {
                 log.error("Endpoint {}.{} returned null, which is not allowed.", endpoint.getClazz().getName(), endpoint.getMethod().getName());
-                return new ApiResponse(ApiResponseStatus.INTERNAL_SERVER_ERROR);
+                return Mono.just(new ApiResponse(ApiResponseStatus.INTERNAL_SERVER_ERROR));
             }
 
             return response;
@@ -51,6 +53,6 @@ final class ApiEndpointExecutor {
             log.error("Unable to execute endpoint {}.{}.", endpoint.getClazz().getName(), endpoint.getMethod().getName(), e);
         }
 
-        return new ApiResponse(ApiResponseStatus.INTERNAL_SERVER_ERROR);
+        return Mono.just(new ApiResponse(ApiResponseStatus.INTERNAL_SERVER_ERROR));
     }
 }

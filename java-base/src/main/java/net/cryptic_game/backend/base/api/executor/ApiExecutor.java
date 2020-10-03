@@ -9,6 +9,7 @@ import net.cryptic_game.backend.base.api.data.ApiResponse;
 import net.cryptic_game.backend.base.api.data.ApiResponseStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import reactor.core.publisher.Mono;
 
 import java.util.Map;
 
@@ -19,15 +20,15 @@ public final class ApiExecutor {
     }
 
     @NotNull
-    public static ApiResponse execute(@NotNull final Map<String, ApiEndpointData> endpoints, @NotNull final ApiRequest request, @Nullable final ApiAuthenticationProvider authenticationProvider) {
+    public static Mono<ApiResponse> execute(@NotNull final Map<String, ApiEndpointData> endpoints, @NotNull final ApiRequest request, @Nullable final ApiAuthenticationProvider authenticationProvider) {
         final ApiEndpointData endpoint = endpoints.get(request.getEndpoint());
-        if (endpoint == null) return new ApiResponse(ApiResponseStatus.NOT_FOUND, "ENDPOINT");
+        if (endpoint == null) return Mono.just(new ApiResponse(ApiResponseStatus.NOT_FOUND, "ENDPOINT"));
         if (!endpoint.getGroups().isEmpty() && authenticationProvider != null) {
             if (request.getAuthenticationGroups() == null || request.getAuthenticationGroups().isEmpty()) {
-                return new ApiResponse(ApiResponseStatus.UNAUTHORIZED, HttpResponseStatus.UNAUTHORIZED.toString());
+                return Mono.just(new ApiResponse(ApiResponseStatus.UNAUTHORIZED, HttpResponseStatus.UNAUTHORIZED.toString()));
             }
             if (!authenticationProvider.isPermitted(endpoint.getGroups(), request.getAuthenticationGroups())) {
-                return new ApiResponse(ApiResponseStatus.FORBIDDEN, HttpResponseStatus.FORBIDDEN.toString());
+                return Mono.just(new ApiResponse(ApiResponseStatus.FORBIDDEN, HttpResponseStatus.FORBIDDEN.toString()));
             }
         }
         return ApiEndpointExecutor.execute(new ApiContext(request), endpoint);

@@ -40,18 +40,16 @@ public final class WebsocketApiLocation implements WebsocketRoute {
                             JsonUtils.fromJson(json.get("tag"), String.class)
                     );
 
-                    ApiResponse apiResponse;
+                    final Mono<ApiResponse> apiResponse;
                     if (request.getTag() == null) {
-                        apiResponse = new ApiResponse(ApiResponseStatus.BAD_REQUEST, "MISSING_TAG");
+                        apiResponse = Mono.just(new ApiResponse(ApiResponseStatus.BAD_REQUEST, "MISSING_TAG"));
                     } else if (request.getEndpoint() == null) {
-                        apiResponse = new ApiResponse(ApiResponseStatus.BAD_REQUEST, "MISSING_ENDPOINT");
+                        apiResponse = Mono.just(new ApiResponse(ApiResponseStatus.BAD_REQUEST, "MISSING_ENDPOINT"));
                     } else {
                         apiResponse = ApiExecutor.execute(this.endpoints, request, null);
                     }
 
-                    apiResponse.setTag(request.getTag());
-
-                    return Mono.justOrEmpty(apiResponse);
+                    return apiResponse.doOnNext(response -> response.setTag(request.getTag()));
                 })
                 .onErrorReturn(cause -> cause instanceof JsonSyntaxException || cause.getCause() instanceof JsonSyntaxException, ERROR_JSON_SYNTAX)
                 .onErrorResume(JsonTypeMappingException.class, cause -> { // FIXME: not working

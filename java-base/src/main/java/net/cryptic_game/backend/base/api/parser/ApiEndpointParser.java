@@ -8,6 +8,7 @@ import net.cryptic_game.backend.base.api.data.ApiParameterData;
 import net.cryptic_game.backend.base.api.data.ApiResponse;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import reactor.core.publisher.Mono;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -54,8 +55,9 @@ final class ApiEndpointParser {
             return null;
         }
 
-        if (!method.getReturnType().equals(ApiResponse.class)) {
-            log.error("Endpoint {}.{} cannot be parsed because it does not have the return type {}.", clazz.getName(), method.getName(), ApiResponse.class.getName());
+        if (!method.getReturnType().equals(ApiResponse.class) && !method.getReturnType().equals(Mono.class)) {
+            log.error("Endpoint {}.{} cannot be parsed because it does not have the return type {} or {}.",
+                    clazz.getName(), method.getName(), ApiResponse.class.getName(), Mono.class.getName());
             if (!hasAccess) method.setAccessible(false);
             return null;
         }

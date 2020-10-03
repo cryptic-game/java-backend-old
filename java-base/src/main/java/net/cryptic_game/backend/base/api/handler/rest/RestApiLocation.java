@@ -38,7 +38,7 @@ public final class RestApiLocation implements HttpRoute {
                 .aggregate()
                 .asString()
                 .defaultIfEmpty("{}")
-                .map(content -> {
+                .flatMap(content -> {
                     final ApiRequest apiRequest = new ApiRequest(
                             request.path().substring(request.path().indexOf('/') + 1),
                             content.isBlank() ? JsonUtils.EMPTY_OBJECT : JsonUtils.fromJson(JsonParser.parseString(content), JsonObject.class),
