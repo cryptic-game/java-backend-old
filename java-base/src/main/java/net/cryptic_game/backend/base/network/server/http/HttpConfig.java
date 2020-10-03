@@ -12,7 +12,7 @@ class HttpConfig {
     @Value("${HTTP_HOST:0.0.0.0}")
     private String host;
 
-    @Value("${HTTP_PORT:6060}")
+    @Value("${HTTP_PORT:8080}")
     private int port;
 
     @Value("${HTTP_TLS_CRT:}")
