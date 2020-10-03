@@ -27,7 +27,7 @@ public final class TeamDepartmentEndpoints {
         return new ApiResponse(ApiResponseStatus.OK, this.teamDepartmentRepository.findAll());
     }
 
-    @ApiEndpoint(id = "add", groups = {Groups.CONTENT_ID})
+    @ApiEndpoint(id = "add", groups = Groups.CONTENT_ID)
     public ApiResponse add(@ApiParameter(id = "name") final String name,
                            @ApiParameter(id = "description") final String description) {
         if (this.teamDepartmentRepository.findByName(name).isPresent()) {
@@ -36,7 +36,7 @@ public final class TeamDepartmentEndpoints {
         return new ApiResponse(ApiResponseStatus.OK, this.teamDepartmentRepository.createTeamDepartment(name, description));
     }
 
-    @ApiEndpoint(id = "delete", groups = {Groups.CONTENT_ID})
+    @ApiEndpoint(id = "delete", groups = Groups.CONTENT_ID)
     public ApiResponse delete(@ApiParameter(id = "department_id") final UUID departmentId) {
         final TeamDepartment department = this.teamDepartmentRepository.findById(departmentId).orElse(null);
         if (department == null) return new ApiResponse(ApiResponseStatus.NOT_FOUND, "DEPARTMENT_NOT_FOUND");

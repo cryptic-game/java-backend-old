@@ -1,7 +1,10 @@
 package net.cryptic_game.backend.admin;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
 import lombok.Getter;
 import net.cryptic_game.backend.base.api.Group;
+import net.cryptic_game.backend.base.json.JsonSerializable;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -11,7 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Getter
-public enum Groups implements Group {
+public enum Groups implements Group, JsonSerializable {
 
     USER("user", "User"),
     CONTENT("content", "Content", USER),
@@ -50,5 +53,10 @@ public enum Groups implements Group {
     @Override
     public String toString() {
         return this.id;
+    }
+
+    @Override
+    public JsonElement serialize() {
+        return new JsonPrimitive(this.id);
     }
 }

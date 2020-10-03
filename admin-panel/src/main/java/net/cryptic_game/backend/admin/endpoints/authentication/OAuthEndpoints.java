@@ -8,6 +8,8 @@ import io.netty.handler.codec.http.HttpHeaderValues;
 import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.admin.authentication.AuthenticationErrorException;
 import net.cryptic_game.backend.admin.authentication.OAuthConfig;
+import net.cryptic_game.backend.admin.data.sql.entites.user.AdminUser;
+import net.cryptic_game.backend.admin.data.sql.repositories.user.AdminUserRepository;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.annotations.ApiParameter;
@@ -28,6 +30,7 @@ public final class OAuthEndpoints {
 
     private final OAuthConfig config;
     private final Key key;
+    private final AdminUserRepository adminUserRepository;
 
     @ApiEndpoint(id = "callback")
     public Mono<ApiResponse> callback(@ApiParameter(id = "code") final String code) {
@@ -58,15 +61,22 @@ public final class OAuthEndpoints {
                 .map(jsonElement -> JsonUtils.fromJson(jsonElement, JsonObject.class))
                 .flatMap(response -> {
                     if (!response.has("id")) return Mono.error(new AuthenticationErrorException());
+                    long id = JsonUtils.fromJson(response.get("id"), Long.class);
+                    AdminUser user = adminUserRepository.findById(id).orElse(null);
+                    if (user == null) return Mono.just(new ApiResponse(ApiResponseStatus.FORBIDDEN));
+                    final String name = JsonUtils.fromJson(response.get("name"), String.class);
+                    user.setName(name);
+                    adminUserRepository.save(user);
+
                     return Mono.just(new ApiResponse(ApiResponseStatus.OK, JsonBuilder.create("jwt", SecurityUtils.jwt(
                             key,
-                            JsonBuilder.create("id", JsonUtils.fromJson(response.get("id"), Long.class))
-                                    .add("name", JsonUtils.fromJson(response.get("name"), String.class))
-                                    .add("avatar_url", JsonUtils.fromJson(response.get("avatar_url"), String.class))
-                                    .add("groups", new String[]{"admin"})
+                            JsonBuilder.create("id", id)
+                                    .add("name", name)
+                                    .add("groups", user.getGroups())
                                     .add("exp", OffsetDateTime.now().plusDays(1))
-                                    .build()))));
+                                    .build()))
+                    ));
                 })
-                .onErrorReturn(AuthenticationErrorException.class, new ApiResponse(ApiResponseStatus.INTERNAL_SERVER_ERROR, "BAD_GITHUB_RESPONSE"));
+                .onErrorReturn(AuthenticationErrorException.class, new ApiResponse(ApiResponseStatus.UNAUTHORIZED, "BAD_GITHUB_RESPONSE"));
     }
 }

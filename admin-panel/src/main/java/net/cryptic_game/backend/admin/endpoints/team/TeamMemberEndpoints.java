@@ -30,7 +30,7 @@ public final class TeamMemberEndpoints {
         return new ApiResponse(ApiResponseStatus.OK, this.teamMemberRepository.findAllByDepartmentId(departmentId));
     }
 
-    @ApiEndpoint(id = "add", groups = {Groups.CONTENT_ID})
+    @ApiEndpoint(id = "add", groups = Groups.CONTENT_ID)
     public ApiResponse add(@ApiParameter(id = "name") final String name,
                            @ApiParameter(id = "github_id") final long githubId,
                            @ApiParameter(id = "department_id") final UUID departmentId,
@@ -45,7 +45,7 @@ public final class TeamMemberEndpoints {
         return new ApiResponse(ApiResponseStatus.OK, this.teamMemberRepository.createTeamMember(name, githubId, department, joined));
     }
 
-    @ApiEndpoint(id = "delete", groups = {Groups.CONTENT_ID})
+    @ApiEndpoint(id = "delete", groups = Groups.CONTENT_ID)
     public ApiResponse delete(@ApiParameter(id = "member_id") final UUID memberId) {
         final TeamMember member = this.teamMemberRepository.findById(memberId).orElse(null);
         if (member == null) return new ApiResponse(ApiResponseStatus.NOT_FOUND, "MEMBER_NOT_FOUND");
