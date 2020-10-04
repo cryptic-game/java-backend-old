@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.admin.data.sql.entites.user;
+package net.cryptic_game.backend.admin.data.sql.entities.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,6 +7,8 @@ import lombok.Setter;
 import net.cryptic_game.backend.admin.Groups;
 import net.cryptic_game.backend.admin.data.sql.GroupsAttributeConverter;
 import net.cryptic_game.backend.base.sql.models.TableModel;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -35,6 +37,7 @@ public class AdminUser extends TableModel {
     @JoinTable(name = "admin_user_groups", joinColumns = @JoinColumn(name = "user_id", nullable = false))
     @Column(name = "group_id", nullable = false)
     @Convert(converter = GroupsAttributeConverter.class)
+    @Cascade(CascadeType.DELETE)
     private Set<Groups> groups;
 
     @Column(name = "name")

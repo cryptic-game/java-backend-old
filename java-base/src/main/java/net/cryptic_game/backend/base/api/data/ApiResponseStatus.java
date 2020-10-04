@@ -23,6 +23,7 @@ public enum ApiResponseStatus {
     UNAUTHORIZED(HttpResponseStatus.UNAUTHORIZED, true),
     FORBIDDEN(HttpResponseStatus.FORBIDDEN, true),
     NOT_FOUND(HttpResponseStatus.NOT_FOUND, true),
+    CONFLICT(HttpResponseStatus.CONFLICT, true),
 
     // Server error responses 5xx
     INTERNAL_SERVER_ERROR(HttpResponseStatus.INTERNAL_SERVER_ERROR, true),

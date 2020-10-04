@@ -8,7 +8,7 @@ import io.netty.handler.codec.http.HttpHeaderValues;
 import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.admin.authentication.AuthenticationErrorException;
 import net.cryptic_game.backend.admin.authentication.OAuthConfig;
-import net.cryptic_game.backend.admin.data.sql.entites.user.AdminUser;
+import net.cryptic_game.backend.admin.data.sql.entities.user.AdminUser;
 import net.cryptic_game.backend.admin.data.sql.repositories.user.AdminUserRepository;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
@@ -39,8 +39,8 @@ public final class OAuthEndpoints {
                         .set(HttpHeaderNames.ACCEPT, HttpHeaderValues.APPLICATION_JSON))
                 .post()
                 .uri("https://github.com/login/oauth/access_token")
-                .send(Mono.just(Unpooled.wrappedBuffer(JsonBuilder.create("client_id", config.getClientId())
-                        .add("client_secret", config.getClientSecret())
+                .send(Mono.just(Unpooled.wrappedBuffer(JsonBuilder.create("client_id", this.config.getClientId())
+                        .add("client_secret", this.config.getClientSecret())
                         .add("code", code).build().toString().getBytes())))
                 .responseContent()
                 .aggregate()
@@ -62,23 +62,23 @@ public final class OAuthEndpoints {
                 .flatMap(response -> {
                     if (!response.has("id")) return Mono.error(new AuthenticationErrorException());
                     long id = JsonUtils.fromJson(response.get("id"), Long.class);
-                    final AdminUser user = adminUserRepository.findById(id).orElse(null);
+                    final AdminUser user = this.adminUserRepository.findById(id).orElse(null);
                     if (user == null) return Mono.just(new ApiResponse(ApiResponseStatus.FORBIDDEN));
                     final String name = JsonUtils.fromJson(response.get("name"), String.class);
                     user.setName(name);
-                    adminUserRepository.save(user);
+                    this.adminUserRepository.save(user);
 
                     final OffsetDateTime now = OffsetDateTime.now();
                     return Mono.just(new ApiResponse(ApiResponseStatus.OK, JsonBuilder
                                     .create("access_token", SecurityUtils.jwt(
-                                            key,
+                                            this.key,
                                             JsonBuilder.create("user_id", id)
                                                     .add("name", name)
                                                     .add("groups", user.getGroups())
-                                                    .add("exp", now.plusMinutes(1))
+                                                    .add("exp", now.plusMinutes(15))
                                                     .build()))
                                     .add("refresh_token", SecurityUtils.jwt(
-                                            key,
+                                            this.key,
                                             JsonBuilder.create("user_id", id)
                                                     .add("exp", now.plusWeeks(1))
                                                     .add("iat", now)
