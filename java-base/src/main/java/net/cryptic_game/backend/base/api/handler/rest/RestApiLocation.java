@@ -58,7 +58,10 @@ public final class RestApiLocation implements HttpRoute {
                     final boolean hasData = apiResponse.getJson() != null;
                     final boolean hasMessage = apiResponse.getError() != null;
 
-                    if (!(hasData || hasMessage)) return Mono.just(EMPTY_RESPONSE);
+                    if (!(hasData || hasMessage)) {
+                        if (responseStatus.isError()) return Mono.just(JsonBuilder.create("error", responseStatus.toString()).toString());
+                        return Mono.just(EMPTY_RESPONSE);
+                    }
 
                     final JsonElement jsonResponse = hasData
                             ? apiResponse.getJson()

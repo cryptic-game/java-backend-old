@@ -46,4 +46,8 @@ public enum ApiResponseStatus {
         }
         return null;
     }
+
+    public String toString() {
+        return code + " " + name;
+    }
 }

@@ -62,20 +62,30 @@ public final class OAuthEndpoints {
                 .flatMap(response -> {
                     if (!response.has("id")) return Mono.error(new AuthenticationErrorException());
                     long id = JsonUtils.fromJson(response.get("id"), Long.class);
-                    AdminUser user = adminUserRepository.findById(id).orElse(null);
+                    final AdminUser user = adminUserRepository.findById(id).orElse(null);
                     if (user == null) return Mono.just(new ApiResponse(ApiResponseStatus.FORBIDDEN));
                     final String name = JsonUtils.fromJson(response.get("name"), String.class);
                     user.setName(name);
                     adminUserRepository.save(user);
 
-                    return Mono.just(new ApiResponse(ApiResponseStatus.OK, JsonBuilder.create("jwt", SecurityUtils.jwt(
-                            key,
-                            JsonBuilder.create("id", id)
-                                    .add("name", name)
-                                    .add("groups", user.getGroups())
-                                    .add("exp", OffsetDateTime.now().plusDays(1))
-                                    .build()))
-                    ));
+                    final OffsetDateTime now = OffsetDateTime.now();
+                    return Mono.just(new ApiResponse(ApiResponseStatus.OK, JsonBuilder
+                                    .create("access_token", SecurityUtils.jwt(
+                                            key,
+                                            JsonBuilder.create("user_id", id)
+                                                    .add("name", name)
+                                                    .add("groups", user.getGroups())
+                                                    .add("exp", now.plusMinutes(1))
+                                                    .build()))
+                                    .add("refresh_token", SecurityUtils.jwt(
+                                            key,
+                                            JsonBuilder.create("user_id", id)
+                                                    .add("exp", now.plusWeeks(1))
+                                                    .add("iat", now)
+                                                    .build()
+                                    ))
+                            )
+                    );
                 })
                 .onErrorReturn(AuthenticationErrorException.class, new ApiResponse(ApiResponseStatus.UNAUTHORIZED, "BAD_GITHUB_RESPONSE"));
     }

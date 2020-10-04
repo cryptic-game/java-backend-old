@@ -1,6 +1,5 @@
 package net.cryptic_game.backend.base.api.executor;
 
-import io.netty.handler.codec.http.HttpResponseStatus;
 import net.cryptic_game.backend.base.api.data.ApiAuthenticationProvider;
 import net.cryptic_game.backend.base.api.data.ApiContext;
 import net.cryptic_game.backend.base.api.data.ApiEndpointData;
@@ -25,10 +24,10 @@ public final class ApiExecutor {
         if (endpoint == null) return Mono.just(new ApiResponse(ApiResponseStatus.NOT_FOUND, "ENDPOINT"));
         if (!endpoint.getGroups().isEmpty() && authenticationProvider != null) {
             if (request.getAuthenticationGroups() == null || request.getAuthenticationGroups().isEmpty()) {
-                return Mono.just(new ApiResponse(ApiResponseStatus.UNAUTHORIZED, HttpResponseStatus.UNAUTHORIZED.toString()));
+                return Mono.just(new ApiResponse(ApiResponseStatus.UNAUTHORIZED));
             }
             if (!authenticationProvider.isPermitted(endpoint.getGroups(), request.getAuthenticationGroups())) {
-                return Mono.just(new ApiResponse(ApiResponseStatus.FORBIDDEN, HttpResponseStatus.FORBIDDEN.toString()));
+                return Mono.just(new ApiResponse(ApiResponseStatus.FORBIDDEN));
             }
         }
         return ApiEndpointExecutor.execute(new ApiContext(request), endpoint);
