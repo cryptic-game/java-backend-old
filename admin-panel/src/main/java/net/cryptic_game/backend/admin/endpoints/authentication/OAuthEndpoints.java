@@ -89,4 +89,9 @@ public final class OAuthEndpoints {
                 })
                 .onErrorReturn(AuthenticationErrorException.class, new ApiResponse(ApiResponseStatus.UNAUTHORIZED, "BAD_GITHUB_RESPONSE"));
     }
+
+    @ApiEndpoint(id = "client_id")
+    public ApiResponse clientId() {
+        return new ApiResponse(ApiResponseStatus.OK, JsonBuilder.create("client_id", this.config.getClientId()));
+    }
 }
