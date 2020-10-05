@@ -22,12 +22,20 @@ public final class ApiExecutor {
     public static Mono<ApiResponse> execute(@NotNull final Map<String, ApiEndpointData> endpoints, @NotNull final ApiRequest request, @Nullable final ApiAuthenticationProvider authenticationProvider) {
         final ApiEndpointData endpoint = endpoints.get(request.getEndpoint());
         if (endpoint == null) return Mono.just(new ApiResponse(ApiResponseStatus.NOT_FOUND, "ENDPOINT"));
-        if (!endpoint.getGroups().isEmpty() && authenticationProvider != null) {
-            if (request.getAuthenticationGroups() == null || request.getAuthenticationGroups().isEmpty()) {
-                return Mono.just(new ApiResponse(ApiResponseStatus.UNAUTHORIZED));
-            }
-            if (!authenticationProvider.isPermitted(endpoint.getGroups(), request.getAuthenticationGroups())) {
-                return Mono.just(new ApiResponse(ApiResponseStatus.FORBIDDEN));
+        if (authenticationProvider != null) {
+            if (authenticationProvider.usesGroups()) {
+                if (!endpoint.getGroups().isEmpty()) {
+                    if (request.getAuthenticationGroups() == null || request.getAuthenticationGroups().isEmpty()) {
+                        return Mono.just(new ApiResponse(ApiResponseStatus.UNAUTHORIZED));
+                    }
+                    if (!authenticationProvider.isPermitted(endpoint.getGroups(), request.getAuthenticationGroups())) {
+                        return Mono.just(new ApiResponse(ApiResponseStatus.FORBIDDEN));
+                    }
+                }
+            } else {
+                if (!authenticationProvider.isPermitted(endpoint.getGroups(), request.getAuthenticationGroups())) {
+                    return Mono.just(new ApiResponse(ApiResponseStatus.UNAUTHORIZED));
+                }
             }
         }
         return ApiEndpointExecutor.execute(new ApiContext(request), endpoint);

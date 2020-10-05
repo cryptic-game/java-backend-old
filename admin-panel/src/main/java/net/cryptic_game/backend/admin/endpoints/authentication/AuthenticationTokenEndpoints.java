@@ -1,5 +1,6 @@
 package net.cryptic_game.backend.admin.endpoints.authentication;
 
+import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.admin.data.sql.entities.user.AdminUser;
 import net.cryptic_game.backend.admin.data.sql.repositories.user.AdminUserRepository;
@@ -25,7 +26,8 @@ public final class AuthenticationTokenEndpoints {
     @ApiEndpoint(id = "refresh")
     public ApiResponse refresh(@ApiParameter(id = "refresh_token") final String refreshToken) {
         try {
-            final AdminUser user = this.adminUserRepository.findById(JsonUtils.fromJson(SecurityUtils.parseJwt(this.key, refreshToken).get("user_id"), Long.class)).orElse(null);
+            final JsonObject jsonObject = SecurityUtils.parseJwt(this.key, refreshToken);
+            final AdminUser user = this.adminUserRepository.findById(JsonUtils.fromJson(jsonObject.get("sub"), Long.class)).orElse(null);
             assert user != null;
             return new ApiResponse(ApiResponseStatus.OK, JsonBuilder.create("access_token", SecurityUtils.jwt(
                     this.key,

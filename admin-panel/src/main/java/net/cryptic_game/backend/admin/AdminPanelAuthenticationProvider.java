@@ -8,7 +8,6 @@ import net.cryptic_game.backend.base.json.JsonUtils;
 import net.cryptic_game.backend.base.utils.SecurityUtils;
 
 import java.security.Key;
-import java.time.OffsetDateTime;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -34,9 +33,6 @@ public class AdminPanelAuthenticationProvider implements ApiAuthenticationProvid
         try {
             final Set<Group> groups = new HashSet<>();
             final JsonObject jsonObject = SecurityUtils.parseJwt(key, jwt);
-            if (!jsonObject.has("exp") || JsonUtils.fromJson(jsonObject.get("exp"), OffsetDateTime.class).isBefore(OffsetDateTime.now())) {
-                return Collections.emptySet();
-            }
             JsonUtils.fromJson(jsonObject.get("groups"), JsonArray.class)
                     .forEach(group -> groups.add(Groups.byId(JsonUtils.fromJson(group, String.class))));
             return groups;
@@ -55,5 +51,10 @@ public class AdminPanelAuthenticationProvider implements ApiAuthenticationProvid
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean usesGroups() {
+        return true;
     }
 }

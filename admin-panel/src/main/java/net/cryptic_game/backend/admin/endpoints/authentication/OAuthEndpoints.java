@@ -79,7 +79,7 @@ public final class OAuthEndpoints {
                                                     .build()))
                                     .add("refresh_token", SecurityUtils.jwt(
                                             this.key,
-                                            JsonBuilder.create("user_id", id)
+                                            JsonBuilder.create("sub", id)
                                                     .add("exp", now.plusWeeks(1))
                                                     .add("iat", now)
                                                     .build()

@@ -29,7 +29,10 @@ public final class AdminUserEndpoints {
         user.setId(id);
         user.setName(name);
         if (groups == null || groups.size() == 0) user.setGroups(Set.of(Groups.USER));
-        else user.setGroups(groups.parallelStream().map(Groups::byId).filter(Objects::nonNull).collect(Collectors.toSet()));
+        else {
+            final Set<Groups> collect = groups.parallelStream().map(Groups::byId).filter(Objects::nonNull).collect(Collectors.toSet());
+            user.setGroups(collect.size() > 0 ? collect : Set.of(Groups.USER));
+        }
         return new ApiResponse(ApiResponseStatus.OK, this.adminUserRepository.save(user));
     }
 

@@ -19,4 +19,6 @@ public @interface ApiEndpoint {
 
     @NotNull
     String[] description() default "";
+
+    boolean disabled() default false;
 }

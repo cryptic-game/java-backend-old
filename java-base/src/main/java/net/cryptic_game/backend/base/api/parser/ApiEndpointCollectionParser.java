@@ -36,7 +36,7 @@ public final class ApiEndpointCollectionParser {
     }
 
     @Nullable
-    private static ApiEndpointCollectionData parseCollection(@NotNull final Object instance, @NotNull final Set<Group> groups) {
+    public static ApiEndpointCollectionData parseCollection(@NotNull final Object instance, @NotNull final Set<Group> groups) {
         final Class<?> clazz = instance.getClass();
         if (!clazz.isAnnotationPresent(ApiEndpointCollection.class)) return null;
 
@@ -44,7 +44,7 @@ public final class ApiEndpointCollectionParser {
         return new ApiEndpointCollectionData(
                 endpointCollectionAnnotation.id(),
                 String.join("\n", endpointCollectionAnnotation.description()),
-                ApiEndpointParser.parseEndpoints(instance, clazz, groups)
+                ApiEndpointParser.parseEndpoints(instance, clazz, groups, endpointCollectionAnnotation.disabled())
         );
     }
 }

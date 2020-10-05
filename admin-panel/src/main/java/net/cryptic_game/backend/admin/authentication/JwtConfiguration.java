@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.base.jwt;
+package net.cryptic_game.backend.admin.authentication;
 
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;

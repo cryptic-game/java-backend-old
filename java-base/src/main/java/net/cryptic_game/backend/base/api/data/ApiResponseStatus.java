@@ -7,7 +7,6 @@ import lombok.ToString;
 import org.jetbrains.annotations.NotNull;
 
 @Getter
-@ToString
 @RequiredArgsConstructor
 public enum ApiResponseStatus {
 

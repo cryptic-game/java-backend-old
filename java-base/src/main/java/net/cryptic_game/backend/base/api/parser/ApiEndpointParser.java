@@ -29,9 +29,9 @@ final class ApiEndpointParser {
     }
 
     @NotNull
-    static Map<String, ApiEndpointData> parseEndpoints(@NotNull final Object object, @NotNull final Class<?> clazz, @NotNull final Set<Group> groups) {
+    static Map<String, ApiEndpointData> parseEndpoints(@NotNull final Object object, @NotNull final Class<?> clazz, @NotNull final Set<Group> groups, final boolean disabled) {
         return Arrays.stream(clazz.getDeclaredMethods())
-                .map(method -> parseEndpoint(object, clazz, method, groups))
+                .map(method -> parseEndpoint(object, clazz, method, groups, disabled))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toUnmodifiableMap(ApiEndpointData::getId, Function.identity()));
     }
@@ -40,7 +40,8 @@ final class ApiEndpointParser {
     private static ApiEndpointData parseEndpoint(@NotNull final Object instance,
                                                  @NotNull final Class<?> clazz,
                                                  @NotNull final Method method,
-                                                 @NotNull final Set<Group> groups) {
+                                                 @NotNull final Set<Group> groups,
+                                                 final boolean disabled) {
         final boolean hasAccess;
         try {
             hasAccess = method.canAccess(instance);
@@ -79,7 +80,7 @@ final class ApiEndpointParser {
                         .collect(Collectors.toSet()),
                 String.join("\n", endpointAnnotation.description()),
                 parameters == null ? Collections.emptyList() : parameters,
-                parameters != null,
+                disabled || endpointAnnotation.disabled() || parameters != null,
                 instance, clazz, method);
     }
 }

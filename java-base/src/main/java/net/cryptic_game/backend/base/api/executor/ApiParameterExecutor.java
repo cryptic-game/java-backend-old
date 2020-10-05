@@ -35,6 +35,7 @@ final class ApiParameterExecutor {
     private static Object getParameter(@NotNull final ApiContext context, @NotNull final ApiParameterData parameter) throws ApiParameterException {
         switch (parameter.getType()) {
             case NORMAL:
+            case USER:
                 final JsonElement jsonValue = context.getRequest().getData().get(parameter.getId());
                 if (parameter.isRequired() && (jsonValue == null || jsonValue instanceof JsonNull)) {
                     throw new ApiParameterException("The parameter \"" + parameter.getId() + "\" was not found.");

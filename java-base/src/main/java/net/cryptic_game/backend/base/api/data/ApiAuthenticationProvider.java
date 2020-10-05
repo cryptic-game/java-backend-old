@@ -8,7 +8,9 @@ public interface ApiAuthenticationProvider {
 
     Set<Group> getGroups();
 
-    Set<Group> resolveGroups(String jwt);
+    Set<Group> resolveGroups(String token);
 
     boolean isPermitted(Set<Group> required, Set<Group> provided);
+
+    boolean usesGroups();
 }

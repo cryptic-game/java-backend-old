@@ -1,11 +1,12 @@
 package net.cryptic_game.backend.endpoints;
 
-import net.cryptic_game.backend.base.api.endpoint.ApiEndpoint;
-import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
-import net.cryptic_game.backend.base.api.endpoint.ApiParameter;
-import net.cryptic_game.backend.base.api.endpoint.ApiParameterSpecialType;
-import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
-import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
+import lombok.RequiredArgsConstructor;
+import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
+import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
+import net.cryptic_game.backend.base.api.annotations.ApiParameter;
+import net.cryptic_game.backend.base.api.data.ApiParameterType;
+import net.cryptic_game.backend.base.api.data.ApiResponse;
+import net.cryptic_game.backend.base.api.data.ApiResponseStatus;
 import net.cryptic_game.backend.data.sql.entities.user.User;
 import net.cryptic_game.backend.data.sql.entities.user.UserSetting;
 import net.cryptic_game.backend.data.sql.repositories.user.UserRepository;
@@ -15,30 +16,25 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 @Component
-public final class UserSettingsEndpoints extends ApiEndpointCollection {
+@RequiredArgsConstructor
+@ApiEndpointCollection(id = "settings", description = "Save, update or delete user settings")
+public final class UserSettingsEndpoints {
 
     private final UserRepository userRepository;
     private final UserSettingRepository userSettingRepository;
 
-    public UserSettingsEndpoints(final UserRepository userRepository,
-                                 final UserSettingRepository userSettingRepository) {
-        super("settings", "Save, update or delete user settings");
-        this.userRepository = userRepository;
-        this.userSettingRepository = userSettingRepository;
-    }
-
-    @ApiEndpoint(value = "save", description = "Save or override a user setting")
-    public ApiResponse save(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
-                            @ApiParameter("key") final String key,
-                            @ApiParameter("value") final String value) {
+    @ApiEndpoint(id = "save", description = "Save or override a user setting")
+    public ApiResponse save(@ApiParameter(id = "user_id", type = ApiParameterType.USER) final UUID userId,
+                            @ApiParameter(id = "key") final String key,
+                            @ApiParameter(id = "value") final String value) {
         User user = this.userRepository.findById(userId).orElse(null);
 
         if (key.length() > 256) {
-            return new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_KEY");
+            return new ApiResponse(ApiResponseStatus.BAD_REQUEST, "INVALID_KEY");
         }
 
         if (value.length() > 2048) {
-            return new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_VALUE");
+            return new ApiResponse(ApiResponseStatus.BAD_REQUEST, "INVALID_VALUE");
         }
 
         UserSetting setting = this.userSettingRepository.findByKeyUserAndKeyKey(user, key).orElse(null);
@@ -48,45 +44,45 @@ public final class UserSettingsEndpoints extends ApiEndpointCollection {
         }
         setting.setValue(value);
         this.userSettingRepository.save(setting);
-        return new ApiResponse(ApiResponseType.OK);
+        return new ApiResponse(ApiResponseStatus.OK);
     }
 
-    @ApiEndpoint(value = "get", description = "Get a user setting")
-    public ApiResponse get(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
-                           @ApiParameter("key") final String key) {
+    @ApiEndpoint(id = "get", description = "Get a user setting")
+    public ApiResponse get(@ApiParameter(id = "user_id", type = ApiParameterType.USER) final UUID userId,
+                           @ApiParameter(id = "key") final String key) {
         User user = this.userRepository.findById(userId).orElse(null);
 
         if (key.length() > 256) {
-            return new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_KEY");
+            return new ApiResponse(ApiResponseStatus.BAD_REQUEST, "INVALID_KEY");
         }
 
         UserSetting setting = this.userSettingRepository.findByKeyUserAndKeyKey(user, key).orElse(null);
         if (setting == null) {
-            return new ApiResponse(ApiResponseType.NOT_FOUND, "SETTING");
+            return new ApiResponse(ApiResponseStatus.NOT_FOUND, "SETTING");
         }
-        return new ApiResponse(ApiResponseType.OK, setting);
+        return new ApiResponse(ApiResponseStatus.OK, setting);
     }
 
-    @ApiEndpoint(value = "delete", description = "Delete a user setting")
-    public ApiResponse delete(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId,
-                              @ApiParameter("key") final String key) {
+    @ApiEndpoint(id = "delete", description = "Delete a user setting")
+    public ApiResponse delete(@ApiParameter(id = "user_id", type = ApiParameterType.USER) final UUID userId,
+                              @ApiParameter(id = "key") final String key) {
         User user = this.userRepository.findById(userId).orElse(null);
 
         if (key.length() > 256) {
-            return new ApiResponse(ApiResponseType.BAD_REQUEST, "INVALID_KEY");
+            return new ApiResponse(ApiResponseStatus.BAD_REQUEST, "INVALID_KEY");
         }
 
         UserSetting setting = this.userSettingRepository.findByKeyUserAndKeyKey(user, key).orElse(null);
         if (setting == null) {
-            return new ApiResponse(ApiResponseType.NOT_FOUND, "SETTING");
+            return new ApiResponse(ApiResponseStatus.NOT_FOUND, "SETTING");
         }
         this.userSettingRepository.delete(setting);
-        return new ApiResponse(ApiResponseType.OK);
+        return new ApiResponse(ApiResponseStatus.OK);
     }
 
-    @ApiEndpoint(value = "all", description = "Get all user settings")
-    public ApiResponse all(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId) {
+    @ApiEndpoint(id = "all", description = "Get all user settings")
+    public ApiResponse all(@ApiParameter(id = "user_id", type = ApiParameterType.USER) final UUID userId) {
         User user = this.userRepository.findById(userId).orElse(null);
-        return new ApiResponse(ApiResponseType.OK, this.userSettingRepository.findAllByKeyUser(user));
+        return new ApiResponse(ApiResponseStatus.OK, this.userSettingRepository.findAllByKeyUser(user));
     }
 }
