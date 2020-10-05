@@ -32,7 +32,7 @@ public final class AuthenticationTokenEndpoints {
                     JsonBuilder.create("user_id", user.getId())
                             .add("name", user.getName())
                             .add("groups", user.getGroups())
-                            .add("exp", OffsetDateTime.now().plusMinutes(1))
+                            .add("exp", OffsetDateTime.now().plusMinutes(15))
                             .build()))
             );
         } catch (Exception e) {
