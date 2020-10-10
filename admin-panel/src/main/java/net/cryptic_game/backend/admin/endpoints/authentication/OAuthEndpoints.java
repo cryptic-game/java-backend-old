@@ -23,6 +23,7 @@ import reactor.netty.http.client.HttpClient;
 
 import java.security.Key;
 import java.time.OffsetDateTime;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @ApiEndpointCollection(id = "authentication/oauth")
@@ -64,7 +65,8 @@ public final class OAuthEndpoints {
                     long id = JsonUtils.fromJson(response.get("id"), Long.class);
                     final AdminUser user = this.adminUserRepository.findById(id).orElse(null);
                     if (user == null) return Mono.just(new ApiResponse(ApiResponseStatus.FORBIDDEN));
-                    final String name = JsonUtils.fromJson(response.get("name"), String.class);
+                    final String name = Optional.ofNullable(JsonUtils.fromJson(response.get("name"), String.class))
+                            .orElseGet(() -> JsonUtils.fromJson(response.get("login"), String.class));
                     user.setName(name);
                     this.adminUserRepository.save(user);
 
