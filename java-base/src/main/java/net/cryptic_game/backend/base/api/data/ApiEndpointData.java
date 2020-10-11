@@ -1,7 +1,9 @@
 package net.cryptic_game.backend.base.api.data;
 
 import com.google.gson.JsonElement;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Setter;
 import net.cryptic_game.backend.base.api.Group;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
@@ -13,24 +15,28 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
+@Setter
+@AllArgsConstructor
 public class ApiEndpointData implements JsonSerializable, Comparable<ApiEndpointData> {
 
     @NotNull
-    private final String id;
+    private String id;
     @NotNull
     private final Set<Group> groups;
     @NotNull
     private final String description;
     @NotNull
-    private final List<ApiParameterData> parameters;
+    private List<ApiParameterData> parameters;
     private final boolean enabled;
 
     @NotNull
-    private final Object instance;
+    private Object instance;
     @NotNull
-    private final Class<?> clazz;
+    private Class<?> clazz;
     @NotNull
-    private final Method method;
+    private Method method;
+
+    private final boolean normalParameters;
 
     @NotNull
     @Override

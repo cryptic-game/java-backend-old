@@ -3,7 +3,6 @@ package net.cryptic_game.backend.base.api.data;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 import org.jetbrains.annotations.NotNull;
 
 @Getter
@@ -27,6 +26,7 @@ public enum ApiResponseStatus {
     // Server error responses 5xx
     INTERNAL_SERVER_ERROR(HttpResponseStatus.INTERNAL_SERVER_ERROR, true),
     NOT_IMPLEMENTED(HttpResponseStatus.NOT_IMPLEMENTED, true),
+    BAD_GATEWAY(HttpResponseStatus.BAD_GATEWAY, true),
     SERVICE_UNAVAILABLE(HttpResponseStatus.SERVICE_UNAVAILABLE, true);
 
     // Self made 9xx

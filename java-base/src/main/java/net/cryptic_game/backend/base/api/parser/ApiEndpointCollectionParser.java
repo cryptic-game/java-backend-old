@@ -7,8 +7,8 @@ import net.cryptic_game.backend.base.api.data.ApiEndpointData;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.AbstractMap;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -30,9 +30,10 @@ public final class ApiEndpointCollectionParser {
 
     @NotNull
     public static Map<String, ApiEndpointData> getEndpoints(@NotNull final Set<ApiEndpointCollectionData> collections) {
-        final Map<String, ApiEndpointData> endpoints = new HashMap<>();
-        collections.forEach(collection -> collection.getEndpoints().forEach((key, value) -> endpoints.put(collection.getId() + "/" + key, value)));
-        return endpoints;
+        return collections.parallelStream()
+                .flatMap(collection -> collection.getEndpoints().entrySet().parallelStream()
+                        .map(entry -> new AbstractMap.SimpleEntry<>(collection.getId() + "/" + entry.getKey(), entry.getValue())))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     @Nullable

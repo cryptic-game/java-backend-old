@@ -27,7 +27,7 @@ import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
-public final class RestApiLocation implements HttpRoute {
+public final class RestApiRoute implements HttpRoute {
 
     private static final String EMPTY_RESPONSE = "{}";
     private final Map<String, ApiEndpointData> endpoints;
@@ -49,6 +49,10 @@ public final class RestApiLocation implements HttpRoute {
                 })
                 .onErrorReturn(cause -> cause instanceof JsonSyntaxException || cause.getCause() instanceof JsonSyntaxException,
                         new ApiResponse(ApiResponseStatus.BAD_REQUEST, "JSON_SYNTAX"))
+                .onErrorResume(cause -> {
+                    log.error("Error while executing websocket pipeline.", cause);
+                    return Mono.just(new ApiResponse(ApiResponseStatus.INTERNAL_SERVER_ERROR));
+                })
                 .flatMap(apiResponse -> {
                     final ApiResponseStatus responseStatus = apiResponse.getResponseCode();
 

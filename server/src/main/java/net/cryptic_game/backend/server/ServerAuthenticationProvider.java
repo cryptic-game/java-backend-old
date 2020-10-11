@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.daemon;
+package net.cryptic_game.backend.server;
 
 import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.base.api.Group;
@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.Set;
 
 @RequiredArgsConstructor
-public final class DaemonAuthenticationProvider implements ApiAuthenticationProvider {
+public final class ServerAuthenticationProvider implements ApiAuthenticationProvider {
 
     private final String apiKey;
 

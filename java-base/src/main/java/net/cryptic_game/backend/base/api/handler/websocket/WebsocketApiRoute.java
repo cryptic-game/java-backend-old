@@ -24,7 +24,7 @@ import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
-public final class WebsocketApiLocation implements WebsocketRoute {
+public final class WebsocketApiRoute implements WebsocketRoute {
 
     private static final ApiResponse ERROR_JSON_SYNTAX = new ApiResponse(ApiResponseStatus.BAD_REQUEST, "JSON_SYNTAX");
     private final Map<String, ApiEndpointData> endpoints;

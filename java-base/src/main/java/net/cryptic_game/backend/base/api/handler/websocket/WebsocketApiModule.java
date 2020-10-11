@@ -1,5 +1,6 @@
 package net.cryptic_game.backend.base.api.handler.websocket;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.api.ApiModule;
 import net.cryptic_game.backend.base.api.data.ApiEndpointCollectionData;
@@ -19,6 +20,9 @@ import java.util.stream.Collectors;
 @Configuration
 public class WebsocketApiModule {
 
+    @Getter
+    private final Map<String, ApiEndpointData> endpoints;
+
     public WebsocketApiModule(final ApiModule apiModule,
                               final WebsocketApiConfig config,
                               final HttpServerModule httpServerModule) {
@@ -26,8 +30,8 @@ public class WebsocketApiModule {
                 .parallelStream()
                 .filter(apiEndpointCollectionData -> apiEndpointCollectionData.getApiType().equals(ApiType.WEBSOCKET)
                         || apiEndpointCollectionData.getApiType().equals(ApiType.ALL)).collect(Collectors.toSet());
-        final Map<String, ApiEndpointData> endpoints = ApiEndpointCollectionParser.getEndpoints(collections);
+        this.endpoints = ApiEndpointCollectionParser.getEndpoints(collections);
         if (collections.isEmpty()) return;
-        httpServerModule.getRoutes().addRoute(config.getPath(), new WebsocketApiLocation(endpoints));
+        httpServerModule.getRoutes().addRoute(config.getPath(), new WebsocketApiRoute(this.endpoints));
     }
 }

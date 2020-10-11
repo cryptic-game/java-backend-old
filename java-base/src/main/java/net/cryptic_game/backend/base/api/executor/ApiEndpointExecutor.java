@@ -26,7 +26,7 @@ final class ApiEndpointExecutor {
         Object[] parameters;
 
         try {
-            parameters = ApiParameterExecutor.parseParameters(context, endpoint.getParameters());
+            parameters = ApiParameterExecutor.parseParameters(context, endpoint.getParameters(), endpoint);
         } catch (ApiInternalParameterException e) {
             log.error("Unable to parse parameters.", e);
             return Mono.just(new ApiResponse(ApiResponseStatus.INTERNAL_SERVER_ERROR));

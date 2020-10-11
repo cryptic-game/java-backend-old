@@ -30,6 +30,6 @@ public class RestApiModule {
                         || apiEndpointCollectionData.getApiType().equals(ApiType.ALL)).collect(Collectors.toSet());
         final Map<String, ApiEndpointData> endpoints = ApiEndpointCollectionParser.getEndpoints(this.collections);
         if (endpoints.isEmpty()) return;
-        httpServerModule.getRoutes().addRoute(config.getPath(), new RestApiLocation(endpoints));
+        httpServerModule.getRoutes().addRoute(config.getPath(), new RestApiRoute(endpoints));
     }
 }

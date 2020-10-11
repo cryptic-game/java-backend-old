@@ -81,6 +81,6 @@ final class ApiEndpointParser {
                 String.join("\n", endpointAnnotation.description()),
                 parameters == null ? Collections.emptyList() : parameters,
                 disabled || endpointAnnotation.disabled() || parameters != null,
-                instance, clazz, method);
+                instance, clazz, method, true);
     }
 }

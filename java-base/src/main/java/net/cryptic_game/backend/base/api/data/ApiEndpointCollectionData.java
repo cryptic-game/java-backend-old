@@ -12,7 +12,7 @@ import java.util.TreeSet;
 @Data
 public class ApiEndpointCollectionData implements JsonSerializable, Comparable<ApiEndpointCollectionData> {
 
-    @NotNull
+//    @NotNull
     private final String id;
     @NotNull
     private final String description;

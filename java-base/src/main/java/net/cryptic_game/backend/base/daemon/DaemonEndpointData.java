@@ -15,14 +15,13 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class DaemonEndpointData extends ApiEndpointData {
+public final class DaemonEndpointData extends ApiEndpointData {
 
     private Daemon daemon;
 
-    public DaemonEndpointData(@NotNull String id, @NotNull Set<Group> groups, @NotNull String description, @NotNull List<ApiParameterData> parameters, boolean enabled, @NotNull Object instance, @NotNull Class<?> clazz, @NotNull Method method) {
-        super(id, groups, description, parameters, enabled, instance, clazz, method);
+    public DaemonEndpointData(@NotNull final String id, @NotNull final Set<Group> groups, @NotNull final String description, @NotNull final List<ApiParameterData> parameters, final boolean enabled, @NotNull final Object instance, @NotNull final Class<?> clazz, @NotNull final Method method) {
+        super(id, groups, description, parameters, enabled, instance, clazz, method, true);
     }
-
 
 //    public DaemonEndpoint(final JsonObject json, final Daemon daemon) throws IllegalArgumentException {
 //        if (!(json.has("name") && json.has("arguments"))) {

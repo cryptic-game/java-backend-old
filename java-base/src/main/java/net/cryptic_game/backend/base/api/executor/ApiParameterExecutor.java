@@ -3,6 +3,7 @@ package net.cryptic_game.backend.base.api.executor;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import net.cryptic_game.backend.base.api.data.ApiContext;
+import net.cryptic_game.backend.base.api.data.ApiEndpointData;
 import net.cryptic_game.backend.base.api.data.ApiParameterData;
 import net.cryptic_game.backend.base.api.exception.ApiParameterException;
 import net.cryptic_game.backend.base.json.JsonTypeMappingException;
@@ -19,12 +20,12 @@ final class ApiParameterExecutor {
     }
 
     @NotNull
-    static Object[] parseParameters(@NotNull final ApiContext context, @NotNull final Collection<ApiParameterData> parameters) throws ApiParameterException {
+    static Object[] parseParameters(@NotNull final ApiContext context, @NotNull final Collection<ApiParameterData> parameters, @NotNull final ApiEndpointData endpoint) throws ApiParameterException {
         final Object[] values = new Object[parameters.size()];
 
         int i = 0;
         for (final ApiParameterData parameter : parameters) {
-            values[i] = getParameter(context, parameter);
+            values[i] = getParameter(context, parameter, endpoint);
             i++;
         }
 
@@ -32,7 +33,7 @@ final class ApiParameterExecutor {
     }
 
     @Nullable
-    private static Object getParameter(@NotNull final ApiContext context, @NotNull final ApiParameterData parameter) throws ApiParameterException {
+    private static Object getParameter(@NotNull final ApiContext context, @NotNull final ApiParameterData parameter, @NotNull final ApiEndpointData endpoint) throws ApiParameterException {
         switch (parameter.getType()) {
             case NORMAL:
             case USER:
@@ -47,7 +48,7 @@ final class ApiParameterExecutor {
                     throw new ApiParameterException("Unable to parse parameter \"" + parameter.getId() + "\"", e);
                 }
             case ENDPOINT:
-                return context.getRequest().getEndpoint();
+                return endpoint;
             case TAG:
                 return context.getRequest().getTag();
             case DATA:

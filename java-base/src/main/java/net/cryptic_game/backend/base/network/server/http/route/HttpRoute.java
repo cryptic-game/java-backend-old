@@ -7,5 +7,5 @@ import reactor.netty.http.server.HttpServerResponse;
 
 public interface HttpRoute {
 
-    Publisher<Void> execute(final HttpServerRequest request, final HttpServerResponse response, final ApiAuthenticationProvider authenticationProvider);
+    Publisher<Void> execute(HttpServerRequest request, HttpServerResponse response, ApiAuthenticationProvider authenticationProvider);
 }

@@ -17,7 +17,7 @@ import java.time.Duration;
 @Slf4j
 @Getter
 @RequiredArgsConstructor
-public class HttpServer implements Server {
+public final class HttpServer implements Server {
 
     private final String id;
     private final SocketAddress address;

@@ -9,12 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 @Getter(AccessLevel.PACKAGE)
 class ServerConfig {
 
-    @Value("${HTTP_HOST:0.0.0.0}")
-    private String httpHost;
-
-    @Value("${HTTP_PORT:8080}")
-    private int httpPort;
-
     @Value("${WEBSOCKET_ADDRESS:ws://127.0.0.1:8080/ws/}")
     private String websocketAddress;
 }

@@ -16,7 +16,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiFunction;
 
-public class HttpRoutes {
+public final class HttpRoutes {
 
     private final Set<Entry> routes;
     private final ApiAuthenticationProvider authenticationProvider;
@@ -55,8 +55,7 @@ public class HttpRoutes {
         @Override
         public Publisher<Void> apply(final HttpServerRequest request, final HttpServerResponse response) {
             for (final Entry entry : this.routes) {
-                if ((entry.getMethod() == null || entry.getMethod().equals(request.method()))
-                        && (request.path() + "/").startsWith(entry.getPath())) {
+                if ((request.path() + "/").startsWith(entry.getPath()) && (entry.getMethod() == null || entry.getMethod().equals(request.method()))) {
                     return this.executeRoute(request, response, entry.getRoute(), this.authenticationProvider);
                 }
             }
