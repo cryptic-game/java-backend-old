@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.cryptic_game.backend.base.api.data.ApiEndpointCollectionData;
 import net.cryptic_game.backend.base.api.data.ApiEndpointData;
+import net.cryptic_game.backend.base.api.data.ApiType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -16,8 +17,11 @@ public class DaemonEndpointCollectionData extends ApiEndpointCollectionData {
 
     private Daemon daemon;
 
-    public DaemonEndpointCollectionData(@NotNull String id, @NotNull String description, @NotNull Map<String, ApiEndpointData> endpoints) {
-        super(id, description, endpoints);
+    public DaemonEndpointCollectionData(@NotNull final String id,
+                                        @NotNull final String description,
+                                        @NotNull final ApiType apiType,
+                                        @NotNull final Map<String, ApiEndpointData> endpoints) {
+        super(id, description, apiType, endpoints);
     }
 
 

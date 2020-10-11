@@ -17,6 +17,8 @@ public class ApiEndpointCollectionData implements JsonSerializable, Comparable<A
     @NotNull
     private final String description;
     @NotNull
+    private final ApiType apiType;
+    @NotNull
     private final Map<String, ApiEndpointData> endpoints;
 
     @NotNull

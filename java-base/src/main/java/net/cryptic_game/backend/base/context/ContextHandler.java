@@ -1,7 +1,11 @@
 package net.cryptic_game.backend.base.context;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeansException;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import java.lang.annotation.Annotation;
+import java.util.Map;
 
 @Slf4j
 public final class ContextHandler {
@@ -14,8 +18,12 @@ public final class ContextHandler {
         if (beans.length != 0) this.applicationContext.register(beans);
     }
 
-    public <T> T getBean(final Class<? extends T> clazz) {
+    public <T> T getBean(final Class<T> clazz) {
         return this.applicationContext.getBean(clazz);
+    }
+
+    public Map<String, Object> getBeansWithAnnotation(final Class<? extends Annotation> annotationType) throws BeansException {
+        return this.applicationContext.getBeansWithAnnotation(annotationType);
     }
 
     public void register(final Class<?>... classes) {

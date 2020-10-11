@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import lombok.Setter;
 import net.cryptic_game.backend.base.api.data.ApiEndpointCollectionData;
 import net.cryptic_game.backend.base.api.data.ApiEndpointData;
+import net.cryptic_game.backend.base.api.data.ApiType;
 import net.cryptic_game.backend.base.daemon.Daemon;
 import net.cryptic_game.backend.base.daemon.DaemonEndpointCollectionData;
 import net.cryptic_game.backend.base.daemon.DaemonEndpointData;
@@ -38,7 +39,7 @@ public final class DaemonUtils {
     }
 
     @NotNull
-    public static Set<ApiEndpointCollectionData> parseDaemonEndpoints(@NotNull final Daemon daemon, @NotNull final JsonArray collections) {
+    public static Set<ApiEndpointCollectionData> parseDaemonEndpoints(@NotNull final Daemon daemon, @NotNull final JsonArray collections, @NotNull final ApiType apiType) {
         return JsonUtils.fromArray(collections, new HashSet<>(), json -> {
             final JsonObject jsonObject = JsonUtils.fromJson(json, JsonObject.class);
 
@@ -57,7 +58,7 @@ public final class DaemonUtils {
                     })
                     .collect(Collectors.toMap(ApiEndpointData::getId, endpoint -> endpoint));
 
-            final DaemonEndpointCollectionData collection = new DaemonEndpointCollectionData(name, description, endpoints);
+            final DaemonEndpointCollectionData collection = new DaemonEndpointCollectionData(name, description, apiType, endpoints);
             collection.setDaemon(daemon);
             return collection;
         });
