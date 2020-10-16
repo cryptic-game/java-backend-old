@@ -2,10 +2,6 @@
     "extends": [
         "config:base"
     ],
-    "reviewers": [
-        "JannikEmmerich",
-        "MarcelCoding"
-    ],
     "labels": [
         "dependencies"
     ],
