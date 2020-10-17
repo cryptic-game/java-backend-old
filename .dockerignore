@@ -179,3 +179,4 @@ gradle-app.setting
 config.yaml
 tmp
 lombok.config
+Dockerfile
