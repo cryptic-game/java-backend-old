@@ -2,59 +2,55 @@ package net.cryptic_game.backend.base.api.executor;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
-import net.cryptic_game.backend.base.api.data.ApiContext;
-import net.cryptic_game.backend.base.api.data.ApiEndpointData;
+import com.google.gson.JsonSyntaxException;
 import net.cryptic_game.backend.base.api.data.ApiParameterData;
+import net.cryptic_game.backend.base.api.data.ApiRequest;
+import net.cryptic_game.backend.base.api.exception.ApiInternalParameterException;
 import net.cryptic_game.backend.base.api.exception.ApiParameterException;
-import net.cryptic_game.backend.base.json.JsonTypeMappingException;
 import net.cryptic_game.backend.base.json.JsonUtils;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Collection;
 
 final class ApiParameterExecutor {
+
+    private static final Object[] EMPTY_PARAMETERS = new Object[0];
 
     private ApiParameterExecutor() {
         throw new UnsupportedOperationException();
     }
 
-    @NotNull
-    static Object[] parseParameters(@NotNull final ApiContext context, @NotNull final Collection<ApiParameterData> parameters, @NotNull final ApiEndpointData endpoint) throws ApiParameterException {
-        final Object[] values = new Object[parameters.size()];
+    static Object[] parseParameters(final ApiRequest request, final ApiParameterData[] parameters) throws ApiParameterException {
+        if (parameters.length == 0) return EMPTY_PARAMETERS;
 
-        int i = 0;
-        for (final ApiParameterData parameter : parameters) {
-            values[i] = getParameter(context, parameter, endpoint);
-            i++;
+        final Object[] values = new Object[parameters.length];
+        for (int i = 0; i < parameters.length; i++) {
+            values[i] = getParameter(request, parameters[i]);
         }
 
         return values;
     }
 
-    @Nullable
-    private static Object getParameter(@NotNull final ApiContext context, @NotNull final ApiParameterData parameter, @NotNull final ApiEndpointData endpoint) throws ApiParameterException {
+    private static Object getParameter(final ApiRequest request, final ApiParameterData parameter) throws ApiParameterException {
         switch (parameter.getType()) {
-            case NORMAL:
             case USER:
-                final JsonElement jsonValue = context.getRequest().getData().get(parameter.getId());
-                if (parameter.isRequired() && (jsonValue == null || jsonValue instanceof JsonNull)) {
-                    throw new ApiParameterException("The parameter \"" + parameter.getId() + "\" was not found.");
-                }
-
-                try {
-                    return JsonUtils.fromJson(jsonValue, parameter.getClassType());
-                } catch (JsonTypeMappingException e) {
-                    throw new ApiParameterException("Unable to parse parameter \"" + parameter.getId() + "\"", e);
-                }
-            case ENDPOINT:
-                return endpoint;
-            case TAG:
-                return context.getRequest().getTag();
-            case DATA:
-                return context.getRequest().getData();
+            case NORMAL:
+                return parseNormalParameter(request, parameter);
+            case REQUEST:
+                return request;
             default:
                 throw new IllegalArgumentException();
+        }
+    }
+
+    private static Object parseNormalParameter(final ApiRequest request, final ApiParameterData parameter) throws ApiParameterException {
+        final JsonElement jsonValue = request.getData().get(parameter.getId());
+        if (parameter.isRequired() && (jsonValue == null || jsonValue instanceof JsonNull)) {
+            throw new ApiParameterException(String.format("PARAMETER_%s_MISSING", parameter.getId()));
+        }
+
+        try {
+            return JsonUtils.fromJson(jsonValue, parameter.getClassType());
+        } catch (JsonSyntaxException e) {
+            throw new ApiInternalParameterException(String.format("Unable to parse parameter \"%s\" in endpoint \"%s\": %s",
+                    parameter.getId(), request.getEndpoint(), e.getMessage()), e);
         }
     }
 }

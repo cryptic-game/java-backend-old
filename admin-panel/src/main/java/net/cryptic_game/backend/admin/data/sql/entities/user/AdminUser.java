@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.cryptic_game.backend.admin.Groups;
+import net.cryptic_game.backend.admin.Group;
 import net.cryptic_game.backend.admin.data.sql.GroupsAttributeConverter;
 import net.cryptic_game.backend.base.sql.models.TableModel;
 import org.hibernate.annotations.Cascade;
@@ -33,12 +33,12 @@ public class AdminUser extends TableModel {
     @Column(name = "id", updatable = false, unique = true)
     private long id;
 
-    @ElementCollection(targetClass = Groups.class, fetch = FetchType.EAGER)
+    @ElementCollection(targetClass = Group.class, fetch = FetchType.EAGER)
     @JoinTable(name = "admin_user_groups", joinColumns = @JoinColumn(name = "user_id", nullable = false))
     @Column(name = "group_id", nullable = false)
     @Convert(converter = GroupsAttributeConverter.class)
     @Cascade(CascadeType.DELETE)
-    private Set<Groups> groups;
+    private Set<Group> groups;
 
     @Column(name = "name")
     private String name;

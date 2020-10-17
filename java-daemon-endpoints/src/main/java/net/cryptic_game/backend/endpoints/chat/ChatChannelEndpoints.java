@@ -1,13 +1,15 @@
 package net.cryptic_game.backend.endpoints.chat;
 
 import com.google.gson.JsonObject;
+import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.RequiredArgsConstructor;
+import net.cryptic_game.backend.DaemonAuthenticator;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.annotations.ApiParameter;
 import net.cryptic_game.backend.base.api.data.ApiParameterType;
 import net.cryptic_game.backend.base.api.data.ApiResponse;
-import net.cryptic_game.backend.base.api.data.ApiResponseStatus;
+import net.cryptic_game.backend.base.api.data.ApiType;
 import net.cryptic_game.backend.base.utils.DaemonUtils;
 import net.cryptic_game.backend.data.sql.entities.chat.ChatAction;
 import net.cryptic_game.backend.data.sql.entities.chat.ChatChannel;
@@ -24,7 +26,7 @@ import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
-@ApiEndpointCollection(id = "chat/channel", description = "join/leave/create/rename a channel. Get information/members")
+@ApiEndpointCollection(id = "chat/channel", description = "join/leave/create/rename a channel. Get information/members", type = ApiType.REST, authenticator = DaemonAuthenticator.class)
 public final class ChatChannelEndpoints {
 
     private final ChatChannelRepository channelRepository;
@@ -36,12 +38,12 @@ public final class ChatChannelEndpoints {
     public ApiResponse create(@ApiParameter(id = "user_id", type = ApiParameterType.USER) final UUID userId,
                               @ApiParameter(id = "name") final String channelName) {
         if (channelName.length() > ChatChannel.MAX_NAME_LENGTH) {
-            return new ApiResponse(ApiResponseStatus.BAD_REQUEST, "NAME_TOO_LONG");
+            return new ApiResponse(HttpResponseStatus.BAD_REQUEST, "NAME_TOO_LONG");
         }
 
         final ChatChannel newChannel = this.channelRepository.create(channelName);
         this.channelAccessRepository.create(this.userRepository.findById(userId).orElse(null), newChannel);
-        return new ApiResponse(ApiResponseStatus.OK, newChannel);
+        return new ApiResponse(HttpResponseStatus.OK, newChannel);
     }
 
     @ApiEndpoint(id = "rename")
@@ -52,17 +54,17 @@ public final class ChatChannelEndpoints {
         final ChatChannel channel = this.channelRepository.findById(channelId).orElse(null);
 
         if (channel == null) {
-            return new ApiResponse(ApiResponseStatus.NOT_FOUND, "CHANNEL_NOT_FOUND");
+            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "CHANNEL_NOT_FOUND");
         }
 
         if (newName.length() > ChatChannel.MAX_NAME_LENGTH) {
-            return new ApiResponse(ApiResponseStatus.BAD_REQUEST, "NAME_TOO_LONG");
+            return new ApiResponse(HttpResponseStatus.BAD_REQUEST, "NAME_TOO_LONG");
         }
 
         final List<User> members = this.channelAccessRepository.getMembers(channel);
 
         if (!members.contains(user)) {
-            return new ApiResponse(ApiResponseStatus.UNAUTHORIZED, "ACCESS_DENIED");
+            return new ApiResponse(HttpResponseStatus.UNAUTHORIZED, "ACCESS_DENIED");
         }
 
         channel.setName(newName);
@@ -71,7 +73,7 @@ public final class ChatChannelEndpoints {
         members.parallelStream()
                 .filter(member -> !member.equals(user))
                 .forEach(member -> DaemonUtils.notifyUser(member.getId(), ChatAction.CHANNEL_RENAMED, channel));
-        return new ApiResponse(ApiResponseStatus.OK, channel);
+        return new ApiResponse(HttpResponseStatus.OK, channel);
     }
 
     @ApiEndpoint(id = "info")
@@ -79,10 +81,10 @@ public final class ChatChannelEndpoints {
         final ChatChannel channel = this.channelRepository.findById(channelId).orElse(null);
 
         if (channel == null) {
-            return new ApiResponse(ApiResponseStatus.NOT_FOUND, "CHANNEL_NOT_FOUND");
+            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "CHANNEL_NOT_FOUND");
         }
 
-        return new ApiResponse(ApiResponseStatus.OK, channel);
+        return new ApiResponse(HttpResponseStatus.OK, channel);
     }
 
     @ApiEndpoint(id = "members")
@@ -92,16 +94,16 @@ public final class ChatChannelEndpoints {
         final ChatChannel channel = this.channelRepository.findById(channelId).orElse(null);
 
         if (channel == null) {
-            return new ApiResponse(ApiResponseStatus.NOT_FOUND, "CHANNEL_NOT_FOUND");
+            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "CHANNEL_NOT_FOUND");
         }
 
         final List<User> members = this.channelAccessRepository.getMembers(channel);
 
         if (!members.contains(user)) {
-            return new ApiResponse(ApiResponseStatus.UNAUTHORIZED, "ACCESS_DENIED");
+            return new ApiResponse(HttpResponseStatus.UNAUTHORIZED, "ACCESS_DENIED");
         }
 
-        return new ApiResponse(ApiResponseStatus.OK, members);
+        return new ApiResponse(HttpResponseStatus.OK, members);
     }
 
     @ApiEndpoint(id = "join")
@@ -111,19 +113,19 @@ public final class ChatChannelEndpoints {
         final ChatChannel channel = this.channelRepository.findById(channelId).orElse(null);
 
         if (channel == null) {
-            return new ApiResponse(ApiResponseStatus.NOT_FOUND, "CHANNEL_NOT_FOUND");
+            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "CHANNEL_NOT_FOUND");
         }
 
         final List<User> members = this.channelAccessRepository.getMembers(channel);
 
         if (members.contains(user)) {
-            return new ApiResponse(ApiResponseStatus.CONFLICT, "ALREADY_IN_CHANNEL");
+            return new ApiResponse(HttpResponseStatus.CONFLICT, "ALREADY_IN_CHANNEL");
         }
 
         final JsonObject userJson = user.serializePublic();
         members.parallelStream().forEach(member -> DaemonUtils.notifyUser(member.getId(), ChatAction.MEMBER_JOIN, userJson));
 
-        return new ApiResponse(ApiResponseStatus.OK, this.channelAccessRepository.create(user, channel));
+        return new ApiResponse(HttpResponseStatus.OK, this.channelAccessRepository.create(user, channel));
     }
 
     @ApiEndpoint(id = "leave")
@@ -133,13 +135,13 @@ public final class ChatChannelEndpoints {
         final ChatChannel channel = this.channelRepository.findById(channelId).orElse(null);
 
         if (channel == null) {
-            return new ApiResponse(ApiResponseStatus.NOT_FOUND, "CHANNEL_NOT_FOUND");
+            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "CHANNEL_NOT_FOUND");
         }
 
         ChatChannelAccess channelAccess = this.channelAccessRepository.findByUserAndChannel(user, channel).orElse(null);
 
         if (channelAccess == null) {
-            return new ApiResponse(ApiResponseStatus.BAD_REQUEST, "NOT_IN_CHANNEL");
+            return new ApiResponse(HttpResponseStatus.BAD_REQUEST, "NOT_IN_CHANNEL");
         }
 
         this.channelAccessRepository.delete(channelAccess);
@@ -153,17 +155,17 @@ public final class ChatChannelEndpoints {
             this.channelRepository.delete(channel);
         }
 
-        return new ApiResponse(ApiResponseStatus.OK);
+        return new ApiResponse(HttpResponseStatus.OK);
     }
 
     @ApiEndpoint(id = "list")
     public ApiResponse list(@ApiParameter(id = "user_id", type = ApiParameterType.USER) final UUID userId,
                             @ApiParameter(id = "public", required = false) final boolean isPublic) {
         if (isPublic) {
-            return new ApiResponse(ApiResponseStatus.OK, this.channelRepository.findAll());
+            return new ApiResponse(HttpResponseStatus.OK, this.channelRepository.findAll());
         } else {
             User user = this.userRepository.findById(userId).orElse(null);
-            return new ApiResponse(ApiResponseStatus.OK, this.channelAccessRepository.getChannels(user));
+            return new ApiResponse(HttpResponseStatus.OK, this.channelAccessRepository.getChannels(user));
         }
     }
 }

@@ -1,7 +1,8 @@
 package net.cryptic_game.backend.base.api.annotations;
 
+import net.cryptic_game.backend.base.api.ApiAuthenticator;
+import net.cryptic_game.backend.base.api.ApiService;
 import net.cryptic_game.backend.base.api.data.ApiType;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 import java.lang.annotation.ElementType;
@@ -14,14 +15,13 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ApiEndpointCollection {
 
-    @NotNull
     String id();
 
-    @NotNull
     String[] description() default "";
 
-    @NotNull
-    ApiType apiType() default ApiType.REST;
+    ApiType type();
 
     boolean disabled() default false;
+
+    Class<? extends ApiAuthenticator> authenticator() default ApiService.DefaultApiAuthenticator.class;
 }

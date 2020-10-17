@@ -1,18 +1,18 @@
 package net.cryptic_game.backend.admin.data.sql;
 
-import net.cryptic_game.backend.admin.Groups;
+import net.cryptic_game.backend.admin.Group;
 
 import javax.persistence.AttributeConverter;
 
-public class GroupsAttributeConverter implements AttributeConverter<Groups, String> {
+public class GroupsAttributeConverter implements AttributeConverter<Group, String> {
 
     @Override
-    public String convertToDatabaseColumn(final Groups attribute) {
+    public String convertToDatabaseColumn(final Group attribute) {
         return attribute.getId();
     }
 
     @Override
-    public Groups convertToEntityAttribute(String dbData) {
-        return Groups.byId(dbData);
+    public Group convertToEntityAttribute(String dbData) {
+        return Group.byId(dbData);
     }
 }

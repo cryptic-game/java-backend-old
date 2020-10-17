@@ -1,12 +1,14 @@
 package net.cryptic_game.backend.endpoints;
 
+import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.RequiredArgsConstructor;
+import net.cryptic_game.backend.DaemonAuthenticator;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.annotations.ApiParameter;
 import net.cryptic_game.backend.base.api.data.ApiParameterType;
 import net.cryptic_game.backend.base.api.data.ApiResponse;
-import net.cryptic_game.backend.base.api.data.ApiResponseStatus;
+import net.cryptic_game.backend.base.api.data.ApiType;
 import net.cryptic_game.backend.data.sql.entities.user.User;
 import net.cryptic_game.backend.data.sql.entities.user.UserSetting;
 import net.cryptic_game.backend.data.sql.repositories.user.UserRepository;
@@ -17,7 +19,7 @@ import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
-@ApiEndpointCollection(id = "settings", description = "Save, update or delete user settings")
+@ApiEndpointCollection(id = "settings", description = "Save, update or delete user settings", type = ApiType.REST, authenticator = DaemonAuthenticator.class)
 public final class UserSettingsEndpoints {
 
     private final UserRepository userRepository;
@@ -30,11 +32,11 @@ public final class UserSettingsEndpoints {
         User user = this.userRepository.findById(userId).orElse(null);
 
         if (key.length() > 256) {
-            return new ApiResponse(ApiResponseStatus.BAD_REQUEST, "INVALID_KEY");
+            return new ApiResponse(HttpResponseStatus.BAD_REQUEST, "INVALID_KEY");
         }
 
         if (value.length() > 2048) {
-            return new ApiResponse(ApiResponseStatus.BAD_REQUEST, "INVALID_VALUE");
+            return new ApiResponse(HttpResponseStatus.BAD_REQUEST, "INVALID_VALUE");
         }
 
         UserSetting setting = this.userSettingRepository.findByKeyUserAndKeyKey(user, key).orElse(null);
@@ -44,7 +46,7 @@ public final class UserSettingsEndpoints {
         }
         setting.setValue(value);
         this.userSettingRepository.save(setting);
-        return new ApiResponse(ApiResponseStatus.OK);
+        return new ApiResponse(HttpResponseStatus.OK);
     }
 
     @ApiEndpoint(id = "get", description = "Get a user setting")
@@ -53,14 +55,14 @@ public final class UserSettingsEndpoints {
         User user = this.userRepository.findById(userId).orElse(null);
 
         if (key.length() > 256) {
-            return new ApiResponse(ApiResponseStatus.BAD_REQUEST, "INVALID_KEY");
+            return new ApiResponse(HttpResponseStatus.BAD_REQUEST, "INVALID_KEY");
         }
 
         UserSetting setting = this.userSettingRepository.findByKeyUserAndKeyKey(user, key).orElse(null);
         if (setting == null) {
-            return new ApiResponse(ApiResponseStatus.NOT_FOUND, "SETTING");
+            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "SETTING");
         }
-        return new ApiResponse(ApiResponseStatus.OK, setting);
+        return new ApiResponse(HttpResponseStatus.OK, setting);
     }
 
     @ApiEndpoint(id = "delete", description = "Delete a user setting")
@@ -69,20 +71,20 @@ public final class UserSettingsEndpoints {
         User user = this.userRepository.findById(userId).orElse(null);
 
         if (key.length() > 256) {
-            return new ApiResponse(ApiResponseStatus.BAD_REQUEST, "INVALID_KEY");
+            return new ApiResponse(HttpResponseStatus.BAD_REQUEST, "INVALID_KEY");
         }
 
         UserSetting setting = this.userSettingRepository.findByKeyUserAndKeyKey(user, key).orElse(null);
         if (setting == null) {
-            return new ApiResponse(ApiResponseStatus.NOT_FOUND, "SETTING");
+            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "SETTING");
         }
         this.userSettingRepository.delete(setting);
-        return new ApiResponse(ApiResponseStatus.OK);
+        return new ApiResponse(HttpResponseStatus.OK);
     }
 
     @ApiEndpoint(id = "all", description = "Get all user settings")
     public ApiResponse all(@ApiParameter(id = "user_id", type = ApiParameterType.USER) final UUID userId) {
         User user = this.userRepository.findById(userId).orElse(null);
-        return new ApiResponse(ApiResponseStatus.OK, this.userSettingRepository.findAllByKeyUser(user));
+        return new ApiResponse(HttpResponseStatus.OK, this.userSettingRepository.findAllByKeyUser(user));
     }
 }

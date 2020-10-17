@@ -1,7 +1,6 @@
 package net.cryptic_game.backend.base.network.server.http.route;
 
 import io.netty.handler.codec.http.HttpResponseStatus;
-import net.cryptic_game.backend.base.api.data.ApiAuthenticationProvider;
 import net.cryptic_game.backend.base.utils.HttpUtils;
 import org.reactivestreams.Publisher;
 import reactor.netty.http.server.HttpServerRequest;
@@ -18,7 +17,7 @@ public class FileHttpRoute implements HttpRoute {
     }
 
     @Override
-    public Publisher<Void> execute(final HttpServerRequest request, final HttpServerResponse response, final ApiAuthenticationProvider authenticationProvider) {
+    public Publisher<Void> execute(final HttpServerRequest request, final HttpServerResponse response) {
         final File file = new File(this.baseDir, request.path());
 
         if (!file.getPath().startsWith(this.baseDir.getPath())

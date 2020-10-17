@@ -1,24 +1,24 @@
 package net.cryptic_game.backend.base.api.data;
 
-import lombok.AccessLevel;
+import com.google.gson.JsonElement;
 import lombok.Data;
-import lombok.Setter;
-import net.cryptic_game.backend.base.json.JsonTransient;
-import org.jetbrains.annotations.NotNull;
+import net.cryptic_game.backend.base.json.JsonBuilder;
+import net.cryptic_game.backend.base.json.JsonSerializable;
 
 @Data
-@Setter(AccessLevel.NONE)
-public final class ApiParameterData {
+public final class ApiParameterData implements JsonSerializable {
 
-    @NotNull
     private final String id;
     private final boolean required;
-    @JsonTransient
-    @NotNull
     private final ApiParameterType type;
-    @NotNull
     private final String description;
-    @JsonTransient
-    @NotNull
     private final Class<?> classType;
+
+    @Override
+    public JsonElement serialize() {
+        return JsonBuilder.create("id", this.id)
+                .add("required", this.required)
+                .add("description", this.description)
+                .build();
+    }
 }

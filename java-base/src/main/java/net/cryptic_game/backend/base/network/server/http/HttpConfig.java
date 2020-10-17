@@ -15,8 +15,8 @@ class HttpConfig {
     @Value("${HTTP_PORT:8080}")
     private int port;
 
-    @Value("${HTTP_TLS_CRT:}")
-    private String crtPath;
+    @Value("${HTTP_TLS_CERT:}")
+    private String certPath;
 
     @Value("${HTTP_TLS_KEY:}")
     private String keyPath;

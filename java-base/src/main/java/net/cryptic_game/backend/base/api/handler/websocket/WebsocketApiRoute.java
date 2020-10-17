@@ -3,15 +3,14 @@ package net.cryptic_game.backend.base.api.handler.websocket;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
+import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.api.data.ApiEndpointData;
 import net.cryptic_game.backend.base.api.data.ApiRequest;
 import net.cryptic_game.backend.base.api.data.ApiResponse;
-import net.cryptic_game.backend.base.api.data.ApiResponseStatus;
 import net.cryptic_game.backend.base.api.executor.ApiExecutor;
 import net.cryptic_game.backend.base.json.JsonBuilder;
-import net.cryptic_game.backend.base.json.JsonTypeMappingException;
 import net.cryptic_game.backend.base.json.JsonUtils;
 import net.cryptic_game.backend.base.network.server.http.route.WebsocketRoute;
 import org.reactivestreams.Publisher;
@@ -19,6 +18,7 @@ import reactor.core.publisher.Mono;
 import reactor.netty.http.websocket.WebsocketInbound;
 import reactor.netty.http.websocket.WebsocketOutbound;
 
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
@@ -26,55 +26,66 @@ import java.util.Map;
 @RequiredArgsConstructor
 public final class WebsocketApiRoute implements WebsocketRoute {
 
-    private static final ApiResponse ERROR_JSON_SYNTAX = new ApiResponse(ApiResponseStatus.BAD_REQUEST, "JSON_SYNTAX");
+    private static final Charset CHARSET = StandardCharsets.UTF_8;
     private final Map<String, ApiEndpointData> endpoints;
 
     @Override
     public Publisher<Void> apply(final WebsocketInbound inbound, final WebsocketOutbound outbound) {
-        return outbound.sendString(inbound.receiveFrames()
-                .flatMap(frame -> {
-                    final JsonObject json = JsonUtils.fromJson(JsonParser.parseString(frame.content().toString(StandardCharsets.UTF_8)), JsonObject.class);
-                    final ApiRequest request = new ApiRequest(
-                            JsonUtils.fromJson(json.get("endpoint"), String.class),
-                            JsonUtils.fromJson(json.get("data"), JsonObject.class) == null ? JsonUtils.EMPTY_OBJECT : JsonUtils.fromJson(json.get("data"), JsonObject.class),
-                            JsonUtils.fromJson(json.get("tag"), String.class)
-                    );
+        return outbound.sendString(
+                inbound.receive()
+                        .asString(CHARSET)
+                        .filter(content -> !content.isBlank())
+                        .map(content -> this.parseRequest(JsonUtils.fromJson(JsonParser.parseString(content), JsonObject.class), inbound))
+                        .flatMap(this::execute)
+                        .onErrorResume(this::handleError)
+                        .map(this::parseResponse),
+                CHARSET
+        );
+    }
 
-                    final Mono<ApiResponse> apiResponse;
-                    if (request.getTag() == null) {
-                        apiResponse = Mono.just(new ApiResponse(ApiResponseStatus.BAD_REQUEST, "MISSING_TAG"));
-                    } else if (request.getEndpoint() == null) {
-                        apiResponse = Mono.just(new ApiResponse(ApiResponseStatus.BAD_REQUEST, "MISSING_ENDPOINT"));
-                    } else {
-                        apiResponse = ApiExecutor.execute(this.endpoints, request, null);
-                    }
+    private ApiRequest parseRequest(final JsonObject json, final WebsocketInbound websocketInbound) {
+        return new WebsocketApiRequest(
+                JsonUtils.fromJson(json.get("endpoint"), String.class),
+                JsonUtils.fromJson(json.get("data"), JsonObject.class) == null ? JsonUtils.EMPTY_OBJECT : JsonUtils.fromJson(json.get("data"), JsonObject.class),
+                JsonUtils.fromJson(json.get("tag"), String.class),
+                websocketInbound
+        );
+    }
 
-                    return apiResponse.doOnNext(response -> response.setTag(request.getTag()));
-                })
-                .onErrorReturn(cause -> cause instanceof JsonSyntaxException || cause.getCause() instanceof JsonSyntaxException, ERROR_JSON_SYNTAX)
-                .onErrorResume(JsonTypeMappingException.class, cause -> { // FIXME: not working
-                    if (cause.getCause() instanceof JsonSyntaxException) // FIXME: not working
-                        return Mono.just(ERROR_JSON_SYNTAX); // FIXME: not working
+    private Mono<ApiResponse> execute(final ApiRequest request) {
+        final Mono<ApiResponse> apiResponse;
 
-                    log.error("Error while executing websocket pipeline.", cause); // FIXME: not working
-                    return Mono.just(new ApiResponse(ApiResponseStatus.INTERNAL_SERVER_ERROR)); // FIXME: not working
-                }) // FIXME: not working
-                .onErrorResume(cause -> { // FIXME: not working
-                    log.error("Error while executing websocket pipeline.", cause); // FIXME: not working
-                    return Mono.just(new ApiResponse(ApiResponseStatus.INTERNAL_SERVER_ERROR)); // FIXME: not working
-                }) // FIXME: not working
-                .map(response -> {
-                    final JsonBuilder builder = JsonBuilder.create(
-                            "status",
-                            JsonBuilder.create("code", response.getResponseCode().getCode())
-                                    .add("name", response.getResponseCode().getName())
-                    );
+        if (request.getTag() == null) {
+            apiResponse = Mono.just(new ApiResponse(HttpResponseStatus.BAD_REQUEST, "MISSING_TAG"));
+        } else if (request.getEndpoint() == null) {
+            apiResponse = Mono.just(new ApiResponse(HttpResponseStatus.BAD_REQUEST, "MISSING_ENDPOINT"));
+        } else {
+            apiResponse = ApiExecutor.execute(this.endpoints, request);
+        }
 
-                    if (response.getTag() != null) builder.add("tag", response.getTag());
-                    if (response.getError() != null) builder.add("message", response.getError());
-                    if (response.getJson() != null) builder.add("data", response.getJson());
+        return apiResponse.doOnNext(response -> response.setTag(request.getTag()));
+    }
 
-                    return builder.build().toString();
-                }));
+    private String parseResponse(final ApiResponse response) {
+        final JsonObject status = JsonBuilder.create("code", response.getStatus().code())
+                .add("name", response.getStatus().reasonPhrase())
+                .build();
+
+        final JsonBuilder builder = JsonBuilder.create("status", status);
+
+        if (response.getTag() != null) builder.add("tag", response.getTag());
+        if (response.getError() != null) builder.add("message", response.getError());
+        if (response.getJson() != null) builder.add("data", response.getJson());
+
+        return builder.build().toString();
+    }
+
+    private Mono<ApiResponse> handleError(final Throwable cause) {
+        if (cause instanceof JsonSyntaxException) {
+            return Mono.just(new ApiResponse(HttpResponseStatus.BAD_REQUEST, "JSON_SYNTAX"));
+        }
+
+        log.error("Error while executing websocket pipeline.", cause);
+        return Mono.just(new ApiResponse(HttpResponseStatus.INTERNAL_SERVER_ERROR));
     }
 }

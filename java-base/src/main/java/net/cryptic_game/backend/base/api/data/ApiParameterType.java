@@ -13,17 +13,7 @@ public enum ApiParameterType {
     USER,
 
     /**
-     * {@link String}.
+     * {@link ApiRequest}.
      */
-    TAG,
-
-    /**
-     * {@link ApiEndpointData}.
-     */
-    ENDPOINT,
-
-    /**
-     * {@link com.google.gson.JsonObject}.
-     */
-    DATA
+    REQUEST
 }

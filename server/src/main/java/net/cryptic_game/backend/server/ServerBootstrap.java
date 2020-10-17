@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.BaseConfig;
 import net.cryptic_game.backend.base.Bootstrap;
 import net.cryptic_game.backend.base.api.data.ApiEndpointData;
-import net.cryptic_game.backend.base.api.handler.websocket.WebsocketApiModule;
+import net.cryptic_game.backend.base.api.handler.websocket.WebsocketApiService;
 import net.cryptic_game.backend.server.daemon.DaemonHandler;
 import net.cryptic_game.backend.server.server.websocket.WebSocketDaemonEndpoints;
 import org.springframework.context.annotation.ComponentScan;
@@ -19,9 +19,9 @@ public class ServerBootstrap {
     public ServerBootstrap(final Bootstrap bootstrap,
                            final BaseConfig baseConfig,
                            final ServerConfig config,
-                           final WebsocketApiModule websocketApiModule) {
+                           final WebsocketApiService websocketApiService) {
 
-        final DaemonHandler daemonHandler = new DaemonHandler(websocketApiModule.getEndpoints(), baseConfig.getApiToken(), bootstrap);
+        final DaemonHandler daemonHandler = new DaemonHandler(websocketApiService.getEndpoints(), baseConfig.getApiToken(), bootstrap);
 
         try {
             daemonHandler.setSend(new WebSocketDaemonEndpoints(baseConfig.getApiToken()),

@@ -6,13 +6,13 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.http.HttpHeaderNames;
+import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.api.annotations.ApiParameter;
 import net.cryptic_game.backend.base.api.data.ApiEndpointData;
 import net.cryptic_game.backend.base.api.data.ApiParameterType;
 import net.cryptic_game.backend.base.api.data.ApiResponse;
-import net.cryptic_game.backend.base.api.data.ApiResponseStatus;
 import net.cryptic_game.backend.base.daemon.Daemon;
 import net.cryptic_game.backend.base.daemon.DaemonEndpointData;
 import net.cryptic_game.backend.base.json.JsonBuilder;
@@ -43,12 +43,12 @@ public final class WebSocketDaemonEndpoints {
 //        final Session session = client.get(Session.class);
 //
 //        if (session == null) {
-//            return new ApiResponse(ApiResponseStatus.UNAUTHORIZED, "INVALID_SESSION");
+//            return new ApiResponse(HttpResponseStatus.UNAUTHORIZED, "INVALID_SESSION");
 //        }
 
         if (!(endpoint instanceof DaemonEndpointData)) {
             log.warn("Method {}.send(...) was executed with wrong endpoint {}.", WebSocketDaemonEndpoints.class.getName(), endpoint.getId());
-            return Mono.just(new ApiResponse(ApiResponseStatus.INTERNAL_SERVER_ERROR));
+            return Mono.just(new ApiResponse(HttpResponseStatus.INTERNAL_SERVER_ERROR));
         }
 
         final DaemonEndpointData daemonEndpoint = (DaemonEndpointData) endpoint;
@@ -66,25 +66,25 @@ public final class WebSocketDaemonEndpoints {
 
         return daemonResponse.responseSingle((response, byteBufMono) -> byteBufMono.asString(CHARSET)
                 .map(content -> {
-                    final Optional<ApiResponseStatus> responseCode = Optional.ofNullable(ApiResponseStatus.getByCode(response.status().code()));
+                    final Optional<HttpResponseStatus> responseCode = Optional.ofNullable(HttpResponseStatus.getByCode(response.status().code()));
                     if (responseCode.isEmpty()) {
                         log.warn("Unknown status code from daemon {} at endpoint {}: {}.", daemon.getName(), endpoint.getId(), response.status().toString());
-                        return new ApiResponse(ApiResponseStatus.BAD_GATEWAY);
+                        return new ApiResponse(HttpResponseStatus.BAD_GATEWAY);
                     }
 
                     return new ApiResponse(responseCode.get(), JsonParser.parseString(content));
                 })
                 .onErrorResume(JsonParseException.class, cause -> {
                     log.warn("Wrong json syntax from daemon {} at endpoint {}.", daemon.getName(), endpoint.getId());
-                    return Mono.just(new ApiResponse(ApiResponseStatus.BAD_GATEWAY));
+                    return Mono.just(new ApiResponse(HttpResponseStatus.BAD_GATEWAY));
                 })
                 .onErrorResume(cause -> cause.getMessage().contains("refused"), cause -> {
                     log.warn("Unable to connect to daemon {}: {}", daemon.getName(), cause.getMessage());
-                    return Mono.just(new ApiResponse(ApiResponseStatus.BAD_GATEWAY));
+                    return Mono.just(new ApiResponse(HttpResponseStatus.BAD_GATEWAY));
                 })
                 .onErrorResume(cause -> {
                     log.warn("Error while receiving daemon {}'s (endpoint {}) response.", daemon.getName(), endpoint.getId(), cause);
-                    return Mono.just(new ApiResponse(ApiResponseStatus.INTERNAL_SERVER_ERROR));
+                    return Mono.just(new ApiResponse(HttpResponseStatus.INTERNAL_SERVER_ERROR));
                 })
         );
     }

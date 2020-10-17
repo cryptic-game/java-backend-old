@@ -1,7 +1,6 @@
 package net.cryptic_game.backend.base.api.annotations;
 
 import net.cryptic_game.backend.base.api.data.ApiParameterType;
-import org.jetbrains.annotations.NotNull;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -12,14 +11,11 @@ import java.lang.annotation.Target;
 @Target(ElementType.PARAMETER)
 public @interface ApiParameter {
 
-    @NotNull
     String id();
 
     boolean required() default true;
 
-    @NotNull
     ApiParameterType type() default ApiParameterType.NORMAL;
 
-    @NotNull
-    String[] description() default "";
+    String[] description() default {};
 }

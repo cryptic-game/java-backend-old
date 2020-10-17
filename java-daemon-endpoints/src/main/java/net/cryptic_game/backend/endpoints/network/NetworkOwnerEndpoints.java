@@ -1,12 +1,14 @@
 package net.cryptic_game.backend.endpoints.network;
 
+import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.RequiredArgsConstructor;
+import net.cryptic_game.backend.DaemonAuthenticator;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.annotations.ApiParameter;
 import net.cryptic_game.backend.base.api.data.ApiParameterType;
 import net.cryptic_game.backend.base.api.data.ApiResponse;
-import net.cryptic_game.backend.base.api.data.ApiResponseStatus;
+import net.cryptic_game.backend.base.api.data.ApiType;
 import net.cryptic_game.backend.data.sql.entities.device.Device;
 import net.cryptic_game.backend.data.sql.entities.network.Network;
 import net.cryptic_game.backend.data.sql.entities.network.NetworkMember;
@@ -23,7 +25,7 @@ import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
-@ApiEndpointCollection(id = "network/owner")
+@ApiEndpointCollection(id = "network/owner", type = ApiType.REST, authenticator = DaemonAuthenticator.class)
 public final class NetworkOwnerEndpoints {
 
     private final UserRepository userRepository;
@@ -40,18 +42,18 @@ public final class NetworkOwnerEndpoints {
         final Device device = this.deviceRepository.findById(deviceId).orElse(null);
 
         if (device == null) {
-            return new ApiResponse(ApiResponseStatus.NOT_FOUND, "DEVICE");
+            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "DEVICE");
         }
 
         if (!this.deviceAccessRepository.hasAccess(device, user)) {
-            return new ApiResponse(ApiResponseStatus.FORBIDDEN, "ACCESS_DENIED");
+            return new ApiResponse(HttpResponseStatus.FORBIDDEN, "ACCESS_DENIED");
         }
 
         if (!device.isPoweredOn()) {
-            return new ApiResponse(ApiResponseStatus.FORBIDDEN, "DEVICE_NOT_ONLINE");
+            return new ApiResponse(HttpResponseStatus.FORBIDDEN, "DEVICE_NOT_ONLINE");
         }
 
-        return new ApiResponse(ApiResponseStatus.OK, this.networkRepository.findAllByOwner(device));
+        return new ApiResponse(HttpResponseStatus.OK, this.networkRepository.findAllByOwner(device));
     }
 
     @ApiEndpoint(id = "invitations")
@@ -61,18 +63,18 @@ public final class NetworkOwnerEndpoints {
         final User user = this.userRepository.findById(userId).orElseThrow();
 
         if (network == null) {
-            return new ApiResponse(ApiResponseStatus.NOT_FOUND, "NETWORK");
+            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "NETWORK");
         }
 
         if (!this.deviceAccessRepository.hasAccess(network.getOwner(), user)) {
-            return new ApiResponse(ApiResponseStatus.FORBIDDEN, "ACCESS_DENIED");
+            return new ApiResponse(HttpResponseStatus.FORBIDDEN, "ACCESS_DENIED");
         }
 
         if (!network.getOwner().isPoweredOn()) {
-            return new ApiResponse(ApiResponseStatus.FORBIDDEN, "DEVICE_NOT_ONLINE");
+            return new ApiResponse(HttpResponseStatus.FORBIDDEN, "DEVICE_NOT_ONLINE");
         }
 
-        return new ApiResponse(ApiResponseStatus.OK, this.networkInvitationRepository.findAllByKeyNetwork(network));
+        return new ApiResponse(HttpResponseStatus.OK, this.networkInvitationRepository.findAllByKeyNetwork(network));
     }
 
     @ApiEndpoint(id = "kick")
@@ -84,33 +86,33 @@ public final class NetworkOwnerEndpoints {
         final Device device = this.deviceRepository.findById(deviceId).orElse(null);
 
         if (network == null) {
-            return new ApiResponse(ApiResponseStatus.NOT_FOUND, "NETWORK");
+            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "NETWORK");
         }
 
         if (!this.deviceAccessRepository.hasAccess(network.getOwner(), user)) {
-            return new ApiResponse(ApiResponseStatus.FORBIDDEN, "ACCESS_DENIED");
+            return new ApiResponse(HttpResponseStatus.FORBIDDEN, "ACCESS_DENIED");
         }
 
         if (!network.getOwner().isPoweredOn()) {
-            return new ApiResponse(ApiResponseStatus.FORBIDDEN, "DEVICE_NOT_ONLINE");
+            return new ApiResponse(HttpResponseStatus.FORBIDDEN, "DEVICE_NOT_ONLINE");
         }
 
         if (network.getOwner().equals(device)) {
-            return new ApiResponse(ApiResponseStatus.FORBIDDEN, "CAN_NOT_KICK_OWNER");
+            return new ApiResponse(HttpResponseStatus.FORBIDDEN, "CAN_NOT_KICK_OWNER");
         }
 
         if (device == null) {
-            return new ApiResponse(ApiResponseStatus.NOT_FOUND, "DEVICE");
+            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "DEVICE");
         }
 
         final NetworkMember networkMember = this.networkMemberRepository.findByKeyDeviceAndKeyNetwork(device, network).orElse(null);
 
         if (networkMember == null) {
-            return new ApiResponse(ApiResponseStatus.NOT_FOUND, "MEMBER");
+            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "MEMBER");
         }
 
         this.networkMemberRepository.delete(networkMember);
-        return new ApiResponse(ApiResponseStatus.OK);
+        return new ApiResponse(HttpResponseStatus.OK);
     }
 
     @ApiEndpoint(id = "delete")
@@ -120,21 +122,21 @@ public final class NetworkOwnerEndpoints {
         Network network = this.networkRepository.findById(networkId).orElse(null);
 
         if (network == null) {
-            return new ApiResponse(ApiResponseStatus.NOT_FOUND, "NETWORK");
+            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "NETWORK");
         }
 
         if (!this.deviceAccessRepository.hasAccess(network.getOwner(), user)) {
-            return new ApiResponse(ApiResponseStatus.FORBIDDEN, "ACCESS_DENIED");
+            return new ApiResponse(HttpResponseStatus.FORBIDDEN, "ACCESS_DENIED");
         }
 
         if (!network.getOwner().isPoweredOn()) {
-            return new ApiResponse(ApiResponseStatus.FORBIDDEN, "DEVICE_NOT_ONLINE");
+            return new ApiResponse(HttpResponseStatus.FORBIDDEN, "DEVICE_NOT_ONLINE");
         }
 
         this.networkMemberRepository.deleteAllByKeyNetwork(network);
         this.networkInvitationRepository.deleteAllByKeyNetwork(network);
         this.networkRepository.delete(network);
 
-        return new ApiResponse(ApiResponseStatus.OK);
+        return new ApiResponse(HttpResponseStatus.OK);
     }
 }

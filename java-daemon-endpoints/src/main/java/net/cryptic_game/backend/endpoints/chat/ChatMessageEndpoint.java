@@ -1,12 +1,14 @@
 package net.cryptic_game.backend.endpoints.chat;
 
+import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.RequiredArgsConstructor;
+import net.cryptic_game.backend.DaemonAuthenticator;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.annotations.ApiParameter;
 import net.cryptic_game.backend.base.api.data.ApiParameterType;
 import net.cryptic_game.backend.base.api.data.ApiResponse;
-import net.cryptic_game.backend.base.api.data.ApiResponseStatus;
+import net.cryptic_game.backend.base.api.data.ApiType;
 import net.cryptic_game.backend.base.utils.DaemonUtils;
 import net.cryptic_game.backend.data.sql.entities.chat.ChatAction;
 import net.cryptic_game.backend.data.sql.entities.chat.ChatChannel;
@@ -24,7 +26,7 @@ import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
-@ApiEndpointCollection(id = "chat/message", description = "send/whisper/delete/list messages")
+@ApiEndpointCollection(id = "chat/message", description = "send/whisper/delete/list messages", type = ApiType.REST, authenticator = DaemonAuthenticator.class)
 public final class ChatMessageEndpoint {
 
     private final UserRepository userRepository;
@@ -40,17 +42,17 @@ public final class ChatMessageEndpoint {
         final ChatChannel channel = this.channelRepository.findById(channelId).orElse(null);
 
         if (channel == null) {
-            return new ApiResponse(ApiResponseStatus.NOT_FOUND, "CHANNEL_NOT_FOUND");
+            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "CHANNEL_NOT_FOUND");
         }
 
         if (message.length() > ChatMessage.MAX_MESSAGE_LENGTH) {
-            return new ApiResponse(ApiResponseStatus.BAD_REQUEST, "MESSAGE_TOO_LONG");
+            return new ApiResponse(HttpResponseStatus.BAD_REQUEST, "MESSAGE_TOO_LONG");
         }
 
         final List<User> members = this.channelAccessRepository.getMembers(channel);
 
         if (!members.contains(user)) {
-            return new ApiResponse(ApiResponseStatus.UNAUTHORIZED, "ACCESS_DENIED");
+            return new ApiResponse(HttpResponseStatus.UNAUTHORIZED, "ACCESS_DENIED");
         }
 
         final ChatMessage msg = this.messageRepository.create(user, channel, message, null);
@@ -59,7 +61,7 @@ public final class ChatMessageEndpoint {
                 .filter(member -> !member.equals(user))
                 .forEach(member -> DaemonUtils.notifyUser(member.getId(), ChatAction.SEND_MESSAGE, msg));
 
-        return new ApiResponse(ApiResponseStatus.OK, msg);
+        return new ApiResponse(HttpResponseStatus.OK, msg);
     }
 
     @ApiEndpoint(id = "whisper")
@@ -72,30 +74,30 @@ public final class ChatMessageEndpoint {
         final User target = this.userRepository.findById(targetId).orElse(null);
 
         if (channel == null) {
-            return new ApiResponse(ApiResponseStatus.NOT_FOUND, "CHANNEL_NOT_FOUND");
+            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "CHANNEL_NOT_FOUND");
         }
 
         if (target == null) {
-            return new ApiResponse(ApiResponseStatus.NOT_FOUND, "TARGET_NOT_FOUND");
+            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "TARGET_NOT_FOUND");
         }
 
         if (message.length() > ChatMessage.MAX_MESSAGE_LENGTH) {
-            return new ApiResponse(ApiResponseStatus.BAD_REQUEST, "MESSAGE_TOO_LONG");
+            return new ApiResponse(HttpResponseStatus.BAD_REQUEST, "MESSAGE_TOO_LONG");
         }
 
         final List<User> members = this.channelAccessRepository.getMembers(channel);
 
         if (!members.contains(user)) {
-            return new ApiResponse(ApiResponseStatus.UNAUTHORIZED, "ACCESS_DENIED");
+            return new ApiResponse(HttpResponseStatus.UNAUTHORIZED, "ACCESS_DENIED");
         }
 
         if (!members.contains(target)) {
-            return new ApiResponse(ApiResponseStatus.NOT_FOUND, "TARGET_NOT_IN_CHANNEL");
+            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "TARGET_NOT_IN_CHANNEL");
         }
 
         final ChatMessage msg = this.messageRepository.create(user, channel, message, target);
         DaemonUtils.notifyUser(target.getId(), ChatAction.WHISPER_MESSAGE, msg);
-        return new ApiResponse(ApiResponseStatus.OK, msg);
+        return new ApiResponse(HttpResponseStatus.OK, msg);
     }
 
     @ApiEndpoint(id = "delete")
@@ -105,11 +107,11 @@ public final class ChatMessageEndpoint {
         final ChatMessage message = this.messageRepository.findById(msgId).orElse(null);
 
         if (message == null) {
-            return new ApiResponse(ApiResponseStatus.NOT_FOUND, "MESSAGE_NOT_FOUND");
+            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "MESSAGE_NOT_FOUND");
         }
 
         if (!message.getUser().equals(user)) {
-            return new ApiResponse(ApiResponseStatus.UNAUTHORIZED, "NOT_YOUR_MESSAGE");
+            return new ApiResponse(HttpResponseStatus.UNAUTHORIZED, "NOT_YOUR_MESSAGE");
         }
 
         if (message.getTarget() == null) {
@@ -121,7 +123,7 @@ public final class ChatMessageEndpoint {
         }
 
         this.messageRepository.delete(message);
-        return new ApiResponse(ApiResponseStatus.OK);
+        return new ApiResponse(HttpResponseStatus.OK);
     }
 
     @ApiEndpoint(id = "list")
@@ -133,12 +135,12 @@ public final class ChatMessageEndpoint {
         final ChatChannel channel = this.channelRepository.findById(channelId).orElse(null);
 
         if (channel == null) {
-            return new ApiResponse(ApiResponseStatus.NOT_FOUND, "CHANNEL_NOT_FOUND");
+            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "CHANNEL_NOT_FOUND");
         }
 
         if (this.channelAccessRepository.findByUserAndChannel(user, channel).isEmpty()) {
-            return new ApiResponse(ApiResponseStatus.UNAUTHORIZED, "ACCESS_DENIED");
+            return new ApiResponse(HttpResponseStatus.UNAUTHORIZED, "ACCESS_DENIED");
         }
-        return new ApiResponse(ApiResponseStatus.OK, messageRepository.getMessages(channel, user, PageRequest.of(page, pageSize)));
+        return new ApiResponse(HttpResponseStatus.OK, messageRepository.getMessages(channel, user, PageRequest.of(page, pageSize)));
     }
 }

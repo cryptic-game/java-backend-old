@@ -3,14 +3,11 @@ package net.cryptic_game.backend.base.daemon;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import net.cryptic_game.backend.base.api.Group;
+import net.cryptic_game.backend.base.api.ApiAuthenticator;
 import net.cryptic_game.backend.base.api.data.ApiEndpointData;
 import net.cryptic_game.backend.base.api.data.ApiParameterData;
-import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Method;
-import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -19,11 +16,12 @@ public final class DaemonEndpointData extends ApiEndpointData {
 
     private Daemon daemon;
 
-    public DaemonEndpointData(@NotNull final String id, @NotNull final Set<Group> groups, @NotNull final String description, @NotNull final List<ApiParameterData> parameters, final boolean enabled, @NotNull final Object instance, @NotNull final Class<?> clazz, @NotNull final Method method) {
-        super(id, groups, description, parameters, enabled, instance, clazz, method, true);
+    public DaemonEndpointData(final String id, final String description, final ApiParameterData[] parameters, final int authentication, final boolean enabled, final ApiAuthenticator authenticator, final Object instance, final Class<?> clazz, final Method method, final Daemon daemon) {
+        super(id, description, parameters, authentication, enabled, authenticator, instance, clazz, method);
+        this.daemon = daemon;
     }
 
-//    public DaemonEndpoint(final JsonObject json, final Daemon daemon) throws IllegalArgumentException {
+    //    public DaemonEndpoint(final JsonObject json, final Daemon daemon) throws IllegalArgumentException {
 //        if (!(json.has("name") && json.has("arguments"))) {
 //            throw new IllegalArgumentException("Missing \"name\" or \"arguments\" property.");
 //        }

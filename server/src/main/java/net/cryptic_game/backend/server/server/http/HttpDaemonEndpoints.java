@@ -17,16 +17,16 @@ public final class HttpDaemonEndpoints {
 //                              @ApiParameter(id = "api_token", optional = true) final String apiToken,
 //                              @ApiParameter(id ="topic") final String topic,
 //                              @ApiParameter(id ="data") final JsonElement data) {
-//        if (!(this.apiToken.isBlank() || this.apiToken.equals(apiToken))) return new ApiResponse(ApiResponseStatus.UNAUTHORIZED);
+//        if (!(this.apiToken.isBlank() || this.apiToken.equals(apiToken))) return new ApiResponse(HttpResponseStatus.UNAUTHORIZED);
 //
 //        final Set<ApiClient> userClients = this.clients.stream().filter(client -> {
 //            final Session session = client.get(Session.class);
 //            return session != null && session.getUserId().equals(userId);
 //        }).collect(Collectors.toUnmodifiableSet());
 //
-//        if (userClients.size() == 0) return new ApiResponse(ApiResponseStatus.NOT_FOUND, "USER_CLIENT");
+//        if (userClients.size() == 0) return new ApiResponse(HttpResponseStatus.NOT_FOUND, "USER_CLIENT");
 //
 //        userClients.forEach(client -> client.getChannel().writeAndFlush(new TextWebSocketFrame(new ApiNotification(topic, data).serialize().toString())));
-//        return new ApiResponse(ApiResponseStatus.OK);
+//        return new ApiResponse(HttpResponseStatus.OK);
 //    }
 }

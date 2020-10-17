@@ -3,7 +3,6 @@ package net.cryptic_game.backend.server;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import lombok.Getter;
-import net.cryptic_game.backend.base.api.Group;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 
 import java.util.Arrays;

@@ -1,8 +1,6 @@
 package net.cryptic_game.backend.server;
 
 import lombok.RequiredArgsConstructor;
-import net.cryptic_game.backend.base.api.Group;
-import net.cryptic_game.backend.base.api.data.ApiAuthenticationProvider;
 
 import java.util.Collections;
 import java.util.Set;

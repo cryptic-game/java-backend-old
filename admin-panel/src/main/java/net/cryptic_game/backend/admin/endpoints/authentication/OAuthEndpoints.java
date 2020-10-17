@@ -5,6 +5,7 @@ import com.google.gson.JsonParser;
 import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.http.HttpHeaderNames;
 import io.netty.handler.codec.http.HttpHeaderValues;
+import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.admin.authentication.AuthenticationErrorException;
 import net.cryptic_game.backend.admin.authentication.OAuthConfig;
@@ -14,7 +15,7 @@ import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.annotations.ApiParameter;
 import net.cryptic_game.backend.base.api.data.ApiResponse;
-import net.cryptic_game.backend.base.api.data.ApiResponseStatus;
+import net.cryptic_game.backend.base.api.data.ApiType;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonUtils;
 import net.cryptic_game.backend.base.utils.SecurityUtils;
@@ -26,7 +27,7 @@ import java.time.OffsetDateTime;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@ApiEndpointCollection(id = "authentication/oauth")
+@ApiEndpointCollection(id = "authentication/oauth", description = "login with github", type = ApiType.REST)
 public final class OAuthEndpoints {
 
     private final OAuthConfig config;
@@ -64,14 +65,14 @@ public final class OAuthEndpoints {
                     if (!response.has("id")) return Mono.error(new AuthenticationErrorException());
                     long id = JsonUtils.fromJson(response.get("id"), Long.class);
                     final AdminUser user = this.adminUserRepository.findById(id).orElse(null);
-                    if (user == null) return Mono.just(new ApiResponse(ApiResponseStatus.FORBIDDEN));
+                    if (user == null) return Mono.just(new ApiResponse(HttpResponseStatus.FORBIDDEN));
                     final String name = Optional.ofNullable(JsonUtils.fromJson(response.get("name"), String.class))
                             .orElseGet(() -> JsonUtils.fromJson(response.get("login"), String.class));
                     user.setName(name);
                     this.adminUserRepository.save(user);
 
                     final OffsetDateTime now = OffsetDateTime.now();
-                    return Mono.just(new ApiResponse(ApiResponseStatus.OK, JsonBuilder
+                    return Mono.just(new ApiResponse(HttpResponseStatus.OK, JsonBuilder
                                     .create("access_token", SecurityUtils.jwt(
                                             this.key,
                                             JsonBuilder.create("user_id", id)
@@ -89,11 +90,11 @@ public final class OAuthEndpoints {
                             )
                     );
                 })
-                .onErrorReturn(AuthenticationErrorException.class, new ApiResponse(ApiResponseStatus.UNAUTHORIZED, "BAD_GITHUB_RESPONSE"));
+                .onErrorReturn(AuthenticationErrorException.class, new ApiResponse(HttpResponseStatus.UNAUTHORIZED, "BAD_GITHUB_RESPONSE"));
     }
 
     @ApiEndpoint(id = "client_id")
     public ApiResponse clientId() {
-        return new ApiResponse(ApiResponseStatus.OK, JsonBuilder.create("client_id", this.config.getClientId()));
+        return new ApiResponse(HttpResponseStatus.OK, JsonBuilder.create("client_id", this.config.getClientId()));
     }
 }
