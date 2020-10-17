@@ -70,3 +70,9 @@ jobs:
         with:
           name: java-daemon
           path: java-daemon/build/install/java-daemon
+
+      - name: Upload Admin Panel
+        uses: actions/upload-artifact@v2
+        with:
+          name: admin-panel
+          path: admin-panel/build/install/admin-panel
