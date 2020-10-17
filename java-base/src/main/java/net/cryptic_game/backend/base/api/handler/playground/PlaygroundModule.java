@@ -26,7 +26,7 @@ public class PlaygroundModule {
 //      .directory( config.getPath(), Path.of("www/playground"));
     }
 
-    public void addCollections(final Collection<ApiEndpointCollectionData> collections) {
+    public final void addCollections(final Collection<ApiEndpointCollectionData> collections) {
         this.collections.addAll(collections);
     }
 }

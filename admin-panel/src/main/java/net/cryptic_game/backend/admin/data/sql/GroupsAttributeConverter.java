@@ -4,7 +4,7 @@ import net.cryptic_game.backend.admin.Group;
 
 import javax.persistence.AttributeConverter;
 
-public class GroupsAttributeConverter implements AttributeConverter<Group, String> {
+public final class GroupsAttributeConverter implements AttributeConverter<Group, String> {
 
     @Override
     public String convertToDatabaseColumn(final Group attribute) {
@@ -12,7 +12,7 @@ public class GroupsAttributeConverter implements AttributeConverter<Group, Strin
     }
 
     @Override
-    public Group convertToEntityAttribute(String dbData) {
+    public Group convertToEntityAttribute(final String dbData) {
         return Group.byId(dbData);
     }
 }

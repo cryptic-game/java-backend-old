@@ -5,13 +5,13 @@ import net.cryptic_game.backend.base.api.exception.ApiException;
 import org.jetbrains.annotations.NotNull;
 
 @NoArgsConstructor
-public class AuthenticationErrorException extends ApiException {
+public final class AuthenticationErrorException extends ApiException {
 
-    public AuthenticationErrorException(@NotNull String message) {
+    public AuthenticationErrorException(final @NotNull String message) {
         super(message);
     }
 
-    public AuthenticationErrorException(@NotNull String message, @NotNull Throwable cause) {
+    public AuthenticationErrorException(final @NotNull String message, final @NotNull Throwable cause) {
         super(message, cause);
     }
 }

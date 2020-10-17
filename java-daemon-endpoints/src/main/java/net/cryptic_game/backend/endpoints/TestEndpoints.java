@@ -13,7 +13,8 @@ import net.cryptic_game.backend.base.utils.DaemonUtils;
 
 import java.util.UUID;
 
-@ApiEndpointCollection(id = "test", description = "Some endpoint for testing existing and new features.", disabled = true, type = ApiType.REST, authenticator = DaemonAuthenticator.class)
+@ApiEndpointCollection(id = "test", description = "Some endpoint for testing existing and new features.", disabled = true,
+        type = ApiType.REST, authenticator = DaemonAuthenticator.class)
 public final class TestEndpoints {
 
     @ApiEndpoint(id = "timeout")

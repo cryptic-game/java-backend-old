@@ -19,7 +19,7 @@ public class ApiEndpointCollectionData implements JsonSerializable, Comparable<A
     private final Map<String, ApiEndpointData> endpoints;
 
     @Override
-    public JsonElement serialize() {
+    public final JsonElement serialize() {
         return JsonBuilder.create("id", this.id)
                 .add("description", this.description)
                 .add("endpoints", new TreeSet<>(this.endpoints.values()))
@@ -28,7 +28,7 @@ public class ApiEndpointCollectionData implements JsonSerializable, Comparable<A
     }
 
     @Override
-    public int compareTo(@NotNull final ApiEndpointCollectionData other) {
+    public final int compareTo(@NotNull final ApiEndpointCollectionData other) {
         return this.id.compareTo(other.id);
     }
 }

@@ -8,7 +8,7 @@ import reactor.netty.http.server.HttpServerResponse;
 
 import java.io.File;
 
-public class FileHttpRoute implements HttpRoute {
+public final class FileHttpRoute implements HttpRoute {
 
     private final File baseDir;
 

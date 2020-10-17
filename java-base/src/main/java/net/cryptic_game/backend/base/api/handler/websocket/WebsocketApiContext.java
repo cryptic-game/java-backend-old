@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Data
-public class WebsocketApiContext {
+public final class WebsocketApiContext {
 
     @Getter(AccessLevel.NONE)
     private final Map<Class<?>, Object> values;
@@ -37,11 +37,15 @@ public class WebsocketApiContext {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        WebsocketApiContext that = (WebsocketApiContext) o;
-        return Objects.equals(values, that.values) &&
-                Objects.equals(getOutbound(), that.getOutbound());
+        final WebsocketApiContext that = (WebsocketApiContext) o;
+        return Objects.equals(getOutbound(), that.getOutbound());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getOutbound());
     }
 }

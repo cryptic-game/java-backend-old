@@ -24,7 +24,8 @@ import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
-@ApiEndpointCollection(id = "chat/channel", description = "join/leave/create/rename a channel. Get information/members", type = ApiType.REST, authenticator = DaemonAuthenticator.class)
+@ApiEndpointCollection(id = "chat/channel", description = "join/leave/create/rename a channel. Get information/members",
+        type = ApiType.REST, authenticator = DaemonAuthenticator.class)
 public final class ChatChannelEndpoints {
 
     private final ChatChannelRepository channelRepository;

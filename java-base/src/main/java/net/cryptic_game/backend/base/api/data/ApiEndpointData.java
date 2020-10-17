@@ -28,7 +28,7 @@ public class ApiEndpointData implements JsonSerializable, Comparable<ApiEndpoint
     private Method method;
 
     @Override
-    public JsonElement serialize() {
+    public final JsonElement serialize() {
         return JsonBuilder.create("id", this.id)
                 .add("description", this.description)
                 .add("parameters", this.getNotmalParameters())
@@ -43,7 +43,7 @@ public class ApiEndpointData implements JsonSerializable, Comparable<ApiEndpoint
     }
 
     @Override
-    public int compareTo(@NotNull final ApiEndpointData other) {
+    public final int compareTo(@NotNull final ApiEndpointData other) {
         return this.id.compareTo(other.id);
     }
 }
