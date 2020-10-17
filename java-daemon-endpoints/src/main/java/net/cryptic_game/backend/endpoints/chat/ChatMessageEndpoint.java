@@ -19,12 +19,10 @@ import net.cryptic_game.backend.data.sql.repositories.chat.ChatChannelRepository
 import net.cryptic_game.backend.data.sql.repositories.chat.ChatMessageRepository;
 import net.cryptic_game.backend.data.sql.repositories.user.UserRepository;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.UUID;
 
-@Component
 @RequiredArgsConstructor
 @ApiEndpointCollection(id = "chat/message", description = "send/whisper/delete/list messages", type = ApiType.REST, authenticator = DaemonAuthenticator.class)
 public final class ChatMessageEndpoint {

@@ -10,6 +10,7 @@ import io.netty.handler.ssl.SslContextBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.Bootstrap;
+import net.cryptic_game.backend.base.api.ApiAuthenticator;
 import net.cryptic_game.backend.base.api.annotations.ApiParameter;
 import net.cryptic_game.backend.base.api.data.ApiEndpointCollectionData;
 import net.cryptic_game.backend.base.api.data.ApiEndpointData;
@@ -31,6 +32,7 @@ import java.time.Duration;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -45,6 +47,7 @@ public final class DaemonHandler {
     private final Map<String, ApiEndpointData> endpoints;
     private final String apiToken;
     private final Bootstrap bootstrap;
+    private final ApiAuthenticator authenticator;
 
     private Object daemonSendObject;
     private Method daemonSendMethod;
@@ -102,9 +105,10 @@ public final class DaemonHandler {
                         .peek(collection -> collection.getEndpoints().forEach((name, endpoint) -> {
                             endpoint.setMethod(this.daemonSendMethod);
                             endpoint.setInstance(this.daemonSendObject);
+                            endpoint.setAuthenticator(authenticator);
                             final List<ApiParameterData> parameters = new ArrayList<>(this.daemonSendMethodParameters);
-                            parameters.addAll(endpoint.getParameters());
-                            endpoint.setParameters(parameters);
+                            Collections.addAll(parameters, endpoint.getParameters());
+                            endpoint.setParameters(parameters.toArray(ApiParameterData[]::new));
                         }))
                         .collect(Collectors.toSet())
         ).entrySet().parallelStream()

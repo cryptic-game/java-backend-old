@@ -1,18 +1,18 @@
 {
-  "extends": [
-    "config:base"
-  ],
-  "labels": [
-    "dependencies"
-  ],
-  "branchName": "{{{branchPrefix}}}{{{managerBranchPrefix}}}{{{branchTopic}}}",
-  "branchPrefix": "dependencies/",
-  "packageRules": [
-    {
-      "packagePatterns": [
-        "^io\\.freefair\\..+"
-      ],
-      "groupName": "Freefair Gradle Plugins"
-    }
-  ]
+    "extends": [
+        "config:base"
+    ],
+    "labels": [
+        "dependencies"
+    ],
+    "branchName": "{{{branchPrefix}}}{{{managerBranchPrefix}}}{{{branchTopic}}}",
+    "branchPrefix": "dependencies/",
+    "packageRules": [
+        {
+            "packagePatterns": [
+                "^io\\.freefair\\..+"
+            ],
+            "groupName": "Freefair Gradle Plugins"
+        }
+    ]
 }

@@ -1,4 +1,4 @@
-package net.cryptic_game.backend;
+package net.cryptic_game.backend.server.server.http;
 
 import io.netty.handler.codec.http.HttpHeaderNames;
 import lombok.extern.slf4j.Slf4j;
@@ -11,13 +11,13 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public final class DaemonAuthenticator implements RestApiAuthenticator {
+public final class HttpServerAuthenticator implements RestApiAuthenticator {
 
     private final BaseConfig config;
     private final boolean authentication;
 
-    public DaemonAuthenticator(final Bootstrap bootstrap,
-                               final BaseConfig config) {
+    public HttpServerAuthenticator(final Bootstrap bootstrap,
+                                   final BaseConfig config) {
         this.config = config;
         this.authentication = this.config.getApiToken() != null && !this.config.getApiToken().isBlank();
 
@@ -25,7 +25,7 @@ public final class DaemonAuthenticator implements RestApiAuthenticator {
             log.warn("No Api token was specified, endpoints can be accessed without authentication.");
 
             if (!bootstrap.isDebug()) {
-                log.error("The Daemon cannot be started in production mode without a api token.");
+                log.error("The Server cannot be started in production mode without a api token.");
                 bootstrap.shutdown();
             }
         }

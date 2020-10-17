@@ -13,11 +13,9 @@ import net.cryptic_game.backend.data.sql.entities.user.User;
 import net.cryptic_game.backend.data.sql.entities.user.UserSetting;
 import net.cryptic_game.backend.data.sql.repositories.user.UserRepository;
 import net.cryptic_game.backend.data.sql.repositories.user.UserSettingRepository;
-import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-@Component
 @RequiredArgsConstructor
 @ApiEndpointCollection(id = "settings", description = "Save, update or delete user settings", type = ApiType.REST, authenticator = DaemonAuthenticator.class)
 public final class UserSettingsEndpoints {

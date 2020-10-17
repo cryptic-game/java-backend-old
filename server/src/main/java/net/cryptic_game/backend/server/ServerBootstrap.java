@@ -1,10 +1,10 @@
 package net.cryptic_game.backend.server;
 
-import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.BaseConfig;
 import net.cryptic_game.backend.base.Bootstrap;
-import net.cryptic_game.backend.base.api.data.ApiEndpointData;
+import net.cryptic_game.backend.base.api.ApiService;
+import net.cryptic_game.backend.base.api.handler.websocket.WebsocketApiRequest;
 import net.cryptic_game.backend.base.api.handler.websocket.WebsocketApiService;
 import net.cryptic_game.backend.server.daemon.DaemonHandler;
 import net.cryptic_game.backend.server.server.websocket.WebSocketDaemonEndpoints;
@@ -19,13 +19,14 @@ public class ServerBootstrap {
     public ServerBootstrap(final Bootstrap bootstrap,
                            final BaseConfig baseConfig,
                            final ServerConfig config,
-                           final WebsocketApiService websocketApiService) {
+                           final WebsocketApiService websocketApiService,
+                           final ApiService.DefaultApiAuthenticator authenticator) {
 
-        final DaemonHandler daemonHandler = new DaemonHandler(websocketApiService.getEndpoints(), baseConfig.getApiToken(), bootstrap);
+        final DaemonHandler daemonHandler = new DaemonHandler(websocketApiService.getEndpoints(), baseConfig.getApiToken(), bootstrap, authenticator);
 
         try {
-            daemonHandler.setSend(new WebSocketDaemonEndpoints(baseConfig.getApiToken()),
-                    WebSocketDaemonEndpoints.class.getDeclaredMethod("send", /*ApiClient.class,*/ String.class, ApiEndpointData.class, JsonObject.class));
+            daemonHandler.setSend(new WebSocketDaemonEndpoints(),
+                    WebSocketDaemonEndpoints.class.getDeclaredMethod("send", WebsocketApiRequest.class));
         } catch (NoSuchMethodException e) {
             log.error("Error while setting daemon endpoint handling method.", e);
         }

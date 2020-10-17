@@ -14,7 +14,6 @@ import org.hibernate.cfg.NotYetImplementedException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -46,23 +45,20 @@ public final class DaemonUtils {
 
             final String id = JsonUtils.fromJson(jsonObject.get("id"), String.class);
             final String description = JsonUtils.fromJson(jsonObject.get("description"), String.class);
-            final boolean enabled = JsonUtils.fromJson(jsonObject.get("enabled"), boolean.class);
+            final boolean disabled = JsonUtils.fromJson(jsonObject.get("disabled"), boolean.class);
 
             final Map<String, ApiEndpointData> endpoints = JsonUtils.fromArray(
                     JsonUtils.fromJson(jsonObject.get("endpoints"), JsonArray.class),
-                    new ArrayList<>(),
+                    new HashSet<>(),
                     DaemonEndpointData.class
             )
                     .stream()
                     .peek(endpoint -> {
                         endpoint.setDaemon(daemon);
-//                        endpoint.getParameters().forEach(parameter -> {
-//                            //if (parameter.getType() == null) parameter.set(ApiParameterSpecialType.NORMAL);
-//                        });
                     })
-                    .collect(Collectors.toMap(ApiEndpointData::getId, endpoint -> endpoint));
+                    .collect(Collectors.toUnmodifiableMap(ApiEndpointData::getId, endpoint -> endpoint));
 
-            final DaemonEndpointCollectionData collection = new DaemonEndpointCollectionData(id, description, enabled, apiType, endpoints);
+            final DaemonEndpointCollectionData collection = new DaemonEndpointCollectionData(id, description, disabled, apiType, endpoints);
             collection.setDaemon(daemon);
             return collection;
         });

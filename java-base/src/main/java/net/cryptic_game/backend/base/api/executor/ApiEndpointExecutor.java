@@ -18,15 +18,16 @@ final class ApiEndpointExecutor {
         throw new UnsupportedOperationException();
     }
 
-    @SuppressWarnings({"unchecked"})
     static Mono<ApiResponse> execute(final ApiRequest request, final ApiEndpointData endpoint) {
-        if (!endpoint.isEnabled()) {
+        if (endpoint.isDisabled()) {
             return Mono.just(new ApiResponse(HttpResponseStatus.SERVICE_UNAVAILABLE, "ENDPOINT_DISABLED"));
         }
 
         if (!endpoint.getAuthenticator().isPermitted(request, endpoint.getAuthentication(), endpoint)) {
             return Mono.just(new ApiResponse(HttpResponseStatus.UNAUTHORIZED));
         }
+
+        request.setEndpointData(endpoint);
 
         final Object[] parameters;
 
@@ -52,8 +53,11 @@ final class ApiEndpointExecutor {
 
             if (response instanceof ApiResponse) {
                 return Mono.just((ApiResponse) response);
+            } else if (response instanceof Mono) {
+                return ((Mono<?>) response).cast(ApiResponse.class);
             } else {
-                return (Mono<ApiResponse>) response;
+                throw new IllegalStateException(String.format("Neither a %s nor a %s was returned by endpoint %s.",
+                        ApiResponse.class.getName(), Mono.class.getName(), getMethodPath(endpoint)));
             }
 
         } catch (IllegalArgumentException e) {

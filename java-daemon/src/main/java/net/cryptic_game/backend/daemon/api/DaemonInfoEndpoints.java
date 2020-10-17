@@ -6,11 +6,14 @@ import net.cryptic_game.backend.DaemonAuthenticator;
 import net.cryptic_game.backend.base.Bootstrap;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
+import net.cryptic_game.backend.base.api.data.ApiEndpointCollectionData;
 import net.cryptic_game.backend.base.api.data.ApiResponse;
 import net.cryptic_game.backend.base.api.data.ApiType;
 import net.cryptic_game.backend.base.api.handler.rest.RestApiService;
 import org.springframework.stereotype.Component;
 
+import java.util.TreeSet;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 @Component
@@ -25,7 +28,9 @@ public final class DaemonInfoEndpoints {
     public ApiResponse endpoints() {
         if (this.endpointsResponse == null)
             this.endpointsResponse = new ApiResponse(HttpResponseStatus.OK, this.bootstrap.getContextHandler().getBean(RestApiService.class).getCollections()
-                    .stream().filter(apiEndpointCollectionData -> !apiEndpointCollectionData.getId().equals("daemon")).collect(Collectors.toUnmodifiableSet()));
+                    .stream()
+                    .filter(apiEndpointCollectionData -> !apiEndpointCollectionData.getId().equals("daemon"))
+                    .collect(Collectors.toCollection((Supplier<TreeSet<ApiEndpointCollectionData>>) TreeSet::new)));
         return this.endpointsResponse;
     }
 }

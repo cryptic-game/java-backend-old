@@ -29,7 +29,7 @@ public final class ApiEndpointCollectionParser {
         return collections.parallelStream()
                 .flatMap(collection -> collection.getEndpoints().entrySet().parallelStream()
                         .map(entry -> new AbstractMap.SimpleEntry<>(collection.getId() + "/" + entry.getKey(), entry.getValue())))
-                .collect(Collectors.toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue));
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     private static ApiEndpointCollectionData parseCollection(final Object instance, final AuthenticatorSupplier authenticatorSupplier) {

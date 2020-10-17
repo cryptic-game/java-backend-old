@@ -21,6 +21,7 @@ import reactor.netty.http.websocket.WebsocketOutbound;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.Set;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -28,27 +29,39 @@ public final class WebsocketApiRoute implements WebsocketRoute {
 
     private static final Charset CHARSET = StandardCharsets.UTF_8;
     private final Map<String, ApiEndpointData> endpoints;
+    private final Set<WebsocketApiContext> contexts;
 
     @Override
     public Publisher<Void> apply(final WebsocketInbound inbound, final WebsocketOutbound outbound) {
+        final WebsocketApiContext context = new WebsocketApiContext(outbound);
+        this.contexts.add(context);
+        inbound.receiveCloseStatus().subscribe(webSocketCloseStatus -> this.contexts.remove(context));
         return outbound.sendString(
                 inbound.receive()
                         .asString(CHARSET)
                         .filter(content -> !content.isBlank())
-                        .map(content -> this.parseRequest(JsonUtils.fromJson(JsonParser.parseString(content), JsonObject.class), inbound))
-                        .flatMap(this::execute)
-                        .onErrorResume(this::handleError)
-                        .map(this::parseResponse),
+                        .flatMap(content -> {
+                            try {
+                                return this.execute(this.parseRequest(JsonUtils.fromJson(JsonParser.parseString(content), JsonObject.class), context, inbound));
+                            } catch (JsonSyntaxException e) {
+                                return Mono.just(new ApiResponse(HttpResponseStatus.BAD_REQUEST, "JSON_SYNTAX"));
+                            } catch (Throwable cause) {
+                                log.error("Error while executing websocket pipeline.", cause);
+                                return Mono.just(new ApiResponse(HttpResponseStatus.INTERNAL_SERVER_ERROR));
+                            }
+                        })
+                        .map(this::parseResponse)
+                        .onErrorContinue((cause, o) -> log.error("Error while executing websocket pipeline.", cause)),
                 CHARSET
         );
     }
 
-    private ApiRequest parseRequest(final JsonObject json, final WebsocketInbound websocketInbound) {
+    private ApiRequest parseRequest(final JsonObject json, final WebsocketApiContext context, final WebsocketInbound websocketInbound) {
         return new WebsocketApiRequest(
                 JsonUtils.fromJson(json.get("endpoint"), String.class),
                 JsonUtils.fromJson(json.get("data"), JsonObject.class) == null ? JsonUtils.EMPTY_OBJECT : JsonUtils.fromJson(json.get("data"), JsonObject.class),
                 JsonUtils.fromJson(json.get("tag"), String.class),
-                websocketInbound
+                context, websocketInbound
         );
     }
 
@@ -74,18 +87,9 @@ public final class WebsocketApiRoute implements WebsocketRoute {
         final JsonBuilder builder = JsonBuilder.create("status", status);
 
         if (response.getTag() != null) builder.add("tag", response.getTag());
-        if (response.getError() != null) builder.add("message", response.getError());
+        if (response.getError() != null) builder.add("error", response.getError());
         if (response.getJson() != null) builder.add("data", response.getJson());
 
         return builder.build().toString();
-    }
-
-    private Mono<ApiResponse> handleError(final Throwable cause) {
-        if (cause instanceof JsonSyntaxException) {
-            return Mono.just(new ApiResponse(HttpResponseStatus.BAD_REQUEST, "JSON_SYNTAX"));
-        }
-
-        log.error("Error while executing websocket pipeline.", cause);
-        return Mono.just(new ApiResponse(HttpResponseStatus.INTERNAL_SERVER_ERROR));
     }
 }

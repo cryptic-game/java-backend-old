@@ -19,11 +19,9 @@ import net.cryptic_game.backend.data.sql.repositories.network.NetworkInvitationR
 import net.cryptic_game.backend.data.sql.repositories.network.NetworkMemberRepository;
 import net.cryptic_game.backend.data.sql.repositories.network.NetworkRepository;
 import net.cryptic_game.backend.data.sql.repositories.user.UserRepository;
-import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-@Component
 @RequiredArgsConstructor
 @ApiEndpointCollection(id = "network/owner", type = ApiType.REST, authenticator = DaemonAuthenticator.class)
 public final class NetworkOwnerEndpoints {

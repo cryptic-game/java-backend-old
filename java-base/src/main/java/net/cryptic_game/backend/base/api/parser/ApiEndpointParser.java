@@ -59,14 +59,14 @@ final class ApiEndpointParser {
         final ApiParameterData[] parameters = ApiParameterParser.parseParameters(clazz, method);
 
         return new ApiEndpointData(
-                endpointAnnotation.id(),
                 String.join("\n", endpointAnnotation.description()),
-                parameters == null || parameters.length == 0 ? EMPTY_PARAMETERS : parameters,
                 endpointAnnotation.authentication(),
-                endpointAnnotation.disabled() || parameters != null || disabled,
-                authenticator,
-                instance,
+                endpointAnnotation.disabled() || parameters == null || disabled,
                 clazz,
+                authenticator,
+                endpointAnnotation.id(),
+                parameters == null || parameters.length == 0 ? EMPTY_PARAMETERS : parameters,
+                instance,
                 method
         );
     }

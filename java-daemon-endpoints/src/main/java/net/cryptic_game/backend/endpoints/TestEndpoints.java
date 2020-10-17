@@ -10,11 +10,9 @@ import net.cryptic_game.backend.base.api.data.ApiResponse;
 import net.cryptic_game.backend.base.api.data.ApiType;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.utils.DaemonUtils;
-import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-@Component
 @ApiEndpointCollection(id = "test", description = "Some endpoint for testing existing and new features.", disabled = true, type = ApiType.REST, authenticator = DaemonAuthenticator.class)
 public final class TestEndpoints {
 

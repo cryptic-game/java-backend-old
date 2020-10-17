@@ -19,10 +19,10 @@ public class DaemonEndpointCollectionData extends ApiEndpointCollectionData {
 
     public DaemonEndpointCollectionData(@NotNull final String id,
                                         @NotNull final String description,
-                                        final boolean enabled,
+                                        final boolean disabled,
                                         @NotNull final ApiType apiType,
                                         @NotNull final Map<String, ApiEndpointData> endpoints) {
-        super(id, description, apiType, enabled, endpoints);
+        super(id, description, apiType, disabled, endpoints);
     }
 
 //    public DaemonEndpoint(final JsonObject json, final Daemon daemon) throws IllegalArgumentException {

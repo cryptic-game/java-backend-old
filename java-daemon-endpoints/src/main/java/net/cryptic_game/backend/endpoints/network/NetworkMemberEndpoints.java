@@ -20,11 +20,8 @@ import net.cryptic_game.backend.data.sql.repositories.network.NetworkMemberRepos
 import net.cryptic_game.backend.data.sql.repositories.network.NetworkRepository;
 import net.cryptic_game.backend.data.sql.repositories.user.UserRepository;
 
-import org.springframework.stereotype.Component;
-
 import java.util.UUID;
 
-@Component
 @RequiredArgsConstructor
 @ApiEndpointCollection(id = "network/member", type = ApiType.REST, authenticator = DaemonAuthenticator.class)
 public final class NetworkMemberEndpoints {
