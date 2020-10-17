@@ -41,11 +41,13 @@ dependencies {
     api('org.springframework.security:spring-security-core:5.4.1')
     api('org.bouncycastle:bcpkix-jdk15on:1.66')
 
-    /* Http Client */
-    api('com.squareup.okhttp3:okhttp:4.9.0')
+    /* JWT */
+    api('io.jsonwebtoken:jjwt-api:0.11.2')
+    runtimeOnly('io.jsonwebtoken:jjwt-impl:0.11.2')
+    runtimeOnly('io.jsonwebtoken:jjwt-gson:0.11.2')
 
     /* Annotations */
-    compileOnly('org.jetbrains:annotations:20.1.0')
+    compileOnlyApi('org.jetbrains:annotations:20.1.0')
 
     /* Metrics */
     api('io.micrometer:micrometer-core:1.5.5')

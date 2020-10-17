@@ -1,25 +1,21 @@
 package net.cryptic_game.backend.server.server.http;
 
-import net.cryptic_game.backend.base.api.endpoint.ApiEndpoint;
-import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
-import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
-import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
-import org.springframework.stereotype.Component;
+import io.netty.handler.codec.http.HttpResponseStatus;
+import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
+import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
+import net.cryptic_game.backend.base.api.data.ApiResponse;
+import net.cryptic_game.backend.base.api.data.ApiType;
 
-@Component
-public final class HttpInfoEndpoint extends ApiEndpointCollection {
+@ApiEndpointCollection(id = "info", type = ApiType.REST)
+public final class HttpInfoEndpoint {
 
-    public HttpInfoEndpoint() {
-        super("info", "todo");
-    }
-
-    @ApiEndpoint("online")
+    @ApiEndpoint(id = "online")
     public ApiResponse online() {
-        return new ApiResponse(ApiResponseType.NOT_IMPLEMENTED);
+        return new ApiResponse(HttpResponseStatus.NOT_IMPLEMENTED);
     }
 
-    @ApiEndpoint("leaderboard")
+    @ApiEndpoint(id = "leaderboard")
     public ApiResponse leaderboard() {
-        return new ApiResponse(ApiResponseType.NOT_IMPLEMENTED);
+        return new ApiResponse(HttpResponseStatus.NOT_IMPLEMENTED);
     }
 }

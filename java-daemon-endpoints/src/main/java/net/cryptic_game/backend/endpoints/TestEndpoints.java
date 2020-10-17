@@ -1,37 +1,35 @@
 package net.cryptic_game.backend.endpoints;
 
-import net.cryptic_game.backend.base.api.endpoint.ApiEndpoint;
-import net.cryptic_game.backend.base.api.endpoint.ApiEndpointCollection;
-import net.cryptic_game.backend.base.api.endpoint.ApiParameter;
-import net.cryptic_game.backend.base.api.endpoint.ApiParameterSpecialType;
-import net.cryptic_game.backend.base.api.endpoint.ApiResponse;
-import net.cryptic_game.backend.base.api.endpoint.ApiResponseType;
+import io.netty.handler.codec.http.HttpResponseStatus;
+import net.cryptic_game.backend.DaemonAuthenticator;
+import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
+import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
+import net.cryptic_game.backend.base.api.annotations.ApiParameter;
+import net.cryptic_game.backend.base.api.data.ApiParameterType;
+import net.cryptic_game.backend.base.api.data.ApiResponse;
+import net.cryptic_game.backend.base.api.data.ApiType;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.utils.DaemonUtils;
-import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-@Component
-public final class TestEndpoints extends ApiEndpointCollection {
+@ApiEndpointCollection(id = "test", description = "Some endpoint for testing existing and new features.", disabled = true,
+        type = ApiType.REST, authenticator = DaemonAuthenticator.class)
+public final class TestEndpoints {
 
-    public TestEndpoints() {
-        super("test", "todo");
-    }
-
-    /*@ApiEndpoint("timeout")
+    @ApiEndpoint(id = "timeout")
     public ApiResponse timeout() {
         try {
             Thread.sleep(1000 * 25);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return new ApiResponse(ApiResponseType.OK);
-    }*/
+        return new ApiResponse(HttpResponseStatus.OK);
+    }
 
-    @ApiEndpoint("notification")
-    public ApiResponse notification(@ApiParameter(value = "user_id", special = ApiParameterSpecialType.USER) final UUID userId) {
+    @ApiEndpoint(id = "notification")
+    public ApiResponse notification(@ApiParameter(id = "user_id", type = ApiParameterType.USER) final UUID userId) {
         DaemonUtils.notifyUser(userId, "test", JsonBuilder.create("foo", "bar"));
-        return new ApiResponse(ApiResponseType.OK);
+        return new ApiResponse(HttpResponseStatus.OK);
     }
 }

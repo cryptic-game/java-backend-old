@@ -47,7 +47,7 @@ public final class NetworkInvitation extends TableModel implements JsonSerializa
      * @return {@link Network} of the {@link NetworkInvitation}
      */
     public Network getNetwork() {
-        if (this.key == null) return null;
+        if (this.key == null) throw new IllegalStateException("Invitation key is null");
         return this.key.network;
     }
 

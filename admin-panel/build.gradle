@@ -1,0 +1,21 @@
+plugins {
+    id 'application'
+}
+
+dependencies {
+    implementation project(':java-base')
+    implementation project(':java-data')
+    annotationProcessor("org.springframework:spring-context-indexer:5.2.8.RELEASE")
+}
+
+application {
+    applicationName = 'admin-panel'
+    mainClassName = 'net.cryptic_game.backend.base.Bootstrap'
+}
+
+task start(type: JavaExec) {
+    dependsOn installDist
+    classpath fileTree("${buildDir}/install/admin-panel/lib").matching { "*.jar" }.files
+    main "net.cryptic_game.backend.base.Bootstrap"
+    workingDir file(projectDir)
+}

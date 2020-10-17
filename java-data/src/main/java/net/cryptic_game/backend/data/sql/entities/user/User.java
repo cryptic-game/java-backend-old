@@ -60,7 +60,7 @@ public final class User extends TableModelAutoId {
      * @return true if the password is correct | false if the password is wrong
      */
     public boolean verifyPassword(final String input) {
-        return SecurityUtils.verify(input, this.getPasswordHash());
+        return SecurityUtils.verifyHash(input, this.getPasswordHash());
     }
 
     public JsonObject serializePublic() {
