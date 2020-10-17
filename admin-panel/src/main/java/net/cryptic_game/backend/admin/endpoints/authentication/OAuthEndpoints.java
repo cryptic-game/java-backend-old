@@ -68,7 +68,6 @@ public final class OAuthEndpoints {
                     if (user == null) return Mono.just(new ApiResponse(HttpResponseStatus.FORBIDDEN));
                     final String name = Optional.ofNullable(JsonUtils.fromJson(response.get("name"), String.class))
                             .orElseGet(() -> JsonUtils.fromJson(response.get("login"), String.class));
-                    user.setName(name);
                     this.adminUserRepository.save(user);
 
                     final OffsetDateTime now = OffsetDateTime.now();
@@ -76,7 +75,6 @@ public final class OAuthEndpoints {
                                     .create("access_token", SecurityUtils.jwt(
                                             this.key,
                                             JsonBuilder.create("user_id", id)
-                                                    .add("name", name)
                                                     .add("groups", user.getGroups())
                                                     .add("exp", now.plusMinutes(15))
                                                     .build()))
@@ -85,6 +83,7 @@ public final class OAuthEndpoints {
                                             JsonBuilder.create("sub", id)
                                                     .add("exp", now.plusWeeks(1))
                                                     .add("iat", now)
+                                                    .add("name", name)
                                                     .build()
                                     ))
                             )

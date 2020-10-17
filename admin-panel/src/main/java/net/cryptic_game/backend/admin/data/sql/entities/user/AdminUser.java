@@ -39,7 +39,4 @@ public class AdminUser extends TableModel {
     @Convert(converter = GroupsAttributeConverter.class)
     @Cascade(CascadeType.DELETE)
     private Set<Group> groups;
-
-    @Column(name = "name")
-    private String name;
 }

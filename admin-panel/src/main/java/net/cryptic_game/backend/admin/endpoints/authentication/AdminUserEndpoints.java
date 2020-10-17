@@ -25,12 +25,10 @@ public final class AdminUserEndpoints {
 
     @ApiEndpoint(id = "add", authentication = Permission.ACCESS_MANAGEMENT)
     public ApiResponse add(@ApiParameter(id = "id") final long id,
-                           @ApiParameter(id = "name", required = false) final String name,
                            @ApiParameter(id = "groups", required = false) final Set<String> groups) {
         if (this.adminUserRepository.findById(id).isPresent()) return new ApiResponse(HttpResponseStatus.CONFLICT, "USER_ALREADY_EXISTS");
         final AdminUser user = new AdminUser();
         user.setId(id);
-        user.setName(name);
         if (groups == null || groups.size() == 0) user.setGroups(Set.of(Group.USER));
         else {
             final Set<Group> collect = groups.parallelStream().map(Group::byId).filter(Objects::nonNull).collect(Collectors.toSet());

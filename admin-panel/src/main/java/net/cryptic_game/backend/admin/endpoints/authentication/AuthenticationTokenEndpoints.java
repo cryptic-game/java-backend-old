@@ -33,7 +33,6 @@ public final class AuthenticationTokenEndpoints {
             return new ApiResponse(HttpResponseStatus.OK, JsonBuilder.create("access_token", SecurityUtils.jwt(
                     this.key,
                     JsonBuilder.create("user_id", user.getId())
-                            .add("name", user.getName())
                             .add("groups", user.getGroups())
                             .add("exp", OffsetDateTime.now().plusMinutes(15))
                             .build()))
