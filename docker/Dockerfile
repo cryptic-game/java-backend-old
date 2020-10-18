@@ -42,4 +42,4 @@ RUN ln --symbolic ${CRYPTIC_HOME}/bin/${SERVICE_NAME} /usr/bin/cryptic \
 USER ${CRYPTIC_USER}
 VOLUME ${DATA_DIR}
 
-ENTRYPOINT ["cryptic", "-e"]
+ENTRYPOINT ["cryptic"]
