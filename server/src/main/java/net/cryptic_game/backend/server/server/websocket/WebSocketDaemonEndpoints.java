@@ -68,6 +68,7 @@ public final class WebSocketDaemonEndpoints {
                     log.warn("Wrong json syntax from daemon {} at endpoint {}.", daemon.getName(), request.getEndpoint());
                     return Mono.just(new ApiResponse(HttpResponseStatus.BAD_GATEWAY));
                 })
+                .retry(2)
                 .onErrorResume(cause -> cause.getMessage().contains("refused"), cause -> {
                     log.warn("Unable to connect to daemon {}: {}", daemon.getName(), cause.getMessage());
                     return Mono.just(new ApiResponse(HttpResponseStatus.BAD_GATEWAY));
