@@ -19,7 +19,6 @@ import net.cryptic_game.backend.base.api.data.ApiParameterData;
 import net.cryptic_game.backend.base.api.data.ApiType;
 import net.cryptic_game.backend.base.api.parser.ApiEndpointCollectionParser;
 import net.cryptic_game.backend.base.daemon.Daemon;
-import net.cryptic_game.backend.base.json.JsonTypeMappingException;
 import net.cryptic_game.backend.base.json.JsonUtils;
 import net.cryptic_game.backend.base.utils.DaemonUtils;
 import reactor.core.publisher.Mono;
@@ -84,7 +83,7 @@ public final class DaemonHandler {
                         ? Mono.error(new DaemonException("Invalid api token"))
                         : byteBufMono.asString())
                 .map(content -> JsonUtils.fromJson(JsonParser.parseString(content), JsonArray.class))
-                .onErrorMap(cause -> cause instanceof JsonParseException || cause instanceof JsonTypeMappingException,
+                .onErrorMap(cause -> cause instanceof JsonParseException,
                         cause -> new DaemonException("unexpected json from daemon", cause))
                 .retry(2)
                 .subscribe(

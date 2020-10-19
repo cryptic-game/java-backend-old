@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.json.types.InstantTypeAdapter;
@@ -36,23 +37,15 @@ public final class JsonUtils {
         throw new UnsupportedOperationException();
     }
 
-    public static <T> T fromJson(final JsonElement jsonElement, final Class<T> type) throws JsonTypeMappingException {
-        try {
-            return GSON.fromJson(jsonElement, type);
-        } catch (Exception e) {
-            throw new JsonTypeMappingException("Error while converting a \"" + JsonElement.class.getName() + "\" into a \"" + type.getName() + "\".", e);
-        }
+    public static <T> T fromJson(final JsonElement jsonElement, final Class<T> type) throws JsonParseException {
+        return GSON.fromJson(jsonElement, type);
     }
 
-    public static JsonElement toJson(final Object object) throws JsonTypeMappingException {
+    public static JsonElement toJson(final Object object) throws JsonParseException {
         if (object instanceof JsonElement) {
             return (JsonElement) object;
         }
-        try {
-            return GSON.toJsonTree(object);
-        } catch (Exception e) {
-            throw new JsonTypeMappingException("Error while converting a \"" + object.getClass().getName() + "\" into a \"" + JsonElement.class.getName() + "\".", e);
-        }
+        return GSON.toJsonTree(object);
     }
 
     public static <T> JsonArray toArray(final Collection<T> collection, final Function<T, Object> function) {

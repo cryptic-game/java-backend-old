@@ -3,6 +3,7 @@ package net.cryptic_game.backend.admin;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import io.netty.handler.codec.http.HttpHeaderNames;
@@ -11,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.api.data.ApiEndpointData;
 import net.cryptic_game.backend.base.api.handler.rest.RestApiAuthenticator;
 import net.cryptic_game.backend.base.api.handler.rest.RestApiRequest;
-import net.cryptic_game.backend.base.json.JsonTypeMappingException;
 import net.cryptic_game.backend.base.json.JsonUtils;
 import net.cryptic_game.backend.base.utils.SecurityUtils;
 import org.springframework.stereotype.Component;
@@ -35,7 +35,7 @@ public final class AdminPanelAuthenticator implements RestApiAuthenticator {
         final JsonObject jwtJson;
         try {
             jwtJson = SecurityUtils.parseJwt(this.key, jwt);
-        } catch (SignatureException | ExpiredJwtException | JsonTypeMappingException e) {
+        } catch (SignatureException | ExpiredJwtException | JsonParseException e) {
             return false;
         } catch (Throwable e) {
             log.error("Error while validating jwt token.");

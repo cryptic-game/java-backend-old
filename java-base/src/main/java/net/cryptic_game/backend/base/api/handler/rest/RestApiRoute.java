@@ -2,8 +2,8 @@ package net.cryptic_game.backend.base.api.handler.rest;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
 import io.netty.handler.codec.http.HttpHeaderNames;
 import io.netty.handler.codec.http.HttpHeaderValues;
 import io.netty.handler.codec.http.HttpResponseStatus;
@@ -83,7 +83,7 @@ final class RestApiRoute implements HttpRoute {
     }
 
     private Mono<ApiResponse> handleError(final Throwable cause) {
-        if (cause instanceof JsonSyntaxException || (cause.getCause() != null && cause.getCause() instanceof JsonSyntaxException)) {
+        if (cause instanceof JsonParseException || (cause.getCause() != null && cause.getCause() instanceof JsonParseException)) {
             return Mono.just(new ApiResponse(HttpResponseStatus.BAD_REQUEST, "JSON_SYNTAX"));
         } else {
             log.error("Error while handling rest api", cause);

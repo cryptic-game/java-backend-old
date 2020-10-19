@@ -7,7 +7,6 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import net.cryptic_game.backend.base.json.JsonTypeMappingException;
 import net.cryptic_game.backend.base.json.JsonUtils;
 
 import java.lang.reflect.Type;
@@ -24,14 +23,10 @@ public final class OffsetDateTimeAdapter implements JsonSerializer<OffsetDateTim
 
     @Override
     public OffsetDateTime deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context) throws JsonParseException {
-        try {
-            if (json.isJsonPrimitive()) {
-                return OffsetDateTime.ofInstant(JsonUtils.fromJson(json, Instant.class), ZoneOffset.UTC);
-            } else {
-                throw new JsonParseException("Unable to parse a non \"" + JsonPrimitive.class.getName() + "\" into a \"" + OffsetDateTime.class.getName() + "\".");
-            }
-        } catch (JsonTypeMappingException e) {
-            throw new JsonParseException(e);
+        if (json.isJsonPrimitive()) {
+            return OffsetDateTime.ofInstant(JsonUtils.fromJson(json, Instant.class), ZoneOffset.UTC);
+        } else {
+            throw new JsonParseException("Unable to parse a non \"" + JsonPrimitive.class.getName() + "\" into a \"" + OffsetDateTime.class.getName() + "\".");
         }
     }
 }
