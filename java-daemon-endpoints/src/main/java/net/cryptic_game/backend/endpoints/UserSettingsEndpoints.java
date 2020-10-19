@@ -80,8 +80,8 @@ public final class UserSettingsEndpoints {
         return new ApiResponse(HttpResponseStatus.OK);
     }
 
-    @ApiEndpoint(id = "all", description = "Get all user settings")
-    public ApiResponse all(@ApiParameter(id = "user_id", type = ApiParameterType.USER) final UUID userId) {
+    @ApiEndpoint(id = "list", description = "List all user settings")
+    public ApiResponse list(@ApiParameter(id = "user_id", type = ApiParameterType.USER) final UUID userId) {
         User user = this.userRepository.findById(userId).orElse(null);
         return new ApiResponse(HttpResponseStatus.OK, this.userSettingRepository.findAllByKeyUser(user));
     }

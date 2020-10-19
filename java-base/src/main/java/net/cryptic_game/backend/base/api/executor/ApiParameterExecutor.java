@@ -4,13 +4,14 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonSyntaxException;
 import net.cryptic_game.backend.base.api.data.ApiParameterData;
+import net.cryptic_game.backend.base.api.data.ApiParameterType;
 import net.cryptic_game.backend.base.api.data.ApiRequest;
 import net.cryptic_game.backend.base.api.exception.ApiInternalParameterException;
 import net.cryptic_game.backend.base.api.exception.ApiParameterException;
 import net.cryptic_game.backend.base.json.JsonUtils;
 
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.LinkedList;
+import java.util.List;
 
 final class ApiParameterExecutor {
 
@@ -23,12 +24,13 @@ final class ApiParameterExecutor {
     static Object[] parseParameters(final ApiRequest request, final ApiParameterData[] parameters) throws ApiParameterException {
         if (parameters.length == 0) return EMPTY_PARAMETERS;
 
-        final Object[] values = new Object[parameters.length];
-        for (int i = 0; i < parameters.length; i++) {
-            values[i] = getParameter(request, parameters[i]);
+        final List<Object> values = new LinkedList<>();
+        for (ApiParameterData parameter : parameters) {
+            final Object value = getParameter(request, parameter);
+            if (parameter.getType().equals(ApiParameterType.DAEMON_PARAMETER)) continue;
+            values.add(value);
         }
-
-        return Arrays.stream(values).filter(Objects::nonNull).toArray();
+        return values.toArray();
     }
 
     private static Object getParameter(final ApiRequest request, final ApiParameterData parameter) throws ApiParameterException {
