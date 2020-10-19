@@ -151,7 +151,7 @@ public final class DaemonHandler {
     private ApiParameterData parseParameter(final Parameter parameter) {
         if (parameter.isAnnotationPresent(ApiParameter.class)) {
             final ApiParameter apiParameter = parameter.getAnnotation(ApiParameter.class);
-            return new ApiParameterData(apiParameter.id(), apiParameter.required(), apiParameter.type(), String.join("\n", apiParameter.description()), parameter.getType());
+            return new ApiParameterData(apiParameter.id(), apiParameter.required(), String.join("\n", apiParameter.description()), parameter.getType(), apiParameter.type());
         } else return null;
     }
 }

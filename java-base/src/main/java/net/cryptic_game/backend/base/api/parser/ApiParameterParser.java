@@ -37,9 +37,9 @@ final class ApiParameterParser {
         return new ApiParameterData(
                 parameterAnnotation.id(),
                 parameterAnnotation.required(),
-                parameterAnnotation.type(),
                 String.join("\n", parameterAnnotation.description()),
-                parameter.getType()
+                parameter.getType(),
+                parameterAnnotation.type()
         );
     }
 }

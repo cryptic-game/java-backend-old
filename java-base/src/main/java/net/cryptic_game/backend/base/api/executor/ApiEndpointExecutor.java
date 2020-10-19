@@ -72,6 +72,6 @@ final class ApiEndpointExecutor {
     }
 
     private static String getMethodPath(final ApiEndpointData endpoint) {
-        return String.format("%s.%s", endpoint.getClazz().getName(), endpoint.getMethod().getName());
+        return endpoint.getClazz() == null ? endpoint.getId() : String.format("%s.%s", endpoint.getClazz().getName(), endpoint.getMethod().getName());
     }
 }

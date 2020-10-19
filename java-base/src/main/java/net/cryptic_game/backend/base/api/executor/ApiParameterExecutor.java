@@ -9,6 +9,9 @@ import net.cryptic_game.backend.base.api.exception.ApiInternalParameterException
 import net.cryptic_game.backend.base.api.exception.ApiParameterException;
 import net.cryptic_game.backend.base.json.JsonUtils;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 final class ApiParameterExecutor {
 
     private static final Object[] EMPTY_PARAMETERS = new Object[0];
@@ -25,7 +28,7 @@ final class ApiParameterExecutor {
             values[i] = getParameter(request, parameters[i]);
         }
 
-        return values;
+        return Arrays.stream(values).filter(Objects::nonNull).toArray();
     }
 
     private static Object getParameter(final ApiRequest request, final ApiParameterData parameter) throws ApiParameterException {
@@ -35,6 +38,8 @@ final class ApiParameterExecutor {
                 return parseNormalParameter(request, parameter);
             case REQUEST:
                 return request;
+            case DAEMON_PARAMETER:
+                return null;
             default:
                 throw new IllegalArgumentException();
         }

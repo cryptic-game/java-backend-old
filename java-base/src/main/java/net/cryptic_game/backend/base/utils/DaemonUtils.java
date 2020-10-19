@@ -5,6 +5,8 @@ import com.google.gson.JsonObject;
 import lombok.Setter;
 import net.cryptic_game.backend.base.api.data.ApiEndpointCollectionData;
 import net.cryptic_game.backend.base.api.data.ApiEndpointData;
+import net.cryptic_game.backend.base.api.data.ApiParameterData;
+import net.cryptic_game.backend.base.api.data.ApiParameterType;
 import net.cryptic_game.backend.base.api.data.ApiType;
 import net.cryptic_game.backend.base.daemon.Daemon;
 import net.cryptic_game.backend.base.daemon.DaemonEndpointCollectionData;
@@ -55,6 +57,9 @@ public final class DaemonUtils {
                     .stream()
                     .peek(endpoint -> {
                         endpoint.setDaemon(daemon);
+                        for (ApiParameterData parameter : endpoint.getParameters()) {
+                            parameter.setType(ApiParameterType.DAEMON_PARAMETER);
+                        }
                     })
                     .collect(Collectors.toUnmodifiableMap(ApiEndpointData::getId, endpoint -> endpoint));
 

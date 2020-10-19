@@ -15,5 +15,10 @@ public enum ApiParameterType {
     /**
      * {@link ApiRequest}.
      */
-    REQUEST
+    REQUEST,
+
+    /**
+     * ignored DO NOT USE.
+     */
+    DAEMON_PARAMETER
 }
