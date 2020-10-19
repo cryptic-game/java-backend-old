@@ -39,6 +39,10 @@ final class ApiParameterExecutor {
             case REQUEST:
                 return request;
             case DAEMON_PARAMETER:
+                final JsonElement jsonValue = request.getData().get(parameter.getId());
+                if (parameter.isRequired() && (jsonValue == null || jsonValue instanceof JsonNull)) {
+                    throw new ApiParameterException(String.format("PARAMETER_%s_MISSING", parameter.getId()));
+                }
                 return null;
             default:
                 throw new IllegalArgumentException();
