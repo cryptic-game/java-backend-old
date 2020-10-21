@@ -15,6 +15,9 @@
     <a style="text-decoration:none" href="https://hub.docker.com/r/crypticcp/java-daemon">
         <img alt="DockerHub - Java Daemon" src="https://img.shields.io/docker/pulls/crypticcp/java-daemon?style=flat-square&label=DockerHub%20-%20Java%20Daemon">
     </a>
+     <a style="text-decoration:none" href="https://hub.docker.com/r/crypticcp/admin-panel">
+        <img alt="DockerHub - Admin Panel" src="https://img.shields.io/docker/pulls/crypticcp/admin-panel?style=flat-square&label=DockerHub%20-%20Admin%20Panel">
+    </a>
 </p>
 <p align="center">
     This is the <a href="https://cryptic-game.github.io/java-backend-dev/">Java Backend</a> of the Cryptic project.
@@ -56,7 +59,12 @@ Java-Daemon:
 ./gradlew :java-daemon:start
 ````
 
-After the first run you will find a `config.yaml` in the directories `java-server` and `java-daemon`, where you can customize your development environment. 
+Admin-Panel:
+````sh
+./gradlew :admin-panel:start
+````
+
+To customize your development environment, check our [available environment variables](https://wiki.cryptic-game.net/books/einf%C3%BChrungen/page/environment).
 
 ### Documentation
 
@@ -69,7 +77,7 @@ See Cryptic backend deployment. (TODO Link)
 ## Used Tools
 
 * [Gradle](https://gradle.org/) - The build tool
-* [Github Actions](https://github.com/features/actions/) - The CI tool
+* [GitHub Actions](https://github.com/features/actions/) - The CI tool
 * [Docker](https://docker.com/) - The deployment tool
 
 ## Authors
