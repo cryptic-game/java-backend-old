@@ -6,6 +6,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import io.netty.handler.codec.http.HttpHeaderNames;
 import io.netty.handler.codec.http.HttpHeaderValues;
+import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.util.AsciiString;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,8 @@ import reactor.netty.http.server.HttpServerResponse;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -37,6 +40,23 @@ final class RestApiRoute implements HttpRoute {
 
     @Override
     public Publisher<Void> execute(final HttpServerRequest httpRequest, final HttpServerResponse httpResponse) {
+        if (!(httpRequest.method().equals(HttpMethod.GET) || httpRequest.method().equals(HttpMethod.POST))) {
+            httpResponse.header(HttpHeaderNames.ALLOW, Stream.of(HttpMethod.OPTIONS, HttpMethod.GET, HttpMethod.POST)
+                    .map(HttpMethod::name)
+                    .collect(Collectors.joining(", ")));
+            if (httpRequest.method().equals(HttpMethod.OPTIONS)) {
+                httpResponse.header(HttpHeaderNames.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+                httpResponse.header(HttpHeaderNames.ACCESS_CONTROL_ALLOW_METHODS, httpResponse.responseHeaders().get(HttpHeaderNames.ALLOW));
+                httpResponse.header(HttpHeaderNames.ACCESS_CONTROL_ALLOW_HEADERS, HttpHeaderNames.CONTENT_TYPE.toString());
+                httpResponse.header(HttpHeaderNames.ACCESS_CONTROL_MAX_AGE, String.valueOf(86400));
+                httpResponse.status(HttpResponseStatus.NO_CONTENT);
+            } else {
+                httpResponse.status(HttpResponseStatus.METHOD_NOT_ALLOWED);
+            }
+            return httpResponse.send();
+        } else {
+            httpResponse.header(HttpHeaderNames.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+        }
         return httpResponse.sendString(
                 httpRequest.receive()
                         .aggregate()
