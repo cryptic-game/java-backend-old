@@ -96,9 +96,8 @@ final class RestApiRoute implements HttpRoute {
     }
 
     private Mono<ApiResponse> execute(final HttpServerRequest httpRequest, final JsonObject json) {
-        final String endpoint = httpRequest.path().substring(httpRequest.path().indexOf('/') + 1);
-        final ApiRequest apiRequest = new RestApiRequest(endpoint, json, httpRequest);
-
+        final ApiRequest apiRequest = new RestApiRequest(httpRequest.path(), json, httpRequest);
+        System.out.println(apiRequest.getEndpoint());
         return ApiExecutor.execute(this.endpoints, apiRequest);
     }
 

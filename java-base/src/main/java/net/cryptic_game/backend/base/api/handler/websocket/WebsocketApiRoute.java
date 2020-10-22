@@ -33,7 +33,7 @@ public final class WebsocketApiRoute implements WebsocketRoute {
 
     @Override
     public Publisher<Void> apply(final WebsocketInbound inbound, final WebsocketOutbound outbound) {
-        final WebsocketApiContext context = new WebsocketApiContext(outbound);
+        final WebsocketApiContext context = new WebsocketApiContext(inbound, outbound);
         this.contexts.add(context);
         inbound.receiveCloseStatus().subscribe(webSocketCloseStatus -> this.contexts.remove(context));
         return outbound.sendString(
@@ -42,7 +42,7 @@ public final class WebsocketApiRoute implements WebsocketRoute {
                         .filter(content -> !content.isBlank())
                         .flatMap(content -> {
                             try {
-                                return this.execute(this.parseRequest(JsonUtils.fromJson(JsonParser.parseString(content), JsonObject.class), context, inbound));
+                                return this.execute(this.parseRequest(JsonUtils.fromJson(JsonParser.parseString(content), JsonObject.class), context));
                             } catch (JsonParseException e) {
                                 return Mono.just(new ApiResponse(HttpResponseStatus.BAD_REQUEST, "JSON_SYNTAX"));
                             } catch (Throwable cause) {
@@ -56,12 +56,12 @@ public final class WebsocketApiRoute implements WebsocketRoute {
         );
     }
 
-    private ApiRequest parseRequest(final JsonObject json, final WebsocketApiContext context, final WebsocketInbound websocketInbound) {
+    private ApiRequest parseRequest(final JsonObject json, final WebsocketApiContext context) {
         return new WebsocketApiRequest(
                 JsonUtils.fromJson(json.get("endpoint"), String.class),
                 JsonUtils.fromJson(json.get("data"), JsonObject.class) == null ? JsonUtils.EMPTY_OBJECT : JsonUtils.fromJson(json.get("data"), JsonObject.class),
                 JsonUtils.fromJson(json.get("tag"), String.class),
-                context, websocketInbound
+                context
         );
     }
 

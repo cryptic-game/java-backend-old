@@ -3,7 +3,7 @@ package net.cryptic_game.backend.base.api.handler.websocket;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
-import org.jetbrains.annotations.NotNull;
+import reactor.netty.http.websocket.WebsocketInbound;
 import reactor.netty.http.websocket.WebsocketOutbound;
 
 import java.util.HashMap;
@@ -17,22 +17,25 @@ public final class WebsocketApiContext {
     @Getter(AccessLevel.NONE)
     private final Map<Class<?>, Object> values;
     @Getter
+    private final WebsocketInbound inbound;
+    @Getter
     private final WebsocketOutbound outbound;
 
-    public WebsocketApiContext(final WebsocketOutbound outbound) {
+    public WebsocketApiContext(final WebsocketInbound inbound, final WebsocketOutbound outbound) {
         this.values = new HashMap<>();
+        this.inbound = inbound;
         this.outbound = outbound;
     }
 
-    public <T> Optional<T> get(@NotNull final Class<T> clazz) {
+    public <T> Optional<T> get(final Class<T> clazz) {
         return Optional.ofNullable(this.values.get(clazz)).map(clazz::cast);
     }
 
-    public <T> Optional<T> remove(@NotNull final Class<T> clazz) {
+    public <T> Optional<T> remove(final Class<T> clazz) {
         return Optional.ofNullable(this.values.remove(clazz)).map(clazz::cast);
     }
 
-    public void set(@NotNull final Object value) {
+    public void set(final Object value) {
         this.values.put(value.getClass(), value);
     }
 
@@ -41,11 +44,12 @@ public final class WebsocketApiContext {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         final WebsocketApiContext that = (WebsocketApiContext) o;
-        return Objects.equals(getOutbound(), that.getOutbound());
+        return Objects.equals(this.inbound, that.inbound)
+                && Objects.equals(this.outbound, that.outbound);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getOutbound());
+        return Objects.hash(this.inbound, this.outbound);
     }
 }

@@ -1,8 +1,6 @@
 package net.cryptic_game.backend.base.network.server.http;
 
-import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpResponseStatus;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.network.server.http.route.HttpRoute;
@@ -11,54 +9,47 @@ import org.reactivestreams.Publisher;
 import reactor.netty.http.server.HttpServerRequest;
 import reactor.netty.http.server.HttpServerResponse;
 
-import java.util.HashSet;
+import java.util.Map;
+import java.util.NavigableMap;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.function.BiFunction;
 
 public final class HttpRoutes {
 
-    private final Set<Entry> routes;
+    private final NavigableMap<String, HttpRoute> routes;
 
     public HttpRoutes() {
-        this.routes = new HashSet<>();
+        this.routes = new TreeMap<>();
     }
 
     public void addRoute(final String path, final HttpRoute route) {
-        this.addRoute(null, path, route);
-    }
-
-    public void addRoute(final HttpMethod method, final String path, final HttpRoute route) {
-        this.routes.add(new Entry(method, path, route));
+        this.routes.put(path.endsWith("/") ? path : path + '/', route);
     }
 
     Handler toHandler() {
-        return new Handler(this.routes);
-    }
-
-    @Data
-    private static final class Entry {
-        private final HttpMethod method;
-        private final String path;
-        private final HttpRoute route;
+        return new Handler(this.routes.entrySet());
     }
 
     @Slf4j
     @RequiredArgsConstructor
     private static final class Handler implements BiFunction<HttpServerRequest, HttpServerResponse, Publisher<Void>> {
 
-        private final Set<Entry> routes;
+        private final Set<Map.Entry<String, HttpRoute>> routes;
 
         @Override
         public Publisher<Void> apply(final HttpServerRequest request, final HttpServerResponse response) {
-            final String path = request.path();
-            for (final Entry entry : this.routes) {
-                if ((entry.getMethod() == null || entry.getMethod().equals(request.method()))
-                        && (path + "/").startsWith(entry.getPath())) {
-                    return this.executeRoute(request, response, entry.getRoute());
-                }
-            }
+            final String path = request.path().toLowerCase() + "/";
 
-            return HttpUtils.sendStatus(response, HttpResponseStatus.NOT_FOUND);
+            return this.routes.stream()
+                    .filter(entry -> path.startsWith(entry.getKey()))
+                    .findFirst()
+                    .map(entry -> {
+                        final HttpServerRequest request0 = entry.getKey().equals("/") ? request
+                                : new CustomPathHttpServerRequest(request.fullPath().substring(entry.getKey().length()), request);
+                        return this.executeRoute(request0, response, entry.getValue());
+                    })
+                    .orElseGet(() -> HttpUtils.sendStatus(response, HttpResponseStatus.NOT_FOUND));
         }
 
         private Publisher<Void> executeRoute(final HttpServerRequest request, final HttpServerResponse response, final HttpRoute route) {
