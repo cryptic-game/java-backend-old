@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.admin;
+package net.cryptic_game.backend.admin.authentication;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Getter
 public enum Group implements JsonSerializable {
 
-    USER("user", "User", new Group[0]),
+    USER("user", "User", new Group[0], Permission.INTERNAL),
     CONTENT("content", "Content", new Group[]{USER}, Permission.TEAM_MANAGEMENT),
     MODERATOR("moderator", "Moderator", new Group[]{USER}),
     SERVER_ADMIN("server_admin", "Server Admin", new Group[]{USER}),

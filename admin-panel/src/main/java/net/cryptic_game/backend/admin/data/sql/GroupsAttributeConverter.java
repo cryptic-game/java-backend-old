@@ -1,6 +1,6 @@
 package net.cryptic_game.backend.admin.data.sql;
 
-import net.cryptic_game.backend.admin.Group;
+import net.cryptic_game.backend.admin.authentication.Group;
 
 import javax.persistence.AttributeConverter;
 

@@ -12,7 +12,6 @@ import io.netty.util.AsciiString;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.api.data.ApiEndpointData;
-import net.cryptic_game.backend.base.api.data.ApiRequest;
 import net.cryptic_game.backend.base.api.data.ApiResponse;
 import net.cryptic_game.backend.base.api.executor.ApiExecutor;
 import net.cryptic_game.backend.base.json.JsonBuilder;
@@ -96,9 +95,7 @@ final class RestApiRoute implements HttpRoute {
     }
 
     private Mono<ApiResponse> execute(final HttpServerRequest httpRequest, final JsonObject json) {
-        final ApiRequest apiRequest = new RestApiRequest(httpRequest.path(), json, httpRequest);
-        System.out.println(apiRequest.getEndpoint());
-        return ApiExecutor.execute(this.endpoints, apiRequest);
+        return ApiExecutor.execute(this.endpoints, new RestApiRequest(httpRequest.path(), json, new RestApiContext(httpRequest)));
     }
 
     private Mono<ApiResponse> handleError(final Throwable cause) {

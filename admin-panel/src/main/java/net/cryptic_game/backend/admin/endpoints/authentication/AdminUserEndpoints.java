@@ -1,19 +1,24 @@
 package net.cryptic_game.backend.admin.endpoints.authentication;
 
+import com.google.gson.JsonObject;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.RequiredArgsConstructor;
-import net.cryptic_game.backend.admin.AdminPanelAuthenticator;
-import net.cryptic_game.backend.admin.Group;
-import net.cryptic_game.backend.admin.Permission;
+import net.cryptic_game.backend.admin.authentication.AdminPanelAuthenticator;
+import net.cryptic_game.backend.admin.authentication.Group;
+import net.cryptic_game.backend.admin.authentication.Permission;
 import net.cryptic_game.backend.admin.data.sql.entities.user.AdminUser;
 import net.cryptic_game.backend.admin.data.sql.repositories.user.AdminUserRepository;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.annotations.ApiParameter;
+import net.cryptic_game.backend.base.api.data.ApiParameterType;
 import net.cryptic_game.backend.base.api.data.ApiResponse;
 import net.cryptic_game.backend.base.api.data.ApiType;
+import net.cryptic_game.backend.base.api.handler.rest.RestApiRequest;
+import net.cryptic_game.backend.base.json.JsonUtils;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -38,8 +43,13 @@ public final class AdminUserEndpoints {
     }
 
     @ApiEndpoint(id = "delete", authentication = Permission.ACCESS_MANAGEMENT)
-    public ApiResponse delete(@ApiParameter(id = "id") final long id) {
-        if (this.adminUserRepository.findById(id).isEmpty()) return new ApiResponse(HttpResponseStatus.NOT_FOUND, "USER");
+    public ApiResponse delete(@ApiParameter(id = "request", type = ApiParameterType.REQUEST) final RestApiRequest request,
+                              @ApiParameter(id = "id") final long id) {
+        final Optional<AdminUser> user = this.adminUserRepository.findById(id);
+        if (user.isEmpty()) return new ApiResponse(HttpResponseStatus.NOT_FOUND, "USER");
+        if (user.get().getId() == JsonUtils.fromJson(request.getContext().get(JsonObject.class).orElseThrow().get("user_id"), Long.class)) {
+            return new ApiResponse(HttpResponseStatus.BAD_REQUEST, "CANNOT_DELETE_OWN_USER");
+        }
         this.adminUserRepository.deleteById(id);
         return new ApiResponse(HttpResponseStatus.OK);
     }

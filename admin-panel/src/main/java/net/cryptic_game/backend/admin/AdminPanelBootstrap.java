@@ -1,6 +1,7 @@
 package net.cryptic_game.backend.admin;
 
 import lombok.extern.slf4j.Slf4j;
+import net.cryptic_game.backend.admin.authentication.Group;
 import net.cryptic_game.backend.admin.data.sql.entities.user.AdminUser;
 import net.cryptic_game.backend.admin.data.sql.repositories.user.AdminUserRepository;
 import org.springframework.context.annotation.Configuration;

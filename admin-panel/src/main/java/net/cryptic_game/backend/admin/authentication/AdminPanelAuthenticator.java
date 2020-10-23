@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.admin;
+package net.cryptic_game.backend.admin.authentication;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -29,18 +29,21 @@ public final class AdminPanelAuthenticator implements RestApiAuthenticator {
     public boolean isPermitted(final RestApiRequest request, final int authentication, final ApiEndpointData endpoint) {
         if (authentication == 0) return true;
 
-        final String jwt = request.getHttpRequest().requestHeaders().get(HttpHeaderNames.AUTHORIZATION);
+        final String jwt = request.getContext().getHttpRequest().requestHeaders().get(HttpHeaderNames.AUTHORIZATION);
         if (jwt == null || jwt.isBlank()) return false;
 
         final JsonObject jwtJson;
         try {
             jwtJson = SecurityUtils.parseJwt(this.key, jwt);
+            if (jwtJson.has("refresh_token")) return false;
         } catch (SignatureException | ExpiredJwtException | JsonParseException e) {
             return false;
         } catch (Throwable e) {
             log.error("Error while validating jwt token.");
             return false;
         }
+
+        request.getContext().set(jwtJson);
 
         for (final JsonElement groupId : JsonUtils.fromJson(jwtJson.get("groups"), JsonArray.class)) {
             final Group group = Group.byId(groupId.getAsString());

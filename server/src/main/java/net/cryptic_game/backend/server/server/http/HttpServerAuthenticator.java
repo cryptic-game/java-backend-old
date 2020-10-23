@@ -33,6 +33,6 @@ public final class HttpServerAuthenticator implements RestApiAuthenticator {
 
     @Override
     public boolean isPermitted(final RestApiRequest request, final int authentication, final ApiEndpointData endpoint) {
-        return !this.authentication || this.config.getApiToken().equals(request.getHttpRequest().requestHeaders().get(HttpHeaderNames.AUTHORIZATION));
+        return !this.authentication || this.config.getApiToken().equals(request.getContext().getHttpRequest().requestHeaders().get(HttpHeaderNames.AUTHORIZATION));
     }
 }

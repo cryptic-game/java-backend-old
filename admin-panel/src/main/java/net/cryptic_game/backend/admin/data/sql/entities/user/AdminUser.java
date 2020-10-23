@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.cryptic_game.backend.admin.Group;
+import net.cryptic_game.backend.admin.authentication.Group;
 import net.cryptic_game.backend.admin.data.sql.GroupsAttributeConverter;
 import net.cryptic_game.backend.base.sql.models.TableModel;
 import org.hibernate.annotations.Cascade;

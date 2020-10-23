@@ -84,6 +84,7 @@ public final class OAuthEndpoints {
                                                     .add("exp", now.plusWeeks(1))
                                                     .add("iat", now)
                                                     .add("name", name)
+                                                    .add("refresh_token", true)
                                                     .build()
                                     ))
                             )

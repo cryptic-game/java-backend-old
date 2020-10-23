@@ -2,8 +2,8 @@ package net.cryptic_game.backend.admin.endpoints.team;
 
 import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.RequiredArgsConstructor;
-import net.cryptic_game.backend.admin.AdminPanelAuthenticator;
-import net.cryptic_game.backend.admin.Permission;
+import net.cryptic_game.backend.admin.authentication.AdminPanelAuthenticator;
+import net.cryptic_game.backend.admin.authentication.Permission;
 import net.cryptic_game.backend.admin.data.sql.entities.team.TeamDepartment;
 import net.cryptic_game.backend.admin.data.sql.repositories.team.TeamDepartmentRepository;
 import net.cryptic_game.backend.admin.data.sql.repositories.team.TeamMemberRepository;
