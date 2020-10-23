@@ -17,7 +17,7 @@ public enum Group implements JsonSerializable {
     USER("user", "User", new Group[0], Permission.INTERNAL),
     CONTENT("content", "Content", new Group[]{USER}, Permission.TEAM_MANAGEMENT),
     MODERATOR("moderator", "Moderator", new Group[]{USER}),
-    SERVER_ADMIN("server_admin", "Server Admin", new Group[]{USER}),
+    SERVER_ADMIN("server_admin", "Server Admin", new Group[]{USER}, Permission.SERVER_MANAGEMENT),
     ADMIN("admin", "Administrator", new Group[]{CONTENT, MODERATOR, SERVER_ADMIN}, Permission.ACCESS_MANAGEMENT);
 
     private static final Map<String, Group> GROUPS = new HashMap<>();

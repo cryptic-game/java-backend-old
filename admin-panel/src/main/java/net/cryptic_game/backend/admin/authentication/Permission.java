@@ -5,6 +5,7 @@ public final class Permission {
     public static final int INTERNAL = 100;
     public static final int TEAM_MANAGEMENT = 200;
     public static final int ACCESS_MANAGEMENT = 300;
+    public static final int SERVER_MANAGEMENT = 400;
 
     private Permission() {
         throw new UnsupportedOperationException();
