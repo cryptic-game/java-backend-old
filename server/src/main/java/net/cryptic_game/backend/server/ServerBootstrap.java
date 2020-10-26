@@ -21,7 +21,7 @@ public class ServerBootstrap {
                            final ServerConfig config,
                            final WebsocketApiService websocketApiService,
                            final ApiService.DefaultApiAuthenticator authenticator) {
-
+        //TODO Endpoints vom Server (z.B. Login, Logout) beim start überprüfen, ob die deaktiviert werden müssen
         final DaemonHandler daemonHandler = new DaemonHandler(websocketApiService.getEndpoints(), baseConfig.getApiToken(), bootstrap, authenticator);
 
         try {

@@ -3,11 +3,12 @@ package net.cryptic_game.backend.admin.endpoints.server_managemnet;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import io.netty.buffer.Unpooled;
+import io.netty.handler.codec.http.HttpHeaderNames;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.admin.authentication.AdminPanelAuthenticator;
 import net.cryptic_game.backend.admin.authentication.Permission;
-import net.cryptic_game.backend.admin.data.sql.repositories.server_management.DisabledEndpointRepository;
+import net.cryptic_game.backend.data.sql.repositories.server_management.DisabledEndpointRepository;
 import net.cryptic_game.backend.base.BaseConfig;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
@@ -19,6 +20,8 @@ import net.cryptic_game.backend.base.json.JsonUtils;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
 
+import java.nio.charset.StandardCharsets;
+
 @RequiredArgsConstructor
 @ApiEndpointCollection(id = "endpoints", description = "manage endpoints", type = ApiType.REST, authenticator = AdminPanelAuthenticator.class)
 public final class EndpointManagement {
@@ -26,6 +29,7 @@ public final class EndpointManagement {
     private static final int SERVER_PORT = 8086;
     private final BaseConfig baseConfig;
     private final DisabledEndpointRepository disabledEndpointRepository;
+    private HttpClient httpClient = null;
 
     @ApiEndpoint(id = "all", authentication = Permission.INTERNAL)
     public Mono<ApiResponse> getAllEndpoints() {
@@ -63,17 +67,16 @@ public final class EndpointManagement {
     }
 
     private Mono<ApiResponse> responseFromServer(final String endpoint, final JsonObject data) {
-        return Mono.from(HttpClient.create()
-                .headers(h -> h.set("API_TOKEN", baseConfig.getApiToken()))
-                .post()
+        if (httpClient == null) httpClient = HttpClient.create().headers(h -> h.set(HttpHeaderNames.AUTHORIZATION, baseConfig.getApiToken()));
+        return Mono.from(httpClient.post()
                 .uri(endpoint)
-                .send(Mono.just(Unpooled.wrappedBuffer(data.toString().getBytes())))
+                .send(Mono.just(Unpooled.copiedBuffer(data.toString(), StandardCharsets.UTF_8)))
                 .responseSingle((client, receiver) -> {
                     return receiver.asString().
                             map(JsonParser::parseString)
                             .map(jsonElement -> JsonUtils.fromJson(jsonElement, JsonObject.class))
-                            .flatMap(content -> Mono.just(new ApiResponse(client.status(), content))
-                            );
+                            .flatMap(content ->
+                                    Mono.just(new ApiResponse(client.status(), content)));
                 }));
     }
 }

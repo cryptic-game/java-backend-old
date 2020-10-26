@@ -1,6 +1,6 @@
-package net.cryptic_game.backend.admin.data.sql.repositories.server_management;
+package net.cryptic_game.backend.data.sql.repositories.server_management;
 
-import net.cryptic_game.backend.admin.data.sql.entities.server_management.DisabledEndpoint;
+import net.cryptic_game.backend.data.sql.entities.server_management.DisabledEndpoint;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DisabledEndpointRepository extends JpaRepository<DisabledEndpoint, String> {
