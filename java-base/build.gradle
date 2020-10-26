@@ -30,7 +30,7 @@ dependencies {
     runtimeOnly('org.mariadb.jdbc:mariadb-java-client:2.7.0')
 
     /* Network */
-    api(platform('io.projectreactor:reactor-bom:Dysprosium-SR12'))
+    api(platform('io.projectreactor:reactor-bom:Dysprosium-SR13'))
     api('io.projectreactor:reactor-core')
     api('io.projectreactor.netty:reactor-netty')
     api('io.projectreactor.addons:reactor-extra')
