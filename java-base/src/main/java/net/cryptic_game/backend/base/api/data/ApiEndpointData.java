@@ -19,8 +19,8 @@ public class ApiEndpointData implements JsonSerializable, Comparable<ApiEndpoint
 
     private final String description;
     private final int authentication;
-    private final boolean disabled;
     private final Class<?> clazz;
+    private boolean disabled;
     private ApiAuthenticator authenticator;
     private String id;
     private ApiParameterData[] parameters;

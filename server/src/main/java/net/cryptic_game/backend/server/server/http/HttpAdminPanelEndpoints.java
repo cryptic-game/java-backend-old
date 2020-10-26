@@ -35,16 +35,16 @@ public final class HttpAdminPanelEndpoints {
     public ApiResponse enableEndpoint(@ApiParameter(id = "name") final String name) {
         if (this.websocketApiService == null) this.websocketApiService = this.bootstrap.getContextHandler().getBean(WebsocketApiService.class);
         ApiEndpointData endpointData = websocketApiService.getEndpoints().get(name);
-        // TODO enabling endpoint
-        return new ApiResponse(HttpResponseStatus.INTERNAL_SERVER_ERROR, "expected error");
+        endpointData.setDisabled(false);
+        return new ApiResponse(HttpResponseStatus.OK, endpointData);
     }
 
     @ApiEndpoint(id = "disable")
     public ApiResponse disableEndpoint(@ApiParameter(id = "name") final String name) {
         if (this.websocketApiService == null) this.websocketApiService = this.bootstrap.getContextHandler().getBean(WebsocketApiService.class);
         ApiEndpointData endpointData = websocketApiService.getEndpoints().get(name);
-        // TODO enabling endpoint
-        return new ApiResponse(HttpResponseStatus.INTERNAL_SERVER_ERROR, "expected error");
+        endpointData.setDisabled(true);
+        return new ApiResponse(HttpResponseStatus.OK, endpointData);
     }
 
 }

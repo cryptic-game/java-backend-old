@@ -61,8 +61,8 @@ final class ApiEndpointParser {
         return new ApiEndpointData(
                 String.join("\n", endpointAnnotation.description()),
                 endpointAnnotation.authentication(),
-                endpointAnnotation.disabled() || parameters == null || disabled,
                 clazz,
+                endpointAnnotation.disabled() || parameters == null || disabled,
                 authenticator,
                 endpointAnnotation.id(),
                 parameters == null || parameters.length == 0 ? EMPTY_PARAMETERS : parameters,
