@@ -33,6 +33,7 @@ public final class Bootstrap {
     private final ContextHandler contextHandler;
 
     private boolean debug;
+    private boolean shuttingDown;
 
     public Bootstrap(final long startUpTime, final String[] args) {
         this.startUpTime = startUpTime;
@@ -43,7 +44,8 @@ public final class Bootstrap {
         this.loadConfig();
 
         this.contextHandler = new ContextHandler(Bootstrap.class, this);
-        Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown, "shutdown"));
+        this.shuttingDown = false;
+        Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown0, "shutdown"));
 
         if (!this.contextHandler.refresh()) this.shutdown();
     }
@@ -77,6 +79,10 @@ public final class Bootstrap {
     }
 
     public void shutdown() {
+        System.exit(0);
+    }
+
+    private void shutdown0() {
         final double before = System.currentTimeMillis();
         this.contextHandler.close();
         final double seconds = (System.currentTimeMillis() - before) / 1000D;

@@ -6,7 +6,6 @@ import com.google.gson.JsonParser;
 import io.netty.handler.codec.http.HttpHeaderNames;
 import io.netty.handler.codec.http.HttpHeaderValues;
 import io.netty.handler.codec.http.HttpResponseStatus;
-import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.util.AsciiString;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +21,6 @@ import net.cryptic_game.backend.base.daemon.Daemon;
 import net.cryptic_game.backend.base.json.JsonUtils;
 import net.cryptic_game.backend.base.utils.DaemonUtils;
 import reactor.core.publisher.Mono;
-import reactor.netty.http.HttpProtocol;
 import reactor.netty.http.client.HttpClient;
 
 import javax.net.ssl.SSLHandshakeException;
@@ -71,17 +69,19 @@ public final class DaemonHandler {
                         })
                         .compress(true)
                         .followRedirect(true)
-                        .protocol(HttpProtocol.HTTP11, HttpProtocol.H2)
-                        .secure(spec -> spec.sslContext(SslContextBuilder.forClient()))
                         .responseTimeout(Duration.ofSeconds(10))
         );
 
         daemon.getHttpClient()
                 .get()
                 .uri("/daemon/endpoints")
-                .responseSingle((response, byteBufMono) -> response.status().equals(HttpResponseStatus.UNAUTHORIZED)
-                        ? Mono.error(new DaemonException("Invalid api token"))
-                        : byteBufMono.asString())
+                .responseSingle((response, byteBufMono) -> {
+                    if (response.status().equals(HttpResponseStatus.UNAUTHORIZED))
+                        return Mono.error(new DaemonException("Invalid api token"));
+                    if (!response.status().equals(HttpResponseStatus.OK))
+                        return Mono.error(new DaemonException(String.format("Unexpected staus from daemon: %s", response.status())));
+                    return byteBufMono.asString();
+                })
                 .map(content -> JsonUtils.fromJson(JsonParser.parseString(content), JsonArray.class))
                 .onErrorMap(cause -> cause instanceof JsonParseException,
                         cause -> new DaemonException("unexpected json from daemon", cause))
