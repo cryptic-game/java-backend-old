@@ -61,5 +61,5 @@ dependencies {
 
     /* Caching */
     runtimeOnly('io.lettuce:lettuce-core:5.3.5.RELEASE')
-    api('org.springframework.data:spring-data-redis:2.4.0')
+    api('org.springframework.data:spring-data-redis')
 }
