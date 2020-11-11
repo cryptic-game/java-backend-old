@@ -6,7 +6,7 @@ dependencies {
     implementation project(':java-base')
     implementation project(':java-data')
     implementation project(':java-daemon-endpoints')
-    annotationProcessor("org.springframework:spring-context-indexer:5.3.0")
+    annotationProcessor("org.springframework:spring-context-indexer:5.3.1")
 }
 
 application {
