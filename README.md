@@ -9,6 +9,7 @@
     <a style="text-decoration:none" href="https://github.com/cryptic-game/java-backend-dev/actions">
         <img alt="Build" src="https://img.shields.io/github/workflow/status/cryptic-game/java-backend-dev/Build/master?style=flat-square">
     </a>
+    <br>
     <a style="text-decoration:none" href="https://hub.docker.com/r/crypticcp/server">
         <img alt="DockerHub - Server" src="https://img.shields.io/docker/pulls/crypticcp/server?style=flat-square&label=DockerHub%20-%20Server">
     </a>
