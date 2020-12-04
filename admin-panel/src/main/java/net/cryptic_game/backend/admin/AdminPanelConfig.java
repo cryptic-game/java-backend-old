@@ -11,6 +11,6 @@ public class AdminPanelConfig {
     @Value("${ADMIN_GITHUB_ID:22866859}")
     private long adminGitHubId;
 
-    @Value("${SERVER_API_URL}")
-    private String serverApiUrl;
+    @Value("${SERVER_ADDRESS:http://127.0.0.1:8080/api}")
+    private String serverAddress;
 }

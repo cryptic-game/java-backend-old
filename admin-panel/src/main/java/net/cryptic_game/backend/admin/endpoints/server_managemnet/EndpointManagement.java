@@ -70,7 +70,7 @@ public final class EndpointManagement {
 
     private Mono<ApiResponse> responseFromServer(final String endpoint, final JsonObject data) {
         if (this.httpClient == null)
-            this.httpClient = HttpClient.create().baseUrl(this.config.getServerApiUrl()).headers(h -> h.set(HttpHeaderNames.AUTHORIZATION, baseConfig.getApiToken()));
+            this.httpClient = HttpClient.create().baseUrl(this.config.getServerAddress()).headers(h -> h.set(HttpHeaderNames.AUTHORIZATION, baseConfig.getApiToken()));
         return Mono.from(this.httpClient.post()
                 .uri(endpoint)
                 .send(Mono.just(Unpooled.copiedBuffer(data.toString(), StandardCharsets.UTF_8)))
