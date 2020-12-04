@@ -6,6 +6,7 @@ import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.http.HttpHeaderNames;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.RequiredArgsConstructor;
+import net.cryptic_game.backend.admin.AdminPanelConfig;
 import net.cryptic_game.backend.admin.authentication.AdminPanelAuthenticator;
 import net.cryptic_game.backend.admin.authentication.Permission;
 import net.cryptic_game.backend.data.sql.repositories.server_management.DisabledEndpointRepository;
@@ -26,25 +27,26 @@ import java.nio.charset.StandardCharsets;
 @ApiEndpointCollection(id = "endpoints", description = "manage endpoints", type = ApiType.REST, authenticator = AdminPanelAuthenticator.class)
 public final class EndpointManagement {
 
-    private static final int SERVER_PORT = 8086;
     private final BaseConfig baseConfig;
+    private final AdminPanelConfig config;
     private final DisabledEndpointRepository disabledEndpointRepository;
+
     private HttpClient httpClient = null;
 
     @ApiEndpoint(id = "all", authentication = Permission.INTERNAL)
     public Mono<ApiResponse> getAllEndpoints() {
-        return responseFromServer(String.format("http://localhost:%d/api/admin_panel/endpoints", SERVER_PORT), new JsonObject());
+        return this.responseFromServer("/admin_panel/endpoints", new JsonObject());
     }
 
     @ApiEndpoint(id = "enable", authentication = Permission.SERVER_MANAGEMENT)
-    public Mono<ApiResponse> enableEndpoint(@ApiParameter(id = "name") final String name) {
-        return getAllEndpoints().flatMap(apiResponse -> {
-            if (!disabledEndpointRepository.existsById(name)) {
+    public Mono<ApiResponse> enableEndpoint(@ApiParameter(id = "id") final String id) {
+        return this.getAllEndpoints().flatMap(apiResponse -> {
+            if (!this.disabledEndpointRepository.existsById(id)) {
                 return Mono.just(new ApiResponse(HttpResponseStatus.BAD_REQUEST, "ENDPOINT_NOT_DISABLED"));
             }
-            if (((JsonObject) apiResponse.getJson()).get(name) != null) {
-                disabledEndpointRepository.deleteById(name);
-                return responseFromServer(String.format("http://localhost:%d/api/admin_panel/enable", SERVER_PORT), JsonBuilder.create("name", name).build());
+            if (((JsonObject) apiResponse.getJson()).get(id) != null) {
+                this.disabledEndpointRepository.deleteById(id);
+                return this.responseFromServer("/admin_panel/enable", JsonBuilder.create("id", id).build());
             } else {
                 return Mono.just(new ApiResponse(HttpResponseStatus.BAD_REQUEST, "ENDPOINT_DOES_NOT_EXIST"));
             }
@@ -52,14 +54,14 @@ public final class EndpointManagement {
     }
 
     @ApiEndpoint(id = "disable", authentication = Permission.SERVER_MANAGEMENT)
-    public Mono<ApiResponse> disableEndpoint(@ApiParameter(id = "name") final String name) {
-        return getAllEndpoints().flatMap(apiResponse -> {
-            if (disabledEndpointRepository.existsById(name)) {
+    public Mono<ApiResponse> disableEndpoint(@ApiParameter(id = "id") final String id) {
+        return this.getAllEndpoints().flatMap(apiResponse -> {
+            if (this.disabledEndpointRepository.existsById(id)) {
                 return Mono.just(new ApiResponse(HttpResponseStatus.BAD_REQUEST, "ENDPOINT_ALREADY_DISABLED"));
             }
-            if (((JsonObject) apiResponse.getJson()).get(name) != null) {
-                disabledEndpointRepository.create(name);
-                return responseFromServer(String.format("http://localhost:%d/api/admin_panel/disable", SERVER_PORT), JsonBuilder.create("name", name).build());
+            if (((JsonObject) apiResponse.getJson()).get(id) != null) {
+                this.disabledEndpointRepository.create(id);
+                return this.responseFromServer("/admin_panel/disable", JsonBuilder.create("id", id).build());
             } else {
                 return Mono.just(new ApiResponse(HttpResponseStatus.BAD_REQUEST, "ENDPOINT_DOES_NOT_EXIST"));
             }
@@ -67,8 +69,9 @@ public final class EndpointManagement {
     }
 
     private Mono<ApiResponse> responseFromServer(final String endpoint, final JsonObject data) {
-        if (httpClient == null) httpClient = HttpClient.create().headers(h -> h.set(HttpHeaderNames.AUTHORIZATION, baseConfig.getApiToken()));
-        return Mono.from(httpClient.post()
+        if (this.httpClient == null)
+            this.httpClient = HttpClient.create().baseUrl(this.config.getServerApiUrl()).headers(h -> h.set(HttpHeaderNames.AUTHORIZATION, baseConfig.getApiToken()));
+        return Mono.from(this.httpClient.post()
                 .uri(endpoint)
                 .send(Mono.just(Unpooled.copiedBuffer(data.toString(), StandardCharsets.UTF_8)))
                 .responseSingle((client, receiver) -> {
