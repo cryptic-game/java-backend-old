@@ -1,4 +1,4 @@
-FROM adoptopenjdk:11-jre-hotspot
+FROM adoptopenjdk:11-jre-hotspot-bionic
 
 ARG GRADLE_USER=gradle
 ARG CRYPTIC_USER=cryptic

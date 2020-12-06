@@ -1,4 +1,4 @@
-FROM adoptopenjdk:11-jdk-hotspot AS builder
+FROM adoptopenjdk:11-jdk-hotspot-bionic AS builder
 
 ARG GRADLE_USER=gradle
 ARG GRADLE_GROUP=gradle
@@ -17,7 +17,7 @@ WORKDIR /home/${GRADLE_USER}/src
 USER ${GRADLE_USER}
 RUN chmod +x ./gradlew && ./gradlew :${SERVICE_NAME}:installDist --stacktrace --no-daemon
 
-FROM adoptopenjdk:11-jre-hotspot
+FROM adoptopenjdk:11-jre-hotspot-bionic
 
 ARG GRADLE_USER=gradle
 ARG CRYPTIC_USER=cryptic
