@@ -37,7 +37,7 @@ dependencies {
     api('io.projectreactor:reactor-core')
     api('io.projectreactor.netty:reactor-netty')
 //    api('io.projectreactor.addons:reactor-extra')
-    runtimeOnly('io.netty:netty-tcnative-boringssl-static:2.0.34.Final')
+    runtimeOnly('io.netty:netty-tcnative-boringssl-static:2.0.35.Final')
 
     /* Json */
     api('com.google.code.gson:gson:2.8.6')
