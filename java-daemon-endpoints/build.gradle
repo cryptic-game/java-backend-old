@@ -1,5 +1,5 @@
 dependencies {
     implementation project(':java-base')
     implementation project(':java-data')
-    annotationProcessor("org.springframework:spring-context-indexer:5.3.1")
+    annotationProcessor("org.springframework:spring-context-indexer:5.3.2")
 }
