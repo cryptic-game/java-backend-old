@@ -1,6 +1,8 @@
 package net.cryptic_game.backend.server.daemon;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import io.netty.handler.codec.http.HttpHeaderNames;
@@ -20,6 +22,7 @@ import net.cryptic_game.backend.base.api.parser.ApiEndpointCollectionParser;
 import net.cryptic_game.backend.base.daemon.Daemon;
 import net.cryptic_game.backend.base.json.JsonUtils;
 import net.cryptic_game.backend.base.utils.DaemonUtils;
+import net.cryptic_game.backend.data.sql.repositories.server_management.DisabledEndpointRepository;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
 
@@ -88,6 +91,18 @@ public final class DaemonHandler {
                 .retry(2)
                 .subscribe(
                         endpoints -> {
+                            // set disabled endpoints from database disabled in the json
+                            for (JsonElement endpointsObject : endpoints) {
+                                JsonArray endpointList = ((JsonObject) endpointsObject).getAsJsonArray("endpoints");
+                                for (JsonElement endpoint : endpointList) {
+                                    if (this.bootstrap.getContextHandler().getBean(DisabledEndpointRepository.class).existsById(
+                                                    ((JsonObject) endpointsObject).get("id").getAsString()
+                                                            + "/"
+                                                            + ((JsonObject) endpoint).getAsJsonPrimitive("id").getAsString())) {
+                                        ((JsonObject) endpoint).addProperty("disabled", true);
+                                    }
+                                }
+                            }
                             this.addEndpointCollections(DaemonUtils.parseDaemonEndpoints(daemon, endpoints, ApiType.WEBSOCKET));
                             log.info("Successfully registered daemon {}.", daemon.getName());
                         },

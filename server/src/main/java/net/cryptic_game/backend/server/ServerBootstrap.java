@@ -6,6 +6,7 @@ import net.cryptic_game.backend.base.Bootstrap;
 import net.cryptic_game.backend.base.api.ApiService;
 import net.cryptic_game.backend.base.api.handler.websocket.WebsocketApiRequest;
 import net.cryptic_game.backend.base.api.handler.websocket.WebsocketApiService;
+import net.cryptic_game.backend.data.sql.repositories.server_management.DisabledEndpointRepository;
 import net.cryptic_game.backend.server.daemon.DaemonHandler;
 import net.cryptic_game.backend.server.server.websocket.WebSocketDaemonEndpoints;
 import org.springframework.context.annotation.ComponentScan;
@@ -21,6 +22,13 @@ public class ServerBootstrap {
                            final ServerConfig config,
                            final WebsocketApiService websocketApiService,
                            final ApiService.DefaultApiAuthenticator authenticator) {
+
+        // disabling endpoints that are disabled in database
+        for (String name : websocketApiService.getEndpoints().keySet()) {
+            if (bootstrap.getContextHandler().getBean(DisabledEndpointRepository.class).existsById(name)) {
+                websocketApiService.getEndpoints().get(name).setDisabled(true);
+            }
+        }
 
         final DaemonHandler daemonHandler = new DaemonHandler(websocketApiService.getEndpoints(), baseConfig.getApiToken(), bootstrap, authenticator);
 
