@@ -96,9 +96,9 @@ public final class DaemonHandler {
                                 JsonArray endpointList = ((JsonObject) endpointsObject).getAsJsonArray("endpoints");
                                 for (JsonElement endpoint : endpointList) {
                                     if (this.bootstrap.getContextHandler().getBean(DisabledEndpointRepository.class).existsById(
-                                                    ((JsonObject) endpointsObject).get("id").getAsString()
-                                                            + "/"
-                                                            + ((JsonObject) endpoint).getAsJsonPrimitive("id").getAsString())) {
+                                            ((JsonObject) endpointsObject).get("id").getAsString()
+                                                    + "/"
+                                                    + ((JsonObject) endpoint).getAsJsonPrimitive("id").getAsString())) {
                                         ((JsonObject) endpoint).addProperty("disabled", true);
                                     }
                                 }

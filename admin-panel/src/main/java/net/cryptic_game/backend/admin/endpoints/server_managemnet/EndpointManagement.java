@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.admin.AdminPanelConfig;
 import net.cryptic_game.backend.admin.authentication.AdminPanelAuthenticator;
 import net.cryptic_game.backend.admin.authentication.Permission;
-import net.cryptic_game.backend.data.sql.repositories.server_management.DisabledEndpointRepository;
 import net.cryptic_game.backend.base.BaseConfig;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
@@ -18,6 +17,7 @@ import net.cryptic_game.backend.base.api.data.ApiResponse;
 import net.cryptic_game.backend.base.api.data.ApiType;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonUtils;
+import net.cryptic_game.backend.data.sql.repositories.server_management.DisabledEndpointRepository;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
 
