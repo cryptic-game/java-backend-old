@@ -1,7 +1,7 @@
 package net.cryptic_game.backend.base.api.annotations;
 
 import net.cryptic_game.backend.base.api.ApiAuthenticator;
-import net.cryptic_game.backend.base.api.ApiService;
+import net.cryptic_game.backend.base.api.DefaultApiAuthenticator;
 import net.cryptic_game.backend.base.api.data.ApiType;
 import org.springframework.stereotype.Component;
 
@@ -23,5 +23,5 @@ public @interface ApiEndpointCollection {
 
     boolean disabled() default false;
 
-    Class<? extends ApiAuthenticator> authenticator() default ApiService.DefaultApiAuthenticator.class;
+    Class<? extends ApiAuthenticator> authenticator() default DefaultApiAuthenticator.class;
 }

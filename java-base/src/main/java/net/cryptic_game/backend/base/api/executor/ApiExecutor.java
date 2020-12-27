@@ -7,6 +7,7 @@ import net.cryptic_game.backend.base.api.data.ApiResponse;
 import reactor.core.publisher.Mono;
 
 import java.util.Map;
+import java.util.Optional;
 
 public final class ApiExecutor {
 
@@ -15,9 +16,8 @@ public final class ApiExecutor {
     }
 
     public static Mono<ApiResponse> execute(final Map<String, ApiEndpointData> endpoints, final ApiRequest request) {
-        final ApiEndpointData endpoint = endpoints.get(request.getEndpoint());
-        return endpoint == null
-                ? Mono.just(new ApiResponse(HttpResponseStatus.NOT_FOUND, "ENDPOINT"))
-                : ApiEndpointExecutor.execute(request, endpoint);
+        return Optional.ofNullable(endpoints.get(request.getEndpoint()))
+                .map(endpoint -> ApiEndpointExecutor.execute(request, endpoint))
+                .orElse(Mono.just(new ApiResponse(HttpResponseStatus.NOT_FOUND, "ENDPOINT")));
     }
 }

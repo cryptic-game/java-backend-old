@@ -36,7 +36,6 @@ public final class WebsocketApiRoute implements WebsocketRoute {
     public Publisher<Void> apply(final WebsocketInbound inbound, final WebsocketOutbound outbound) {
         final WebsocketApiContext context = new WebsocketApiContext(inbound, outbound);
         this.contexts.add(context);
-        inbound.receiveCloseStatus().subscribe(staus -> this.contexts.remove(context));
 
         return outbound.sendString(
                 inbound.receive()
@@ -44,7 +43,8 @@ public final class WebsocketApiRoute implements WebsocketRoute {
                         .filter(content -> !(content.isEmpty() && content.isBlank()))
                         .flatMap(content -> this.execute(context, content))
                         .onErrorResume(this::handleError)
-                        .map(this::parseResponse),
+                        .map(this::parseResponse)
+                        .doFinally(signal -> this.contexts.remove(context)),
                 CHARSET
         );
     }
@@ -70,9 +70,9 @@ public final class WebsocketApiRoute implements WebsocketRoute {
             response = ApiExecutor.execute(
                     this.endpoints,
                     new WebsocketApiRequest(
+                            tag,
                             JsonUtils.fromJson(endpoint, String.class),
                             Optional.ofNullable(JsonUtils.fromJson(json.get("data"), JsonObject.class)).orElse(JsonUtils.EMPTY_OBJECT),
-                            tag,
                             context
                     )
             );

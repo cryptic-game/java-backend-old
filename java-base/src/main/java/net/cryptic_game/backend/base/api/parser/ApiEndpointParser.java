@@ -24,7 +24,8 @@ final class ApiEndpointParser {
         throw new UnsupportedOperationException();
     }
 
-    static Map<String, ApiEndpointData> parseEndpoints(final Object object, final Class<?> clazz, final boolean disabled, final ApiAuthenticator authenticator) {
+    static Map<String, ApiEndpointData> parseEndpoints(final Object object, final Class<?> clazz,
+                                                       final boolean disabled, final ApiAuthenticator authenticator) {
         return Arrays.stream(clazz.getDeclaredMethods())
                 .parallel()
                 .map(method -> parseEndpoint(object, clazz, method, disabled, authenticator))
@@ -32,7 +33,8 @@ final class ApiEndpointParser {
                 .collect(Collectors.toUnmodifiableMap(ApiEndpointData::getId, Function.identity()));
     }
 
-    private static ApiEndpointData parseEndpoint(final Object instance, final Class<?> clazz, final Method method, final boolean disabled, final ApiAuthenticator authenticator) {
+    private static ApiEndpointData parseEndpoint(final Object instance, final Class<?> clazz, final Method method,
+                                                 final boolean disabled, final ApiAuthenticator authenticator) {
         final boolean hasAccess;
         try {
             hasAccess = method.canAccess(instance);

@@ -34,6 +34,7 @@ final class RestApiRoute implements HttpRoute {
 
     private static final Charset CHARSET = StandardCharsets.UTF_8;
     private static final AsciiString CONTENT_TYPE = AsciiString.of(HttpHeaderValues.APPLICATION_JSON + "; " + HttpHeaderValues.CHARSET + "=" + CHARSET.toString());
+    private static final String EMPTY_REQUEST = "";
     private static final String EMPTY_RESPONSE = "{}";
     private final Map<String, ApiEndpointData> endpoints;
 
@@ -56,54 +57,51 @@ final class RestApiRoute implements HttpRoute {
         } else {
             httpResponse.header(HttpHeaderNames.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
         }
+
         return httpResponse.sendString(
                 httpRequest.receive()
                         .aggregate()
                         .asString(CHARSET)
-                        .flatMap(this::parse)
-                        .defaultIfEmpty(JsonUtils.EMPTY_OBJECT)
-                        .flatMap(json -> this.execute(httpRequest, json))
+                        .defaultIfEmpty(EMPTY_REQUEST)
+                        .flatMap(content -> this.execute(httpRequest, content))
                         .onErrorResume(this::handleError)
-                        .flatMap(apiResponse -> this.parseResponse(httpResponse, apiResponse)),
+                        .map(apiResponse -> this.parseResponse(httpResponse, apiResponse)),
                 CHARSET
         );
     }
 
-    private Mono<String> parseResponse(final HttpServerResponse httpResponse, final ApiResponse apiResponse) {
+    private Mono<ApiResponse> execute(final HttpServerRequest httpRequest, final String content) {
+        final JsonObject json;
+        try {
+            json = content.isEmpty() && content.isBlank() ? JsonUtils.EMPTY_OBJECT : JsonUtils.fromJson(JsonParser.parseString(content), JsonObject.class);
+        } catch (JsonParseException e) {
+            return Mono.just(new ApiResponse(HttpResponseStatus.BAD_REQUEST, "JSON_SYNTAX"));
+        }
+
+        return ApiExecutor.execute(
+                this.endpoints,
+                new RestApiRequest(httpRequest.path(), json, new RestApiContext(httpRequest))
+        );
+    }
+
+    private String parseResponse(final HttpServerResponse httpResponse, final ApiResponse apiResponse) {
         httpResponse.status(apiResponse.getStatus());
         httpResponse.header(HttpHeaderNames.CONTENT_TYPE, CONTENT_TYPE);
 
         final boolean hasData = apiResponse.getJson() != null;
         final boolean hasMessage = apiResponse.getError() != null;
 
-        if (!hasData && !hasMessage)
-            return Mono.just(
-                    apiResponse.getStatus().code() < 400
-                            ? EMPTY_RESPONSE
-                            : JsonBuilder.create("error", apiResponse.getStatus().toString()).build().toString()
-            );
+        if (!hasData && !hasMessage) return EMPTY_RESPONSE;
 
         final JsonElement jsonResponse = hasData
                 ? apiResponse.getJson()
                 : JsonBuilder.create("error", apiResponse.getError()).build();
 
-        return Mono.just(jsonResponse.toString());
-    }
-
-    private Mono<JsonObject> parse(final String content) {
-        return content.isBlank() ? Mono.empty() : Mono.just(JsonUtils.fromJson(JsonParser.parseString(content), JsonObject.class));
-    }
-
-    private Mono<ApiResponse> execute(final HttpServerRequest httpRequest, final JsonObject json) {
-        return ApiExecutor.execute(this.endpoints, new RestApiRequest(httpRequest.path(), json, new RestApiContext(httpRequest)));
+        return jsonResponse.toString();
     }
 
     private Mono<ApiResponse> handleError(final Throwable cause) {
-        if (cause instanceof JsonParseException || (cause.getCause() != null && cause.getCause() instanceof JsonParseException)) {
-            return Mono.just(new ApiResponse(HttpResponseStatus.BAD_REQUEST, "JSON_SYNTAX"));
-        } else {
-            log.error("Error while handling rest api", cause);
-            return Mono.just(new ApiResponse(HttpResponseStatus.INTERNAL_SERVER_ERROR));
-        }
+        log.error("Error while executing rest api pipeline.", cause);
+        return Mono.just(new ApiResponse(HttpResponseStatus.INTERNAL_SERVER_ERROR));
     }
 }

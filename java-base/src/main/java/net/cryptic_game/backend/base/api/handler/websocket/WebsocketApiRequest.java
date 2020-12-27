@@ -13,7 +13,7 @@ public class WebsocketApiRequest extends ApiRequest {
 
     private final WebsocketApiContext context;
 
-    public WebsocketApiRequest(final String endpoint, final JsonObject data, final String tag, final WebsocketApiContext context) {
+    public WebsocketApiRequest(final String tag, final String endpoint, final JsonObject data, final WebsocketApiContext context) {
         super(endpoint, data, tag);
         this.context = context;
     }

@@ -3,7 +3,7 @@ package net.cryptic_game.backend.server;
 import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.BaseConfig;
 import net.cryptic_game.backend.base.Bootstrap;
-import net.cryptic_game.backend.base.api.ApiService;
+import net.cryptic_game.backend.base.api.DefaultApiAuthenticator;
 import net.cryptic_game.backend.base.api.handler.websocket.WebsocketApiRequest;
 import net.cryptic_game.backend.base.api.handler.websocket.WebsocketApiService;
 import net.cryptic_game.backend.data.sql.repositories.server_management.DisabledEndpointRepository;
@@ -21,7 +21,7 @@ public class ServerBootstrap {
                            final BaseConfig baseConfig,
                            final ServerConfig config,
                            final WebsocketApiService websocketApiService,
-                           final ApiService.DefaultApiAuthenticator authenticator) {
+                           final DefaultApiAuthenticator authenticator) {
 
         // disabling endpoints that are disabled in database
         for (String name : websocketApiService.getEndpoints().keySet()) {

@@ -1,7 +1,6 @@
 package net.cryptic_game.backend.base.api.handler.websocket;
 
 import lombok.AccessLevel;
-import lombok.Data;
 import lombok.Getter;
 import reactor.netty.http.websocket.WebsocketInbound;
 import reactor.netty.http.websocket.WebsocketOutbound;
@@ -11,8 +10,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@Data
-public final class WebsocketApiContext {
+public class WebsocketApiContext {
 
     @Getter(AccessLevel.NONE)
     private final Map<Class<?>, Object> values;

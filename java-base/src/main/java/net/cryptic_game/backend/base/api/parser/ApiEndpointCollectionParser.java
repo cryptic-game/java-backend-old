@@ -4,6 +4,7 @@ import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.data.ApiEndpointCollectionData;
 import net.cryptic_game.backend.base.api.data.ApiEndpointData;
 import net.cryptic_game.backend.base.api.data.AuthenticatorSupplier;
+import org.springframework.aop.framework.AopProxyUtils;
 
 import java.util.AbstractMap;
 import java.util.Collection;
@@ -18,7 +19,8 @@ public final class ApiEndpointCollectionParser {
         throw new UnsupportedOperationException();
     }
 
-    public static Set<ApiEndpointCollectionData> parseCollections(final Collection<Object> instances, final AuthenticatorSupplier authenticatorSupplier) {
+    public static Set<ApiEndpointCollectionData> parseCollections(final Collection<Object> instances,
+                                                                  final AuthenticatorSupplier authenticatorSupplier) {
         return instances.stream()
                 .map(instance -> parseCollection(instance, authenticatorSupplier))
                 .filter(Objects::nonNull)
@@ -32,8 +34,9 @@ public final class ApiEndpointCollectionParser {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    private static ApiEndpointCollectionData parseCollection(final Object instance, final AuthenticatorSupplier authenticatorSupplier) {
-        final Class<?> clazz = instance.getClass();
+    private static ApiEndpointCollectionData parseCollection(final Object instance,
+                                                             final AuthenticatorSupplier authenticatorSupplier) {
+        final Class<?> clazz = AopProxyUtils.ultimateTargetClass(instance);
         if (!clazz.isAnnotationPresent(ApiEndpointCollection.class)) return null;
 
         final ApiEndpointCollection endpointCollectionAnnotation = clazz.getAnnotation(ApiEndpointCollection.class);

@@ -11,14 +11,15 @@ import net.cryptic_game.backend.base.network.server.http.HttpServerService;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedHashSet;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @Getter
-@ComponentScan
 @Service
+@ComponentScan
 public class WebsocketApiService {
 
     private final Map<String, ApiEndpointData> endpoints;
@@ -31,7 +32,7 @@ public class WebsocketApiService {
     ) {
         final Set<ApiEndpointCollectionData> collections = apiService.getCollections(ApiType.WEBSOCKET);
         this.endpoints = ApiEndpointCollectionParser.getEndpoints(collections);
-        this.contexts = new LinkedHashSet<>();
+        this.contexts = Collections.newSetFromMap(new ConcurrentHashMap<>());
         if (!this.endpoints.isEmpty()) {
             httpServerService.getRoutes().addRoute(config.getPath(), new WebsocketApiRoute(this.endpoints, this.contexts));
         }
