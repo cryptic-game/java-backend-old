@@ -1,6 +1,5 @@
 FROM adoptopenjdk:11-jre-hotspot-bionic
 
-ARG GRADLE_USER=gradle
 ARG CRYPTIC_USER=cryptic
 ARG CRYPTIC_GROUP=cryptic
 ARG SERVICE_NAME=server
@@ -15,7 +14,7 @@ RUN set -o errexit -o nounset \
     && chown --recursive ${CRYPTIC_USER}:${CRYPTIC_GROUP} ${DATA_DIR} \
     && chown --recursive ${CRYPTIC_USER}:${CRYPTIC_GROUP} /home/${CRYPTIC_USER}
 
-COPY --chown=${CRYPTIC_USER}:${CRYPTIC_GROUP} ${SERVICE_NAME}/build/install/${SERVICE_NAME} ${CRYPTIC_HOME}
+COPY --chown=${CRYPTIC_USER}:${CRYPTIC_GROUP} ./dist/${SERVICE_NAME}/ ${CRYPTIC_HOME}/
 WORKDIR ${DATA_DIR}
 
 RUN ln --symbolic ${CRYPTIC_HOME}/bin/${SERVICE_NAME} /usr/bin/cryptic \
