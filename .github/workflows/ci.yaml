@@ -2,7 +2,7 @@ name: CI
 
 on:
   schedule:
-    - cron: '0 0 * * *' # everyday at 00:00 UTC
+    - cron: '0 10 * * 1' # every monday at 10 am UTC
   push:
     branches: [ master ]
     tags: [ 'v*' ]
