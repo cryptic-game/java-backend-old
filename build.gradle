@@ -4,6 +4,7 @@ plugins {
     id('io.freefair.aggregate-javadoc') version('5.2.1')
     id('io.freefair.javadoc-utf-8') version('5.2.1')
     id('io.freefair.lombok') version('5.2.1') apply(false)
+    id('com.github.spotbugs') version('4.6.0') apply(false)
 }
 
 allprojects {
@@ -15,6 +16,8 @@ subprojects {
     apply from: "${rootDir}/gradle/java.gradle"
     apply from: "${rootDir}/gradle/test.gradle"
     apply from: "${rootDir}/gradle/checkstyle.gradle"
+    apply from: "${rootDir}/gradle/spotbugs.gradle"
+    apply from: "${rootDir}/gradle/pmd.gradle"
     apply from: "${rootDir}/gradle/javadoc.gradle"
 }
 

@@ -1,0 +1,5 @@
+apply(plugin: 'com.github.spotbugs')
+
+spotbugs {
+    ignoreFailures = true
+}
