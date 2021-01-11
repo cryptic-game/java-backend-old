@@ -7,7 +7,7 @@
         <img alt="Releases" src="https://img.shields.io/github/v/tag/cryptic-game/java-backend-dev?label=latest%20version&style=flat-square">
     </a>
     <a style="text-decoration:none" href="https://github.com/cryptic-game/java-backend-dev/actions">
-        <img alt="Build" src="https://img.shields.io/github/workflow/status/cryptic-game/java-backend-dev/Build/master?style=flat-square">
+        <img alt="Build" src="https://img.shields.io/github/workflow/status/cryptic-game/java-backend-dev/CI/master?style=flat-square">
     </a>
     <br>
     <a style="text-decoration:none" href="https://hub.docker.com/r/crypticcp/server">
