@@ -1,20 +1,22 @@
 package net.cryptic_game.backend.admin.endpoints.website.team;
 
+
 import io.netty.handler.codec.http.HttpResponseStatus;
+
+import java.util.UUID;
+
 import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.admin.authentication.AdminPanelAuthenticator;
 import net.cryptic_game.backend.admin.authentication.Permission;
-import net.cryptic_game.backend.admin.data.sql.entities.team.TeamDepartment;
-import net.cryptic_game.backend.admin.data.sql.repositories.team.TeamDepartmentRepository;
-import net.cryptic_game.backend.admin.data.sql.repositories.team.TeamMemberRepository;
+import net.cryptic_game.backend.admin.data.sql.entities.website.team.TeamDepartment;
+import net.cryptic_game.backend.admin.data.sql.repositories.website.team.TeamDepartmentRepository;
+import net.cryptic_game.backend.admin.data.sql.repositories.website.team.TeamMemberRepository;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.annotations.ApiParameter;
 import net.cryptic_game.backend.base.api.data.ApiResponse;
 import net.cryptic_game.backend.base.api.data.ApiType;
 import org.springframework.stereotype.Component;
-
-import java.util.UUID;
 
 @Component
 @ApiEndpointCollection(id = "webiste/team/department", description = "manages team departments", type = ApiType.REST, authenticator = AdminPanelAuthenticator.class)

@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.admin.data.sql.entities.website_management.faq;
+package net.cryptic_game.backend.admin.data.sql.entities.website.faq;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

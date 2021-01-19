@@ -1,20 +1,21 @@
 package net.cryptic_game.backend.admin.endpoints.website.faq;
 
 import io.netty.handler.codec.http.HttpResponseStatus;
+
+import java.util.Optional;
+import java.util.UUID;
+import java.util.regex.Pattern;
+
 import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.admin.authentication.AdminPanelAuthenticator;
 import net.cryptic_game.backend.admin.authentication.Permission;
-import net.cryptic_game.backend.admin.data.sql.entities.website_management.faq.FaqEntry;
-import net.cryptic_game.backend.admin.data.sql.repositories.website_management.faq.FaqEntryRepository;
+import net.cryptic_game.backend.admin.data.sql.entities.website.faq.FaqEntry;
+import net.cryptic_game.backend.admin.data.sql.repositories.website.faq.FaqEntryRepository;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.annotations.ApiParameter;
 import net.cryptic_game.backend.base.api.data.ApiResponse;
 import net.cryptic_game.backend.base.api.data.ApiType;
-
-import java.util.Optional;
-import java.util.UUID;
-import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
 @ApiEndpointCollection(id = "website/faq", description = "manages faq", type = ApiType.REST, authenticator = AdminPanelAuthenticator.class)
@@ -24,9 +25,19 @@ public class FaqEntryEndpoints {
 
     private final FaqEntryRepository faqEntryRepository;
 
+    /**
+     * returns true if an xxs attempt might be there.
+     *
+     * @param content content to prove
+     * @return true if html tags might be in the content
+     */
+    private static boolean checkXxs(final String content) {
+        return XXS_FILTER.matcher(content).find();
+    }
+
     @ApiEndpoint(id = "list")
     public ApiResponse list() {
-        return new ApiResponse(HttpResponseStatus.BAD_REQUEST, this.faqEntryRepository.findAll());
+        return new ApiResponse(HttpResponseStatus.OK, this.faqEntryRepository.findAll());
     }
 
     @ApiEndpoint(id = "add", authentication = Permission.FAQ_MANAGEMENT)
@@ -52,7 +63,7 @@ public class FaqEntryEndpoints {
             return new ApiResponse(HttpResponseStatus.BAD_REQUEST, "NO_HTML_TAGS_ALLOWED");
         }
 
-        final Optional<FaqEntry> faqEntryOpt = this.faqEntryRepository.getByQuestion(question);
+        final Optional<FaqEntry> faqEntryOpt = this.faqEntryRepository.findById(id);
         if (faqEntryOpt.isEmpty()) {
             return new ApiResponse(HttpResponseStatus.BAD_REQUEST, "NO_SUCH_ELEMENT");
         }
@@ -73,15 +84,5 @@ public class FaqEntryEndpoints {
         } else {
             return new ApiResponse(HttpResponseStatus.BAD_REQUEST, "NO_SUCH_ELEMENT");
         }
-    }
-
-    /**
-     * returns true if an xxs attempt might be there.
-     *
-     * @param content content to prove
-     * @return true if html tags might be in the content
-     */
-    private static boolean checkXxs(final String content) {
-        return XXS_FILTER.matcher(content).find();
     }
 }

@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.admin.data.sql.entities.team;
+package net.cryptic_game.backend.admin.data.sql.entities.website.team;
 
 import com.google.gson.JsonElement;
 import lombok.AllArgsConstructor;
