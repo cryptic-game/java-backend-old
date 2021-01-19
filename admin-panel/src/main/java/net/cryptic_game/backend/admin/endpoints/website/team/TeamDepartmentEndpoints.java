@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.admin.endpoints.team;
+package net.cryptic_game.backend.admin.endpoints.website.team;
 
 import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 @Component
-@ApiEndpointCollection(id = "team/department", description = "manages team departments", type = ApiType.REST, authenticator = AdminPanelAuthenticator.class)
+@ApiEndpointCollection(id = "webiste/team/department", description = "manages team departments", type = ApiType.REST, authenticator = AdminPanelAuthenticator.class)
 @RequiredArgsConstructor
 public final class TeamDepartmentEndpoints {
 

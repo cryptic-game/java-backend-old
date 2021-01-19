@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.admin.endpoints.team;
+package net.cryptic_game.backend.admin.endpoints.website.team;
 
 import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Component
-@ApiEndpointCollection(id = "team/member", description = "manage team members", type = ApiType.REST, authenticator = AdminPanelAuthenticator.class)
+@ApiEndpointCollection(id = "webiste/team/member", description = "manage team members", type = ApiType.REST, authenticator = AdminPanelAuthenticator.class)
 @RequiredArgsConstructor
 public final class TeamMemberEndpoints {
 
