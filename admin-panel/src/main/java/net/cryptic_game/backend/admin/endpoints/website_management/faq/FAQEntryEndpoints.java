@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
 public class FAQEntryEndpoints {
 
     private final FAQEntryRepository faqEntryRepository;
+    private final Pattern xxsFilter = Pattern.compile("<[^- ]|[^- ]>");
 
     @ApiEndpoint(id = "change_answer", authentication = Permission.FAQ_MANAGEMENT)
     public ApiResponse changeAnswer(@ApiParameter(id = "element_id") final UUID elementId,
@@ -81,6 +82,6 @@ public class FAQEntryEndpoints {
      */
     private boolean checkXXS(final String content) {
         //RegEx to find everything with < and no space or minus after it and > with not space or minus before
-        return Pattern.compile("<[^- ]|[^- ]>").matcher(content).find();
+        return this.xxsFilter.matcher(content).find();
     }
 }
