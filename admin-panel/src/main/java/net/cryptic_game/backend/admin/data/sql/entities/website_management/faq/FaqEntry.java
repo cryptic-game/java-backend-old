@@ -16,11 +16,11 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "faq_entry")
-public class FAQEntry extends TableModelAutoId {
+public class FaqEntry extends TableModelAutoId {
 
-    @Column(name = "question", updatable = true, nullable = false, unique = false)
+    @Column(name = "question", updatable = true, nullable = false)
     private String question;
 
-    @Column(name = "answer", updatable = true, nullable = false, unique = false)
+    @Column(name = "answer", updatable = true, nullable = false)
     private String answer;
 }
