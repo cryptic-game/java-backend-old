@@ -1,10 +1,6 @@
 package net.cryptic_game.backend.admin.endpoints.website.team;
 
 import io.netty.handler.codec.http.HttpResponseStatus;
-
-import java.time.OffsetDateTime;
-import java.util.UUID;
-
 import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.admin.authentication.AdminPanelAuthenticator;
 import net.cryptic_game.backend.admin.authentication.Permission;
@@ -17,12 +13,17 @@ import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.annotations.ApiParameter;
 import net.cryptic_game.backend.base.api.data.ApiResponse;
 import net.cryptic_game.backend.base.api.data.ApiType;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.OffsetDateTime;
+import java.util.UUID;
 
 @Component
 @ApiEndpointCollection(id = "website/team/member", description = "manage team members", type = ApiType.REST, authenticator = AdminPanelAuthenticator.class)
 @RequiredArgsConstructor
-public final class TeamMemberEndpoints {
+public class TeamMemberEndpoints {
 
     private final TeamMemberRepository teamMemberRepository;
     private final TeamDepartmentRepository teamDepartmentRepository;
@@ -49,6 +50,8 @@ public final class TeamMemberEndpoints {
     }
 
     @ApiEndpoint(id = "update", authentication = Permission.TEAM_MANAGEMENT)
+    @Transactional
+    @Modifying
     public ApiResponse update(@ApiParameter(id = "id") final UUID id,
                               @ApiParameter(id = "name", required = false) final String name,
                               @ApiParameter(id = "department_id", required = false) final UUID departmentId,
@@ -59,9 +62,11 @@ public final class TeamMemberEndpoints {
             return new ApiResponse(HttpResponseStatus.NOT_FOUND, "MEMBER_NOT_FOUND");
         }
 
-        if (member.getJoined() != null) member.setName(name);
+        if (name != null) {
+            member.setName(name);
+        }
 
-        if (member.getDepartment() != null) {
+        if (departmentId != null) {
             final TeamDepartment department = this.teamDepartmentRepository.findById(departmentId).orElse(null);
             if (department == null) {
                 return new ApiResponse(HttpResponseStatus.NOT_FOUND, "DEPARTMENT_NOT_FOUND");
@@ -70,7 +75,7 @@ public final class TeamMemberEndpoints {
             member.setDepartment(department);
         }
 
-        if (member.getJoined() != null) member.setJoined(joined);
+        if (joined != null) member.setJoined(joined);
 
         return new ApiResponse(HttpResponseStatus.OK, this.teamMemberRepository.save(member));
     }

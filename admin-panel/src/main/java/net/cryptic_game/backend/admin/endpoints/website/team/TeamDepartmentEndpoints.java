@@ -48,7 +48,7 @@ public final class TeamDepartmentEndpoints {
 
         final TeamDepartment department = this.teamDepartmentRepository.findById(id).orElse(null);
         if (department == null) {
-            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "MEMBER_NOT_FOUND");
+            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "DEPARTMENT_NOT_FOUND");
         }
 
         department.setName(name);
