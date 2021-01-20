@@ -20,7 +20,7 @@ import net.cryptic_game.backend.base.api.data.ApiType;
 import org.springframework.stereotype.Component;
 
 @Component
-@ApiEndpointCollection(id = "webiste/team/member", description = "manage team members", type = ApiType.REST, authenticator = AdminPanelAuthenticator.class)
+@ApiEndpointCollection(id = "website/team/member", description = "manage team members", type = ApiType.REST, authenticator = AdminPanelAuthenticator.class)
 @RequiredArgsConstructor
 public final class TeamMemberEndpoints {
 
@@ -48,9 +48,36 @@ public final class TeamMemberEndpoints {
         return new ApiResponse(HttpResponseStatus.OK, this.teamMemberRepository.createTeamMember(name, githubId, department, joined));
     }
 
+    @ApiEndpoint(id = "update", authentication = Permission.TEAM_MANAGEMENT)
+    public ApiResponse update(@ApiParameter(id = "id") final UUID id,
+                              @ApiParameter(id = "name", required = false) final String name,
+                              @ApiParameter(id = "department_id", required = false) final UUID departmentId,
+                              @ApiParameter(id = "joined", required = false) final OffsetDateTime joined) {
+
+        final TeamMember member = this.teamMemberRepository.findById(id).orElse(null);
+        if (member == null) {
+            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "MEMBER_NOT_FOUND");
+        }
+
+        if (member.getJoined() != null) member.setName(name);
+
+        if (member.getDepartment() != null) {
+            final TeamDepartment department = this.teamDepartmentRepository.findById(departmentId).orElse(null);
+            if (department == null) {
+                return new ApiResponse(HttpResponseStatus.NOT_FOUND, "DEPARTMENT_NOT_FOUND");
+            }
+
+            member.setDepartment(department);
+        }
+
+        if (member.getJoined() != null) member.setJoined(joined);
+
+        return new ApiResponse(HttpResponseStatus.OK, this.teamMemberRepository.save(member));
+    }
+
     @ApiEndpoint(id = "delete", authentication = Permission.TEAM_MANAGEMENT)
-    public ApiResponse delete(@ApiParameter(id = "member_id") final UUID memberId) {
-        final TeamMember member = this.teamMemberRepository.findById(memberId).orElse(null);
+    public ApiResponse delete(@ApiParameter(id = "id") final UUID id) {
+        final TeamMember member = this.teamMemberRepository.findById(id).orElse(null);
         if (member == null) return new ApiResponse(HttpResponseStatus.NOT_FOUND, "MEMBER_NOT_FOUND");
         this.teamMemberRepository.delete(member);
         return new ApiResponse(HttpResponseStatus.OK);
