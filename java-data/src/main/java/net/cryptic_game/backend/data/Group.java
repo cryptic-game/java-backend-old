@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public enum Group implements JsonSerializable {
 
     USER("user", "User", new Group[0], Permission.INTERNAL),
-    CONTENT("content", "Content", new Group[]{USER}, Permission.TEAM_MANAGEMENT, Permission.FAQ_MANAGEMENT),
+    CONTENT("content", "Content", new Group[]{USER}, Permission.TEAM_MANAGEMENT, Permission.FAQ_MANAGEMENT, Permission.BLOG_MANAGEMENT),
     MODERATOR("moderator", "Moderator", new Group[]{USER}, Permission.USER_MANAGEMENT),
     SERVER_ADMIN("server_admin", "Server Admin", new Group[]{USER}, Permission.SERVER_MANAGEMENT),
     ADMIN("admin", "Administrator", new Group[]{CONTENT, MODERATOR, SERVER_ADMIN}, Permission.ACCESS_MANAGEMENT);
