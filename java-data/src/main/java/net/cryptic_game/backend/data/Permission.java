@@ -8,6 +8,7 @@ public final class Permission {
     // 200 -> Manager Website
     public static final int TEAM_MANAGEMENT = 200;
     public static final int FAQ_MANAGEMENT = 201;
+    public static final int BLOG_MANAGEMENT = 202;
 
     // 300 -> Manage Admin Panel Access for other users
     public static final int ACCESS_MANAGEMENT = 300;
