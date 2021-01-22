@@ -27,8 +27,6 @@
 ### Documentation
 
 #### Versions
-- [v0.3.0-pre-alpha-rc2 (latest)](javadoc/0.3.0-pre-alpha-rc2)
-- [v0.3.0-pre-alpha-rc1](javadoc/0.3.0-pre-alpha-rc1)
 
 [Further Information](https://wiki.cryptic-game.net/books/einf%C3%BChrungen/chapter/java)  
 
