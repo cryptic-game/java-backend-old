@@ -3,11 +3,11 @@
 </h1>
 
 <p align="center">
-    <a style="text-decoration:none" href="https://github.com/cryptic-game/java-backend-dev/releases">
-        <img alt="Releases" src="https://img.shields.io/github/v/tag/cryptic-game/java-backend-dev?label=latest%20version&style=flat-square">
+    <a style="text-decoration:none" href="https://github.com/cryptic-game/java-backend/releases">
+        <img alt="Releases" src="https://img.shields.io/github/v/tag/cryptic-game/java-backend?label=latest%20version&style=flat-square">
     </a>
-    <a style="text-decoration:none" href="https://github.com/cryptic-game/java-backend-dev/actions">
-        <img alt="Build" src="https://img.shields.io/github/workflow/status/cryptic-game/java-backend-dev/CI/master?style=flat-square">
+    <a style="text-decoration:none" href="https://github.com/cryptic-game/java-backend/actions">
+        <img alt="Build" src="https://img.shields.io/github/workflow/status/cryptic-game/java-backend/CI/master?style=flat-square">
     </a>
     <br>
     <a style="text-decoration:none" href="https://hub.docker.com/r/crypticcp/server">
@@ -21,7 +21,7 @@
     </a>
 </p>
 <p align="center">
-    This is the <a href="https://cryptic-game.github.io/java-backend-dev/">Java Backend</a> of the Cryptic project.
+    This is the <a href="https://cryptic-game.github.io/java-backend/">Java Backend</a> of the Cryptic project.
 </p>
 
 ## Getting Started
@@ -41,7 +41,7 @@ What things you need to install the software and how to install them
 A step by step series of examples that tell you how to get a development env running
 
 ```sh
-git clone https://github.com/cryptic-game/java-backend-dev.git
+git clone https://github.com/cryptic-game/java-backend.git
 ```
 
 Then you can open it with you IDE.
@@ -69,7 +69,7 @@ To customize your development environment, check our [available environment vari
 
 ### Documentation
 
-The Javadocs can be found in [GitHub Pages](https://cryptic-game.github.io/java-backend-dev/) and the protocol documentation in our [wiki](https://wiki.cryptic-game.net/books/einf%C3%BChrungen/chapter/java).
+The Javadocs can be found in [GitHub Pages](https://cryptic-game.github.io/java-backend/) and the protocol documentation in our [wiki](https://wiki.cryptic-game.net/books/einf%C3%BChrungen/chapter/java).
 
 ### Deployment
 
