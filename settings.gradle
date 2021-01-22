@@ -1,4 +1,4 @@
-rootProject.name = 'cryptic-backend'
+rootProject.name = 'java-backend'
 include 'server'
 include 'java-daemon'
 include 'java-base'
