@@ -3,11 +3,11 @@
 </h1>
 
 <p align="center">
-    <a style="text-decoration:none" href="https://github.com/cryptic-game/java-backend-dev/releases">
-        <img alt="Releases" src="https://img.shields.io/github/v/tag/cryptic-game/java-backend-dev?label=latest%20version&style=flat-square">
+    <a style="text-decoration:none" href="https://github.com/cryptic-game/java-backend/releases">
+        <img alt="Releases" src="https://img.shields.io/github/v/tag/cryptic-game/java-backend?label=latest%20version&style=flat-square">
     </a>
-    <a style="text-decoration:none" href="https://github.com/cryptic-game/java-backend-dev/actions">
-        <img alt="Build" src="https://img.shields.io/github/workflow/status/cryptic-game/java-backend-dev/CI/master?style=flat-square">
+    <a style="text-decoration:none" href="https://github.com/cryptic-game/java-backend/actions">
+        <img alt="Build" src="https://img.shields.io/github/workflow/status/cryptic-game/java-backend/CI/master?style=flat-square">
     </a>
     <br>
     <a style="text-decoration:none" href="https://hub.docker.com/r/crypticcp/server">
@@ -21,7 +21,7 @@
     </a>
 </p>
 <p align="center">
-    This is the <a href="https://cryptic-game.github.io/java-backend-dev/">Java Backend</a> of the Cryptic project.
+    This is the <a href="https://cryptic-game.github.io/java-backend/">Java Backend</a> of the Cryptic project.
 </p>
 
 ### Documentation
@@ -34,4 +34,4 @@
 
 ### Other
 
-[License](https://github.com/cryptic-game/java-backend-dev/blob/master/LICENSE)
+[License](https://github.com/cryptic-game/java-backend/blob/master/LICENSE)
