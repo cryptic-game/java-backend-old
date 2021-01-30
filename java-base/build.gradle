@@ -8,7 +8,7 @@ dependencies {
     /* Logger */
     api('org.slf4j:slf4j-api:1.7.30')
     implementation('ch.qos.logback:logback-classic:1.2.3')
-    implementation('io.sentry:sentry-logback:1.7.30')
+    implementation('io.sentry:sentry-logback:4.0.0')
 
     /* Bootstrapping & Dependency Injection */
     api('org.springframework:spring-context')
