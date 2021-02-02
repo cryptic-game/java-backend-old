@@ -14,7 +14,7 @@ import ch.qos.logback.core.pattern.color.ANSIConstants;
 import ch.qos.logback.core.spi.ContextAware;
 import ch.qos.logback.core.spi.LifeCycle;
 import ch.qos.logback.core.util.OptionHelper;
-import io.sentry.Sentry;
+import io.sentry.SentryOptions;
 import io.sentry.logback.SentryAppender;
 import net.cryptic_game.backend.base.ansi.AnsiColor;
 import net.cryptic_game.backend.base.ansi.AnsiStyle;
@@ -86,10 +86,7 @@ public final class LogbackHandler implements LoggingHandler {
         this.setLogLevel(level);
         this.getRootLogger().addAppender(this.consoleAppender(PATTERN));
 
-        if (dsn != null) {
-            Sentry.init(dsn);
-            this.getRootLogger().addAppender(this.sentryAppender(COLOR_LESS_PATTERN));
-        }
+        if (dsn != null) this.getRootLogger().addAppender(this.sentryAppender(dsn));
     }
 
     @Override
@@ -132,17 +129,16 @@ public final class LogbackHandler implements LoggingHandler {
         return appender;
     }
 
-    private Appender<ILoggingEvent> sentryAppender(final String pattern) {
-        final PatternLayoutEncoder encoder = new PatternLayoutEncoder();
-        encoder.setPattern(OptionHelper.substVars(pattern, this.context));
-        this.start(encoder);
-
+    private Appender<ILoggingEvent> sentryAppender(final String dsn) {
         final LevelFilter levelFilter = new LevelFilter();
         levelFilter.setLevel(Level.WARN);
 
+        final SentryOptions options = new SentryOptions();
+        options.setDsn(dsn);
+
         final SentryAppender appender = new SentryAppender();
         appender.setName("sentry");
-        appender.setEncoder(encoder);
+        appender.setOptions(options);
         appender.addFilter(levelFilter);
         this.start(appender);
 
