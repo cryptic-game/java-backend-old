@@ -1,5 +1,9 @@
 package net.cryptic_game.backend.base;
 
+import java.io.File;
+import java.util.Collections;
+import java.util.List;
+
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.context.ContextHandler;
@@ -7,9 +11,6 @@ import net.cryptic_game.backend.base.logging.LogLevel;
 import net.cryptic_game.backend.base.logging.LoggingHandler;
 import net.cryptic_game.backend.base.logging.logback.LogbackHandler;
 import org.springframework.context.annotation.ComponentScan;
-
-import java.io.File;
-import java.util.List;
 
 @Slf4j
 @Getter
@@ -26,6 +27,8 @@ public final class Bootstrap {
             "              __/ | |",
             "             |___/|_| "
     );
+    private static final String DSN = System.getenv("SENTRY_DSN");
+    private static final boolean JSON_LOGGING = Boolean.parseBoolean(System.getenv("JSON_LOGGING"));
 
     private final long startUpTime;
     private final File workingDir;
@@ -39,7 +42,7 @@ public final class Bootstrap {
         this.startUpTime = startUpTime;
         this.workingDir = new File(System.getProperty("user.dir")).getAbsoluteFile();
 
-        this.loggingHandler = new LogbackHandler(LogLevel.INFO, BANNER, null);
+        this.loggingHandler = new LogbackHandler(LogLevel.INFO, JSON_LOGGING ? Collections.emptyList() : BANNER, DSN, JSON_LOGGING);
         log.info("Starting in working directory \"{}\"...", this.workingDir.getPath());
         this.loadConfig();
 
@@ -70,8 +73,7 @@ public final class Bootstrap {
             log.error("The log level \"{}\" could not be found.", levelString);
         }
 
-        final String sentryDsn = System.getenv("SENTRY_DSN");
-        this.loggingHandler.reinitialize(level, sentryDsn);
+        this.loggingHandler.reinitialize(level, DSN, JSON_LOGGING);
 
         if (this.debug) {
             log.info("Running in debug mode...");

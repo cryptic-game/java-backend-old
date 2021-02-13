@@ -1,14 +1,19 @@
 package net.cryptic_game.backend.base.logging.logback;
 
+import static org.slf4j.Logger.ROOT_LOGGER_NAME;
+
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
 import ch.qos.logback.classic.filter.LevelFilter;
 import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.contrib.json.classic.JsonLayout;
 import ch.qos.logback.core.Appender;
 import ch.qos.logback.core.ConsoleAppender;
 import ch.qos.logback.core.CoreConstants;
+import ch.qos.logback.core.encoder.Encoder;
+import ch.qos.logback.core.encoder.LayoutWrappingEncoder;
 import ch.qos.logback.core.pattern.Converter;
 import ch.qos.logback.core.pattern.color.ANSIConstants;
 import ch.qos.logback.core.spi.ContextAware;
@@ -16,18 +21,17 @@ import ch.qos.logback.core.spi.LifeCycle;
 import ch.qos.logback.core.util.OptionHelper;
 import io.sentry.SentryOptions;
 import io.sentry.logback.SentryAppender;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import net.cryptic_game.backend.base.ansi.AnsiColor;
 import net.cryptic_game.backend.base.ansi.AnsiStyle;
 import net.cryptic_game.backend.base.logging.LogLevel;
 import net.cryptic_game.backend.base.logging.LogLevelConverter;
 import net.cryptic_game.backend.base.logging.LoggingHandler;
 import org.slf4j.impl.StaticLoggerBinder;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.slf4j.Logger.ROOT_LOGGER_NAME;
 
 public final class LogbackHandler implements LoggingHandler {
 
@@ -51,11 +55,11 @@ public final class LogbackHandler implements LoggingHandler {
 
     private final LoggerContext context;
 
-    public LogbackHandler(final LogLevel level, final List<String> banner, final String dsn) {
+    public LogbackHandler(final LogLevel level, final List<String> banner, final String dsn, final boolean json) {
         this.context = (LoggerContext) StaticLoggerBinder.getSingleton().getLoggerFactory();
         this.cleanUp();
-        this.initialize(level, dsn);
-        this.printBanner(banner);
+        this.initialize(level, dsn, json);
+        if (!banner.isEmpty()) this.printBanner(banner);
     }
 
     private void printBanner(final List<String> banner) {
@@ -79,12 +83,16 @@ public final class LogbackHandler implements LoggingHandler {
     }
 
     @Override
-    public void initialize(final LogLevel level, final String dsn) {
+    public void initialize(final LogLevel level, final String dsn, final boolean json) {
         this.addConversionRule("clr", ColorConverter.class);
         this.addConversionRule("rExW", RootCauseFirstWhitespaceThrowableProxyConverter.class);
 
+        final Encoder<ILoggingEvent> encoder = json
+                ? this.jsonEncoder()
+                : this.patternEncoder(PATTERN);
+
         this.setLogLevel(level);
-        this.getRootLogger().addAppender(this.consoleAppender(PATTERN));
+        this.getRootLogger().addAppender(this.consoleAppender(encoder));
 
         if (dsn != null) this.getRootLogger().addAppender(this.sentryAppender(dsn));
     }
@@ -116,9 +124,23 @@ public final class LogbackHandler implements LoggingHandler {
         this.context.stop();
     }
 
-    private Appender<ILoggingEvent> consoleAppender(final String pattern) {
+    private PatternLayoutEncoder patternEncoder(final String pattern) {
         final PatternLayoutEncoder encoder = new PatternLayoutEncoder();
         encoder.setPattern(OptionHelper.substVars(pattern, this.context));
+        return encoder;
+    }
+
+    private LayoutWrappingEncoder<ILoggingEvent> jsonEncoder() {
+        final JsonLayout layout = new JsonLayout();
+        layout.setJsonFormatter(new GsonJsonFormatter());
+
+        final LayoutWrappingEncoder<ILoggingEvent> encoder = new LayoutWrappingEncoder<>();
+        encoder.setLayout(layout);
+
+        return encoder;
+    }
+
+    private Appender<ILoggingEvent> consoleAppender(final Encoder<ILoggingEvent> encoder) {
         this.start(encoder);
 
         final ConsoleAppender<ILoggingEvent> appender = new ConsoleAppender<>();

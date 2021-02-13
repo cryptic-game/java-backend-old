@@ -10,12 +10,13 @@ public interface LoggingHandler {
      *
      * @param level the {@link LogLevel} for the root logger
      * @param dsn   the sentry dsn to log errors
+     * @param json  if the output should be formatted as json
      */
-    void initialize(LogLevel level, String dsn);
+    void initialize(LogLevel level, String dsn, boolean json);
 
-    default void reinitialize(final LogLevel level, String dsn) {
+    default void reinitialize(LogLevel level, String dsn, boolean json) {
         this.cleanUp();
-        this.initialize(level, dsn);
+        this.initialize(level, dsn, json);
     }
 
     LogLevel getLogLevel();
