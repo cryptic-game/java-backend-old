@@ -1,0 +1,3 @@
+[submodule "config/gamedesign"]
+	path = config/gamedesign
+	url = https://github.com/cryptic-game/gamedesign.git

@@ -12,13 +12,7 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.springframework:spring-context-indexer'
-}
 
-//jar {
-//    from "${rootDir}/LICENSE"
-//    manifest.attributes([
-//            'Implementation-Title'  : 'Cryptic Server',
-//            'Implementation-Version': project.version,
-//            'Implementation-Vendor' : 'Cryptic Game (https://cryptic-game.net)'
-//    ])
-//}
+    compileOnly project(':config-processor')
+    annotationProcessor project(':config-processor')
+}
