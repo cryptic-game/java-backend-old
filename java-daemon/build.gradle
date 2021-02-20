@@ -11,7 +11,8 @@ dependencies {
 
 application {
     applicationName = 'java-daemon'
-    mainClassName = 'net.cryptic_game.backend.base.Bootstrap'
+    mainClass.set('net.cryptic_game.backend.base.Bootstrap')
+    applicationDefaultJvmArgs = ["-XX:+UseParallelGC"]
 }
 
 task start(type: JavaExec) {
