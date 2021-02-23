@@ -57,12 +57,12 @@ public class UserSuspensionEndpoints {
     @ApiEndpoint(id = "create", authentication = Permission.USER_MANAGEMENT)
     public ApiResponse create(@ApiParameter(id = "request", type = ApiParameterType.REQUEST) final RestApiRequest request,
                               @ApiParameter(id = "user_id") final UUID userId,
-                              @ApiParameter(id = "expire") final OffsetDateTime expire,
+                              @ApiParameter(id = "expires") final OffsetDateTime expires,
                               @ApiParameter(id = "reason") final String reason) {
         final Optional<User> user = this.userRepository.findById(userId);
         final OffsetDateTime now = OffsetDateTime.now();
 
-        if (!expire.isAfter(now)) return new ApiResponse(HttpResponseStatus.BAD_REQUEST, "EXPIRE_NOT_IN_FUTURE");
+        if (!expires.isAfter(now)) return new ApiResponse(HttpResponseStatus.BAD_REQUEST, "EXPIRE_NOT_IN_FUTURE");
         if (user.isEmpty()) return new ApiResponse(HttpResponseStatus.NOT_FOUND, "USER");
 
         long adminUserId = JsonUtils.fromJson(JsonUtils.fromJson(JsonParser.parseString(
@@ -70,7 +70,7 @@ public class UserSuspensionEndpoints {
                         .requestHeaders().get(HttpHeaderNames.AUTHORIZATION).split(Pattern.quote("."))[1])))
                 , JsonObject.class).get("user_id"), long.class);
 
-        final UserSuspension suspension = new UserSuspension(user.get(), this.adminUserRepository.findById(adminUserId).orElseThrow(), now, expire, reason);
+        final UserSuspension suspension = new UserSuspension(user.get(), this.adminUserRepository.findById(adminUserId).orElseThrow(), now, expires, reason);
         StreamSupport.stream(this.sessionRepository.findAll().spliterator(), true)
                 .filter(Objects::nonNull)
                 .filter(session -> session.getUserId().equals(userId))
