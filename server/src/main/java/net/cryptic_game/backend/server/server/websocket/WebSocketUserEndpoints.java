@@ -14,9 +14,13 @@ import net.cryptic_game.backend.data.Constants;
 import net.cryptic_game.backend.data.redis.entities.Session;
 import net.cryptic_game.backend.data.redis.repositories.SessionRepository;
 import net.cryptic_game.backend.data.sql.entities.user.User;
+import net.cryptic_game.backend.data.sql.entities.user.UserSuspension;
 import net.cryptic_game.backend.data.sql.repositories.user.UserRepository;
+import net.cryptic_game.backend.data.sql.repositories.user.UserSuspensionRepository;
+import net.cryptic_game.backend.data.sql.repositories.user.UserSuspensionRevokedRepository;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -26,6 +30,8 @@ public final class WebSocketUserEndpoints {
 
     private final UserRepository userRepository;
     private final SessionRepository sessionRepository;
+    private final UserSuspensionRepository userSuspensionRepository;
+    private final UserSuspensionRevokedRepository userSuspensionRevokedRepository;
 
     @ApiEndpoint(id = "login")
     public ApiResponse login(@ApiParameter(id = "request", type = ApiParameterType.REQUEST) final WebsocketApiRequest request,
@@ -44,6 +50,15 @@ public final class WebSocketUserEndpoints {
         if (user == null) {
             return new ApiResponse(HttpResponseStatus.UNAUTHORIZED, "INVALID_USERNAME");
         }
+
+        final List<UserSuspension> suspensions = this.userSuspensionRepository.findAllByUserIdAndExpiresAfter(user.getId(), OffsetDateTime.now());
+
+        if (suspensions.size() != 0
+                && suspensions.stream().map(userSuspension -> userSuspensionRevokedRepository.findByUserSuspensionId(userSuspension.getId()))
+                .anyMatch(Optional::isEmpty)) {
+            return new ApiResponse(HttpResponseStatus.FORBIDDEN, "ACCOUNT_SUSPENDED");
+        }
+
         if (!user.verifyPassword(password)) {
             return new ApiResponse(HttpResponseStatus.UNAUTHORIZED, "INVALID_PASSWORD");
         }
