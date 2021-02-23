@@ -1,6 +1,6 @@
-package net.cryptic_game.backend.admin.data.sql.repositories.website.faq;
+package net.cryptic_game.backend.data.sql.repositories.website.faq;
 
-import net.cryptic_game.backend.admin.data.sql.entities.website.faq.FaqEntry;
+import net.cryptic_game.backend.data.sql.entities.website.faq.FaqEntry;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

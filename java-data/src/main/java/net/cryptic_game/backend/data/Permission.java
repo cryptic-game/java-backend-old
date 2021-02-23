@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.admin.authentication;
+package net.cryptic_game.backend.data;
 
 public final class Permission {
 

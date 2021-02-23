@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.admin.authentication;
+package net.cryptic_game.backend.data;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;

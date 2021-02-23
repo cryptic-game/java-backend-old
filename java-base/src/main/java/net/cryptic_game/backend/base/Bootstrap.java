@@ -1,9 +1,5 @@
 package net.cryptic_game.backend.base;
 
-import java.io.File;
-import java.util.Collections;
-import java.util.List;
-
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.context.ContextHandler;
@@ -11,6 +7,10 @@ import net.cryptic_game.backend.base.logging.LogLevel;
 import net.cryptic_game.backend.base.logging.LoggingHandler;
 import net.cryptic_game.backend.base.logging.logback.LogbackHandler;
 import org.springframework.context.annotation.ComponentScan;
+
+import java.io.File;
+import java.util.Collections;
+import java.util.List;
 
 @Slf4j
 @Getter

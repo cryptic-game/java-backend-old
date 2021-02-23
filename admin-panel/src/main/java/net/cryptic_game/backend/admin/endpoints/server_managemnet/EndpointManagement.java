@@ -8,7 +8,7 @@ import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.admin.AdminPanelConfig;
 import net.cryptic_game.backend.admin.authentication.AdminPanelAuthenticator;
-import net.cryptic_game.backend.admin.authentication.Permission;
+import net.cryptic_game.backend.data.Permission;
 import net.cryptic_game.backend.base.BaseConfig;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;

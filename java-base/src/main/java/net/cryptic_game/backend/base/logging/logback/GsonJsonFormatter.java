@@ -1,10 +1,9 @@
 package net.cryptic_game.backend.base.logging.logback;
 
 import ch.qos.logback.contrib.json.JsonFormatter;
+import net.cryptic_game.backend.base.json.JsonUtils;
 
 import java.util.Map;
-
-import net.cryptic_game.backend.base.json.JsonUtils;
 
 public class GsonJsonFormatter implements JsonFormatter {
 

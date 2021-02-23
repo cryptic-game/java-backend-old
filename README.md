@@ -26,7 +26,8 @@
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development. See deployment for notes on how to deploy
+the project on a live system.
 
 ### Prerequisites
 
@@ -51,25 +52,30 @@ Then you can open it with you IDE.
 To test the things you have changed you have to execute the Gradle Task 'run'.
 
 Server:
+
 ````sh
 ./gradlew :server:start
 ````
 
 Java-Daemon:
+
 ````sh
 ./gradlew :java-daemon:start
 ````
 
 Admin-Panel:
+
 ````sh
 ./gradlew :admin-panel:start
 ````
 
-To customize your development environment, check our [available environment variables](https://wiki.cryptic-game.net/books/einf%C3%BChrungen/page/environment).
+To customize your development environment, check
+our [available environment variables](https://wiki.cryptic-game.net/books/einf%C3%BChrungen/page/environment).
 
 ### Documentation
 
-The Javadocs can be found in [GitHub Pages](https://cryptic-game.github.io/java-backend/) and the protocol documentation in our [wiki](https://wiki.cryptic-game.net/books/einf%C3%BChrungen/chapter/java).
+The Javadocs can be found in [GitHub Pages](https://cryptic-game.github.io/java-backend/) and the protocol documentation in
+our [wiki](https://wiki.cryptic-game.net/books/einf%C3%BChrungen/chapter/java).
 
 ### Deployment
 
