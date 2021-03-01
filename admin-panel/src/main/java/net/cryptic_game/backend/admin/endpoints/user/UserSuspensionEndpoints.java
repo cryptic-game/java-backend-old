@@ -31,11 +31,12 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @RequiredArgsConstructor
 @ApiEndpointCollection(id = "user/suspension", description = "manages user suspensions", type = ApiType.REST, authenticator = AdminPanelAuthenticator.class)
-public class UserSuspensionEndpoints {
+public final class UserSuspensionEndpoints {
 
     private final UserRepository userRepository;
     private final SessionRepository sessionRepository;
@@ -71,10 +72,10 @@ public class UserSuspensionEndpoints {
                 , JsonObject.class).get("user_id"), long.class);
 
         final UserSuspension suspension = new UserSuspension(user.get(), this.adminUserRepository.findById(adminUserId).orElseThrow(), now, expires, reason);
-        StreamSupport.stream(this.sessionRepository.findAll().spliterator(), true)
+        this.sessionRepository.deleteAll(StreamSupport.stream(this.sessionRepository.findAll().spliterator(), true)
                 .filter(Objects::nonNull)
                 .filter(session -> session.getUserId().equals(userId))
-                .forEach(this.sessionRepository::delete);
+                .collect(Collectors.toSet()));
 
         return new ApiResponse(HttpResponseStatus.OK, this.userSuspensionRepository.save(suspension));
     }
