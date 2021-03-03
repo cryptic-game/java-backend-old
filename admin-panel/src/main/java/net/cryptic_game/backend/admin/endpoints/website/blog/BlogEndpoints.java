@@ -12,6 +12,8 @@ import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.annotations.ApiParameter;
 import net.cryptic_game.backend.base.api.data.ApiResponse;
 import net.cryptic_game.backend.base.api.data.ApiType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.time.OffsetDateTime;
 import java.util.Optional;
@@ -24,26 +26,38 @@ public final class BlogEndpoints {
     private final BlogEntryRepository blogEntryRepository;
 
     @ApiEndpoint(id = "list")
-    public ApiResponse list() {
-        return new ApiResponse(HttpResponseStatus.OK, this.blogEntryRepository.findAll());
+    public ApiResponse list(@ApiParameter(id = "lang", required = false) final String lang,
+                            @ApiParameter(id = "page") final int page,
+                            @ApiParameter(id = "page_size") final int pageSize) {
+        if (lang == null)
+            return new ApiResponse(HttpResponseStatus.OK, this.shortContent(
+                    this.blogEntryRepository.findAllByOrderByCreationDesc(PageRequest.of(page, pageSize))));
+        return new ApiResponse(HttpResponseStatus.OK, this.shortContent(
+                this.blogEntryRepository.findAllByLanguageOrderByCreationDesc(lang, PageRequest.of(page, pageSize))));
+    }
+
+    @ApiEndpoint(id = "get")
+    public ApiResponse getBlogEntry(@ApiParameter(id = "id") final UUID id) {
+        return new ApiResponse(HttpResponseStatus.OK, this.blogEntryRepository.findById(id));
     }
 
     @ApiEndpoint(id = "add", authentication = Permission.BLOG_MANAGEMENT)
     public ApiResponse add(@ApiParameter(id = "title") final String title,
-                           @ApiParameter(id = "content") final String content) {
+                           @ApiParameter(id = "content") final String content,
+                           @ApiParameter(id = "lang") final String lang) {
         if (WebsiteUtils.checkXxs(title) || WebsiteUtils.checkXxs(content)) {
             return new ApiResponse(HttpResponseStatus.FORBIDDEN, "NO_HTML_TAGS_ALLOWED");
         }
         if (content.length() > WebsiteUtils.MAX_CONTENT_LENGTH) {
             return new ApiResponse(HttpResponseStatus.FORBIDDEN, "CONTENT_TOO_LONG");
         }
-        return new ApiResponse(HttpResponseStatus.OK, this.blogEntryRepository.save(new BlogEntry(OffsetDateTime.now(), null, title, content)));
+        return new ApiResponse(HttpResponseStatus.OK, this.blogEntryRepository.save(new BlogEntry(OffsetDateTime.now(), null, title, lang, content)));
     }
 
     @ApiEndpoint(id = "update", authentication = Permission.BLOG_MANAGEMENT)
     public ApiResponse update(@ApiParameter(id = "id") final UUID id,
-                       @ApiParameter(id = "title") final String title,
-                       @ApiParameter(id = "content") final String content) {
+                              @ApiParameter(id = "title") final String title,
+                              @ApiParameter(id = "content") final String content) {
         if (WebsiteUtils.checkXxs(title) || WebsiteUtils.checkXxs(content)) {
             return new ApiResponse(HttpResponseStatus.FORBIDDEN, "NO_HTML_TAGS_ALLOWED");
         }
@@ -71,5 +85,14 @@ public final class BlogEndpoints {
             this.blogEntryRepository.delete(entry.get());
             return new ApiResponse(HttpResponseStatus.OK);
         }
+    }
+
+    private Page<BlogEntry> shortContent(final Page<BlogEntry> blogEntryPage) {
+        return blogEntryPage
+                .map(blogEntry -> {
+                    final String content = blogEntry.getContent();
+                    blogEntry.setContent(content.substring(0, Math.min(content.length(), 200)));
+                    return blogEntry;
+                });
     }
 }

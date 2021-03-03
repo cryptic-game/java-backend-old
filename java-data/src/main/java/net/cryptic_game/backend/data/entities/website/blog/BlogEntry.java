@@ -28,6 +28,9 @@ public class BlogEntry extends TableModelAutoId {
     @Column(name = "title", updatable = true, nullable = false)
     private String title;
 
+    @Column(name = "language", updatable = false, nullable = false)
+    private String language;
+
     @Column(name = "content", updatable = true, nullable = false, columnDefinition = "TEXT")
     private String content;
 
