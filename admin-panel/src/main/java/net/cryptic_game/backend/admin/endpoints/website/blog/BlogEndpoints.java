@@ -32,7 +32,10 @@ public final class BlogEndpoints {
     public ApiResponse add(@ApiParameter(id = "title") final String title,
                            @ApiParameter(id = "content") final String content) {
         if (WebsiteUtils.checkXxs(title) || WebsiteUtils.checkXxs(content)) {
-            return new ApiResponse(HttpResponseStatus.BAD_REQUEST, "NO_HTML_TAGS_ALLOWED");
+            return new ApiResponse(HttpResponseStatus.FORBIDDEN, "NO_HTML_TAGS_ALLOWED");
+        }
+        if (content.length() > WebsiteUtils.MAX_CONTENT_LENGTH) {
+            return new ApiResponse(HttpResponseStatus.FORBIDDEN, "CONTENT_TOO_LONG");
         }
         return new ApiResponse(HttpResponseStatus.OK, this.blogEntryRepository.save(new BlogEntry(OffsetDateTime.now(), null, title, content)));
     }
@@ -42,7 +45,10 @@ public final class BlogEndpoints {
                        @ApiParameter(id = "title") final String title,
                        @ApiParameter(id = "content") final String content) {
         if (WebsiteUtils.checkXxs(title) || WebsiteUtils.checkXxs(content)) {
-            return new ApiResponse(HttpResponseStatus.BAD_REQUEST, "NO_HTML_TAGS_ALLOWED");
+            return new ApiResponse(HttpResponseStatus.FORBIDDEN, "NO_HTML_TAGS_ALLOWED");
+        }
+        if (content.length() > WebsiteUtils.MAX_CONTENT_LENGTH) {
+            return new ApiResponse(HttpResponseStatus.FORBIDDEN, "CONTENT_TOO_LONG");
         }
         final Optional<BlogEntry> entry = this.blogEntryRepository.findById(id);
         if (entry.isPresent()) {
@@ -51,7 +57,7 @@ public final class BlogEndpoints {
             entry.get().setUpdated(OffsetDateTime.now());
             return new ApiResponse(HttpResponseStatus.OK, this.blogEntryRepository.save(entry.get()));
         } else {
-            return new ApiResponse(HttpResponseStatus.BAD_REQUEST, "NO_SUCH_ELEMENT");
+            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "NO_SUCH_ELEMENT");
         }
     }
 
@@ -60,7 +66,7 @@ public final class BlogEndpoints {
     public ApiResponse delete(@ApiParameter(id = "id") final UUID id) {
         final Optional<BlogEntry> entry = this.blogEntryRepository.findById(id);
         if (entry.isEmpty()) {
-            return new ApiResponse(HttpResponseStatus.BAD_REQUEST, "NO_SUCH_ELEMENT");
+            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "NO_SUCH_ELEMENT");
         } else {
             this.blogEntryRepository.delete(entry.get());
             return new ApiResponse(HttpResponseStatus.OK);

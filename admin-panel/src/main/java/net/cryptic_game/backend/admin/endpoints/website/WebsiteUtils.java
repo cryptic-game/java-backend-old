@@ -9,7 +9,7 @@ public final class WebsiteUtils {
     }
 
     private static final Pattern XXS_FILTER = Pattern.compile("<[^ ]+>");
-
+    public static final int MAX_CONTENT_LENGTH = 65535;
 
     /**
      * returns true if an xxs attempt might be there.
