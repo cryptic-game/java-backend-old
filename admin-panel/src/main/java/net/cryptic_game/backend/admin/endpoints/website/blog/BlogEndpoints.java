@@ -29,21 +29,18 @@ public final class BlogEndpoints {
     public ApiResponse list(@ApiParameter(id = "lang", required = false) final String lang,
                             @ApiParameter(id = "page") final int page,
                             @ApiParameter(id = "page_size") final int pageSize) {
-        if (lang == null) {
-            return new ApiResponse(HttpResponseStatus.OK, this.shortContent(
-                    this.blogEntryRepository.findAllByOrderByCreationDesc(PageRequest.of(page, pageSize))));
-        }
         return new ApiResponse(HttpResponseStatus.OK, this.shortContent(
-                this.blogEntryRepository.findAllByLanguageOrderByCreationDesc(lang, PageRequest.of(page, pageSize))));
+                Optional.ofNullable(lang)
+                        .map(l -> this.blogEntryRepository.findAllByLanguageOrderByCreationDesc(l, PageRequest.of(page, pageSize)))
+                        .orElseGet(() -> this.blogEntryRepository.findAllByOrderByCreationDesc(PageRequest.of(page, pageSize)))
+        ));
     }
 
     @ApiEndpoint(id = "get")
     public ApiResponse getBlogEntry(@ApiParameter(id = "id") final UUID id) {
-        final Optional<BlogEntry> entry = this.blogEntryRepository.findById(id);
-        if (entry.isEmpty()) {
-            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "NO_SUCH_ELEMENT");
-        }
-        return new ApiResponse(HttpResponseStatus.OK, entry.get());
+        return this.blogEntryRepository.findById(id)
+                .map(entry -> new ApiResponse(HttpResponseStatus.OK, entry))
+                .orElseGet(() -> new ApiResponse(HttpResponseStatus.NOT_FOUND, "NO_SUCH_ELEMENT"));
     }
 
     @ApiEndpoint(id = "add", authentication = Permission.BLOG_MANAGEMENT)
@@ -82,12 +79,12 @@ public final class BlogEndpoints {
 
     @ApiEndpoint(id = "delete", authentication = Permission.BLOG_MANAGEMENT)
     public ApiResponse delete(@ApiParameter(id = "id") final UUID id) {
-        final Optional<BlogEntry> entry = this.blogEntryRepository.findById(id);
-        if (entry.isEmpty()) {
-            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "NO_SUCH_ELEMENT");
-        }
-        this.blogEntryRepository.delete(entry.get());
-        return new ApiResponse(HttpResponseStatus.OK);
+        return this.blogEntryRepository.findById(id)
+                .map(entry -> {
+                    this.blogEntryRepository.delete(entry);
+                    return new ApiResponse(HttpResponseStatus.OK);
+                })
+                .orElseGet(() -> new ApiResponse(HttpResponseStatus.NOT_FOUND, "NO_SUCH_ELEMENT"));
     }
 
     private Page<BlogEntry> shortContent(final Page<BlogEntry> blogEntryPage) {
