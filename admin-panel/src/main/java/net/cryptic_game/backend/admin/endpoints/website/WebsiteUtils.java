@@ -8,8 +8,9 @@ public final class WebsiteUtils {
         throw new UnsupportedOperationException();
     }
 
-    private static final Pattern XXS_FILTER = Pattern.compile("<[^ ]+>");
     public static final int MAX_CONTENT_LENGTH = 65535;
+
+    private static final Pattern XXS_FILTER = Pattern.compile("<[^ ]+>");
 
     /**
      * returns true if an xxs attempt might be there.

@@ -4,8 +4,8 @@ import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.admin.authentication.AdminPanelAuthenticator;
 import net.cryptic_game.backend.admin.authentication.Permission;
-import net.cryptic_game.backend.admin.data.sql.entities.website.blog.BlogEntry;
-import net.cryptic_game.backend.admin.data.sql.repositories.website.blog.BlogEntryRepository;
+import net.cryptic_game.backend.data.sql.entities.website.blog.BlogEntry;
+import net.cryptic_game.backend.data.sql.repositories.website.blog.BlogEntryRepository;
 import net.cryptic_game.backend.admin.endpoints.website.WebsiteUtils;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
@@ -29,16 +29,21 @@ public final class BlogEndpoints {
     public ApiResponse list(@ApiParameter(id = "lang", required = false) final String lang,
                             @ApiParameter(id = "page") final int page,
                             @ApiParameter(id = "page_size") final int pageSize) {
-        if (lang == null)
+        if (lang == null) {
             return new ApiResponse(HttpResponseStatus.OK, this.shortContent(
                     this.blogEntryRepository.findAllByOrderByCreationDesc(PageRequest.of(page, pageSize))));
+        }
         return new ApiResponse(HttpResponseStatus.OK, this.shortContent(
                 this.blogEntryRepository.findAllByLanguageOrderByCreationDesc(lang, PageRequest.of(page, pageSize))));
     }
 
     @ApiEndpoint(id = "get")
     public ApiResponse getBlogEntry(@ApiParameter(id = "id") final UUID id) {
-        return new ApiResponse(HttpResponseStatus.OK, this.blogEntryRepository.findById(id));
+        final Optional<BlogEntry> entry = this.blogEntryRepository.findById(id);
+        if (entry.isEmpty()) {
+            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "NO_SUCH_ELEMENT");
+        }
+        return new ApiResponse(HttpResponseStatus.OK, entry.get());
     }
 
     @ApiEndpoint(id = "add", authentication = Permission.BLOG_MANAGEMENT)
@@ -64,15 +69,14 @@ public final class BlogEndpoints {
         if (content.length() > WebsiteUtils.MAX_CONTENT_LENGTH) {
             return new ApiResponse(HttpResponseStatus.FORBIDDEN, "CONTENT_TOO_LONG");
         }
-        final Optional<BlogEntry> entry = this.blogEntryRepository.findById(id);
-        if (entry.isPresent()) {
-            entry.get().setContent(content);
-            entry.get().setTitle(title);
-            entry.get().setUpdated(OffsetDateTime.now());
-            return new ApiResponse(HttpResponseStatus.OK, this.blogEntryRepository.save(entry.get()));
-        } else {
+        final BlogEntry entry = this.blogEntryRepository.findById(id).orElse(null);
+        if (entry == null) {
             return new ApiResponse(HttpResponseStatus.NOT_FOUND, "NO_SUCH_ELEMENT");
         }
+        entry.setContent(content);
+        entry.setTitle(title);
+        entry.setUpdated(OffsetDateTime.now());
+        return new ApiResponse(HttpResponseStatus.OK, this.blogEntryRepository.save(entry));
     }
 
 
@@ -81,10 +85,9 @@ public final class BlogEndpoints {
         final Optional<BlogEntry> entry = this.blogEntryRepository.findById(id);
         if (entry.isEmpty()) {
             return new ApiResponse(HttpResponseStatus.NOT_FOUND, "NO_SUCH_ELEMENT");
-        } else {
-            this.blogEntryRepository.delete(entry.get());
-            return new ApiResponse(HttpResponseStatus.OK);
         }
+        this.blogEntryRepository.delete(entry.get());
+        return new ApiResponse(HttpResponseStatus.OK);
     }
 
     private Page<BlogEntry> shortContent(final Page<BlogEntry> blogEntryPage) {

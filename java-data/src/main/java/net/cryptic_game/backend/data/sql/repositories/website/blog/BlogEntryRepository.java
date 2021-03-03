@@ -1,6 +1,6 @@
-package net.cryptic_game.backend.admin.data.sql.repositories.website.blog;
+package net.cryptic_game.backend.data.sql.repositories.website.blog;
 
-import net.cryptic_game.backend.admin.data.sql.entities.website.blog.BlogEntry;
+import net.cryptic_game.backend.data.sql.entities.website.blog.BlogEntry;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
