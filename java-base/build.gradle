@@ -24,7 +24,7 @@ dependencies {
     api('org.springframework.data:spring-data-jpa') {
         exclude(group: "org.aspectj", module: "aspectjrt")
     }
-    implementation('com.zaxxer:HikariCP:4.0.2')
+    implementation('com.zaxxer:HikariCP:4.0.3')
     api('org.hibernate:hibernate-core:5.4.28.Final') {
         exclude(group: 'javax.activation', module: 'javax.activation-api')
         exclude(group: 'javax.persistence', module: 'javax.persistence-api')
