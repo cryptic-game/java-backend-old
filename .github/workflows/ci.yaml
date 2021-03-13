@@ -1,15 +1,13 @@
 name: CI
 
 on:
-  schedule:
-    - cron: '0 10 * * 1' # every monday at 10 am UTC
   push:
     branches: [ master ]
     tags: [ 'v*' ]
   pull_request:
 
 env:
-  DOCKER_PLATFORMS: linux/amd64,linux/arm/v7,linux/arm64/v8 #linux/ppc64le,linux/s390x
+  JAVA_VERSION: 11
 
 jobs:
   lint:
@@ -23,14 +21,14 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Set up JDK 15
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
         uses: actions/setup-java@v1
         with:
-          java-version: 15
+          java-version: ${{ env.JAVA_VERSION }}
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -56,6 +54,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        java-version: [ 11, 15 ]
+
     steps:
       - uses: actions/checkout@v2
 
@@ -64,14 +66,14 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Set up JDK 15
+      - name: Set up JDK ${{ matrix.java-version }}
         uses: actions/setup-java@v1
         with:
-          java-version: 15
+          java-version: ${{ matrix.java-version }}
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -94,14 +96,14 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Set up JDK 15
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
         uses: actions/setup-java@v1
         with:
-          java-version: 15
+          java-version: ${{ env.JAVA_VERSION }}
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -117,20 +119,26 @@ jobs:
   docker:
     needs: build
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
         service: [ 'server', 'java-daemon', 'admin-panel' ]
+        jvm-impl: [ hotspot, openj9 ]
+        include:
+          - jvm-impl: hotspot
+            platforms: linux/amd64,linux/arm/v7,linux/arm64/v8
+          - jvm-impl: openj9
+            platforms: linux/amd64,linux/arm64/v8
+
     env:
       IMAGE_NAME: crypticcp/${{ matrix.service }}
-
-    if: github.event_name != 'pull_request'
 
     steps:
       - uses: actions/checkout@v2
 
       - name: Docker meta
         id: docker_meta
-        uses: crazy-max/ghaction-docker-meta@v1
+        uses: hugopeixoto/ghaction-docker-meta@feature/add-flavor
         with:
           tag-edge: true
           images: |
@@ -139,6 +147,8 @@ jobs:
           tag-semver: |
             {{version}}
             {{major}}.{{minor}}
+          flavor: ${{ matrix.jvm-impl }}
+          main-flavor: ${{ matrix.jvm-impl == 'hotspot' }}
 
       - uses: docker/setup-qemu-action@v1
       - uses: docker/setup-buildx-action@v1
@@ -174,11 +184,14 @@ jobs:
         with:
           context: .
           file: ./docker/Dockerfile.github-actions
-          platforms: ${{ env.DOCKER_PLATFORMS }}
-          push: true
+          platforms: ${{ matrix.platforms }}
+          push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
-          build-args: SERVICE_NAME=${{ matrix.service }}
+          build-args: |
+            SERVICE_NAME=${{ matrix.service }}
+            JAVA_VERSION=${{ env.JAVA_VERSION }}
+            JVM_IMPL=${{ matrix.jvm-impl }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
 
@@ -188,6 +201,7 @@ jobs:
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
       - name: Check manifest
+        if: ${{ github.event_name != 'pull_request' }}
         run: |
           docker buildx imagetools inspect ${{ env.IMAGE_NAME }}:${{ steps.docker_meta.outputs.version }}
-        # docker buildx imagetools inspect ghcr.io/${{ env.IMAGE_NAME }}:${{ steps.docker_meta.outputs.version }}
+        # docker buildx imagetools inspect ghcr.io/cryptic-game/${{ matrix.service }}:${{ steps.docker_meta.outputs.version }}

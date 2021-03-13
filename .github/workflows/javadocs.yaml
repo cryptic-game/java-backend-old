@@ -7,6 +7,9 @@ on:
       - v*
     paths-ignore: [ '**.md' ]
 
+env:
+  JAVA_VERSION: 11
+
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -20,14 +23,14 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Set up JDK 11
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
         uses: actions/setup-java@v1
         with:
-          java-version: 11
+          java-version: ${{ env.JAVA_VERSION }}
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -48,14 +51,14 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Set up JDK 11
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
         uses: actions/setup-java@v1
         with:
-          java-version: 11
+          java-version: ${{ env.JAVA_VERSION }}
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
