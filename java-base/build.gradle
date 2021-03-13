@@ -1,5 +1,6 @@
 plugins {
     id 'java-library'
+    id 'org.hibernate.orm'
 }
 
 dependencies {
@@ -10,7 +11,7 @@ dependencies {
     implementation('ch.qos.logback:logback-classic:1.2.3')
     implementation('io.sentry:sentry-logback:4.3.0')
     implementation('ch.qos.logback.contrib:logback-json-classic:0.1.5')
-    implementation( 'ch.qos.logback.contrib:logback-jackson:0.1.5')
+    implementation('ch.qos.logback.contrib:logback-jackson:0.1.5')
 
     /* Bootstrapping & Dependency Injection */
     api('org.springframework:spring-context')
@@ -64,4 +65,13 @@ dependencies {
     /* Caching */
     runtimeOnly('io.lettuce:lettuce-core:6.0.2.RELEASE')
     api('org.springframework.data:spring-data-redis')
+}
+
+hibernate {
+    enhance {
+        enableLazyInitialization = true
+        enableDirtyTracking = true
+        enableAssociationManagement = true
+        enableExtendedEnhancement = false
+    }
 }

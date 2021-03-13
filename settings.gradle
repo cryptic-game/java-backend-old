@@ -1,3 +1,18 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+    }
+
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id == 'org.hibernate.orm') {
+                useModule('org.hibernate:hibernate-gradle-plugin:5.4.29.Final')
+            }
+        }
+    }
+}
+
 rootProject.name = 'java-backend'
 include 'server'
 include 'java-daemon'
