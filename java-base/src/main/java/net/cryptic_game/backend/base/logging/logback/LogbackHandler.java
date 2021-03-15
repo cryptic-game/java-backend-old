@@ -1,7 +1,5 @@
 package net.cryptic_game.backend.base.logging.logback;
 
-import static org.slf4j.Logger.ROOT_LOGGER_NAME;
-
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.LoggerContext;
@@ -21,17 +19,18 @@ import ch.qos.logback.core.spi.LifeCycle;
 import ch.qos.logback.core.util.OptionHelper;
 import io.sentry.SentryOptions;
 import io.sentry.logback.SentryAppender;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import net.cryptic_game.backend.base.ansi.AnsiColor;
 import net.cryptic_game.backend.base.ansi.AnsiStyle;
 import net.cryptic_game.backend.base.logging.LogLevel;
 import net.cryptic_game.backend.base.logging.LogLevelConverter;
 import net.cryptic_game.backend.base.logging.LoggingHandler;
 import org.slf4j.impl.StaticLoggerBinder;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.slf4j.Logger.ROOT_LOGGER_NAME;
 
 public final class LogbackHandler implements LoggingHandler {
 

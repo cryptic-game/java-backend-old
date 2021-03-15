@@ -1,7 +1,7 @@
-package net.cryptic_game.backend.admin.data.sql.repositories.website.team;
+package net.cryptic_game.backend.data.sql.repositories.website.team;
 
-import net.cryptic_game.backend.admin.data.sql.entities.website.team.TeamDepartment;
-import net.cryptic_game.backend.admin.data.sql.entities.website.team.TeamMember;
+import net.cryptic_game.backend.data.sql.entities.website.team.TeamDepartment;
+import net.cryptic_game.backend.data.sql.entities.website.team.TeamMember;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.OffsetDateTime;

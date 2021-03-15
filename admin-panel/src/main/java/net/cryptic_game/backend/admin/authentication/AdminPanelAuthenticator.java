@@ -14,6 +14,7 @@ import net.cryptic_game.backend.base.api.handler.rest.RestApiAuthenticator;
 import net.cryptic_game.backend.base.api.handler.rest.RestApiRequest;
 import net.cryptic_game.backend.base.json.JsonUtils;
 import net.cryptic_game.backend.base.utils.SecurityUtils;
+import net.cryptic_game.backend.data.Group;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;

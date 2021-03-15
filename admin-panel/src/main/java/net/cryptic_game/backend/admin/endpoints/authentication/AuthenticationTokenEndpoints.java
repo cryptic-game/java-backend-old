@@ -3,8 +3,6 @@ package net.cryptic_game.backend.admin.endpoints.authentication;
 import com.google.gson.JsonObject;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.RequiredArgsConstructor;
-import net.cryptic_game.backend.admin.data.sql.entities.user.AdminUser;
-import net.cryptic_game.backend.admin.data.sql.repositories.user.AdminUserRepository;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.annotations.ApiParameter;
@@ -13,6 +11,8 @@ import net.cryptic_game.backend.base.api.data.ApiType;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonUtils;
 import net.cryptic_game.backend.base.utils.SecurityUtils;
+import net.cryptic_game.backend.data.sql.entities.user.AdminUser;
+import net.cryptic_game.backend.data.sql.repositories.user.AdminUserRepository;
 
 import java.security.Key;
 import java.time.OffsetDateTime;

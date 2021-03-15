@@ -1,21 +1,20 @@
 package net.cryptic_game.backend.admin.endpoints.website.faq;
 
 import io.netty.handler.codec.http.HttpResponseStatus;
-
-import java.util.Optional;
-import java.util.UUID;
-import java.util.regex.Pattern;
-
 import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.admin.authentication.AdminPanelAuthenticator;
-import net.cryptic_game.backend.admin.authentication.Permission;
-import net.cryptic_game.backend.admin.data.sql.entities.website.faq.FaqEntry;
-import net.cryptic_game.backend.admin.data.sql.repositories.website.faq.FaqEntryRepository;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.annotations.ApiParameter;
 import net.cryptic_game.backend.base.api.data.ApiResponse;
 import net.cryptic_game.backend.base.api.data.ApiType;
+import net.cryptic_game.backend.data.Permission;
+import net.cryptic_game.backend.data.sql.entities.website.faq.FaqEntry;
+import net.cryptic_game.backend.data.sql.repositories.website.faq.FaqEntryRepository;
+
+import java.util.Optional;
+import java.util.UUID;
+import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
 @ApiEndpointCollection(id = "website/faq", description = "manages faq", type = ApiType.REST, authenticator = AdminPanelAuthenticator.class)

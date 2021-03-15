@@ -15,6 +15,8 @@ import net.cryptic_game.backend.data.redis.entities.Session;
 import net.cryptic_game.backend.data.redis.repositories.SessionRepository;
 import net.cryptic_game.backend.data.sql.entities.user.User;
 import net.cryptic_game.backend.data.sql.repositories.user.UserRepository;
+import net.cryptic_game.backend.data.sql.repositories.user.UserSuspensionRepository;
+import net.cryptic_game.backend.data.sql.repositories.user.UserSuspensionRevokedRepository;
 
 import java.time.OffsetDateTime;
 import java.util.Optional;
@@ -26,6 +28,8 @@ public final class WebSocketUserEndpoints {
 
     private final UserRepository userRepository;
     private final SessionRepository sessionRepository;
+    private final UserSuspensionRepository userSuspensionRepository;
+    private final UserSuspensionRevokedRepository userSuspensionRevokedRepository;
 
     @ApiEndpoint(id = "login")
     public ApiResponse login(@ApiParameter(id = "request", type = ApiParameterType.REQUEST) final WebsocketApiRequest request,
@@ -44,6 +48,10 @@ public final class WebSocketUserEndpoints {
         if (user == null) {
             return new ApiResponse(HttpResponseStatus.UNAUTHORIZED, "INVALID_USERNAME");
         }
+        if (this.userSuspensionRepository.getActiveSuspensionsByUserId(user.getId()).size() > 0) {
+            return new ApiResponse(HttpResponseStatus.FORBIDDEN, "ACCOUNT_SUSPENDED");
+        }
+
         if (!user.verifyPassword(password)) {
             return new ApiResponse(HttpResponseStatus.UNAUTHORIZED, "INVALID_PASSWORD");
         }

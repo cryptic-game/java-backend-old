@@ -1,12 +1,12 @@
-package net.cryptic_game.backend.admin.data.sql.entities.user;
+package net.cryptic_game.backend.data.sql.entities.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.cryptic_game.backend.admin.authentication.Group;
-import net.cryptic_game.backend.admin.data.sql.GroupsAttributeConverter;
 import net.cryptic_game.backend.base.sql.models.TableModel;
+import net.cryptic_game.backend.data.Group;
+import net.cryptic_game.backend.data.GroupsAttributeConverter;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
