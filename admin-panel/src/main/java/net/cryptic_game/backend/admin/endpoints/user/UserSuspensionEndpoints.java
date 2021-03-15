@@ -68,8 +68,8 @@ public final class UserSuspensionEndpoints {
 
         long adminUserId = JsonUtils.fromJson(JsonUtils.fromJson(JsonParser.parseString(
                 new String(Base64.getDecoder().decode(request.getContext().getHttpRequest()
-                        .requestHeaders().get(HttpHeaderNames.AUTHORIZATION).split(Pattern.quote("."))[1])))
-                , JsonObject.class).get("user_id"), long.class);
+                        .requestHeaders().get(HttpHeaderNames.AUTHORIZATION).split(Pattern.quote("."))[1]))),
+                JsonObject.class).get("user_id"), long.class);
 
         final UserSuspension suspension = new UserSuspension(user.get(), this.adminUserRepository.findById(adminUserId).orElseThrow(), now, expires, reason);
         this.sessionRepository.deleteAll(StreamSupport.stream(this.sessionRepository.findAll().spliterator(), true)
@@ -92,8 +92,8 @@ public final class UserSuspensionEndpoints {
 
         long adminUserId = JsonUtils.fromJson(JsonUtils.fromJson(JsonParser.parseString(
                 new String(Base64.getDecoder().decode(request.getContext().getHttpRequest()
-                        .requestHeaders().get(HttpHeaderNames.AUTHORIZATION).split(Pattern.quote("."))[1])))
-                , JsonObject.class).get("user_id"), long.class);
+                        .requestHeaders().get(HttpHeaderNames.AUTHORIZATION).split(Pattern.quote("."))[1]))),
+                JsonObject.class).get("user_id"), long.class);
 
         return new ApiResponse(HttpResponseStatus.OK, this.userSuspensionRevokedRepository.save(
                 new UserSuspensionRevoked(suspension, this.adminUserRepository.findById(adminUserId).orElseThrow(), now, reason)

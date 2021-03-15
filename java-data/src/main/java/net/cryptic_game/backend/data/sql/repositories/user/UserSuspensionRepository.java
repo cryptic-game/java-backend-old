@@ -13,9 +13,9 @@ public interface UserSuspensionRepository extends JpaRepository<UserSuspension, 
 
     Page<UserSuspension> findAllByUserId(UUID userId, Pageable pageable);
 
-    @Query("select object(us) from UserSuspension as us where us.user.id = ?1 " +
-            "and us.expires > current_timestamp and us.id not in " +
-            "(select usr.userSuspension.id from UserSuspensionRevoked as usr)")
+    @Query("select object(us) from UserSuspension as us where us.user.id = ?1 "
+            + "and us.expires > current_timestamp and us.id not in "
+            + "(select usr.userSuspension.id from UserSuspensionRevoked as usr)")
     List<UserSuspension> getActiveSuspensionsByUserId(UUID userId);
 
 }
