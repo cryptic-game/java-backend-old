@@ -1,5 +1,7 @@
 ---
-name: Feature Request about: If you'd like to make a suggestion please fill out the form below. labels: enhancement
+name: Feature Request
+about: If you'd like to make a suggestion please fill out the form below.
+labels: enhancement
 
 ---
 
