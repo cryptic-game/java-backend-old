@@ -3,15 +3,15 @@ package net.cryptic_game.backend.admin.endpoints.website.blog;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.admin.authentication.AdminPanelAuthenticator;
-import net.cryptic_game.backend.admin.authentication.Permission;
-import net.cryptic_game.backend.data.sql.entities.website.blog.BlogEntry;
-import net.cryptic_game.backend.data.sql.repositories.website.blog.BlogEntryRepository;
 import net.cryptic_game.backend.admin.endpoints.website.WebsiteUtils;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.annotations.ApiParameter;
 import net.cryptic_game.backend.base.api.data.ApiResponse;
 import net.cryptic_game.backend.base.api.data.ApiType;
+import net.cryptic_game.backend.data.Permission;
+import net.cryptic_game.backend.data.sql.entities.website.blog.BlogEntry;
+import net.cryptic_game.backend.data.sql.repositories.website.blog.BlogEntryRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
