@@ -7,7 +7,7 @@ on:
   pull_request:
 
 env:
-  JAVA_VERSION: 11
+  JAVA_VERSION: 16
 
 jobs:
   lint:
@@ -34,7 +34,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Lint with Gradle
-        run: ./gradlew installDist checkstyleMain checkstyleTest spotbugsMain spotbugsTest pmdMain pmdTest --stacktrace --no-daemon # javadoc
+        run: ./gradlew installDist checkstyleMain checkstyleTest spotbugsMain spotbugsTest pmdMain pmdTest --stacktrace --no-daemon  --refresh-dependencies
 
       - name: Annotate Checkstyle Issues
         uses: jwgmeligmeyling/checkstyle-github-action@master
@@ -79,7 +79,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Run tests with Gradle
-        run: ./gradlew test --no-daemon
+        run: ./gradlew test --stacktrace --no-daemon  --refresh-dependencies
 
   build:
     needs: [ lint, test ]
@@ -109,7 +109,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew :${{ matrix.service }}:installDist --no-daemon
+        run: ./gradlew :${{ matrix.service }}:installDist --stacktrace --no-daemon  --refresh-dependencies
 
       - uses: actions/upload-artifact@v2
         with:

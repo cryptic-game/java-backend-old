@@ -15,8 +15,7 @@ on:
     - cron: '17 10 * * 1'
 
 env:
-  JAVA_VERSION: 11
-
+  JAVA_VERSION: 16
 jobs:
   analyze:
     name: Analyze

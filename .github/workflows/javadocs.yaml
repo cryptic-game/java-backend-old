@@ -8,7 +8,7 @@ on:
     paths-ignore: [ '**.md' ]
 
 env:
-  JAVA_VERSION: 11
+  JAVA_VERSION: 16
 
 jobs:
   check:
@@ -36,7 +36,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Run checks with Gradle
-        run: ./gradlew check --no-daemon
+        run: ./gradlew check --stacktrace --no-daemon  --refresh-dependencies
 
   docs:
     needs: check
@@ -64,7 +64,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build JavaDocs with Gradle
-        run: ./gradlew aggregateJavadoc --no-daemon
+        run: ./gradlew aggregateJavadoc --stacktrace --no-daemon  --refresh-dependencies
 
       - name: generate version
         id: version
