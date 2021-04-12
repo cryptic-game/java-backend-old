@@ -46,7 +46,7 @@ dependencies {
     api('com.google.code.gson:gson:2.8.6')
 
     /* Spring Security */
-    api(platform('org.springframework.security:spring-security-bom:5.4.5'))
+    api(platform('org.springframework.security:spring-security-bom:5.4.6'))
     api('org.springframework.security:spring-security-core')
     api('org.bouncycastle:bcpkix-jdk15on:1.68')
 
