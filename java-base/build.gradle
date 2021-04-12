@@ -36,7 +36,7 @@ dependencies {
     runtimeOnly('org.mariadb.jdbc:mariadb-java-client:2.7.2')
 
     /* Network */
-    api(platform('io.projectreactor:reactor-bom:2020.0.4'))
+    api(platform('io.projectreactor:reactor-bom:2020.0.6'))
     api('io.projectreactor:reactor-core')
     api('io.projectreactor.netty:reactor-netty')
 //    api('io.projectreactor.addons:reactor-extra')
