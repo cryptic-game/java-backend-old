@@ -19,7 +19,7 @@ dependencies {
     api('jakarta.annotation:jakarta.annotation-api:1.3.5')
 
     /* Database */
-    api(platform('org.springframework.data:spring-data-releasetrain:Neumann-SR7'))
+    api(platform('org.springframework.data:spring-data-releasetrain:Neumann-SR9'))
     api('jakarta.persistence:jakarta.persistence-api:2.2.3')
     api('jakarta.transaction:jakarta.transaction-api:1.3.3')
     api('org.springframework.data:spring-data-jpa') {
