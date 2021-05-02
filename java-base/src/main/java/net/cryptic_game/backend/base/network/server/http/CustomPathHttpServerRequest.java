@@ -121,6 +121,11 @@ final class CustomPathHttpServerRequest implements HttpServerRequest {
     }
 
     @Override
+    public String requestId() {
+        return this.request.requestId();
+    }
+
+    @Override
     public String uri() {
         return this.request.uri();
     }
