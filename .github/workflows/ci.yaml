@@ -86,9 +86,20 @@ jobs:
   build:
     needs: [ lint, test ]
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
         service: [ 'server', 'java-daemon', 'admin-panel' ]
+        include:
+          - service: server
+            task: installDist
+            output: build/install/server
+          - service: java-daemon
+            task: installDist
+            output: build/install/java-daemon
+          - service: admin-panel
+            task: bootJar
+            output: build/libs
 
     steps:
       - uses: actions/checkout@v2
@@ -112,12 +123,12 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew :${{ matrix.service }}:installDist --no-daemon
+        run: ./gradlew :${{ matrix.service }}:${{ matrix.task }} --no-daemon
 
       - uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.service }}
-          path: ${{ matrix.service }}/build/install/${{ matrix.service }}
+          path: ${{ matrix.service }}/${{ matrix.output }}
 
   docker:
     needs: build
@@ -132,6 +143,12 @@ jobs:
             platforms: linux/amd64,linux/arm/v7,linux/arm64/v8
           - jvm-impl: openj9
             platforms: linux/amd64 #,linux/arm64/v8
+          - service: server
+            dockerfile: Dockerfile.github-actions
+          - service: java-daemon
+            dockerfile: Dockerfile.github-actions
+          - service: admin-panel
+            dockerfile: Dockerfile.admin-panel.github-actions
 
     env:
       IMAGE_NAME: crypticcp/${{ matrix.service }}
@@ -180,13 +197,13 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: ${{ matrix.service }}
-          path: dist/${{ matrix.service }}
+          path: dist
 
       - name: Build
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./docker/Dockerfile.github-actions
+          file: ./docker/${{ matrix.dockerfile }}
           platforms: ${{ matrix.platforms }}
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.docker_meta.outputs.tags }}

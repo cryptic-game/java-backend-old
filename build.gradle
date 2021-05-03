@@ -1,10 +1,19 @@
+buildscript {
+    ext {
+        novaVersion = 'edge'
+        freefairVersion = '5.3.3.3'
+    }
+}
+
 plugins {
     id('base')
-    id('io.freefair.git-version') version('5.3.3.3')
-    id('io.freefair.aggregate-javadoc') version('5.3.3.3')
-    id('io.freefair.javadoc-utf-8') version('5.3.3.3')
-    id('io.freefair.lombok') version('5.2.1') apply(false)
+    id 'io.freefair.git-version' version "${freefairVersion}"
+    id('io.freefair.aggregate-javadoc') version "${freefairVersion}"
+    id('io.freefair.javadoc-utf-8') version "${freefairVersion}"
+    id('io.freefair.lombok') version "${freefairVersion}" apply(false)
     id('com.github.spotbugs') version('4.6.0') apply(false)
+    id 'org.springframework.boot' version '2.4.5' apply false
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
 }
 
 allprojects {
