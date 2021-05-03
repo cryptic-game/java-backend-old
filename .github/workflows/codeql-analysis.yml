@@ -31,6 +31,7 @@ jobs:
       - name: Set up JDK ${{ env.JAVA_VERSION }}
         uses: actions/setup-java@v2
         with:
+          distribution: 'adopt'
           java-version: ${{ env.JAVA_VERSION }}
 
       # Initializes the CodeQL tools for scanning.
