@@ -9,11 +9,12 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
-public class SecurityConfig {
+public class SecurityConfiguration {
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(final ServerHttpSecurity http) {
         http.csrf().disable();
+        http.oauth2Login();
 
         http.authorizeExchange()
 
