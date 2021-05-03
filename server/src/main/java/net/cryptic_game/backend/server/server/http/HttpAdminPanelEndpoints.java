@@ -10,6 +10,7 @@ import net.cryptic_game.backend.base.api.data.ApiEndpointData;
 import net.cryptic_game.backend.base.api.data.ApiResponse;
 import net.cryptic_game.backend.base.api.data.ApiType;
 import net.cryptic_game.backend.base.api.handler.websocket.WebsocketApiService;
+import net.cryptic_game.backend.base.json.JsonBuilder;
 
 @RequiredArgsConstructor
 @ApiEndpointCollection(id = "admin_panel", description = "Endpoints for the admin panel", type = ApiType.REST, authenticator = HttpServerAuthenticator.class)
@@ -21,7 +22,7 @@ public final class HttpAdminPanelEndpoints {
     @ApiEndpoint(id = "endpoints")
     public ApiResponse getEndpoints() {
         if (this.websocketApiService == null) this.websocketApiService = this.bootstrap.getContextHandler().getBean(WebsocketApiService.class);
-        return new ApiResponse(HttpResponseStatus.OK, this.websocketApiService.getEndpoints());
+        return new ApiResponse(HttpResponseStatus.OK, JsonBuilder.create("endpoints", this.websocketApiService.getEndpoints()));
     }
 
     @ApiEndpoint(id = "enable")
@@ -29,7 +30,7 @@ public final class HttpAdminPanelEndpoints {
         if (this.websocketApiService == null) this.websocketApiService = this.bootstrap.getContextHandler().getBean(WebsocketApiService.class);
         final ApiEndpointData endpointData = this.websocketApiService.getEndpoints().get(id);
         endpointData.setDisabled(false);
-        return new ApiResponse(HttpResponseStatus.OK, endpointData);
+        return new ApiResponse(HttpResponseStatus.OK, JsonBuilder.create("endpoint", endpointData));
     }
 
     @ApiEndpoint(id = "disable")
@@ -37,7 +38,7 @@ public final class HttpAdminPanelEndpoints {
         if (this.websocketApiService == null) this.websocketApiService = this.bootstrap.getContextHandler().getBean(WebsocketApiService.class);
         final ApiEndpointData endpointData = this.websocketApiService.getEndpoints().get(id);
         endpointData.setDisabled(true);
-        return new ApiResponse(HttpResponseStatus.OK, endpointData);
+        return new ApiResponse(HttpResponseStatus.OK, JsonBuilder.create("endpoint", endpointData));
     }
 
 }

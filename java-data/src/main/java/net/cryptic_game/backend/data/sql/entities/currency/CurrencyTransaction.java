@@ -9,7 +9,6 @@ import lombok.Setter;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,12 +35,10 @@ public final class CurrencyTransaction extends TableModelAutoId implements JsonS
 
     @ManyToOne
     @JoinColumn(name = "source_id", updatable = false, nullable = false)
-    @Type(type = "uuid-char")
     private CurrencyWallet source;
 
     @ManyToOne
     @JoinColumn(name = "destination_id", nullable = false, updatable = false)
-    @Type(type = "uuid-char")
     private CurrencyWallet destination;
 
     @Column(name = "amount", updatable = false, nullable = false)

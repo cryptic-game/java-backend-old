@@ -10,7 +10,6 @@ import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.data.sql.entities.user.User;
 import org.hibernate.Session;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,12 +36,10 @@ public final class ChatMessage extends TableModelAutoId implements JsonSerializa
 
     @ManyToOne
     @JoinColumn(name = "user_id", updatable = false, nullable = false)
-    @Type(type = "uuid-char")
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "channel_id", nullable = false, updatable = false)
-    @Type(type = "uuid-char")
     private ChatChannel channel;
 
     @Column(name = "timestamp", updatable = false, nullable = false)

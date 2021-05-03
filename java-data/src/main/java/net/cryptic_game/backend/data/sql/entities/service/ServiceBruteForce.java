@@ -8,7 +8,6 @@ import lombok.Setter;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,7 +34,6 @@ public final class ServiceBruteForce extends TableModelAutoId implements JsonSer
 
     @ManyToOne
     @JoinColumn(name = "target_service_id", updatable = false, nullable = false)
-    @Type(type = "uuid-char")
     private Service targetService;
 
     @Column(name = "progress", updatable = true, nullable = false)

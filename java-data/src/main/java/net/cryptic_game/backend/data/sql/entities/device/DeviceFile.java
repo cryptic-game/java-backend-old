@@ -8,7 +8,6 @@ import lombok.Setter;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,7 +30,6 @@ public final class DeviceFile extends TableModelAutoId implements JsonSerializab
 
     @ManyToOne
     @JoinColumn(name = "device_id", nullable = false, updatable = false)
-    @Type(type = "uuid-char")
     private Device device;
 
     @Column(name = "name", nullable = false, updatable = true)
@@ -45,7 +43,6 @@ public final class DeviceFile extends TableModelAutoId implements JsonSerializab
 
     @ManyToOne
     @JoinColumn(name = "parent_directory_id", nullable = true, updatable = true)
-    @Type(type = "uuid-char")
     private DeviceFile parentDirectory;
 
     /**

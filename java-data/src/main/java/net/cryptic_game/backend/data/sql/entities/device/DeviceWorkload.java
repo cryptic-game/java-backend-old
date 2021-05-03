@@ -2,13 +2,13 @@ package net.cryptic_game.backend.data.sql.entities.device;
 
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModel;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,13 +28,13 @@ import java.io.Serializable;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 @Table(name = "device_workload")
 public final class DeviceWorkload extends TableModel implements JsonSerializable, Serializable {
 
     @Id
     @ManyToOne
     @JoinColumn(name = "device_id", updatable = false, nullable = false)
-    @Type(type = "uuid-char")
     private Device device;
 
     @Column(name = "performance_cpu", updatable = true, nullable = false)

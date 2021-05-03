@@ -9,7 +9,6 @@ import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.data.sql.entities.device.Device;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,7 +36,6 @@ public final class Network extends TableModelAutoId implements JsonSerializable 
 
     @ManyToOne
     @JoinColumn(name = "device_id", updatable = true, nullable = false)
-    @Type(type = "uuid-char")
     private Device owner;
 
     @Column(name = "public", updatable = true, nullable = false)

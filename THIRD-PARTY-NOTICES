@@ -15,11 +15,6 @@ Licensor:  JBoss
 Website:   https://hibernate.org/
 License:   LGPL 2.1
 
-Component: MariaDB
-Licensor:  MariaDB Foundation
-Website:   https://mariadb.com/
-License:   LGPL 2.1
-
 Component: PostgreSQL
 Licensor:  PostgreSQL
 Website:   https://www.postgresql.org/
@@ -117,7 +112,7 @@ License:   Apache License 2.0
 
 
 --------------------------------------------------------------------------------
-LGPL 2.1 (hibernate-orm, MariaDB)
+LGPL 2.1 (hibernate-orm)
 
                   GNU LESSER GENERAL PUBLIC LICENSE
                        Version 2.1, February 1999
