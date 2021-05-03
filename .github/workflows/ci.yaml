@@ -128,7 +128,7 @@ jobs:
           - jvm-impl: hotspot
             platforms: linux/amd64,linux/arm/v7,linux/arm64/v8
           - jvm-impl: openj9
-            platforms: linux/amd64,linux/arm64/v8
+            platforms: linux/amd64 #,linux/arm64/v8
 
     env:
       IMAGE_NAME: crypticcp/${{ matrix.service }}
