@@ -16,8 +16,6 @@ public class Bootstrap {
 
     @GetMapping("/user")
     public Principal user(@AuthenticationPrincipal final Principal principal) {
-        System.out.println(principal.getClass().getName());
-        System.out.println(principal.getName());
         return principal;
     }
 
@@ -26,7 +24,7 @@ public class Bootstrap {
     }
 
     @Bean
-    GroupedOpenApi cactiApi() {
+    GroupedOpenApi websiteApi() {
         return GroupedOpenApi.builder()
                 .group("cryptic-website")
                 .pathsToMatch("/website/**")

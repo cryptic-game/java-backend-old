@@ -1,12 +1,6 @@
 package net.cryptic_game.backend.admin;
 
-import java.lang.reflect.Field;
-import java.util.Collection;
-import java.util.Locale;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -15,29 +9,36 @@ import org.springframework.security.config.annotation.web.reactive.EnableWebFlux
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.RedirectServerAuthenticationSuccessHandler;
 import org.springframework.security.web.server.savedrequest.WebSessionServerRequestCache;
 
+import java.lang.reflect.Field;
+import java.util.Collection;
+import java.util.Locale;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+@Slf4j
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
 public class SecurityConfiguration {
 
     @Bean
-    public SecurityWebFilterChain securityWebFilterChain(final ReactiveClientRegistrationRepository clientRegistrationRepository, final ServerHttpSecurity http) {
+    public SecurityWebFilterChain securityWebFilterChain(final ServerHttpSecurity http) {
         http.csrf().disable();
+
         final WebSessionServerRequestCache webSessionServerRequestCache = new WebSessionServerRequestCache();
         http.requestCache(spec -> spec.requestCache(webSessionServerRequestCache));
 
-        http.oauth2Login(spec -> {
-            spec.authenticationSuccessHandler((webFilterExchange, authentication) -> {
+        http.oauth2Login(spec -> spec.authenticationSuccessHandler((webFilterExchange, authentication) -> {
+            final DefaultOAuth2User principal = ((DefaultOAuth2User) authentication.getPrincipal());
+            final Collection<String> tokenRoles = principal.getAttribute("roles");
 
-                final DefaultOAuth2User principal = ((DefaultOAuth2User) authentication.getPrincipal());
-
-                final Set<SimpleGrantedAuthority> roles = ((Collection<String>) principal.getAttributes().get("roles"))
-                        .stream()
+            if (tokenRoles != null) {
+                final Set<SimpleGrantedAuthority> roles = tokenRoles.stream()
                         .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toUpperCase(Locale.ROOT)))
                         .collect(Collectors.toSet());
 
@@ -51,34 +52,27 @@ public class SecurityConfiguration {
                         roles.stream()
                 ).collect(Collectors.toUnmodifiableSet());
 
-                try {
-                    final Field authorities = DefaultOAuth2User.class.getDeclaredField("authorities");
-                    authorities.setAccessible(true);
-                    authorities.set(principal, newPrincipleAuthorities);
-                } catch (IllegalAccessException | NoSuchFieldException e) {
-                    e.printStackTrace();
-                }
+                setField(DefaultOAuth2User.class, "authorities", principal, newPrincipleAuthorities);
+                setField(AbstractAuthenticationToken.class, "authorities", authentication, newTokenAuthorities);
+            } else {
+                log.error("");
+                log.error("OIDC: Missing \"roles\" in token/userinfo.");
+                log.error("");
+            }
 
-                try {
-                    final Field authorities = AbstractAuthenticationToken.class.getDeclaredField("authorities");
-                    authorities.setAccessible(true);
-                    authorities.set(authentication, newTokenAuthorities);
-                } catch (NoSuchFieldException | IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-
-                RedirectServerAuthenticationSuccessHandler handler = new RedirectServerAuthenticationSuccessHandler();
-                handler.setRequestCache(webSessionServerRequestCache);
-                return handler.onAuthenticationSuccess(webFilterExchange, authentication);
-            });
-        });
+            final RedirectServerAuthenticationSuccessHandler handler = new RedirectServerAuthenticationSuccessHandler();
+            handler.setRequestCache(webSessionServerRequestCache);
+            return handler.onAuthenticationSuccess(webFilterExchange, authentication);
+        }));
 
         http.authorizeExchange()
 
-                .pathMatchers("/", "/swagger-ui", "/webjars/**", "/v3/api-docs/**").permitAll()
+                .pathMatchers(HttpMethod.GET, "/", "/swagger-ui", "/webjars/**", "/v3/api-docs/**").permitAll()
 
                 .pathMatchers(HttpMethod.GET, "/website/**").permitAll()
                 .pathMatchers("/website/**").hasRole("WEBSITE")
+
+                // SERVER_ADMIN, MODERATOR
 
 //                .pathMatchers("/users/{username}").access((authentication, context) ->
 //                authentication
@@ -89,5 +83,15 @@ public class SecurityConfiguration {
                 .anyExchange().authenticated();
 
         return http.build();
+    }
+
+    private static void setField(final Class<?> clazz, final String field, final Object object, final Object value) {
+        try {
+            final Field authorities = clazz.getDeclaredField(field);
+            authorities.setAccessible(true);
+            authorities.set(object, value);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 }
