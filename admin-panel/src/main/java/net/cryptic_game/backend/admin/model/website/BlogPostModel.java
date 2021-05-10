@@ -20,7 +20,7 @@ import net.getnova.framework.jpa.model.TableModel;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "blog_post")
+@Table(name = "admin_blog_post")
 public class BlogPostModel extends TableModel {
 
     @EmbeddedId
