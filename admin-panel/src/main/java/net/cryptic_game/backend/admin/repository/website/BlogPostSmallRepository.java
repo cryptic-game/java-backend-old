@@ -15,6 +15,6 @@ import org.w3c.dom.stylesheets.LinkStyle;
 @Repository
 public interface BlogPostSmallRepository extends JpaRepository<BlogPostSmallModel, IdModel> {
 
-    @Query("select object(bp) from BlogPostSmallModel bp where bp.id.language = ?0 order by bp.created")
+    @Query("select object(bp) from BlogPostSmallModel bp where bp.id.language = ?1 order by bp.created")
     List<BlogPostSmallModel> findAll(String language);
 }
