@@ -20,7 +20,7 @@ import java.time.OffsetDateTime;
 @Immutable
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "blog_post")
+@Table(name = "admin_blog_post")
 public class BlogPostSmallModel extends TableModel {
 
     @EmbeddedId
