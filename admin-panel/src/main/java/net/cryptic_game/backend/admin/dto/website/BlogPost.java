@@ -1,12 +1,11 @@
 package net.cryptic_game.backend.admin.dto.website;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.time.OffsetDateTime;
-
 import lombok.Data;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
+
+import java.time.OffsetDateTime;
 
 @Data
 public class BlogPost {
@@ -17,6 +16,7 @@ public class BlogPost {
 
     private final Id id;
     private final String title;
+    private final String image;
     private final OffsetDateTime created;
     private final OffsetDateTime updated;
     private final String description;
@@ -25,6 +25,7 @@ public class BlogPost {
     public BlogPost(
             @JsonProperty("id") final Id id,
             @JsonProperty("title") final String title,
+            @JsonProperty("image") final String image,
             @JsonProperty("created") final OffsetDateTime created,
             @JsonProperty("updated") final OffsetDateTime updated,
             @JsonProperty("description") final String description,
@@ -32,6 +33,7 @@ public class BlogPost {
     ) {
         this.id = id;
         this.title = title;
+        this.image = image;
         this.created = created;
         this.updated = updated;
         this.description = description;

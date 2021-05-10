@@ -14,13 +14,13 @@ import java.security.Principal;
 @RestController
 public class Bootstrap {
 
+    public static void main(final String[] args) {
+        SpringApplication.run(Bootstrap.class, args);
+    }
+
     @GetMapping("/user")
     public Principal user(@AuthenticationPrincipal final Principal principal) {
         return principal;
-    }
-
-    public static void main(final String[] args) {
-        SpringApplication.run(Bootstrap.class, args);
     }
 
     @Bean

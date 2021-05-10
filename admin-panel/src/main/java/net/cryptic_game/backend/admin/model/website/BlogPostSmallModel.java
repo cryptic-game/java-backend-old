@@ -29,6 +29,9 @@ public class BlogPostSmallModel extends TableModel {
     @Column(name = "title", updatable = true, nullable = false)
     private String title;
 
+    @Column(name = "image", updatable = true, nullable = false)
+    private String image;
+
     @Column(name = "created", updatable = false, nullable = false)
     private OffsetDateTime created;
 

@@ -26,6 +26,16 @@ import java.util.stream.Stream;
 @EnableReactiveMethodSecurity
 public class SecurityConfiguration {
 
+    private static void setField(final Class<?> clazz, final String field, final Object object, final Object value) {
+        try {
+            final Field authorities = clazz.getDeclaredField(field);
+            authorities.setAccessible(true);
+            authorities.set(object, value);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(final ServerHttpSecurity http) {
         http.csrf().disable();
@@ -83,15 +93,5 @@ public class SecurityConfiguration {
                 .anyExchange().authenticated();
 
         return http.build();
-    }
-
-    private static void setField(final Class<?> clazz, final String field, final Object object, final Object value) {
-        try {
-            final Field authorities = clazz.getDeclaredField(field);
-            authorities.setAccessible(true);
-            authorities.set(object, value);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
     }
 }

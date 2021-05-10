@@ -1,19 +1,19 @@
 package net.cryptic_game.backend.admin.model.website;
 
-import java.io.Serializable;
-import java.time.OffsetDateTime;
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.getnova.framework.jpa.model.TableModel;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.io.Serializable;
+import java.time.OffsetDateTime;
 
 @Entity
 @Setter
@@ -28,6 +28,9 @@ public class BlogPostModel extends TableModel {
 
     @Column(name = "title", updatable = true, nullable = false)
     private String title;
+
+    @Column(name = "image", updatable = true, nullable = false)
+    private String image;
 
     @Column(name = "created", updatable = false, nullable = false)
     private OffsetDateTime created;
