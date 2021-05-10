@@ -1,12 +1,19 @@
 package net.cryptic_game.backend.admin.dto.website;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
 
 import java.time.OffsetDateTime;
 
+import lombok.Data;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
+
 @Data
 public class BlogPost {
+
+    private static final Whitelist WHITELIST = Whitelist.relaxed()
+            .addEnforcedAttribute("a", "target", "_blank")
+            .addEnforcedAttribute("a", "rel", "nofollow noopener noreferrer");
 
     private final Id id;
     private final String title;
@@ -28,7 +35,7 @@ public class BlogPost {
         this.created = created;
         this.updated = updated;
         this.description = description;
-        this.content = content;
+        this.content = Jsoup.clean(content, WHITELIST);
     }
 
     @Data

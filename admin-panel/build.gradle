@@ -18,6 +18,8 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
+    implementation 'org.jsoup:jsoup:1.13.1'
+
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
     annotationProcessor "org.springframework:spring-context-indexer"
