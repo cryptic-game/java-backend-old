@@ -22,6 +22,7 @@ public class BlogPostSmallConverter implements Converter<BlogPostSmallModel, Blo
         return new BlogPostSmall(
                 this.idConverter.toDto(model.getId()),
                 model.getTitle(),
+                model.getImage(),
                 model.getCreated(),
                 model.getUpdated(),
                 model.getDescription()

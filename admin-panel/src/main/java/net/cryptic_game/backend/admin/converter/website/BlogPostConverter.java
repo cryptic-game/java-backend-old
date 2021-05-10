@@ -18,6 +18,7 @@ public class BlogPostConverter implements Converter<BlogPostModel, BlogPost> {
         return new BlogPostModel(
                 this.idConverter.toModel(dto.getId()),
                 dto.getTitle(),
+                dto.getImage(),
                 dto.getCreated(),
                 dto.getUpdated(),
                 dto.getDescription(),
@@ -30,6 +31,7 @@ public class BlogPostConverter implements Converter<BlogPostModel, BlogPost> {
         return new BlogPost(
                 this.idConverter.toDto(model.getId()),
                 model.getTitle(),
+                model.getImage(),
                 model.getCreated(),
                 model.getUpdated(),
                 model.getDescription(),
