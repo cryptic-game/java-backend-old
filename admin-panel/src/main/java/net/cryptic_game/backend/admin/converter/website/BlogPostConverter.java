@@ -45,7 +45,6 @@ public class BlogPostConverter implements Converter<BlogPostModel, BlogPost> {
 
         model.setTitle(dto.getTitle());
         model.setContent(dto.getContent());
-        model.setUpdated(dto.getUpdated());
         model.setDescription(dto.getDescription());
         model.setContent(dto.getContent());
     }

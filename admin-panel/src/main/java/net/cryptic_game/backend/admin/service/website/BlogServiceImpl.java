@@ -1,9 +1,5 @@
 package net.cryptic_game.backend.admin.service.website;
 
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.admin.converter.website.BlogPostConverter;
 import net.cryptic_game.backend.admin.converter.website.BlogPostIdConverter;
@@ -17,6 +13,11 @@ import net.cryptic_game.backend.admin.model.website.BlogPostModel.IdModel;
 import net.cryptic_game.backend.admin.repository.website.BlogPostRepository;
 import net.cryptic_game.backend.admin.repository.website.BlogPostSmallRepository;
 import org.springframework.stereotype.Service;
+
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -51,6 +52,7 @@ public class BlogServiceImpl implements BlogService {
                 .orElseThrow(() -> new NotFoundException(id.toString(), "POST_NOT_FOUND"));
 
         this.postConverter.override(model, post);
+        model.setUpdated(OffsetDateTime.now());
 
         return this.postConverter.toDto(
                 this.postRepository.save(model)
