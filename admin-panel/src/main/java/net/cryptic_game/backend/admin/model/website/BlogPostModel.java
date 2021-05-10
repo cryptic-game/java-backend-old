@@ -50,10 +50,10 @@ public class BlogPostModel extends TableModel {
     @AllArgsConstructor
     public static final class IdModel implements Serializable {
 
-        @Column(name = "language", updatable = true, nullable = false)
+        @Column(name = "language", updatable = false, nullable = false)
         private String language; // TODO java.util.Locale
 
-        @Column(name = "post_id", updatable = true, nullable = false)
+        @Column(name = "post_id", updatable = false, nullable = false)
         private String postId;
     }
 }
