@@ -3,6 +3,7 @@ package net.cryptic_game.backend.admin.service.website;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import javax.transaction.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.admin.converter.website.BlogPostConverter;
@@ -29,6 +30,7 @@ public class BlogServiceImpl implements BlogService {
     private final BlogPostIdConverter idConverter;
 
     @Override
+    @Transactional
     public Set<BlogPostSmall> findPosts(final String language) {
         return this.postSmallRepository.findAll(language)
                 .map(this.postSmallConverter::toDto)
