@@ -63,7 +63,7 @@ dependencies {
     // implementation('io.micrometer:micrometer-registry-influx:1.5.5')
 
     /* Caching */
-    runtimeOnly('io.lettuce:lettuce-core:6.1.1.RELEASE')
+    runtimeOnly('io.lettuce:lettuce-core:6.1.2.RELEASE')
     api('org.springframework.data:spring-data-redis')
 }
 
