@@ -63,6 +63,7 @@ public final class JsonUtils {
         return collection;
     }
 
+    @SuppressWarnings("checkstyle:FinalParameters")
     public static JsonElement findJsonPath(final JsonElement jsonElement, String jsonPath) {
         if (jsonPath.startsWith(".")) jsonPath = jsonPath.substring(1);
         if (jsonPath.isEmpty()) return jsonElement;

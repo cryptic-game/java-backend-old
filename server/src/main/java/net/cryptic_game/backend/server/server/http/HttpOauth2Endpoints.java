@@ -50,9 +50,9 @@ public final class HttpOauth2Endpoints {
                                 .add("redirect_uri", this.oAuth2Config.getGithubRedirectUri())
                                 .add("scopes", this.oAuth2Config.getGithubScopes())
                 ));
+            default:
+                return new ApiResponse(HttpResponseStatus.NOT_FOUND, "PROVIDER");
         }
-
-        return new ApiResponse(HttpResponseStatus.NOT_FOUND, "PROVIDER");
     }
 
     @ApiEndpoint(id = "callback")
