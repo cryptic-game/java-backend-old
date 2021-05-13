@@ -15,14 +15,17 @@ on:
     - cron: '17 10 * * 1'
 
 env:
-  JAVA_VERSION: 11
+  JAVA_VERSION: 16
 
 jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
 
-    if: false # TODO: fix https://github.com/cryptic-game/java-backend/runs/2101630821
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
 
     steps:
       - name: Checkout repository
