@@ -18,7 +18,7 @@ RUN set -o errexit -o nounset \
 WORKDIR ${DATA_DIR}
 VOLUME ${DATA_DIR}
 
-COPY ./dist/${SERVICE_NAME}/ /opt/cryptic
+COPY ./dist/ /opt/cryptic
 
 RUN ln --symbolic /opt/cryptic/bin/${SERVICE_NAME} /usr/bin/cryptic \
   && chmod +x /usr/bin/cryptic
