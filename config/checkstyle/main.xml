@@ -108,10 +108,7 @@
         <module name="AvoidNestedBlocks"/>
         <module name="EmptyBlock"/>
         <module name="LeftCurly"/>
-        <module name="RightCurly">
-            <property name="option" value="alone_or_singleline"/>
-            <property name="tokens" value="LITERAL_IF, METHOD_DEF"/>
-        </module>
+        <module name="RightCurly"/>
 
         <!-- Checks for common coding problems               -->
         <!-- See https://checkstyle.org/config_coding.html -->
