@@ -10,6 +10,7 @@ import org.springframework.util.unit.DataSize;
 import reactor.netty.DisposableServer;
 import reactor.netty.http.HttpProtocol;
 
+import javax.net.ssl.SSLException;
 import java.io.File;
 import java.net.SocketAddress;
 import java.time.Duration;
@@ -52,7 +53,13 @@ public final class HttpServer implements Server {
                     this.certificateFile.getAbsolutePath(), this.keyFile.getAbsolutePath(), this.id);
             if (OpenSsl.isAvailable()) log.info("Using native SSL implementation.");
             server = server.protocol(HttpProtocol.HTTP11, HttpProtocol.H2)
-                    .secure(spec -> spec.sslContext(SslContextBuilder.forServer(this.certificateFile, this.keyFile)));
+                    .secure(spec -> {
+                        try {
+                            spec.sslContext(SslContextBuilder.forServer(this.certificateFile, this.keyFile).build());
+                        } catch (SSLException e) {
+                            log.error("Error while building ssl context", e);
+                        }
+                    });
         }
 
         server = server.handle(this.routes.toHandler());
