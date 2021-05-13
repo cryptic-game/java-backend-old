@@ -9,7 +9,6 @@ import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModel;
 import net.cryptic_game.backend.data.sql.entities.device.Device;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
@@ -38,7 +37,6 @@ public final class NetworkInvitation extends TableModel implements JsonSerializa
 
     @ManyToOne
     @JoinColumn(name = "inviter_id", nullable = true, updatable = false)
-    @Type(type = "uuid-char")
     private Device inviter;
 
     /**
@@ -131,12 +129,10 @@ public final class NetworkInvitation extends TableModel implements JsonSerializa
 
         @ManyToOne
         @JoinColumn(name = "network_id", nullable = false, updatable = false)
-        @Type(type = "uuid-char")
         private Network network;
 
         @ManyToOne
         @JoinColumn(name = "device_id", nullable = false, updatable = false)
-        @Type(type = "uuid-char")
         private Device device;
 
         /**

@@ -10,7 +10,6 @@ import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.data.sql.entities.user.User;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -33,12 +32,10 @@ public final class ChatChannelAccess extends TableModelAutoId implements JsonSer
 
     @ManyToOne
     @JoinColumn(name = "user_id", updatable = false, nullable = false)
-    @Type(type = "uuid-char")
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "channel_id", nullable = false, updatable = false)
-    @Type(type = "uuid-char")
     private ChatChannel channel;
 
     /**

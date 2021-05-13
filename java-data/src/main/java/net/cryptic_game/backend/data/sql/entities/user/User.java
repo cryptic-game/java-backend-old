@@ -8,7 +8,6 @@ import lombok.Setter;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonTransient;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
-import net.cryptic_game.backend.base.utils.SecurityUtils;
 import net.cryptic_game.backend.data.Constants;
 
 import javax.persistence.Cacheable;
@@ -31,12 +30,8 @@ import java.time.OffsetDateTime;
 @Cacheable
 public final class User extends TableModelAutoId {
 
-    @Column(name = "username", updatable = true, nullable = false, unique = true, length = Constants.USERNAME_LENGTH)
+    @Column(name = "username", updatable = true, nullable = true, unique = true, length = Constants.USERNAME_LENGTH)
     private String username;
-
-    @JsonTransient
-    @Column(name = "password", updatable = true, nullable = false, length = 100)
-    private String passwordHash;
 
     @Column(name = "created", updatable = false, nullable = false)
     private OffsetDateTime created;
@@ -44,24 +39,9 @@ public final class User extends TableModelAutoId {
     @Column(name = "last", updatable = true, nullable = false)
     private OffsetDateTime last;
 
-    /**
-     * Set a new password for the given {@link User}.
-     *
-     * @param newPassword New password to be set
-     */
-    public void setPassword(final String newPassword) {
-        this.setPasswordHash(SecurityUtils.hash(newPassword));
-    }
-
-    /**
-     * Checks whether a password matches the current password of the {@link User}.
-     *
-     * @param input The password to be checked
-     * @return true if the password is correct | false if the password is wrong
-     */
-    public boolean verifyPassword(final String input) {
-        return SecurityUtils.verifyHash(input, this.getPasswordHash());
-    }
+    @JsonTransient
+    @Column(name = "new_user", updatable = true, nullable = false)
+    private boolean newUser;
 
     public JsonObject serializePublic() {
         return JsonBuilder.create("id", this.getId())

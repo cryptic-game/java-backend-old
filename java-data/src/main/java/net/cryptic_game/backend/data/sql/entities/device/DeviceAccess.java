@@ -9,7 +9,6 @@ import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.data.sql.entities.user.User;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,12 +32,10 @@ public final class DeviceAccess extends TableModelAutoId implements JsonSerializ
 
     @ManyToOne
     @JoinColumn(name = "device_id", nullable = false, updatable = false)
-    @Type(type = "uuid-char")
     private Device device;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, updatable = false)
-    @Type(type = "uuid-char")
     private User user;
 
     @Column(name = "granted", nullable = false, updatable = false)

@@ -6,7 +6,6 @@ import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.data.sql.entities.user.User;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,7 +28,6 @@ public final class Inventory extends TableModelAutoId implements JsonSerializabl
 
     @ManyToOne
     @JoinColumn(name = "owner", updatable = false, nullable = false)
-    @Type(type = "uuid-char")
     private User owner;
 
     /**

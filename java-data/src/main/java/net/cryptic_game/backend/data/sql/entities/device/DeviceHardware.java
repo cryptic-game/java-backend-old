@@ -8,7 +8,6 @@ import lombok.Setter;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,12 +32,10 @@ public final class DeviceHardware extends TableModelAutoId implements JsonSerial
 
     @ManyToOne
     @JoinColumn(name = "device_id", updatable = false, nullable = false)
-    @Type(type = "uuid-char")
     private Device device;
 
     @ManyToOne
     @JoinColumn(name = "element_id", updatable = false, nullable = false)
-    @Type(type = "uuid-char")
     private DeviceHardwareElement element;
 
     @Enumerated(EnumType.STRING)

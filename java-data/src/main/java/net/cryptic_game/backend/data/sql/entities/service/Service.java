@@ -10,7 +10,6 @@ import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.data.sql.entities.device.Device;
 import net.cryptic_game.backend.data.sql.entities.user.User;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,7 +32,6 @@ public final class Service extends TableModelAutoId implements JsonSerializable 
 
     @ManyToOne
     @JoinColumn(name = "device_id", updatable = false, nullable = false)
-    @Type(type = "uuid-char")
     private Device device;
 
     @Column(name = "name", updatable = true, nullable = false)
@@ -47,7 +45,6 @@ public final class Service extends TableModelAutoId implements JsonSerializable 
 
     @ManyToOne
     @JoinColumn(name = "user_id", updatable = false, nullable = false)
-    @Type(type = "uuid-char")
     private User user;
 
     /**

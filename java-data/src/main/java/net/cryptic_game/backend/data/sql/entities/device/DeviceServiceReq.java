@@ -9,7 +9,6 @@ import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.data.sql.entities.service.Service;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,12 +31,10 @@ public final class DeviceServiceReq extends TableModelAutoId implements JsonSeri
 
     @ManyToOne
     @JoinColumn(name = "service_id", updatable = true, nullable = true)
-    @Type(type = "uuid-char")
     private Service service;
 
     @ManyToOne
     @JoinColumn(name = "device_id", updatable = true, nullable = true) // updatable?
-    @Type(type = "uuid-char")
     private Device device;
 
     @Column(name = "allocated_cpu", updatable = true, nullable = true)

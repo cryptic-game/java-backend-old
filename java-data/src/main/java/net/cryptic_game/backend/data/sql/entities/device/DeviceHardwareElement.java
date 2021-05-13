@@ -8,7 +8,6 @@ import lombok.Setter;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,7 +33,6 @@ public final class DeviceHardwareElement extends TableModelAutoId implements Jso
 
     @ManyToOne
     @JoinColumn(name = "manufacturer", updatable = false, nullable = false)
-    @Type(type = "uuid-char")
     private DeviceHardwareManufacturer manufacturer;
 
     /**

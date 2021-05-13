@@ -6,14 +6,13 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.SignatureException;
-
-import java.security.Key;
-import java.util.Map;
-
 import net.cryptic_game.backend.base.json.JsonUtils;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.security.Key;
+import java.util.Map;
 
 public final class SecurityUtils {
 

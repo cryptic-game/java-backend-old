@@ -62,4 +62,13 @@ public final class JsonUtils {
         array.forEach(item -> collection.add(function.apply(item)));
         return collection;
     }
+
+    public static JsonElement findJsonPath(final JsonElement jsonElement, String jsonPath) {
+        if (jsonPath.startsWith(".")) jsonPath = jsonPath.substring(1);
+        if (jsonPath.isEmpty()) return jsonElement;
+        int dot = jsonPath.indexOf('.');
+        if (dot == -1) dot = jsonPath.length();
+        if (!jsonElement.isJsonObject()) throw new IllegalArgumentException();
+        return findJsonPath(jsonElement.getAsJsonObject().get(jsonPath.substring(0, dot)), jsonPath.substring(dot));
+    }
 }

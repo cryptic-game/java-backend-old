@@ -9,7 +9,6 @@ import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
 import net.cryptic_game.backend.data.sql.entities.currency.CurrencyWallet;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,7 +31,6 @@ public final class ServiceMiner extends TableModelAutoId implements JsonSerializ
 
     @ManyToOne
     @JoinColumn(name = "wallet_id", nullable = false, updatable = true)
-    @Type(type = "uuid-char")
     private CurrencyWallet wallet;
 
     @Column(name = "started", updatable = true, nullable = false)

@@ -2,7 +2,17 @@ apply plugin: 'java'
 apply plugin: 'io.freefair.lombok'
 
 repositories {
-    mavenCentral()
+    mavenCentral {
+        content {
+            excludeGroup('net.getnova.framework')
+        }
+    }
+    maven {
+        url 'https://raw.githubusercontent.com/getnova/maven/main'
+        content {
+            includeGroup('net.getnova.framework')
+        }
+    }
 }
 
 sourceCompatibility = JavaVersion.VERSION_11

@@ -9,7 +9,6 @@ import lombok.Setter;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.base.sql.models.TableModel;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -62,7 +61,6 @@ public final class UserSetting extends TableModel implements JsonSerializable {
 
         @ManyToOne
         @JoinColumn(name = "user_id", updatable = false, nullable = false)
-        @Type(type = "uuid-char")
         private User user;
 
         @Column(name = "settingKey", updatable = false, nullable = false)

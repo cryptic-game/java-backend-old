@@ -33,7 +33,6 @@ dependencies {
     }
 
     runtimeOnly('org.postgresql:postgresql:42.2.20')
-    runtimeOnly('org.mariadb.jdbc:mariadb-java-client:2.7.2')
 
     /* Network */
     api(platform('io.projectreactor:reactor-bom:2020.0.6'))
