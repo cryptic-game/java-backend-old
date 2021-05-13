@@ -1,18 +1,5 @@
-plugins {
-    id 'org.hibernate.orm'
-}
-
 dependencies {
     implementation project(':java-base')
     annotationProcessor("org.springframework:spring-context-indexer:5.3.6")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor:2.4.5")
-}
-
-hibernate {
-    enhance {
-        enableLazyInitialization = true
-        enableDirtyTracking = true
-        enableAssociationManagement = true
-        enableExtendedEnhancement = false
-    }
 }
