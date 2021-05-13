@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
 
+import java.nio.charset.StandardCharsets;
+
 @Component
 @RequiredArgsConstructor
 public class OAuth2Provider {
@@ -64,7 +66,7 @@ public class OAuth2Provider {
                 .uri("https://github.com/login/oauth/access_token")
                 .send(Mono.just(Unpooled.wrappedBuffer(JsonBuilder.create("client_id", this.config.getGithubClientId())
                         .add("client_secret", this.config.getGithubClientSecret())
-                        .add("code", code).build().toString().getBytes())))
+                        .add("code", code).build().toString().getBytes(StandardCharsets.UTF_8))))
                 .responseContent()
                 .aggregate()
                 .asString()

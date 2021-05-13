@@ -7,6 +7,7 @@ import net.cryptic_game.backend.base.Bootstrap;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 
 @Configuration
@@ -23,7 +24,7 @@ public class JwtConfiguration {
      */
     @Bean
     Key getSigningKey(final Bootstrap bootstrap, final JwtConfig config) {
-        final byte[] bytes = config.getKey().getBytes();
+        final byte[] bytes = config.getKey().getBytes(StandardCharsets.UTF_8);
         if (bytes.length * 8 < SignatureAlgorithm.HS512.getMinKeyLength()) {
             log.error("A key length of {} bits is too weak! Minimum required is {} bits.", bytes.length * 8, SignatureAlgorithm.HS512.getMinKeyLength());
             bootstrap.shutdown();
