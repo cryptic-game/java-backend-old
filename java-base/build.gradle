@@ -1,6 +1,5 @@
 plugins {
     id 'java-library'
-    id 'org.hibernate.orm'
 }
 
 dependencies {
@@ -64,13 +63,4 @@ dependencies {
     /* Caching */
     runtimeOnly('io.lettuce:lettuce-core:6.1.1.RELEASE')
     api('org.springframework.data:spring-data-redis')
-}
-
-hibernate {
-    enhance {
-        enableLazyInitialization = true
-        enableDirtyTracking = true
-        enableAssociationManagement = true
-        enableExtendedEnhancement = false
-    }
 }

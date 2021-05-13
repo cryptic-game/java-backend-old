@@ -1,6 +1,5 @@
 plugins {
     id 'application'
-    id 'org.hibernate.orm'
 }
 
 dependencies {
@@ -21,13 +20,4 @@ task start(type: JavaExec) {
     classpath fileTree("${buildDir}/install/server/lib").matching { "*.jar" }.files
     main "net.cryptic_game.backend.base.Bootstrap"
     workingDir file(projectDir)
-}
-
-hibernate {
-    enhance {
-        enableLazyInitialization = true
-        enableDirtyTracking = true
-        enableAssociationManagement = true
-        enableExtendedEnhancement = false
-    }
 }
