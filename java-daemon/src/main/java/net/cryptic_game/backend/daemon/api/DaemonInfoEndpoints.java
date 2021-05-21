@@ -22,8 +22,6 @@ public final class DaemonInfoEndpoints {
 
     @ApiEndpoint(id = "endpoints", description = "All available endpoints of the daemon")
     public ApiResponse endpoints() {
-        System.out.println(this.context.getBean(RestApiInitializer.class).getCollections());
-
         if (this.endpointsResponse == null)
             this.endpointsResponse = new ApiResponse(HttpResponseStatus.OK, this.context.getBean(RestApiInitializer.class).getCollections()
                     .stream()
