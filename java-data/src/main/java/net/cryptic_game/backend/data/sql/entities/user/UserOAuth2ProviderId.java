@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.cryptic_game.backend.base.sql.models.TableModel;
+import net.getnova.framework.jpa.model.TableModel;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;

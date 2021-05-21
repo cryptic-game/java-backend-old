@@ -2,7 +2,6 @@ package net.cryptic_game.backend.endpoints.network;
 
 import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.RequiredArgsConstructor;
-import net.cryptic_game.backend.DaemonAuthenticator;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.annotations.ApiParameter;
@@ -23,7 +22,7 @@ import net.cryptic_game.backend.data.sql.repositories.user.UserRepository;
 import java.util.UUID;
 
 @RequiredArgsConstructor
-@ApiEndpointCollection(id = "network/invitation", type = ApiType.REST, authenticator = DaemonAuthenticator.class)
+@ApiEndpointCollection(id = "network/invitation", type = ApiType.REST)
 public final class NetworkInvitationEndpoints {
 
     private final UserRepository userRepository;

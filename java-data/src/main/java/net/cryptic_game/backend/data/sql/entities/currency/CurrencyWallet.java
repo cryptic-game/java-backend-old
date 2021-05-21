@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.cryptic_game.backend.base.json.JsonTransient;
-import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
+import net.getnova.framework.jpa.model.TableModelAutoId;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

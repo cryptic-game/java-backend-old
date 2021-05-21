@@ -9,12 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 @Getter(AccessLevel.PACKAGE)
 class DaemonConfig {
 
-    @Value("${HTTP_HOST:0.0.0.0}")
-    private String httpHost;
-
-    @Value("${HTTP_PORT:8081}")
-    private int httpPort;
-
     @Value("${SERVER_ADDRESS:http://127.0.0.1:8080/api}")
     private String serverAddress;
 }

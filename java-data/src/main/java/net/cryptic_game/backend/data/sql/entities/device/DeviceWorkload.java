@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
-import net.cryptic_game.backend.base.sql.models.TableModel;
+import net.getnova.framework.jpa.model.TableModel;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

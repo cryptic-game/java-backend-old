@@ -1,22 +1,21 @@
 package net.cryptic_game.backend.data.sql.entities.user;
 
 import com.google.gson.JsonElement;
-
-import java.time.OffsetDateTime;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
-import net.cryptic_game.backend.base.sql.models.TableModelAutoId;
+import net.getnova.framework.jpa.model.TableModelAutoId;
 import org.hibernate.annotations.Type;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import java.time.OffsetDateTime;
 
 /**
  * Entity representing an user suspension revoked entry in the database.

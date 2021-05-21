@@ -1,23 +1,24 @@
 plugins {
-    id 'application'
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
 }
 
 dependencies {
-    implementation(project(':java-base'))
-    implementation(project(':java-data'))
-    annotationProcessor("org.springframework:spring-context-indexer:5.3.6")
-    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor:2.4.5")
+    implementation project(':java-base')
+    implementation project(':java-data')
+
+    runtimeOnly 'io.netty:netty-tcnative-boringssl-static'
+
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.springframework:spring-context-indexer'
 }
 
-application {
-    applicationName = 'server'
-    mainClass.set('net.cryptic_game.backend.base.Bootstrap')
-    applicationDefaultJvmArgs = ["-XX:+UseParallelGC"]
-}
-
-task start(type: JavaExec) {
-    dependsOn installDist
-    classpath fileTree("${buildDir}/install/server/lib").matching { "*.jar" }.files
-    main "net.cryptic_game.backend.base.Bootstrap"
-    workingDir file(projectDir)
-}
+//jar {
+//    from "${rootDir}/LICENSE"
+//    manifest.attributes([
+//            'Implementation-Title'  : 'Cryptic Server',
+//            'Implementation-Version': project.version,
+//            'Implementation-Vendor' : 'Cryptic Game (https://cryptic-game.net)'
+//    ])
+//}

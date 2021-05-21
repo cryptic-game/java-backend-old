@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
@@ -14,6 +15,7 @@ import java.time.ZoneOffset;
 import java.util.List;
 import java.util.UUID;
 
+@Repository
 public interface ChatMessageRepository extends JpaRepository<ChatMessage, UUID> {
 
     @Query("select m from ChatMessage m where m.channel = ?1 and (m.user = ?2 or m.target = ?2 or m.target = null)")

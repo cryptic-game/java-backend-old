@@ -1,7 +1,6 @@
 package net.cryptic_game.backend.endpoints;
 
 import io.netty.handler.codec.http.HttpResponseStatus;
-import net.cryptic_game.backend.DaemonAuthenticator;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.annotations.ApiParameter;
@@ -13,8 +12,7 @@ import net.cryptic_game.backend.base.utils.DaemonUtils;
 
 import java.util.UUID;
 
-@ApiEndpointCollection(id = "test", description = "Some endpoint for testing existing and new features.", disabled = true,
-        type = ApiType.REST, authenticator = DaemonAuthenticator.class)
+@ApiEndpointCollection(id = "test", description = "Some endpoint for testing existing and new features.", disabled = true, type = ApiType.REST)
 public final class TestEndpoints {
 
     @ApiEndpoint(id = "timeout")
