@@ -71,7 +71,7 @@ public class Bootstrap {
 
             System.getenv()
                     .entrySet()
-                    .parallelStream()
+                    .stream()
                     .filter(entry -> entry.getKey().startsWith("DAEMON_"))
                     .forEach(entry -> daemonHandler.registerDaemon(entry.getKey().substring(7).replace('_', '-').toLowerCase(), entry.getValue()));
         };

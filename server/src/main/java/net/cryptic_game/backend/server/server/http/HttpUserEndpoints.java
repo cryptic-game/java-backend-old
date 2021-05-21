@@ -112,7 +112,6 @@ public final class HttpUserEndpoints {
 
         user.setUsername(username);
         user.setNewUser(false);
-        user.setLast(OffsetDateTime.now());
 
         return new ApiResponse(HttpResponseStatus.OK, JsonBuilder.create("user", this.userRepository.save(user)));
     }

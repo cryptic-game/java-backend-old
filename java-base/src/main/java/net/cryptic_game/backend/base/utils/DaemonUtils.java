@@ -2,7 +2,6 @@ package net.cryptic_game.backend.base.utils;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import lombok.Setter;
 import net.cryptic_game.backend.base.api.data.ApiEndpointCollectionData;
 import net.cryptic_game.backend.base.api.data.ApiEndpointData;
 import net.cryptic_game.backend.base.api.data.ApiParameterData;
@@ -12,32 +11,17 @@ import net.cryptic_game.backend.base.daemon.Daemon;
 import net.cryptic_game.backend.base.daemon.DaemonEndpointCollectionData;
 import net.cryptic_game.backend.base.daemon.DaemonEndpointData;
 import net.cryptic_game.backend.base.json.JsonUtils;
-import org.hibernate.cfg.NotYetImplementedException;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 public final class DaemonUtils {
 
-    @Setter
-    private static String serverAddress;
-
     private DaemonUtils() {
         throw new UnsupportedOperationException();
-    }
-
-    public static void notifyUser(@NotNull final UUID user, @NotNull final Enum<?> topic, @Nullable final Object data) {
-        notifyUser(user, topic.name(), data);
-    }
-
-    public static void notifyUser(@NotNull final UUID user, @NotNull final String topic, @Nullable final Object data) {
-//        HttpClientUtils.sendAsyncRequest(serverAddress + "/daemon/notify", JsonBuilder.create("user_id", user).add("topic", topic).add("data", data).build());
-        throw new NotYetImplementedException();
     }
 
     @NotNull

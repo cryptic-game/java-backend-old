@@ -14,7 +14,7 @@ import net.cryptic_game.backend.base.api.handler.websocket.WebsocketApiRequest;
 import net.cryptic_game.backend.base.daemon.Daemon;
 import net.cryptic_game.backend.base.daemon.DaemonEndpointData;
 import net.cryptic_game.backend.base.json.JsonBuilder;
-import net.cryptic_game.backend.data.redis.entities.Session;
+import net.cryptic_game.backend.data.sql.entities.user.User;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
 
@@ -32,9 +32,9 @@ public final class WebSocketDaemonEndpoints {
     private static final Charset CHARSET = StandardCharsets.UTF_8;
 
     public Mono<ApiResponse> send(@ApiParameter(id = "request", type = ApiParameterType.REQUEST) final WebsocketApiRequest request) {
-        final Optional<Session> session = request.getContext().get(Session.class);
+        final Optional<User> user = request.getContext().get(User.class);
 
-        if (session.isEmpty()) {
+        if (user.isEmpty()) {
             return Mono.just(new ApiResponse(HttpResponseStatus.UNAUTHORIZED, "INVALID_SESSION"));
         }
 
@@ -47,7 +47,7 @@ public final class WebSocketDaemonEndpoints {
         final Daemon daemon = daemonEndpoint.getDaemon();
 
         final JsonElement body = JsonBuilder.create(request.getData())
-                .add("user_id", session.get().getUserId())
+                .add("user_id", user.get().getId())
                 .build();
 
         final HttpClient.ResponseReceiver<?> daemonResponse = daemon.getHttpClient().post()
@@ -58,7 +58,7 @@ public final class WebSocketDaemonEndpoints {
                 .map(content -> {
                     final Optional<HttpResponseStatus> responseCode = Optional.ofNullable(HttpResponseStatus.valueOf(response.status().code()));
                     if (responseCode.isEmpty()) {
-                        log.warn("Unknown status code from daemon {} at endpoint {}: {}.", daemon.getName(), request.getEndpoint(), response.status().toString());
+                        log.warn("Unknown status code from daemon {} at endpoint {}: {}.", daemon.getName(), request.getEndpoint(), response.status());
                         return new ApiResponse(HttpResponseStatus.BAD_GATEWAY);
                     }
 

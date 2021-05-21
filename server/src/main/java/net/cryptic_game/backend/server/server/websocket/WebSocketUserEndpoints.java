@@ -28,7 +28,7 @@ public final class WebSocketUserEndpoints {
     public ApiResponse session(@ApiParameter(id = "request", type = ApiParameterType.REQUEST) final WebsocketApiRequest request,
                                @ApiParameter(id = "session_id") final UUID sessionId,
                                @ApiParameter(id = "user_id") final UUID userId) {
-        if (request.getContext().get(Session.class).isPresent()) {
+        if (request.getContext().get(User.class).isPresent()) {
             return new ApiResponse(HttpResponseStatus.FORBIDDEN, "ALREADY_LOGGED_IN");
         }
 
@@ -42,8 +42,8 @@ public final class WebSocketUserEndpoints {
             return new ApiResponse(HttpResponseStatus.NOT_FOUND, "INVALID_SESSION");
         }
 
-        this.sessionRepository.save(session);
-        request.getContext().set(session);
+        this.sessionRepository.delete(session);
+        request.getContext().set(user);
 
         return new ApiResponse(HttpResponseStatus.OK, JsonBuilder.create("session", session).add("user", user));
     }
@@ -51,7 +51,7 @@ public final class WebSocketUserEndpoints {
     @ApiEndpoint(id = "get")
     public ApiResponse get(@ApiParameter(id = "request", type = ApiParameterType.REQUEST) final WebsocketApiRequest request,
                            @ApiParameter(id = "id") final UUID userId) {
-        if (request.getContext().get(Session.class).isEmpty()) {
+        if (request.getContext().get(User.class).isEmpty()) {
             return new ApiResponse(HttpResponseStatus.FORBIDDEN, "NOT_LOGGED_IN");
         }
 

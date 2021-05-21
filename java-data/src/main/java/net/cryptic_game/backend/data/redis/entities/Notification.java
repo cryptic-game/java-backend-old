@@ -10,19 +10,15 @@ import org.springframework.data.redis.core.RedisHash;
 
 import java.util.UUID;
 
-/**
- * Entity representing a session entry in the database.
- *
- * @since 0.3.0
- */
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@RedisHash(value = "session", timeToLive = Constants.SESSION_EXPIRE)
-public final class Session {
+@RedisHash(value = "notification", timeToLive = Constants.NOTIFICATION_EXPIRE)
+public class Notification {
 
     @Id
     private UUID id;
-    private UUID userId;
+    private String topic;
+    private String data;
 }

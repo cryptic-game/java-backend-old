@@ -1,5 +1,6 @@
 package net.cryptic_game.backend.endpoints.chat;
 
+import com.google.gson.JsonElement;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
@@ -8,7 +9,7 @@ import net.cryptic_game.backend.base.api.annotations.ApiParameter;
 import net.cryptic_game.backend.base.api.data.ApiParameterType;
 import net.cryptic_game.backend.base.api.data.ApiResponse;
 import net.cryptic_game.backend.base.api.data.ApiType;
-import net.cryptic_game.backend.base.utils.DaemonUtils;
+import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.data.sql.entities.chat.ChatAction;
 import net.cryptic_game.backend.data.sql.entities.chat.ChatChannel;
 import net.cryptic_game.backend.data.sql.entities.chat.ChatMessage;
@@ -17,6 +18,7 @@ import net.cryptic_game.backend.data.sql.repositories.chat.ChatChannelAccessRepo
 import net.cryptic_game.backend.data.sql.repositories.chat.ChatChannelRepository;
 import net.cryptic_game.backend.data.sql.repositories.chat.ChatMessageRepository;
 import net.cryptic_game.backend.data.sql.repositories.user.UserRepository;
+import net.cryptic_game.backend.endpoints.NotificationService;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
@@ -26,6 +28,7 @@ import java.util.UUID;
 @ApiEndpointCollection(id = "chat/message", description = "send/whisper/delete/list messages", type = ApiType.REST)
 public final class ChatMessageEndpoint {
 
+    private final NotificationService notificationService;
     private final UserRepository userRepository;
     private final ChatChannelRepository channelRepository;
     private final ChatChannelAccessRepository channelAccessRepository;
@@ -54,9 +57,11 @@ public final class ChatMessageEndpoint {
 
         final ChatMessage msg = this.messageRepository.create(user, channel, message, null);
 
-        members.parallelStream()
+        JsonElement json = JsonBuilder.create("action", ChatAction.SEND_MESSAGE).add("message", msg).build();
+
+        members.stream()
                 .filter(member -> !member.equals(user))
-                .forEach(member -> DaemonUtils.notifyUser(member.getId(), ChatAction.SEND_MESSAGE, msg));
+                .forEach(member -> this.notificationService.sendNotification(member.getId(), "chat", json));
 
         return new ApiResponse(HttpResponseStatus.OK, msg);
     }
@@ -93,7 +98,7 @@ public final class ChatMessageEndpoint {
         }
 
         final ChatMessage msg = this.messageRepository.create(user, channel, message, target);
-        DaemonUtils.notifyUser(target.getId(), ChatAction.WHISPER_MESSAGE, msg);
+        this.notificationService.sendNotification(target.getId(), "chat", JsonBuilder.create("action", ChatAction.WHISPER_MESSAGE).add("message", msg).build());
         return new ApiResponse(HttpResponseStatus.OK, msg);
     }
 
@@ -111,12 +116,13 @@ public final class ChatMessageEndpoint {
             return new ApiResponse(HttpResponseStatus.UNAUTHORIZED, "NOT_YOUR_MESSAGE");
         }
 
+        JsonElement json = JsonBuilder.create("action", ChatAction.MESSAGE_DELETED).add("message_id", message.getId()).build();
         if (message.getTarget() == null) {
-            this.channelAccessRepository.getMembers(message.getChannel()).parallelStream()
+            this.channelAccessRepository.getMembers(message.getChannel()).stream()
                     .filter(member -> !member.equals(user))
-                    .forEach(member -> DaemonUtils.notifyUser(member.getId(), ChatAction.MESSAGE_DELETED, message));
+                    .forEach(member -> this.notificationService.sendNotification(member.getId(), "chat", json));
         } else {
-            DaemonUtils.notifyUser(message.getTarget().getId(), ChatAction.MESSAGE_DELETED, message);
+            this.notificationService.sendNotification(message.getTarget().getId(), "chat", json);
         }
 
         this.messageRepository.delete(message);

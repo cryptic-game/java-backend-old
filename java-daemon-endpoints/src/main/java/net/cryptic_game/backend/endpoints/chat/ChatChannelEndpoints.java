@@ -9,7 +9,7 @@ import net.cryptic_game.backend.base.api.annotations.ApiParameter;
 import net.cryptic_game.backend.base.api.data.ApiParameterType;
 import net.cryptic_game.backend.base.api.data.ApiResponse;
 import net.cryptic_game.backend.base.api.data.ApiType;
-import net.cryptic_game.backend.base.utils.DaemonUtils;
+import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.data.sql.entities.chat.ChatAction;
 import net.cryptic_game.backend.data.sql.entities.chat.ChatChannel;
 import net.cryptic_game.backend.data.sql.entities.chat.ChatChannelAccess;
@@ -18,6 +18,7 @@ import net.cryptic_game.backend.data.sql.repositories.chat.ChatChannelAccessRepo
 import net.cryptic_game.backend.data.sql.repositories.chat.ChatChannelRepository;
 import net.cryptic_game.backend.data.sql.repositories.chat.ChatMessageRepository;
 import net.cryptic_game.backend.data.sql.repositories.user.UserRepository;
+import net.cryptic_game.backend.endpoints.NotificationService;
 
 import java.util.List;
 import java.util.UUID;
@@ -26,6 +27,7 @@ import java.util.UUID;
 @ApiEndpointCollection(id = "chat/channel", description = "join/leave/create/rename a channel. Get information/members", type = ApiType.REST)
 public final class ChatChannelEndpoints {
 
+    private final NotificationService notificationService;
     private final ChatChannelRepository channelRepository;
     private final ChatChannelAccessRepository channelAccessRepository;
     private final ChatMessageRepository messageRepository;
@@ -67,9 +69,13 @@ public final class ChatChannelEndpoints {
         channel.setName(newName);
         this.channelRepository.save(channel);
 
-        members.parallelStream()
+        members.stream()
                 .filter(member -> !member.equals(user))
-                .forEach(member -> DaemonUtils.notifyUser(member.getId(), ChatAction.CHANNEL_RENAMED, channel));
+                .forEach(member -> this.notificationService.sendNotification(
+                        member.getId(),
+                        "chat",
+                        JsonBuilder.create("action", ChatAction.CHANNEL_RENAMED).add("channel", channel).build()
+                ));
         return new ApiResponse(HttpResponseStatus.OK, channel);
     }
 
@@ -120,7 +126,11 @@ public final class ChatChannelEndpoints {
         }
 
         final JsonObject userJson = user.serializePublic();
-        members.parallelStream().forEach(member -> DaemonUtils.notifyUser(member.getId(), ChatAction.MEMBER_JOIN, userJson));
+        members.forEach(member -> this.notificationService.sendNotification(
+                member.getId(),
+                "chat",
+                JsonBuilder.create("action", ChatAction.MEMBER_JOIN).add("user", userJson).build()
+        ));
 
         return new ApiResponse(HttpResponseStatus.OK, this.channelAccessRepository.create(user, channel));
     }
@@ -144,7 +154,12 @@ public final class ChatChannelEndpoints {
         this.channelAccessRepository.delete(channelAccess);
 
         final List<User> members = this.channelAccessRepository.getMembers(channel);
-        members.parallelStream().forEach(member -> DaemonUtils.notifyUser(member.getId(), ChatAction.MEMBER_LEAVE, user.serializePublic()));
+        final JsonObject userJson = user.serializePublic();
+        members.forEach(member -> this.notificationService.sendNotification(
+                member.getId(),
+                "chat",
+                JsonBuilder.create("action", ChatAction.MEMBER_LEAVE).add("user", userJson).build()
+        ));
 
         if (members.size() == 0) {
             this.channelAccessRepository.deleteAllByChannel(channel);
