@@ -1,26 +1,11 @@
 <component name="ProjectRunConfigurationManager">
-    <configuration default="false" name="AdminPanel" type="GradleRunConfiguration" factoryName="Gradle">
-        <ExternalSystemSettings>
-            <option name="env">
-                <map>
-                    <entry key="DEBUG" value="true"/>
-                </map>
-            </option>
-            <option name="executionName"/>
-            <option name="externalProjectPath" value="$PROJECT_DIR$/admin-panel"/>
-            <option name="externalSystemIdString" value="GRADLE"/>
-            <option name="scriptParameters" value=""/>
-            <option name="taskDescriptions">
-                <list/>
-            </option>
-            <option name="taskNames">
-                <list>
-                    <option value="start"/>
-                </list>
-            </option>
-            <option name="vmOptions" value=""/>
-        </ExternalSystemSettings>
-        <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-        <method v="2"/>
+    <configuration default="false" name="AdminPanel" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+        <module name="java-backend.admin-panel.main"/>
+        <option name="SPRING_BOOT_MAIN_CLASS" value="net.cryptic_game.backend.admin.Bootstrap"/>
+        <option name="ALTERNATIVE_JRE_PATH"/>
+        <option name="SHORTEN_COMMAND_LINE" value="NONE"/>
+        <method v="2">
+            <option name="Make" enabled="true"/>
+        </method>
     </configuration>
 </component>

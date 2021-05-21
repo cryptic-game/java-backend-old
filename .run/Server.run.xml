@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
-    <configuration default="false" name="Daemon" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-        <module name="java-backend.java-daemon.main"/>
-        <option name="SPRING_BOOT_MAIN_CLASS" value="net.cryptic_game.backend.daemon.Bootstrap"/>
+    <configuration default="false" name="Server" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+        <module name="java-backend.server.main"/>
+        <option name="SPRING_BOOT_MAIN_CLASS" value="net.cryptic_game.backend.server.Bootstrap"/>
         <option name="ALTERNATIVE_JRE_PATH"/>
         <option name="SHORTEN_COMMAND_LINE" value="NONE"/>
         <method v="2">

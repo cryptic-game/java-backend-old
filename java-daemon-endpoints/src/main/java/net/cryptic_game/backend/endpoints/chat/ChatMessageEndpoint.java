@@ -2,7 +2,6 @@ package net.cryptic_game.backend.endpoints.chat;
 
 import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.RequiredArgsConstructor;
-import net.cryptic_game.backend.DaemonAuthenticator;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.annotations.ApiParameter;
@@ -24,7 +23,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
-@ApiEndpointCollection(id = "chat/message", description = "send/whisper/delete/list messages", type = ApiType.REST, authenticator = DaemonAuthenticator.class)
+@ApiEndpointCollection(id = "chat/message", description = "send/whisper/delete/list messages", type = ApiType.REST)
 public final class ChatMessageEndpoint {
 
     private final UserRepository userRepository;

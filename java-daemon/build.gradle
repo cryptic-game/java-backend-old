@@ -1,12 +1,6 @@
 plugins {
-    id 'application'
+    id 'org.springframework.boot'
     id 'io.spring.dependency-management'
-}
-
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
-    }
 }
 
 dependencies {
@@ -14,19 +8,7 @@ dependencies {
     implementation project(':java-data')
     implementation project(':java-daemon-endpoints')
 
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.springframework:spring-context-indexer'
-}
-
-application {
-    applicationName = 'java-daemon'
-    mainClass.set('net.cryptic_game.backend.base.Bootstrap')
-    applicationDefaultJvmArgs = ["-XX:+UseParallelGC"]
-}
-
-task start(type: JavaExec) {
-    dependsOn installDist
-    classpath fileTree("${buildDir}/install/java-daemon/lib").matching { "*.jar" }.files
-    main "net.cryptic_game.backend.base.Bootstrap"
-    workingDir file(projectDir)
 }

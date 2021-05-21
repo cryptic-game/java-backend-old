@@ -3,7 +3,6 @@ package net.cryptic_game.backend.endpoints.chat;
 import com.google.gson.JsonObject;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.RequiredArgsConstructor;
-import net.cryptic_game.backend.DaemonAuthenticator;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.annotations.ApiParameter;
@@ -24,8 +23,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
-@ApiEndpointCollection(id = "chat/channel", description = "join/leave/create/rename a channel. Get information/members",
-        type = ApiType.REST, authenticator = DaemonAuthenticator.class)
+@ApiEndpointCollection(id = "chat/channel", description = "join/leave/create/rename a channel. Get information/members", type = ApiType.REST)
 public final class ChatChannelEndpoints {
 
     private final ChatChannelRepository channelRepository;

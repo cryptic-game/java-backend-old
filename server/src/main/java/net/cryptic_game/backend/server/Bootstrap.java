@@ -3,6 +3,7 @@ package net.cryptic_game.backend.server;
 import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.BaseConfig;
 import net.cryptic_game.backend.base.api.DefaultApiAuthenticator;
+import net.cryptic_game.backend.base.api.data.ApiEndpointData;
 import net.cryptic_game.backend.base.api.handler.websocket.WebsocketApiInitializer;
 import net.cryptic_game.backend.base.api.handler.websocket.WebsocketApiRequest;
 import net.cryptic_game.backend.data.sql.repositories.server_management.DisabledEndpointRepository;
@@ -13,7 +14,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Lazy;
+
+import java.util.Map;
 
 @Slf4j
 @SpringBootApplication(scanBasePackages = "net.cryptic_game.backend")
@@ -30,15 +32,13 @@ public class Bootstrap {
     }
 
     @Bean
-    @Lazy
     DaemonHandler daemonHandler(
-            final WebsocketApiInitializer wsInitializer,
             final BaseConfig config,
             final ApplicationContext context,
             final DisabledEndpointRepository disabledEndpointRepository,
             final DefaultApiAuthenticator authenticator
     ) {
-        return new DaemonHandler(wsInitializer.getEndpoints(), config.getApiToken(), context, disabledEndpointRepository, authenticator);
+        return new DaemonHandler(config.getApiToken(), context, disabledEndpointRepository, authenticator);
     }
 
     @Bean
@@ -48,8 +48,11 @@ public class Bootstrap {
             final DaemonHandler daemonHandler
     ) {
         return args -> {
+            final Map<String, ApiEndpointData> endpoints = wsInitializer.getEndpoints();
+            daemonHandler.setEndpoints(endpoints);
+
             // disabling endpoints that are disabled in database
-            wsInitializer.getEndpoints()
+            endpoints
                     .forEach((name, endpoint) -> {
                         if (disabledEndpointRepository.existsById(name)) {
                             endpoint.setDisabled(true);

@@ -1,5 +1,6 @@
 package net.cryptic_game.backend.base.api.handler.rest;
 
+import lombok.Getter;
 import net.cryptic_game.backend.base.api.ApiConfiguration;
 import net.cryptic_game.backend.base.api.data.ApiEndpointCollectionData;
 import net.cryptic_game.backend.base.api.data.ApiEndpointData;
@@ -9,7 +10,6 @@ import net.cryptic_game.backend.base.network.server.http.HttpServerService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.Map;
 import java.util.Set;
@@ -18,6 +18,7 @@ import java.util.Set;
 public class RestApiInitializer implements CommandLineRunner {
 
     private final HttpServerService serverService;
+    @Getter
     private final Set<ApiEndpointCollectionData> collections;
 
     public RestApiInitializer(final HttpServerService serverService, @Lazy final Set<ApiEndpointCollectionData> collections) {

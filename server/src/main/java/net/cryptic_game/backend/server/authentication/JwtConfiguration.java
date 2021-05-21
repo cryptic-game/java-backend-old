@@ -19,8 +19,8 @@ public class JwtConfiguration {
      * Creates a {@link Key} from the secret key given through the environment variables.
      * If the key is to short, the bootstrapping is being canceled.
      *
-     * @param bootstrap The {@link Bootstrap}
-     * @param config    The {@link JwtConfig} with the raw secret key
+     * @param context The {@link ApplicationContext}
+     * @param config  The {@link JwtConfig} with the raw secret key
      * @return The created {@link Key}
      */
     @Bean

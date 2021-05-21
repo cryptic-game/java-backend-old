@@ -15,17 +15,17 @@ import java.util.stream.Collectors;
 @Configuration
 public class ApiConfiguration {
 
+    public static Set<ApiEndpointCollectionData> filter(final Set<ApiEndpointCollectionData> collections, final ApiType type) {
+        return collections.stream()
+                .filter(collection -> collection.getType() == type || collection.getType() == ApiType.ALL)
+                .collect(Collectors.toSet());
+    }
+
     @Bean
     Set<ApiEndpointCollectionData> collections(
             @ApiEndpointCollection(id = "", type = ApiType.ALL) final Collection<Object> collections,
             final ApplicationContext context
     ) {
         return ApiEndpointCollectionParser.parseCollections(collections, context::getBean);
-    }
-
-    public static Set<ApiEndpointCollectionData> filter(final Set<ApiEndpointCollectionData> collections, final ApiType type) {
-        return collections.stream()
-                .filter(collection -> collection.getType() == type || collection.getType() == ApiType.ALL)
-                .collect(Collectors.toSet());
     }
 }

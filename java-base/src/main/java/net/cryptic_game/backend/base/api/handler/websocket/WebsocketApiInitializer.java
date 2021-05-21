@@ -37,9 +37,8 @@ public class WebsocketApiInitializer implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(final String[] args) throws Exception {
         this.endpoints = ApiEndpointCollectionParser.getEndpoints(ApiConfiguration.filter(this.collections, ApiType.WEBSOCKET));
-
         if (endpoints.isEmpty()) {
             return;
         }

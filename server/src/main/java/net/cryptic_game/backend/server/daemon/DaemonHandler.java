@@ -10,6 +10,7 @@ import io.netty.handler.codec.http.HttpHeaderValues;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.util.AsciiString;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.api.ApiAuthenticator;
 import net.cryptic_game.backend.base.api.annotations.ApiParameter;
@@ -50,12 +51,13 @@ public final class DaemonHandler {
     private static final String CHARSET = StandardCharsets.UTF_8.toString();
     private static final AsciiString CONTENT_TYPE = AsciiString.of(HttpHeaderValues.APPLICATION_JSON + "; " + HttpHeaderValues.CHARSET + "=" + CHARSET);
 
-    private final Map<String, ApiEndpointData> endpoints;
     private final String apiToken;
     private final ApplicationContext context;
     private final DisabledEndpointRepository disabledEndpointRepository;
     private final ApiAuthenticator authenticator;
 
+    @Setter
+    private Map<String, ApiEndpointData> endpoints;
     private Object daemonSendObject;
     private Method daemonSendMethod;
     private List<ApiParameterData> daemonSendMethodParameters;

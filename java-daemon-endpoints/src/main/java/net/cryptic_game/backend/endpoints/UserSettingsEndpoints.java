@@ -2,7 +2,6 @@ package net.cryptic_game.backend.endpoints;
 
 import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.RequiredArgsConstructor;
-import net.cryptic_game.backend.DaemonAuthenticator;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.annotations.ApiParameter;
@@ -17,7 +16,7 @@ import net.cryptic_game.backend.data.sql.repositories.user.UserSettingRepository
 import java.util.UUID;
 
 @RequiredArgsConstructor
-@ApiEndpointCollection(id = "settings", description = "Save, update or delete user settings", type = ApiType.REST, authenticator = DaemonAuthenticator.class)
+@ApiEndpointCollection(id = "settings", description = "Save, update or delete user settings", type = ApiType.REST)
 public final class UserSettingsEndpoints {
 
     private final UserRepository userRepository;
