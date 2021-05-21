@@ -3,6 +3,8 @@ ARG JVM_IMPL=hotspot
 
 FROM adoptopenjdk:${JAVA_VERSION}-jre-${JVM_IMPL} AS extractor
 
+ARG SERVICE_NAME=server
+
 WORKDIR /src
 
 COPY ./dist/${SERVICE_NAME}*.jar cryptic.jar

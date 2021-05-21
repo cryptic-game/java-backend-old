@@ -4,6 +4,8 @@ ARG SERVICE_NAME=server
 
 FROM adoptopenjdk:${JAVA_VERSION}-jdk-${JVM_IMPL} AS builder
 
+ARG SERVICE_NAME=server
+
 RUN set -o errexit -o nounset \
     && apt-get update \
     && apt-get install git -y
@@ -15,6 +17,8 @@ RUN chmod +x ./gradlew \
     && ./gradlew :${SERVICE_NAME}:bootJar --stacktrace --no-daemon
 
 FROM adoptopenjdk:${JAVA_VERSION}-jre-${JVM_IMPL} AS extractor
+
+ARG SERVICE_NAME=server
 
 WORKDIR /src
 
