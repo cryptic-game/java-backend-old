@@ -89,10 +89,10 @@ public final class DaemonHandler {
                         return Mono.error(new DaemonException(String.format("Unexpected staus from daemon: %s", response.status())));
                     return byteBufMono.asString();
                 })
+                .retry(2)
                 .map(content -> JsonUtils.fromJson(JsonParser.parseString(content), JsonArray.class))
                 .onErrorMap(cause -> cause instanceof JsonParseException,
                         cause -> new DaemonException("unexpected json from daemon", cause))
-                .retry(2)
                 .subscribe(
                         endpoints -> {
                             // set disabled endpoints from database disabled in the json
