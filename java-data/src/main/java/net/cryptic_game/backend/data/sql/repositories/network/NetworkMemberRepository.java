@@ -5,12 +5,14 @@ import net.cryptic_game.backend.data.sql.entities.network.Network;
 import net.cryptic_game.backend.data.sql.entities.network.NetworkMember;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Repository
 public interface NetworkMemberRepository extends JpaRepository<NetworkMember, UUID> {
 
     Optional<NetworkMember> findByKeyDeviceAndKeyNetwork(Device device, Network network);

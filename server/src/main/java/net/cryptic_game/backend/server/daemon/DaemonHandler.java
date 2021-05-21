@@ -11,7 +11,6 @@ import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.util.AsciiString;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.cryptic_game.backend.base.Bootstrap;
 import net.cryptic_game.backend.base.api.ApiAuthenticator;
 import net.cryptic_game.backend.base.api.annotations.ApiParameter;
 import net.cryptic_game.backend.base.api.data.ApiEndpointCollectionData;
@@ -23,6 +22,8 @@ import net.cryptic_game.backend.base.daemon.Daemon;
 import net.cryptic_game.backend.base.json.JsonUtils;
 import net.cryptic_game.backend.base.utils.DaemonUtils;
 import net.cryptic_game.backend.data.sql.repositories.server_management.DisabledEndpointRepository;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContext;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
 
@@ -51,7 +52,8 @@ public final class DaemonHandler {
 
     private final Map<String, ApiEndpointData> endpoints;
     private final String apiToken;
-    private final Bootstrap bootstrap;
+    private final ApplicationContext context;
+    private final DisabledEndpointRepository disabledEndpointRepository;
     private final ApiAuthenticator authenticator;
 
     private Object daemonSendObject;
@@ -95,7 +97,7 @@ public final class DaemonHandler {
                             for (JsonElement endpointsObject : endpoints) {
                                 JsonArray endpointList = ((JsonObject) endpointsObject).getAsJsonArray("endpoints");
                                 for (JsonElement endpoint : endpointList) {
-                                    if (this.bootstrap.getContextHandler().getBean(DisabledEndpointRepository.class).existsById(
+                                    if (this.disabledEndpointRepository.existsById(
                                             ((JsonObject) endpointsObject).get("id").getAsString()
                                                     + "/"
                                                     + ((JsonObject) endpoint).getAsJsonPrimitive("id").getAsString())) {
@@ -124,7 +126,7 @@ public final class DaemonHandler {
                             } else {
                                 log.error("Unable to register daemon {}.", daemon.getName(), cause);
                             }
-                            this.bootstrap.shutdown();
+                            SpringApplication.exit(this.context);
                         }
                 );
     }
@@ -135,7 +137,7 @@ public final class DaemonHandler {
                         .peek(collection -> collection.getEndpoints().forEach((name, endpoint) -> {
                             endpoint.setMethod(this.daemonSendMethod);
                             endpoint.setInstance(this.daemonSendObject);
-                            endpoint.setAuthenticator(authenticator);
+                            endpoint.setAuthenticator(this.authenticator);
                             final List<ApiParameterData> parameters = new ArrayList<>(this.daemonSendMethodParameters);
                             Collections.addAll(parameters, endpoint.getParameters());
                             endpoint.setParameters(parameters.toArray(ApiParameterData[]::new));

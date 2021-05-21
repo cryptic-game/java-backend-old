@@ -1,13 +1,21 @@
 plugins {
     id 'application'
+    id 'io.spring.dependency-management'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+    }
 }
 
 dependencies {
     implementation project(':java-base')
     implementation project(':java-data')
     implementation project(':java-daemon-endpoints')
-    annotationProcessor("org.springframework:spring-context-indexer:5.3.6")
-    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor:2.4.4")
+
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.springframework:spring-context-indexer'
 }
 
 application {

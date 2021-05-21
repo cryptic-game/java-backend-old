@@ -3,7 +3,6 @@ package net.cryptic_game.backend;
 import io.netty.handler.codec.http.HttpHeaderNames;
 import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.BaseConfig;
-import net.cryptic_game.backend.base.Bootstrap;
 import net.cryptic_game.backend.base.api.data.ApiEndpointData;
 import net.cryptic_game.backend.base.api.handler.rest.RestApiAuthenticator;
 import net.cryptic_game.backend.base.api.handler.rest.RestApiRequest;

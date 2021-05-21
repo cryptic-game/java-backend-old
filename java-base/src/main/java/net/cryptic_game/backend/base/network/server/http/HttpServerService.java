@@ -2,7 +2,6 @@ package net.cryptic_game.backend.base.network.server.http;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -13,7 +12,6 @@ import java.time.Duration;
 
 @Slf4j
 @Service
-@ComponentScan
 public class HttpServerService {
 
     @Getter

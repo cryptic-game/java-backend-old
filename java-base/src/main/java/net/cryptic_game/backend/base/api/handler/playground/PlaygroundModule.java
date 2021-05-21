@@ -3,14 +3,12 @@ package net.cryptic_game.backend.base.api.handler.playground;
 import net.cryptic_game.backend.base.api.data.ApiEndpointCollectionData;
 import net.cryptic_game.backend.base.network.server.http.HttpServerService;
 import net.cryptic_game.backend.base.network.server.http.route.FileHttpRoute;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.File;
 import java.util.Collection;
 import java.util.TreeSet;
 
-@ComponentScan
 @Configuration
 public class PlaygroundModule {
 

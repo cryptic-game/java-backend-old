@@ -3,7 +3,8 @@ package net.cryptic_game.backend.server.authentication;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
-import net.cryptic_game.backend.base.Bootstrap;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -23,11 +24,11 @@ public class JwtConfiguration {
      * @return The created {@link Key}
      */
     @Bean
-    Key getSigningKey(final Bootstrap bootstrap, final JwtConfig config) {
+    Key getSigningKey(final ApplicationContext context, final JwtConfig config) {
         final byte[] bytes = config.getKey().getBytes(StandardCharsets.UTF_8);
         if (bytes.length * 8 < SignatureAlgorithm.HS512.getMinKeyLength()) {
             log.error("A key length of {} bits is too weak! Minimum required is {} bits.", bytes.length * 8, SignatureAlgorithm.HS512.getMinKeyLength());
-            bootstrap.shutdown();
+            SpringApplication.exit(context);
         }
         return Keys.hmacShaKeyFor(bytes);
     }

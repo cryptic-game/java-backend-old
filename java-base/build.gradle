@@ -1,50 +1,30 @@
 plugins {
     id 'java-library'
+    id 'io.spring.dependency-management'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+    }
 }
 
 dependencies {
-    api(platform('org.springframework:spring-framework-bom:5.3.6'))
-
-    /* Logger */
-    api('org.slf4j:slf4j-api:1.7.30')
-    implementation('ch.qos.logback:logback-classic:1.2.3')
-    implementation('io.sentry:sentry-logback:4.3.0')
-    implementation('ch.qos.logback.contrib:logback-json-classic:0.1.5')
-    implementation('ch.qos.logback.contrib:logback-jackson:0.1.5')
-
-    /* Bootstrapping & Dependency Injection */
-    api('org.springframework:spring-context')
-    annotationProcessor('org.springframework:spring-context-indexer:5.3.6')
-    api('jakarta.annotation:jakarta.annotation-api:1.3.5')
+    api 'org.springframework.boot:spring-boot-starter'
 
     /* Database */
-    api(platform('org.springframework.data:spring-data-releasetrain:Neumann-SR9'))
-    api('jakarta.persistence:jakarta.persistence-api:2.2.3')
-    api('jakarta.transaction:jakarta.transaction-api:1.3.3')
-    api('org.springframework.data:spring-data-jpa') {
-        exclude(group: "org.aspectj", module: "aspectjrt")
-    }
-    implementation('com.zaxxer:HikariCP:4.0.3')
-    api('org.hibernate:hibernate-core:5.4.31.Final') {
-        exclude(group: 'javax.activation', module: 'javax.activation-api')
-        exclude(group: 'javax.persistence', module: 'javax.persistence-api')
-        exclude(group: 'org.jboss.spec.javax.transaction', module: 'jboss-transaction-api_1.2_spec')
-    }
-
-    runtimeOnly('org.postgresql:postgresql:42.2.20')
+    api 'org.springframework.boot:spring-boot-starter-data-jpa'
+    api("net.getnova.framework:nova-data-jpa:${novaVersion}") { changing true }
+    api 'org.postgresql:postgresql'
 
     /* Network */
-    api(platform('io.projectreactor:reactor-bom:2020.0.6'))
-    api('io.projectreactor:reactor-core')
-    api('io.projectreactor.netty:reactor-netty')
-//    api('io.projectreactor.addons:reactor-extra')
-    runtimeOnly('io.netty:netty-tcnative-boringssl-static:2.0.39.Final')
+    api 'org.springframework.boot:spring-boot-starter-reactor-netty'
+    runtimeOnly('io.netty:netty-tcnative-boringssl-static')
 
     /* Json */
-    api('com.google.code.gson:gson:2.8.6')
+    api('com.google.code.gson:gson')
 
     /* Spring Security */
-    api(platform('org.springframework.security:spring-security-bom:5.4.6'))
     api('org.springframework.security:spring-security-core')
     api('org.bouncycastle:bcpkix-jdk15on:1.68')
 
@@ -61,6 +41,8 @@ dependencies {
     // implementation('io.micrometer:micrometer-registry-influx:1.5.5')
 
     /* Caching */
-    runtimeOnly('io.lettuce:lettuce-core:6.1.1.RELEASE')
-    api('org.springframework.data:spring-data-redis')
+    api 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.springframework:spring-context-indexer'
 }

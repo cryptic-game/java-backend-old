@@ -3,7 +3,6 @@ package net.cryptic_game.backend.daemon.api;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.DaemonAuthenticator;
-import net.cryptic_game.backend.base.Bootstrap;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.data.ApiEndpointCollectionData;

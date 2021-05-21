@@ -76,15 +76,8 @@ public final class HttpServer implements Server {
             new Thread(this.server.onDispose()::block, "server-" + this.id).start();
         } catch (Throwable cause) {
             log.error("Unable to start http server {}: {}", this.id, cause.getMessage());
-            log.error("Retrying in 20 seconds...");
 
-            try {
-                Thread.sleep(20000L); // 10 seconds
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-
-            this.restart();
+            throw cause;
         }
     }
 
