@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.io.File;
 import java.net.InetSocketAddress;
 import java.time.Duration;
 
@@ -18,18 +19,20 @@ public class HttpServerService {
     @Getter
     private final HttpServer server;
 
-    public HttpServerService() {
+    public HttpServerService(final HttpConfig config) {
         this.routes = new HttpRoutes();
-        this.server = this.createHttpServer("0.0.0.0", 8080);
+        this.server = !config.getCertPath().isBlank() && !config.getKeyPath().isBlank()
+                ? this.createSecureHttpServer(config.getHost(), config.getPort(), config.getCertPath(), config.getKeyPath())
+                : this.createHttpServer(config.getHost(), config.getPort());
     }
 
     private HttpServer createHttpServer(final String host, final int port) {
         return new HttpServer("http", new InetSocketAddress(host, port), Duration.ofSeconds(10), this.routes);
     }
 
-//    private HttpServer createSecureHttpServer(final String host, final int port, final String certPath, final String keyPath) {
-//        return new HttpServer("http", new InetSocketAddress(host, port), Duration.ofSeconds(10), this.routes, new File(certPath), new File(keyPath));
-//    }
+    private HttpServer createSecureHttpServer(final String host, final int port, final String certPath, final String keyPath) {
+        return new HttpServer("http", new InetSocketAddress(host, port), Duration.ofSeconds(10), this.routes, new File(certPath), new File(keyPath));
+    }
 
     @PostConstruct
     private void postConstruct() {
