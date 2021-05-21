@@ -12,7 +12,7 @@ COPY . /src
 WORKDIR /src
 
 RUN chmod +x ./gradlew \
-    && ./gradlew :admin-panel:bootJar --stacktrace --no-daemon
+    && ./gradlew :${SERVICE_NAME}:bootJar --stacktrace --no-daemon
 
 FROM adoptopenjdk:${JAVA_VERSION}-jre-${JVM_IMPL} AS extractor
 
