@@ -17,12 +17,15 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
 }
 
+version version.toString().startsWith('v') ? version.toString().substring(1) : version
+
 allprojects {
     group 'net.cryptic-game'
-    version version.toString().startsWith('v') ? version.toString().substring(1) : version
 }
 
 subprojects {
+    version rootProject.version
+
     apply from: "${rootDir}/gradle/java.gradle"
     apply from: "${rootDir}/gradle/test.gradle"
     apply from: "${rootDir}/gradle/checkstyle.gradle"

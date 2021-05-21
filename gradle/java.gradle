@@ -26,18 +26,14 @@ java {
     withSourcesJar()
 }
 
-jar {
-    manifest {
-        attributes([
-                "Specification-Title"     : project.name,
-                "Specification-Vendor"    : "Cryptic Game (https://github.com/cryptic-game)",
-                "Specification-Version"   : project.version,
-                "Implementation-Title"    : project.name,
-                "Implementation-Version"  : project.version,
-                "Implementation-Vendor"   : "Cryptic Game (https://github.com/cryptic-game)",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-        ])
-    }
+tasks.withType(Jar) {
+    from "${rootDir}/LICENSE"
+    manifest.attributes([
+            "Implementation-Title"    : 'Cryptic ' + project.name.split('-').collect{it.capitalize()}.join(' '),
+            "Implementation-Version"  : project.version,
+            "Implementation-Vendor"   : "Cryptic Game (https://cryptic-game.net)",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+    ])
 }
 
 lombok {
