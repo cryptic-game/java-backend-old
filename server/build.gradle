@@ -7,6 +7,8 @@ dependencies {
     implementation project(':java-base')
     implementation project(':java-data')
 
+    runtimeOnly 'io.netty:netty-tcnative-boringssl-static'
+
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.springframework:spring-context-indexer'

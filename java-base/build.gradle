@@ -19,22 +19,21 @@ dependencies {
 
     /* Network */
     api 'org.springframework.boot:spring-boot-starter-reactor-netty'
-    runtimeOnly('io.netty:netty-tcnative-boringssl-static')
 
     /* Json */
-    api('com.google.code.gson:gson')
+    api 'com.google.code.gson:gson'
 
     /* Spring Security */
-    api('org.springframework.security:spring-security-core')
-    api('org.bouncycastle:bcpkix-jdk15on:1.68')
+    api 'org.springframework.security:spring-security-core'
+    api 'org.bouncycastle:bcpkix-jdk15on:1.68'
 
     /* JWT */
-    api('io.jsonwebtoken:jjwt-api:0.11.2')
-    runtimeOnly('io.jsonwebtoken:jjwt-impl:0.11.2')
-    runtimeOnly('io.jsonwebtoken:jjwt-gson:0.11.2')
+    api 'io.jsonwebtoken:jjwt-api:0.11.2'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
+    runtimeOnly 'io.jsonwebtoken:jjwt-gson:0.11.2'
 
     /* Annotations */
-    compileOnlyApi('org.jetbrains:annotations:20.1.0')
+    compileOnlyApi 'org.jetbrains:annotations:20.1.0'
 
     /* Metrics */
     // api('io.micrometer:micrometer-core:1.5.5')

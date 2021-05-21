@@ -1,9 +1,8 @@
-ARG JAVA_VERSION=15
+ARG JAVA_VERSION=16
 ARG JVM_IMPL=hotspot
+ARG SERVICE_NAME=server
 
 FROM adoptopenjdk:${JAVA_VERSION}-jdk-${JVM_IMPL} AS builder
-
-ARG SERVICE_NAME=server
 
 RUN set -o errexit -o nounset \
     && apt-get update \
@@ -13,13 +12,19 @@ COPY . /src
 WORKDIR /src
 
 RUN chmod +x ./gradlew \
-    && ./gradlew :${SERVICE_NAME}:installDist --stacktrace --no-daemon
+    && ./gradlew :admin-panel:bootJar --stacktrace --no-daemon
+
+FROM adoptopenjdk:${JAVA_VERSION}-jre-${JVM_IMPL} AS extractor
+
+WORKDIR /src
+
+COPY --from=builder /src/${SERVICE_NAME}/build/libs/${SERVICE_NAME}*.jar cryptic.jar
+RUN java -Djarmode=layertools -jar cryptic.jar extract
 
 FROM adoptopenjdk:${JAVA_VERSION}-jre-${JVM_IMPL}
 
 ARG CRYPTIC_USER=cryptic
 ARG CRYPTIC_GROUP=cryptic
-ARG SERVICE_NAME=server
 ARG DATA_DIR=/data
 
 RUN set -o errexit -o nounset \
@@ -30,13 +35,14 @@ RUN set -o errexit -o nounset \
     && chown --recursive ${CRYPTIC_USER}:${CRYPTIC_GROUP} /home/${CRYPTIC_USER}
 
 WORKDIR ${DATA_DIR}
+
+USER ${CRYPTIC_USER}:${CRYPTIC_GROUP}
+EXPOSE 8080
 VOLUME ${DATA_DIR}
 
-COPY --from=builder /src/${SERVICE_NAME}/build/install/${SERVICE_NAME}/ /opt/cryptic
+COPY --from=extractor /src/dependencies/ /opt/cryptic
+COPY --from=extractor /src/spring-boot-loader/ /opt/cryptic
+COPY --from=extractor /src/snapshot-dependencies/ /opt/cryptic
+COPY --from=extractor /src/application/ /opt/cryptic
 
-RUN ln --symbolic /opt/cryptic/bin/${SERVICE_NAME} /usr/bin/cryptic \
-  && chmod +x /usr/bin/cryptic
-
-USER ${CRYPTIC_USER}
-
-ENTRYPOINT ["cryptic"]
+ENTRYPOINT ["java", "-cp", "/opt/cryptic", "org.springframework.boot.loader.JarLauncher"]
