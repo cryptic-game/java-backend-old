@@ -38,6 +38,9 @@ public class BlogPostSmallModel extends TableModel {
     @Column(name = "updated", updatable = true, nullable = true)
     private OffsetDateTime updated;
 
+    @Column(name = "published", updatable = true, nullable = false)
+    private boolean published;
+
     @Column(name = "description", updatable = true, nullable = false, length = 1025)
     private String description;
 }
