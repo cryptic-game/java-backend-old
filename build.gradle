@@ -17,7 +17,11 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
 }
 
-version version.toString().startsWith('v') ? version.toString().substring(1) : version
+if (version.toString().endsWith('SNAPSHOT') || version.toString().isBlank()) {
+    version = 'edge'
+} else if (version.toString().startsWith('v')) {
+    version = version.toString().substring(1)
+}
 
 allprojects {
     group 'net.cryptic-game'

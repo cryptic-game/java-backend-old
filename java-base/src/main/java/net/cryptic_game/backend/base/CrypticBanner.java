@@ -35,7 +35,7 @@ public class CrypticBanner implements Banner {
                 AnsiColor.GREEN,
                 title == null ? "Local Development" : title,
                 AnsiStyle.NORMAL,
-                version == null ? "" : " v" + version
+                version == null ? "" : version.equals("edge") ? version : (" v" + version)
         ));
 
         final String springBootVersion = SpringBootVersion.getVersion();
