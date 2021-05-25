@@ -19,6 +19,7 @@ public class BlogPost {
     private final String image;
     private final OffsetDateTime created;
     private final OffsetDateTime updated;
+    private final boolean published;
     private final String description;
     private final String content;
 
@@ -28,6 +29,7 @@ public class BlogPost {
             @JsonProperty("image") final String image,
             @JsonProperty("created") final OffsetDateTime created,
             @JsonProperty("updated") final OffsetDateTime updated,
+            @JsonProperty("published") final boolean published,
             @JsonProperty("description") final String description,
             @JsonProperty("content") final String content
     ) {
@@ -36,6 +38,7 @@ public class BlogPost {
         this.image = image;
         this.created = created;
         this.updated = updated;
+        this.published = published;
         this.description = description;
         this.content = Jsoup.clean(content, WHITELIST);
     }

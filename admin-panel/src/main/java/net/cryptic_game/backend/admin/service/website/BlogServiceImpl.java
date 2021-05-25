@@ -65,6 +65,7 @@ public class BlogServiceImpl implements BlogService {
 
         model.setCreated(OffsetDateTime.now());
         model.setUpdated(null);
+        model.setPublished(false);
 
         return this.postConverter.toDto(
                 this.postRepository.save(model)
