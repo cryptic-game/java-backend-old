@@ -25,6 +25,7 @@ public class BlogPostSmallConverter implements Converter<BlogPostSmallModel, Blo
                 model.getImage(),
                 model.getCreated(),
                 model.getUpdated(),
+                model.isPublished(),
                 model.getDescription()
         );
     }
