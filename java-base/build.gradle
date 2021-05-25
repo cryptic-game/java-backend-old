@@ -44,4 +44,7 @@ dependencies {
 
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.springframework:spring-context-indexer'
+
+    compileOnly project(':config-processor')
+    annotationProcessor project(':config-processor')
 }
