@@ -26,16 +26,11 @@ public class DisabledEndpointConverter implements Converter<DisabledEndpointMode
 
     @Override
     public void override(final DisabledEndpointModel model, final DisabledEndpoint dto) {
-        model.setEndpointPath(dto.getEndpointPath());
-        model.setReason(model.getReason());
+        model.setReason(dto.getReason());
     }
 
     @Override
     public void merge(final DisabledEndpointModel model, final DisabledEndpoint dto) {
-        if (dto.getEndpointPath() != null) {
-            model.setEndpointPath(dto.getEndpointPath());
-        }
-
         if (dto.getReason() != null) {
             model.setReason(dto.getReason());
         }

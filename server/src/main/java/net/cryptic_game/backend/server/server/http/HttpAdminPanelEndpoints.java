@@ -34,7 +34,7 @@ public final class HttpAdminPanelEndpoints {
         if (endpointData == null) {
             return new ApiResponse(HttpResponseStatus.NOT_FOUND, "ENDPOINT_NOT_FOUND");
         }
-        return new ApiResponse(HttpResponseStatus.OK, JsonBuilder.create("endpoint", endpointData));
+        return new ApiResponse(HttpResponseStatus.OK, endpointData);
     }
 
     @ApiEndpoint(id = "enable")
@@ -45,7 +45,7 @@ public final class HttpAdminPanelEndpoints {
             return new ApiResponse(HttpResponseStatus.NOT_FOUND, "ENDPOINT_NOT_FOUND");
         }
         endpointData.setDisabled(false);
-        return new ApiResponse(HttpResponseStatus.OK, JsonBuilder.create("endpoint", endpointData));
+        return new ApiResponse(HttpResponseStatus.OK, endpointData);
     }
 
     @ApiEndpoint(id = "disable")
@@ -56,7 +56,7 @@ public final class HttpAdminPanelEndpoints {
             return new ApiResponse(HttpResponseStatus.NOT_FOUND, "ENDPOINT_NOT_FOUND");
         }
         endpointData.setDisabled(true);
-        return new ApiResponse(HttpResponseStatus.OK, JsonBuilder.create("endpoint", endpointData));
+        return new ApiResponse(HttpResponseStatus.OK, endpointData);
     }
 
 }

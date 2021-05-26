@@ -30,4 +30,12 @@ public class Bootstrap {
                 .pathsToMatch("/website/**")
                 .build();
     }
+
+    @Bean
+    GroupedOpenApi serverApi() {
+        return GroupedOpenApi.builder()
+                .group("cryptic-server")
+                .pathsToMatch("/server_management/**")
+                .build();
+    }
 }
