@@ -9,7 +9,7 @@ public class DisabledEndpoint {
     private final String endpointPath;
     private final String reason;
 
-    public DisabledEndpoint(@JsonProperty("endpoint_path") final String endpointPath,
+    public DisabledEndpoint(@JsonProperty("endpointPath") final String endpointPath,
                             @JsonProperty("reason") final String reason) {
         this.endpointPath = endpointPath;
         this.reason = reason;
