@@ -15,7 +15,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.Set;
 
-@Tag(name = "Endpoint")
+@Tag(name = "Endpoint Management")
 @RequestMapping("server_management/disabled_endpoints")
 public interface EndpointController {
 
@@ -35,6 +35,6 @@ public interface EndpointController {
     Mono<Endpoint> disableEndpoint(@PathVariable("path") String path, @RequestBody DisabledEndpoint disabledEndpoint);
 
     @PostMapping("{path}")
-    Mono<Endpoint> changeReason(@PathVariable("path") String path, @RequestBody DisabledEndpoint disabledEndpoint);
+    Mono<Endpoint> edit(@PathVariable("path") String path, @RequestBody DisabledEndpoint disabledEndpoint);
 
 }

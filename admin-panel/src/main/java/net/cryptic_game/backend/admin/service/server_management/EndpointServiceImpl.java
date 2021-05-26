@@ -62,7 +62,12 @@ public class EndpointServiceImpl implements EndpointService {
                         return endpoint;
                     } catch (JsonProcessingException e) {
                         e.printStackTrace();
-                        throw new InternalServerErrorException("");
+                        throw new InternalServerErrorException("Invalid Format from server to admin-panel");
+                    }
+                })
+                .doOnError(err -> {
+                    if (err instanceof NotFoundException) {
+                        throw new NotFoundException(path, "endpoint not found");
                     }
                 });
     }
@@ -80,7 +85,12 @@ public class EndpointServiceImpl implements EndpointService {
                         return this.objectMapper.readValue(response, Endpoint.class);
                     } catch (JsonProcessingException e) {
                         e.printStackTrace();
-                        throw new InternalServerErrorException("");
+                        throw new InternalServerErrorException("Invalid Format from server to admin-panel");
+                    }
+                })
+                .doOnError(err -> {
+                    if (err instanceof NotFoundException) {
+                        throw new NotFoundException(path, "endpoint not found");
                     }
                 });
     }
@@ -102,7 +112,12 @@ public class EndpointServiceImpl implements EndpointService {
                         return endpoint;
                     } catch (JsonProcessingException e) {
                         e.printStackTrace();
-                        throw new InternalServerErrorException("");
+                        throw new InternalServerErrorException("Invalid Format from server to admin-panel");
+                    }
+                })
+                .doOnError(err -> {
+                    if (err instanceof NotFoundException) {
+                        throw new NotFoundException(path, "endpoint not found");
                     }
                 });
     }

@@ -47,7 +47,7 @@ public class EndpointControllerImpl implements EndpointController {
     }
 
     @Override
-    public Mono<Endpoint> changeReason(final String path, final DisabledEndpoint disabledEndpoint) {
+    public Mono<Endpoint> edit(final String path, final DisabledEndpoint disabledEndpoint) {
         this.endpointService.edit(path, disabledEndpoint);
         return this.endpointService.endpointInfo(path);
     }
