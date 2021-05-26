@@ -82,6 +82,9 @@ public class SecurityConfiguration {
                 .pathMatchers(HttpMethod.GET, "/website/**").permitAll()
                 .pathMatchers("/website/**").hasRole("WEBSITE")
 
+                .pathMatchers("/server_management/**").hasRole("SERVER_MANAGEMENT")
+
+
                 // SERVER_ADMIN, MODERATOR
 
 //                .pathMatchers("/users/{username}").access((authentication, context) ->
