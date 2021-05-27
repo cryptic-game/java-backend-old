@@ -5,5 +5,5 @@ import reactor.core.publisher.Mono;
 
 public interface ServerCommunication {
 
-    Mono<String> responseFromServer(String endpoint, JSONObject data);
+    Mono<JSONObject> responseFromServer(String endpoint, JSONObject data);
 }

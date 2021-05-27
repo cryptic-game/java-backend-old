@@ -1,51 +1,41 @@
 package net.cryptic_game.backend.admin.service.server_management;
 
 import com.nimbusds.jose.shaded.json.JSONObject;
-import io.netty.buffer.Unpooled;
-import io.netty.handler.codec.http.HttpHeaderNames;
 import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.admin.Config;
 import net.cryptic_game.backend.admin.exception.InternalServerErrorException;
 import net.cryptic_game.backend.admin.exception.NotFoundException;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Mono;
-import reactor.netty.http.client.HttpClient;
-
-import java.nio.charset.StandardCharsets;
 
 @Component
 @RequiredArgsConstructor
 public class ServerCommunicationImpl implements ServerCommunication {
 
     private final Config config;
-    private HttpClient httpClient;
+    private WebClient webClient;
 
-    public Mono<String> responseFromServer(final String endpoint, final JSONObject data) {
-        if (this.httpClient == null) {
-            this.httpClient = HttpClient.create()
+    public Mono<JSONObject> responseFromServer(final String endpoint, final JSONObject data) {
+        if (this.webClient == null) {
+            this.webClient = WebClient.builder()
                     .baseUrl(this.config.getServerUrl())
-                    .headers(h -> h.set(HttpHeaderNames.AUTHORIZATION, this.config.getApiToken()));
+                    .defaultHeader("authorization", this.config.getApiToken())
+                    .build();
         }
-        return this.httpClient.post()
+        return this.webClient.post()
                 .uri(endpoint)
-                .send(Mono.just(Unpooled.copiedBuffer(data.toJSONString(), StandardCharsets.ISO_8859_1)))
-                .responseSingle((response, body) -> {
-                    if (!Integer.toString(response.status().code()).startsWith("2")) {
-                        if (response.status().code() == 404) {
-                            throw new NotFoundException("", "");
-                        }
-                        throw new InternalServerErrorException("Got status code " + response.status().codeAsText() + " from the server");
+                .body(Mono.just(data), JSONObject.class)
+                .exchangeToMono(response -> {
+                    if (response.statusCode().is2xxSuccessful()) {
+                        return response.bodyToMono(JSONObject.class);
                     }
-                    return body.asString();
+                    if (response.rawStatusCode() == 404) {
+                        throw new NotFoundException(data.toJSONString(), "Element not found");
+                    }
+                    throw new InternalServerErrorException("Got status code " + response.rawStatusCode() + " from the server");
                 })
-                .doOnError(err -> {
-                    if (err instanceof ResponseStatusException) {
-                        throw (ResponseStatusException) err;
-                    } else {
-                        throw new InternalServerErrorException(err.getMessage());
-                    }
-                });
-
+                .onErrorMap(err -> !(err instanceof ResponseStatusException), err -> new InternalServerErrorException(err.getMessage()));
     }
 }

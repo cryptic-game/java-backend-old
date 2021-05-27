@@ -4,7 +4,6 @@ import com.nimbusds.jose.shaded.json.JSONObject;
 import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.admin.dto.server_management.DisabledEndpoint;
 
-import net.cryptic_game.backend.admin.dto.server_management.Endpoint;
 import net.cryptic_game.backend.admin.service.server_management.EndpointService;
 import net.cryptic_game.backend.admin.service.server_management.ServerCommunication;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,23 +20,23 @@ public class EndpointControllerImpl implements EndpointController {
     private final ServerCommunication serverCommunication;
 
     @Override
-    public Mono<String> findAll() {
+    public Mono<JSONObject> findAll() {
         return this.serverCommunication.responseFromServer("/admin_panel/endpoints",
                 new JSONObject());
     }
 
     @Override
-    public Mono<Endpoint> getInfo(final String path) {
+    public Mono<JSONObject> getInfo(final String path) {
         return this.endpointService.endpointInfo(path);
     }
 
     @Override
-    public Mono<Endpoint> enableEndpoint(final String path) {
+    public Mono<JSONObject> enableEndpoint(final String path) {
         return this.endpointService.enableEndpoint(path);
     }
 
     @Override
-    public Mono<Endpoint> disableEndpoint(final String path, final DisabledEndpoint disabledEndpoint) {
+    public Mono<JSONObject> disableEndpoint(final String path, final DisabledEndpoint disabledEndpoint) {
         return this.endpointService.disableEndpoint(path, disabledEndpoint);
     }
 
@@ -47,7 +46,7 @@ public class EndpointControllerImpl implements EndpointController {
     }
 
     @Override
-    public Mono<Endpoint> edit(final String path, final DisabledEndpoint disabledEndpoint) {
+    public Mono<JSONObject> edit(final String path, final DisabledEndpoint disabledEndpoint) {
         this.endpointService.edit(path, disabledEndpoint);
         return this.endpointService.endpointInfo(path);
     }
