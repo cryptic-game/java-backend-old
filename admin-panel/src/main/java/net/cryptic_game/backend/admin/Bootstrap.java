@@ -1,8 +1,9 @@
 package net.cryptic_game.backend.admin;
 
+import net.getnova.framework.core.NovaBanner;
 import org.springdoc.core.GroupedOpenApi;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,7 +18,9 @@ import java.security.Principal;
 public class Bootstrap {
 
     public static void main(final String[] args) {
-        SpringApplication.run(Bootstrap.class, args);
+        new SpringApplicationBuilder(Bootstrap.class)
+                .banner(new NovaBanner())
+                .run(args);
     }
 
     @GetMapping("/user")
