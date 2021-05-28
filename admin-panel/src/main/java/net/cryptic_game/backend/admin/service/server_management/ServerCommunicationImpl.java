@@ -32,13 +32,10 @@ public class ServerCommunicationImpl implements ServerCommunication {
                     if (response.statusCode().is2xxSuccessful()) {
                         return response.bodyToMono(JSONObject.class);
                     }
-                    return response.createException()
-                            .flatMap(err ->
-                                    Mono.error(err.getRawStatusCode() == 404
-                                            ? new NotFoundException("", "element not found")
-                                            : new InternalServerErrorException(
-                                                    String.format("Got code %d from server", err.getRawStatusCode())))
-                            );
+                    if (response.rawStatusCode() == 404) {
+                        throw new NotFoundException("", "element not found");
+                    }
+                    return response.createException().flatMap(Mono::error);
 
                 })
                 .onErrorMap(err -> !(err instanceof ResponseStatusException), err -> new InternalServerErrorException(err.getMessage()));
