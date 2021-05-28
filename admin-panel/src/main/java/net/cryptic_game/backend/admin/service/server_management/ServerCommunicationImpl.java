@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.admin.Config;
 import net.cryptic_game.backend.admin.exception.InternalServerErrorException;
 import net.cryptic_game.backend.admin.exception.NotFoundException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
@@ -21,7 +22,7 @@ public class ServerCommunicationImpl implements ServerCommunication {
         if (this.webClient == null) {
             this.webClient = WebClient.builder()
                     .baseUrl(this.config.getServerUrl())
-                    .defaultHeader("authorization", this.config.getApiToken())
+                    .defaultHeader(HttpHeaders.AUTHORIZATION, this.config.getApiToken())
                     .build();
         }
         return this.webClient.post()
@@ -31,10 +32,14 @@ public class ServerCommunicationImpl implements ServerCommunication {
                     if (response.statusCode().is2xxSuccessful()) {
                         return response.bodyToMono(JSONObject.class);
                     }
-                    if (response.rawStatusCode() == 404) {
-                        throw new NotFoundException(data.toJSONString(), "Element not found");
-                    }
-                    throw new InternalServerErrorException("Got status code " + response.rawStatusCode() + " from the server");
+                    return response.createException()
+                            .flatMap(err ->
+                                    Mono.error(err.getRawStatusCode() == 404
+                                            ? new NotFoundException("", "element not found")
+                                            : new InternalServerErrorException(
+                                                    String.format("Got code %d from server", err.getRawStatusCode())))
+                            );
+
                 })
                 .onErrorMap(err -> !(err instanceof ResponseStatusException), err -> new InternalServerErrorException(err.getMessage()));
     }
