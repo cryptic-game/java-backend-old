@@ -1,17 +1,15 @@
 package net.cryptic_game.backend.admin;
 
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Getter
-@Component
+@Setter
+@ConfigurationProperties(prefix = "gameserver")
 public class Config {
 
-    @Value("${API_TOKEN:}")
     private String apiToken;
-
-    @Value("${SERVER_URL:}")
     private String serverUrl;
 
 }
