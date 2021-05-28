@@ -1,5 +1,6 @@
 package net.cryptic_game.backend.admin.service.server_management;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.nimbusds.jose.shaded.json.JSONObject;
 import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.admin.converter.server_management.DisabledEndpointConverter;
@@ -40,7 +41,7 @@ public class EndpointServiceImpl implements EndpointService {
     }
 
     @Override
-    public Mono<JSONObject> disableEndpoint(final String path, final DisabledEndpoint disabledEndpoint) {
+    public Mono<ObjectNode> disableEndpoint(final String path, final DisabledEndpoint disabledEndpoint) {
         if (this.disabledEndpointRepository.findById(path).isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "already disabled");
         }
@@ -55,7 +56,7 @@ public class EndpointServiceImpl implements EndpointService {
     }
 
     @Override
-    public Mono<JSONObject> enableEndpoint(final String path) {
+    public Mono<ObjectNode> enableEndpoint(final String path) {
         if (this.disabledEndpointRepository.findById(path).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "not disabled");
         }
@@ -65,7 +66,7 @@ public class EndpointServiceImpl implements EndpointService {
     }
 
     @Override
-    public Mono<JSONObject> endpointInfo(final String path) {
+    public Mono<ObjectNode> endpointInfo(final String path) {
         return this.serverCommunication.responseFromServer("/admin_panel/info",
                 new JSONObject(Map.of("id", path)))
                 .doOnSuccess(endpoint -> {

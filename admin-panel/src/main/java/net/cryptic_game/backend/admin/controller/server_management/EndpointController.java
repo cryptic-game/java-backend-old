@@ -1,6 +1,6 @@
 package net.cryptic_game.backend.admin.controller.server_management;
 
-import com.nimbusds.jose.shaded.json.JSONObject;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import net.cryptic_game.backend.admin.dto.server_management.DisabledEndpoint;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,21 +19,21 @@ import java.util.Set;
 public interface EndpointController {
 
     @GetMapping("all_server_endpoints")
-    Mono<JSONObject> findAll();
+    Mono<ObjectNode> findAll();
 
     @GetMapping("")
     Set<DisabledEndpoint> findAllDisabledEndpoints();
 
     @GetMapping("{path}")
-    Mono<JSONObject> getInfo(@PathVariable("path") String path);
+    Mono<ObjectNode> getInfo(@PathVariable("path") String path);
 
     @DeleteMapping("{path}")
-    Mono<JSONObject> enableEndpoint(@PathVariable("path") String path);
+    Mono<ObjectNode> enableEndpoint(@PathVariable("path") String path);
 
     @PutMapping("{path}")
-    Mono<JSONObject> disableEndpoint(@PathVariable("path") String path, @RequestBody DisabledEndpoint disabledEndpoint);
+    Mono<ObjectNode> disableEndpoint(@PathVariable("path") String path, @RequestBody DisabledEndpoint disabledEndpoint);
 
     @PostMapping("{path}")
-    Mono<JSONObject> edit(@PathVariable("path") String path, @RequestBody DisabledEndpoint disabledEndpoint);
+    Mono<ObjectNode> edit(@PathVariable("path") String path, @RequestBody DisabledEndpoint disabledEndpoint);
 
 }

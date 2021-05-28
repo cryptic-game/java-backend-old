@@ -20,7 +20,7 @@ import javax.persistence.Table;
 public class DisabledEndpointModel extends TableModel {
 
     @Id
-    @Column(name = "endpoint_path", unique = true, nullable = false)
+    @Column(name = "endpoint_path", unique = true, nullable = false, updatable = false)
     private String endpointPath;
 
     @Column(name = "reason")

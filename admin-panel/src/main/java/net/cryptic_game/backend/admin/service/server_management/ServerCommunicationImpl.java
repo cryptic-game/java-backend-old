@@ -1,14 +1,13 @@
 package net.cryptic_game.backend.admin.service.server_management;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.nimbusds.jose.shaded.json.JSONObject;
 import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.admin.Config;
-import net.cryptic_game.backend.admin.exception.InternalServerErrorException;
 import net.cryptic_game.backend.admin.exception.NotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Mono;
 
 @Component
@@ -18,7 +17,7 @@ public class ServerCommunicationImpl implements ServerCommunication {
     private final Config config;
     private WebClient webClient;
 
-    public Mono<JSONObject> responseFromServer(final String endpoint, final JSONObject data) {
+    public Mono<ObjectNode> responseFromServer(final String endpoint, final JSONObject data) {
         if (this.webClient == null) {
             this.webClient = WebClient.builder()
                     .baseUrl(this.config.getServerUrl())
@@ -30,14 +29,13 @@ public class ServerCommunicationImpl implements ServerCommunication {
                 .body(Mono.just(data), JSONObject.class)
                 .exchangeToMono(response -> {
                     if (response.statusCode().is2xxSuccessful()) {
-                        return response.bodyToMono(JSONObject.class);
+                        return response.bodyToMono(ObjectNode.class);
                     }
                     if (response.rawStatusCode() == 404) {
                         throw new NotFoundException("", "element not found");
                     }
                     return response.createException().flatMap(Mono::error);
 
-                })
-                .onErrorMap(err -> !(err instanceof ResponseStatusException), err -> new InternalServerErrorException(err.getMessage()));
+                });
     }
 }

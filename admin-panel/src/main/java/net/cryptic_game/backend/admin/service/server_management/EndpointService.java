@@ -1,6 +1,6 @@
 package net.cryptic_game.backend.admin.service.server_management;
 
-import com.nimbusds.jose.shaded.json.JSONObject;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import net.cryptic_game.backend.admin.dto.server_management.DisabledEndpoint;
 import reactor.core.publisher.Mono;
 
@@ -13,11 +13,11 @@ public interface EndpointService {
 
     Optional<DisabledEndpoint> findDisabledEndpoint(String path);
 
-    Mono<JSONObject> disableEndpoint(String path, DisabledEndpoint disabledEndpoint);
+    Mono<ObjectNode> disableEndpoint(String path, DisabledEndpoint disabledEndpoint);
 
-    Mono<JSONObject> enableEndpoint(String path);
+    Mono<ObjectNode> enableEndpoint(String path);
 
-    Mono<JSONObject> endpointInfo(String path);
+    Mono<ObjectNode> endpointInfo(String path);
 
     void edit(String path, DisabledEndpoint template);
 }

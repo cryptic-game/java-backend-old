@@ -1,5 +1,6 @@
 package net.cryptic_game.backend.admin.controller.server_management;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.nimbusds.jose.shaded.json.JSONObject;
 import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.admin.dto.server_management.DisabledEndpoint;
@@ -20,23 +21,23 @@ public class EndpointControllerImpl implements EndpointController {
     private final ServerCommunication serverCommunication;
 
     @Override
-    public Mono<JSONObject> findAll() {
+    public Mono<ObjectNode> findAll() {
         return this.serverCommunication.responseFromServer("/admin_panel/endpoints",
                 new JSONObject());
     }
 
     @Override
-    public Mono<JSONObject> getInfo(final String path) {
+    public Mono<ObjectNode> getInfo(final String path) {
         return this.endpointService.endpointInfo(path);
     }
 
     @Override
-    public Mono<JSONObject> enableEndpoint(final String path) {
+    public Mono<ObjectNode> enableEndpoint(final String path) {
         return this.endpointService.enableEndpoint(path);
     }
 
     @Override
-    public Mono<JSONObject> disableEndpoint(final String path, final DisabledEndpoint disabledEndpoint) {
+    public Mono<ObjectNode> disableEndpoint(final String path, final DisabledEndpoint disabledEndpoint) {
         return this.endpointService.disableEndpoint(path, disabledEndpoint);
     }
 
@@ -46,7 +47,7 @@ public class EndpointControllerImpl implements EndpointController {
     }
 
     @Override
-    public Mono<JSONObject> edit(final String path, final DisabledEndpoint disabledEndpoint) {
+    public Mono<ObjectNode> edit(final String path, final DisabledEndpoint disabledEndpoint) {
         this.endpointService.edit(path, disabledEndpoint);
         return this.endpointService.endpointInfo(path);
     }
