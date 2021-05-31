@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "gameserver")
+@ConfigurationProperties(prefix = "cryptic.admin-panel")
 public class Config {
 
     private String apiToken;
