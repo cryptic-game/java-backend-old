@@ -27,20 +27,36 @@ public final class HttpAdminPanelEndpoints {
         return new ApiResponse(HttpResponseStatus.OK, JsonBuilder.create("endpoints", this.websocketApiService.getEndpoints()));
     }
 
+    @ApiEndpoint(id = "info")
+    public ApiResponse getEndpointInfo(@ApiParameter(id = "id") final String id) {
+        if (this.websocketApiService == null) this.websocketApiService = this.context.getBean(WebsocketApiInitializer.class);
+        final ApiEndpointData endpointData = this.websocketApiService.getEndpoints().get(id);
+        if (endpointData == null) {
+            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "ENDPOINT_NOT_FOUND");
+        }
+        return new ApiResponse(HttpResponseStatus.OK, endpointData);
+    }
+
     @ApiEndpoint(id = "enable")
     public ApiResponse enableEndpoint(@ApiParameter(id = "id") final String id) {
         if (this.websocketApiService == null) this.websocketApiService = this.context.getBean(WebsocketApiInitializer.class);
         final ApiEndpointData endpointData = this.websocketApiService.getEndpoints().get(id);
+        if (endpointData == null) {
+            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "ENDPOINT_NOT_FOUND");
+        }
         endpointData.setDisabled(false);
-        return new ApiResponse(HttpResponseStatus.OK, JsonBuilder.create("endpoint", endpointData));
+        return new ApiResponse(HttpResponseStatus.OK, endpointData);
     }
 
     @ApiEndpoint(id = "disable")
     public ApiResponse disableEndpoint(@ApiParameter(id = "id") final String id) {
         if (this.websocketApiService == null) this.websocketApiService = this.context.getBean(WebsocketApiInitializer.class);
         final ApiEndpointData endpointData = this.websocketApiService.getEndpoints().get(id);
+        if (endpointData == null) {
+            return new ApiResponse(HttpResponseStatus.NOT_FOUND, "ENDPOINT_NOT_FOUND");
+        }
         endpointData.setDisabled(true);
-        return new ApiResponse(HttpResponseStatus.OK, JsonBuilder.create("endpoint", endpointData));
+        return new ApiResponse(HttpResponseStatus.OK, endpointData);
     }
 
 }

@@ -1,0 +1,14 @@
+{
+    "properties": [
+        {
+            "name": "cryptic.admin-panel.api-token",
+            "type": "java.lang.String",
+            "description": "Cryptic server api-token."
+        },
+        {
+            "name": "cryptic.admin-panel.server-url",
+            "type": "java.lang.String",
+            "description": "Cryptic server url."
+        }
+    ]
+}
