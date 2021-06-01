@@ -5,6 +5,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +25,15 @@ public class Bootstrap {
     @GetMapping("/user")
     public Principal user(@AuthenticationPrincipal final Principal principal) {
         return principal;
+    }
+
+    @GetMapping(value = "/auth", produces = MediaType.TEXT_HTML_VALUE)
+    public String auth(@AuthenticationPrincipal final Authentication authentication) {
+        if (authentication.isAuthenticated()) {
+            return "<script>window.close();</script>This window will be closed.";
+        } else {
+            return "Not authenticated!";
+        }
     }
 
     @Bean
