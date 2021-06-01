@@ -1,5 +1,12 @@
 package net.cryptic_game.backend.admin;
 
+import java.lang.reflect.Field;
+import java.util.Collection;
+import java.util.Locale;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -13,13 +20,6 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.RedirectServerAuthenticationSuccessHandler;
 import org.springframework.security.web.server.savedrequest.WebSessionServerRequestCache;
-
-import java.lang.reflect.Field;
-import java.util.Collection;
-import java.util.Locale;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Slf4j
 @EnableWebFluxSecurity
@@ -78,8 +78,13 @@ public class SecurityConfiguration {
         http.authorizeExchange()
 
                 .pathMatchers(HttpMethod.GET, "/", "/swagger-ui", "/webjars/**", "/v3/api-docs/**").permitAll()
+                .pathMatchers(HttpMethod.HEAD, "/", "/swagger-ui", "/webjars/**", "/v3/api-docs/**").permitAll()
+                .pathMatchers(HttpMethod.OPTIONS, "/", "/swagger-ui", "/webjars/**", "/v3/api-docs/**").permitAll()
 
                 .pathMatchers(HttpMethod.GET, "/website/**").permitAll()
+                .pathMatchers(HttpMethod.HEAD, "/website/**").permitAll()
+                .pathMatchers(HttpMethod.OPTIONS, "/website/**").permitAll()
+
                 .pathMatchers("/website/**").hasRole("WEBSITE")
 
                 .pathMatchers("/server_management/**").hasRole("SERVER_ADMIN")
