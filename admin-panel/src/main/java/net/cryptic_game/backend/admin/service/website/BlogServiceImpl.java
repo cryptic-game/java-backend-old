@@ -52,7 +52,10 @@ public class BlogServiceImpl implements BlogService {
                 .orElseThrow(() -> new NotFoundException(id.toString(), "POST_NOT_FOUND"));
 
         this.postConverter.override(model, post);
-        model.setUpdated(OffsetDateTime.now());
+
+        if (model.isPublished()) {
+            model.setUpdated(OffsetDateTime.now());
+        }
 
         return this.postConverter.toDto(
                 this.postRepository.save(model)
