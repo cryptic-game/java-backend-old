@@ -1,21 +1,25 @@
 package net.cryptic_game.backend.admin.dto.website;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.time.OffsetDateTime;
+import javax.validation.constraints.Pattern;
+
 import lombok.Data;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
-import java.time.OffsetDateTime;
-
 @Data
 public class BlogPost {
 
+    private static final String IMAGE_REGEX = "https://cdn\\.cryptic-game\\.net/images/blog/(.+)\\.jpe?g";
     private static final Whitelist WHITELIST = Whitelist.relaxed()
             .addEnforcedAttribute("a", "target", "_blank")
             .addEnforcedAttribute("a", "rel", "nofollow noopener noreferrer");
 
     private final Id id;
     private final String title;
+    @Pattern(regexp = IMAGE_REGEX)
     private final String image;
     private final OffsetDateTime created;
     private final OffsetDateTime updated;
