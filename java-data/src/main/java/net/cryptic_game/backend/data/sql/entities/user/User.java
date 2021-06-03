@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.cryptic_game.backend.base.json.JsonBuilder;
-import net.cryptic_game.backend.base.json.JsonTransient;
 import net.cryptic_game.backend.data.Constants;
 import net.getnova.framework.jpa.model.TableModelAutoId;
 
@@ -39,15 +38,15 @@ public final class User extends TableModelAutoId {
     @Column(name = "last", updatable = true, nullable = false)
     private OffsetDateTime last;
 
-    @JsonTransient
-    @Column(name = "new_user", updatable = true, nullable = false)
-    private boolean newUser;
-
     public JsonObject serializePublic() {
         return JsonBuilder.create("id", this.getId())
                 .add("username", this.getUsername())
                 .add("created", this.getCreated())
                 .build();
+    }
+
+    public boolean isNewUser() {
+        return this.username == null;
     }
 }
 

@@ -83,7 +83,6 @@ public final class HttpOauth2Endpoints {
                 user = new User();
                 user.setCreated(now);
                 user.setLast(now);
-                user.setNewUser(true);
                 final UserOAuth2ProviderId oauth2ProviderUserId = new UserOAuth2ProviderId();
                 oauth2ProviderUserId.setUser(this.userRepository.save(user));
                 oauth2ProviderUserId.setProviderUserId(new UserOAuth2ProviderId.ProviderUserId(userId, provider));
