@@ -17,8 +17,8 @@ public class OAuth2Config {
     @Value("${DISCORD_OAUTH2_REDIRECT_URI:}")
     private String discordRedirectUri;
 
-    @Value("${DISCORD_OAUTH2_SCOPES:}")
-    private String discordScopes;
+    @Value("${DISCORD_OAUTH2_AUTH_URI:}")
+    private String discordAuthUri;
 
     @Value("${GITHUB_OAUTH2_CLIENT_ID:}")
     private String githubClientId;
@@ -26,9 +26,6 @@ public class OAuth2Config {
     @Value("${GITHUB_OAUTH2_CLIENT_SECRET:}")
     private String githubClientSecret;
 
-    @Value("${GITHUB_OAUTH2_REDIRECT_URI:}")
-    private String githubRedirectUri;
-
-    @Value("${GITHUB_OAUTH2_SCOPES:}")
-    private String githubScopes;
+    @Value("${GITHUB_OAUTH2_AUTH_URI:}")
+    private String githubAuthUri;
 }

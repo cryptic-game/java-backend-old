@@ -1,7 +1,6 @@
 package net.cryptic_game.backend.server.server.http;
 
 import io.netty.handler.codec.http.HttpResponseStatus;
-import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.annotations.ApiParameter;
@@ -21,38 +20,42 @@ import reactor.core.publisher.Mono;
 
 import java.security.Key;
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor
 @ApiEndpointCollection(id = "oauth2", type = ApiType.REST)
 public final class HttpOauth2Endpoints {
 
     private final Key key;
-    private final OAuth2Config oAuth2Config;
     private final OAuth2Provider oAuth2Provider;
     private final UserRepository userRepository;
     private final UserOAuthProviderIdRepository userOAuthProviderIdRepository;
+    private final ApiResponse apiResponse;
 
-    @ApiEndpoint(id = "info")
-    public ApiResponse providerInfo(@ApiParameter(id = "provider") final String provider) {
-        switch (provider) {
-            case "discord":
-                return new ApiResponse(HttpResponseStatus.OK, JsonBuilder.create("provider",
-                        JsonBuilder
-                                .create("client_id", this.oAuth2Config.getDiscordClientId())
-                                .add("redirect_uri", this.oAuth2Config.getDiscordRedirectUri())
-                                .add("scopes", this.oAuth2Config.getDiscordScopes())
-                ));
-            case "github":
-                return new ApiResponse(HttpResponseStatus.OK, JsonBuilder.create("provider",
-                        JsonBuilder
-                                .create("client_id", this.oAuth2Config.getGithubClientId())
-                                .add("redirect_uri", this.oAuth2Config.getGithubRedirectUri())
-                                .add("scopes", this.oAuth2Config.getGithubScopes())
-                ));
-            default:
-                return new ApiResponse(HttpResponseStatus.NOT_FOUND, "PROVIDER");
-        }
+    public HttpOauth2Endpoints(final Key key,
+                               final OAuth2Config oAuth2Config,
+                               final OAuth2Provider oAuth2Provider,
+                               final UserRepository userRepository,
+                               final UserOAuthProviderIdRepository userOAuthProviderIdRepository) {
+        this.key = key;
+        this.oAuth2Provider = oAuth2Provider;
+        this.userRepository = userRepository;
+        this.userOAuthProviderIdRepository = userOAuthProviderIdRepository;
+        this.apiResponse = new ApiResponse(HttpResponseStatus.OK, List.of(
+                JsonBuilder
+                        .create("id", "discord")
+                        .add("display_name", "Discord")
+                        .add("auth_uri", oAuth2Config.getDiscordAuthUri()),
+                JsonBuilder
+                        .create("id", "github")
+                        .add("display_name", "GitHub")
+                        .add("auth_uri", oAuth2Config.getGithubAuthUri())
+        ));
+    }
+
+    @ApiEndpoint(id = "list")
+    public ApiResponse list() {
+        return this.apiResponse;
     }
 
     @ApiEndpoint(id = "callback")
@@ -61,10 +64,10 @@ public final class HttpOauth2Endpoints {
         final Mono<String> userIdMono;
         switch (provider) {
             case "discord":
-                userIdMono = oAuth2Provider.discordUserId(code);
+                userIdMono = this.oAuth2Provider.discordUserId(code);
                 break;
             case "github":
-                userIdMono = oAuth2Provider.githubUserId(code);
+                userIdMono = this.oAuth2Provider.githubUserId(code);
                 break;
             default:
                 return Mono.just(new ApiResponse(HttpResponseStatus.NOT_FOUND, "PROVIDER"));
