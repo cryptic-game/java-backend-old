@@ -2,10 +2,10 @@ package net.cryptic_game.backend.data.sql.entities;
 
 import com.google.gson.JsonObject;
 import lombok.Data;
+import net.cryptic_game.backend.base.jpa.model.TableModelAutoId;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
 import net.cryptic_game.backend.data.sql.entities.user.User;
-import net.getnova.framework.jpa.model.TableModelAutoId;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
