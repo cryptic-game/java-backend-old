@@ -3,6 +3,7 @@ package net.cryptic_game.backend.server.server.http;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +40,7 @@ public final class HttpUserEndpoints {
         final JsonObject accessToken;
         try {
             accessToken = SecurityUtils.parseJwt(key, accessTokenJwt);
-        } catch (JsonParseException | SignatureException e) {
+        } catch (JsonParseException | SignatureException | MalformedJwtException e) {
             return new ApiResponse(HttpResponseStatus.UNAUTHORIZED, "INVALID_TOKEN");
         } catch (ExpiredJwtException e) {
             return new ApiResponse(HttpResponseStatus.UNAUTHORIZED, "TOKEN_EXPIRED");
@@ -79,7 +80,7 @@ public final class HttpUserEndpoints {
         final JsonObject accessToken;
         try {
             accessToken = SecurityUtils.parseJwt(key, accessTokenJwt);
-        } catch (JsonParseException | SignatureException e) {
+        } catch (JsonParseException | SignatureException | MalformedJwtException e) {
             return new ApiResponse(HttpResponseStatus.UNAUTHORIZED, "INVALID_TOKEN");
         } catch (ExpiredJwtException e) {
             return new ApiResponse(HttpResponseStatus.UNAUTHORIZED, "TOKEN_EXPIRED");
