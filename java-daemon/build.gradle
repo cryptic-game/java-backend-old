@@ -8,6 +8,8 @@ dependencies {
     implementation project(':java-data')
     implementation project(':java-daemon-endpoints')
 
+    implementation("net.getnova.framework:nova-core:${novaVersion}") { changing true }
+
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.springframework:spring-context-indexer'

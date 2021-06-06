@@ -1,6 +1,6 @@
 package net.cryptic_game.backend.daemon;
 
-import net.cryptic_game.backend.base.CrypticBanner;
+import net.getnova.framework.core.NovaBanner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
@@ -10,7 +10,7 @@ public class Bootstrap {
 
     public static void main(final String[] args) {
         new SpringApplicationBuilder(Bootstrap.class)
-                .banner(new CrypticBanner())
+                .banner(new NovaBanner())
                 .run(args);
     }
 }

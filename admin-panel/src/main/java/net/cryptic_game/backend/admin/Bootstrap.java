@@ -1,11 +1,10 @@
 package net.cryptic_game.backend.admin;
 
-import java.security.Principal;
-
+import net.getnova.framework.core.NovaBanner;
 import org.apache.commons.lang3.NotImplementedException;
 import org.springdoc.core.GroupedOpenApi;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
@@ -16,13 +15,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.WebSession;
 
+import java.security.Principal;
+
 @SpringBootApplication
 @RestController
 @EnableConfigurationProperties(Config.class)
 public class Bootstrap {
 
     public static void main(final String[] args) {
-        SpringApplication.run(Bootstrap.class, args);
+        new SpringApplicationBuilder(Bootstrap.class)
+                .banner(new NovaBanner())
+                .run(args);
     }
 
     @Bean

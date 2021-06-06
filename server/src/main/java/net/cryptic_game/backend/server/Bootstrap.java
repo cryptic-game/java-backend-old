@@ -2,7 +2,6 @@ package net.cryptic_game.backend.server;
 
 import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.BaseConfig;
-import net.cryptic_game.backend.base.CrypticBanner;
 import net.cryptic_game.backend.base.api.DefaultApiAuthenticator;
 import net.cryptic_game.backend.base.api.data.ApiEndpointData;
 import net.cryptic_game.backend.base.api.handler.websocket.WebsocketApiInitializer;
@@ -10,6 +9,7 @@ import net.cryptic_game.backend.base.api.handler.websocket.WebsocketApiRequest;
 import net.cryptic_game.backend.data.sql.repositories.server_management.DisabledEndpointRepository;
 import net.cryptic_game.backend.server.daemon.DaemonHandler;
 import net.cryptic_game.backend.server.server.websocket.WebSocketDaemonEndpoints;
+import net.getnova.framework.core.NovaBanner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -30,7 +30,7 @@ public class Bootstrap {
 
     public static void main(final String[] args) {
         new SpringApplicationBuilder(Bootstrap.class)
-                .banner(new CrypticBanner())
+                .banner(new NovaBanner())
                 .run(args);
     }
 
