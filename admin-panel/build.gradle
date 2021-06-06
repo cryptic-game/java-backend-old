@@ -17,6 +17,8 @@ dependencies {
     implementation "org.springdoc:springdoc-openapi-security:${springDocVersion}"
 
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.session:spring-session-data-redis'
+    implementation 'io.lettuce:lettuce-core'
 
     implementation 'org.jsoup:jsoup:1.13.1'
 

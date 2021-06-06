@@ -1,17 +1,20 @@
 package net.cryptic_game.backend.admin;
 
+import java.security.Principal;
+
+import org.apache.commons.lang3.NotImplementedException;
 import org.springdoc.core.GroupedOpenApi;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.security.Principal;
+import org.springframework.web.server.WebSession;
 
 @SpringBootApplication
 @RestController
@@ -22,18 +25,19 @@ public class Bootstrap {
         SpringApplication.run(Bootstrap.class, args);
     }
 
+    @Bean
+    public LettuceConnectionFactory connectionFactory() {
+        return new LettuceConnectionFactory();
+    }
+
     @GetMapping("/user")
     public Principal user(@AuthenticationPrincipal final Principal principal) {
         return principal;
     }
 
     @GetMapping(value = "/auth", produces = MediaType.TEXT_HTML_VALUE)
-    public String auth(@AuthenticationPrincipal final Authentication authentication) {
-        if (authentication.isAuthenticated()) {
-            return "<script>window.close();</script>This window will be closed.";
-        } else {
-            return "Not authenticated!";
-        }
+    public String auth(@AuthenticationPrincipal final Authentication authentication, final WebSession session) {
+        throw new NotImplementedException();
     }
 
     @Bean

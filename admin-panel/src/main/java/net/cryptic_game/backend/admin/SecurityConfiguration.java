@@ -1,6 +1,7 @@
 package net.cryptic_game.backend.admin;
 
 import java.lang.reflect.Field;
+import java.time.Duration;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Set;
@@ -14,12 +15,17 @@ import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.config.web.server.ServerHttpSecurity.CsrfSpec;
+import org.springframework.security.config.web.server.ServerHttpSecurity.FormLoginSpec;
+import org.springframework.security.config.web.server.ServerHttpSecurity.HttpBasicSpec;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.RedirectServerAuthenticationSuccessHandler;
 import org.springframework.security.web.server.savedrequest.WebSessionServerRequestCache;
+import org.springframework.web.server.session.CookieWebSessionIdResolver;
+import org.springframework.web.server.session.WebSessionIdResolver;
 
 @Slf4j
 @EnableWebFluxSecurity
@@ -38,7 +44,9 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(final ServerHttpSecurity http) {
-        http.csrf().disable();
+        http.csrf(CsrfSpec::disable);
+        http.formLogin(FormLoginSpec::disable);
+        http.httpBasic(HttpBasicSpec::disable);
 
         final WebSessionServerRequestCache webSessionServerRequestCache = new WebSessionServerRequestCache();
         http.requestCache(spec -> spec.requestCache(webSessionServerRequestCache));
@@ -100,6 +108,22 @@ public class SecurityConfiguration {
 
                 .anyExchange().authenticated();
 
+//        http.exceptionHandling()
+//                .authenticationEntryPoint((exchange, ex) -> Mono.fromRunnable(() -> exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED)));
+
         return http.build();
+    }
+
+    @Bean
+    WebSessionIdResolver webSessionIdResolver(final Config config) {
+        final CookieWebSessionIdResolver resolver = new CookieWebSessionIdResolver();
+
+        resolver.setCookieMaxAge(Duration.ofDays(1));
+        resolver.addCookieInitializer(responseCookieBuilder ->
+                responseCookieBuilder.domain(config.getCookieDomain())
+                        .httpOnly(true)
+        );
+
+        return resolver;
     }
 }
