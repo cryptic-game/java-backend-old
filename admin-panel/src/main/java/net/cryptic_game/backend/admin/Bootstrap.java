@@ -28,11 +28,6 @@ public class Bootstrap {
                 .run(args);
     }
 
-    @Bean
-    public LettuceConnectionFactory connectionFactory() {
-        return new LettuceConnectionFactory();
-    }
-
     @GetMapping("/user")
     public Principal user(@AuthenticationPrincipal final Principal principal) {
         return principal;
