@@ -113,17 +113,4 @@ public class SecurityConfiguration {
 
         return http.build();
     }
-
-    @Bean
-    WebSessionIdResolver webSessionIdResolver(final Config config) {
-        final CookieWebSessionIdResolver resolver = new CookieWebSessionIdResolver();
-
-        resolver.setCookieMaxAge(Duration.ofDays(1));
-        resolver.addCookieInitializer(responseCookieBuilder ->
-                responseCookieBuilder.domain(config.getCookieDomain())
-                        .httpOnly(true)
-        );
-
-        return resolver;
-    }
 }
