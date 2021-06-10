@@ -3,6 +3,7 @@ package net.cryptic_game.backend.admin.converter.website;
 import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.admin.dto.website.BlogPost;
 import net.cryptic_game.backend.admin.model.website.BlogPostModel;
+import net.cryptic_game.backend.admin.repository.website.BlogPostRepository;
 import net.getnova.framework.core.Converter;
 import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.stereotype.Component;
@@ -11,12 +12,13 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class BlogPostConverter implements Converter<BlogPostModel, BlogPost> {
 
+    private final BlogPostRepository blogPostRepository;
     private final BlogPostIdConverter idConverter;
 
     @Override
     public BlogPostModel toModel(final BlogPost dto) {
         return new BlogPostModel(
-                this.idConverter.toModel(dto.getId()),
+                dto.getId() == null ? null : this.idConverter.toModel(dto.getId()),
                 dto.getTitle(),
                 dto.getImage(),
                 dto.getCreated(),
@@ -37,13 +39,16 @@ public class BlogPostConverter implements Converter<BlogPostModel, BlogPost> {
                 model.getUpdated(),
                 model.isPublished(),
                 model.getDescription(),
-                model.getContent()
+                model.getContent(),
+                this.blogPostRepository.findLanguagesById(model.getId().getPostId())
         );
     }
 
     @Override
     public void override(final BlogPostModel model, final BlogPost dto) {
-        this.idConverter.override(model.getId(), dto.getId());
+        if (dto.getId() != null) {
+            this.idConverter.override(model.getId(), dto.getId());
+        }
 
         model.setTitle(dto.getTitle());
         model.setContent(dto.getContent());

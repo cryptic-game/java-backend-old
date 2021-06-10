@@ -1,13 +1,11 @@
 package net.cryptic_game.backend.admin;
 
 import net.getnova.framework.core.NovaBanner;
-import org.apache.commons.lang3.NotImplementedException;
 import org.springdoc.core.GroupedOpenApi;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -33,9 +31,9 @@ public class Bootstrap {
         return principal;
     }
 
-    @GetMapping(value = "/auth", produces = MediaType.TEXT_HTML_VALUE)
+    @GetMapping(value = "/auth/success", produces = MediaType.TEXT_HTML_VALUE)
     public String auth(@AuthenticationPrincipal final Authentication authentication, final WebSession session) {
-        throw new NotImplementedException();
+        return "<script>close()</script>";
     }
 
     @Bean

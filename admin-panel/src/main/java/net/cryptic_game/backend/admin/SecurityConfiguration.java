@@ -1,16 +1,9 @@
 package net.cryptic_game.backend.admin;
 
-import java.lang.reflect.Field;
-import java.time.Duration;
-import java.util.Collection;
-import java.util.Locale;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -24,8 +17,14 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.RedirectServerAuthenticationSuccessHandler;
 import org.springframework.security.web.server.savedrequest.WebSessionServerRequestCache;
-import org.springframework.web.server.session.CookieWebSessionIdResolver;
-import org.springframework.web.server.session.WebSessionIdResolver;
+import reactor.core.publisher.Mono;
+
+import java.lang.reflect.Field;
+import java.util.Collection;
+import java.util.Locale;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @EnableWebFluxSecurity
@@ -78,7 +77,7 @@ public class SecurityConfiguration {
                 log.error("");
             }
 
-            final RedirectServerAuthenticationSuccessHandler handler = new RedirectServerAuthenticationSuccessHandler();
+            final RedirectServerAuthenticationSuccessHandler handler = new RedirectServerAuthenticationSuccessHandler("/auth/success");
             handler.setRequestCache(webSessionServerRequestCache);
             return handler.onAuthenticationSuccess(webFilterExchange, authentication);
         }));
@@ -108,8 +107,8 @@ public class SecurityConfiguration {
 
                 .anyExchange().authenticated();
 
-//        http.exceptionHandling()
-//                .authenticationEntryPoint((exchange, ex) -> Mono.fromRunnable(() -> exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED)));
+        http.exceptionHandling()
+                .authenticationEntryPoint((exchange, ex) -> Mono.fromRunnable(() -> exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED)));
 
         return http.build();
     }
