@@ -9,6 +9,7 @@ dependencies {
     implementation project(':java-daemon-endpoints')
 
     implementation("net.getnova.framework:nova-core:${novaVersion}") { changing true }
+    runtimeOnly 'org.springframework.boot:spring-boot-starter-actuator'
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'

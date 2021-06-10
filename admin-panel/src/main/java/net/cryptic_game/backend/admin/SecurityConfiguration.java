@@ -1,5 +1,12 @@
 package net.cryptic_game.backend.admin;
 
+import java.lang.reflect.Field;
+import java.util.Collection;
+import java.util.Locale;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -18,13 +25,6 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.RedirectServerAuthenticationSuccessHandler;
 import org.springframework.security.web.server.savedrequest.WebSessionServerRequestCache;
 import reactor.core.publisher.Mono;
-
-import java.lang.reflect.Field;
-import java.util.Collection;
-import java.util.Locale;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Slf4j
 @EnableWebFluxSecurity
@@ -96,6 +96,7 @@ public class SecurityConfiguration {
 
                 .pathMatchers("/server_management/**").hasRole("SERVER_ADMIN")
 
+                .pathMatchers(HttpMethod.GET, "/actuator/health").permitAll()
 
                 // SERVER_ADMIN, MODERATOR
 
