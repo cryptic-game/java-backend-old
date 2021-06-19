@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.base.api.handler.websocket;
+package net.cryptic_game.backend.server.api.handler.websocket;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -13,6 +13,7 @@ import net.cryptic_game.backend.base.api.executor.ApiExecutor;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonUtils;
 import net.cryptic_game.backend.base.network.server.http.route.WebsocketRoute;
+import net.cryptic_game.backend.server.redis.OnlineUsersCounter;
 import org.reactivestreams.Publisher;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.websocket.WebsocketInbound;
@@ -31,11 +32,13 @@ public final class WebsocketApiRoute implements WebsocketRoute {
     private static final Charset CHARSET = StandardCharsets.UTF_8;
     private final Map<String, ApiEndpointData> endpoints;
     private final Set<WebsocketApiContext> contexts;
+    private final OnlineUsersCounter onlineUsersCounter;
 
     @Override
     public Publisher<Void> apply(final WebsocketInbound inbound, final WebsocketOutbound outbound) {
         final WebsocketApiContext context = new WebsocketApiContext(inbound, outbound);
         this.contexts.add(context);
+        this.onlineUsersCounter.increaseOnlineCount();
 
         return outbound.sendString(
                 inbound.receive()
@@ -44,7 +47,10 @@ public final class WebsocketApiRoute implements WebsocketRoute {
                         .flatMap(content -> this.execute(context, content))
                         .onErrorResume(this::handleError)
                         .map(this::parseResponse)
-                        .doFinally(signal -> this.contexts.remove(context)),
+                        .doFinally(signal -> {
+                            this.contexts.remove(context);
+                            this.onlineUsersCounter.decreaseOnlineCount();
+                        }),
                 CHARSET
         );
     }

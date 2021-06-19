@@ -10,11 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.api.annotations.ApiParameter;
 import net.cryptic_game.backend.base.api.data.ApiParameterType;
 import net.cryptic_game.backend.base.api.data.ApiResponse;
-import net.cryptic_game.backend.base.api.handler.websocket.WebsocketApiRequest;
 import net.cryptic_game.backend.base.daemon.Daemon;
 import net.cryptic_game.backend.base.daemon.DaemonEndpointData;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.data.sql.entities.user.User;
+import net.cryptic_game.backend.server.api.handler.websocket.WebsocketApiRequest;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
 

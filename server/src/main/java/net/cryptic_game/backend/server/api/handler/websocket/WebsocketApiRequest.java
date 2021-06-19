@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.base.api.handler.websocket;
+package net.cryptic_game.backend.server.api.handler.websocket;
 
 import com.google.gson.JsonObject;
 import lombok.EqualsAndHashCode;

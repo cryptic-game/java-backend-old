@@ -8,8 +8,8 @@ import net.cryptic_game.backend.base.api.annotations.ApiParameter;
 import net.cryptic_game.backend.base.api.data.ApiEndpointData;
 import net.cryptic_game.backend.base.api.data.ApiResponse;
 import net.cryptic_game.backend.base.api.data.ApiType;
-import net.cryptic_game.backend.base.api.handler.websocket.WebsocketApiInitializer;
 import net.cryptic_game.backend.base.json.JsonBuilder;
+import net.cryptic_game.backend.server.api.handler.websocket.WebsocketApiInitializer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 

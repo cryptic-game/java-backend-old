@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
 import net.cryptic_game.backend.base.api.annotations.ApiParameter;
+import net.cryptic_game.backend.base.api.data.ApiParameterType;
 import net.cryptic_game.backend.base.api.data.ApiResponse;
 import net.cryptic_game.backend.base.api.data.ApiType;
 import net.cryptic_game.backend.base.json.JsonBuilder;
@@ -20,9 +21,11 @@ import net.cryptic_game.backend.data.redis.repositories.SessionRepository;
 import net.cryptic_game.backend.data.sql.entities.user.User;
 import net.cryptic_game.backend.data.sql.repositories.user.UserRepository;
 import net.cryptic_game.backend.data.sql.repositories.user.UserSuspensionRepository;
+import net.cryptic_game.backend.server.api.handler.websocket.WebsocketApiRequest;
 
 import java.security.Key;
 import java.time.OffsetDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -114,5 +117,15 @@ public final class HttpUserEndpoints {
         user.setUsername(username);
 
         return new ApiResponse(HttpResponseStatus.OK, JsonBuilder.create("user", this.userRepository.save(user)));
+    }
+
+    @ApiEndpoint(id = "info")
+    public ApiResponse info(@ApiParameter(id = "request", type = ApiParameterType.REQUEST) final WebsocketApiRequest request) {
+        final Optional<User> user = request.getContext().get(User.class);
+        if (user.isEmpty()) {
+            return new ApiResponse(HttpResponseStatus.FORBIDDEN, "NOT_LOGGED_IN");
+        }
+
+        return new ApiResponse(HttpResponseStatus.OK, this.userRepository.findById(user.get().getId()).orElse(null));
     }
 }

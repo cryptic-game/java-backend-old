@@ -8,12 +8,12 @@ import net.cryptic_game.backend.base.api.annotations.ApiParameter;
 import net.cryptic_game.backend.base.api.data.ApiParameterType;
 import net.cryptic_game.backend.base.api.data.ApiResponse;
 import net.cryptic_game.backend.base.api.data.ApiType;
-import net.cryptic_game.backend.base.api.handler.websocket.WebsocketApiRequest;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.data.redis.entities.Session;
 import net.cryptic_game.backend.data.redis.repositories.SessionRepository;
 import net.cryptic_game.backend.data.sql.entities.user.User;
 import net.cryptic_game.backend.data.sql.repositories.user.UserRepository;
+import net.cryptic_game.backend.server.api.handler.websocket.WebsocketApiRequest;
 
 import java.util.UUID;
 
