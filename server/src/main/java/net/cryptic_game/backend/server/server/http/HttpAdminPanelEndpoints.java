@@ -24,7 +24,7 @@ public final class HttpAdminPanelEndpoints {
     @ApiEndpoint(id = "endpoints")
     public ApiResponse getEndpoints() {
         if (this.websocketApiService == null) this.websocketApiService = this.context.getBean(WebsocketApiInitializer.class);
-        return new ApiResponse(HttpResponseStatus.OK, JsonBuilder.create("endpoints", this.websocketApiService.getEndpoints()));
+        return new ApiResponse(HttpResponseStatus.OK, JsonBuilder.create("endpoints", this.websocketApiService.getEndpoints().values()));
     }
 
     @ApiEndpoint(id = "info")

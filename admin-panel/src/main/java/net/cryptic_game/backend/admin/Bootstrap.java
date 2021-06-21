@@ -6,11 +6,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.WebSession;
 
 import java.security.Principal;
@@ -34,6 +36,14 @@ public class Bootstrap {
     @GetMapping(value = "/auth/success", produces = MediaType.TEXT_HTML_VALUE)
     public String auth(@AuthenticationPrincipal final Authentication authentication, final WebSession session) {
         return "<script>close()</script>";
+    }
+
+    @Bean("server")
+    WebClient client(final Config config) {
+        return WebClient.builder()
+                .baseUrl(config.getServerUrl())
+                .defaultHeader(HttpHeaders.AUTHORIZATION, config.getApiToken())
+                .build();
     }
 
     @Bean
