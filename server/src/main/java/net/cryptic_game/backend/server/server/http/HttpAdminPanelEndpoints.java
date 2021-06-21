@@ -13,6 +13,8 @@ import net.cryptic_game.backend.base.json.JsonBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
+import java.util.stream.Collectors;
+
 @RequiredArgsConstructor
 @Component
 @ApiEndpointCollection(id = "admin_panel", description = "Endpoints for the admin panel", type = ApiType.REST, authenticator = HttpServerAuthenticator.class)
@@ -24,7 +26,15 @@ public final class HttpAdminPanelEndpoints {
     @ApiEndpoint(id = "endpoints")
     public ApiResponse getEndpoints() {
         if (this.websocketApiService == null) this.websocketApiService = this.context.getBean(WebsocketApiInitializer.class);
-        return new ApiResponse(HttpResponseStatus.OK, JsonBuilder.create("endpoints", this.websocketApiService.getEndpoints().values()));
+        return new ApiResponse(HttpResponseStatus.OK, this.websocketApiService.getEndpoints()
+                .entrySet()
+                .stream()
+                .map(entry ->
+                        JsonBuilder.create("id", entry.getKey())
+                                .add("description", entry.getValue().getDescription()).
+                                add("disabled", entry.getValue().isDisabled())
+                )
+                .collect(Collectors.toSet()));
     }
 
     @ApiEndpoint(id = "info")
