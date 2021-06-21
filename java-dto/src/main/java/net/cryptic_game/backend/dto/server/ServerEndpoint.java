@@ -1,4 +1,4 @@
-package net.cryptic_game.backend.admin.dto.server;
+package net.cryptic_game.backend.dto.server;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

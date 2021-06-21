@@ -1,8 +1,8 @@
 package net.cryptic_game.backend.admin.controller.website;
 
 import lombok.RequiredArgsConstructor;
-import net.cryptic_game.backend.admin.dto.website.TeamDepartment;
-import net.cryptic_game.backend.admin.dto.website.TeamMember;
+import net.cryptic_game.backend.dto.website.TeamDepartment;
+import net.cryptic_game.backend.dto.website.TeamMember;
 import net.cryptic_game.backend.admin.exception.NotFoundException;
 import net.cryptic_game.backend.admin.service.website.TeamService;
 import org.springframework.web.bind.annotation.RestController;

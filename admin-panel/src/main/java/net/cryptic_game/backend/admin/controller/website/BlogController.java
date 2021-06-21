@@ -1,8 +1,8 @@
 package net.cryptic_game.backend.admin.controller.website;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import net.cryptic_game.backend.admin.dto.website.BlogPost;
-import net.cryptic_game.backend.admin.dto.website.BlogPostSmall;
+import net.cryptic_game.backend.dto.website.BlogPost;
+import net.cryptic_game.backend.dto.website.BlogPostSmall;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

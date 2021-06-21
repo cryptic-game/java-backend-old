@@ -1,7 +1,7 @@
 package net.cryptic_game.backend.admin.converter.website;
 
 import lombok.RequiredArgsConstructor;
-import net.cryptic_game.backend.admin.dto.website.BlogPost;
+import net.cryptic_game.backend.dto.website.BlogPost;
 import net.cryptic_game.backend.admin.model.website.BlogPostModel;
 import net.cryptic_game.backend.admin.repository.website.BlogPostRepository;
 import net.getnova.framework.core.Converter;
