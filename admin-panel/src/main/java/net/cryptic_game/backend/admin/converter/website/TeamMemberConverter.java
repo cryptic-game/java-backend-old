@@ -1,7 +1,7 @@
 package net.cryptic_game.backend.admin.converter.website;
 
 import lombok.RequiredArgsConstructor;
-import net.cryptic_game.backend.admin.dto.website.TeamMember;
+import net.cryptic_game.backend.dto.website.TeamMember;
 import net.cryptic_game.backend.admin.exception.NotFoundException;
 import net.cryptic_game.backend.admin.model.website.TeamDepartmentModel;
 import net.cryptic_game.backend.admin.model.website.TeamMemberModel;

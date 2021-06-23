@@ -1,9 +1,9 @@
 package net.cryptic_game.backend.admin.controller.website;
 
 import lombok.RequiredArgsConstructor;
-import net.cryptic_game.backend.admin.dto.website.BlogPost;
-import net.cryptic_game.backend.admin.dto.website.BlogPost.Id;
-import net.cryptic_game.backend.admin.dto.website.BlogPostSmall;
+import net.cryptic_game.backend.dto.website.BlogPost;
+import net.cryptic_game.backend.dto.website.BlogPost.Id;
+import net.cryptic_game.backend.dto.website.BlogPostSmall;
 import net.cryptic_game.backend.admin.exception.NotFoundException;
 import net.cryptic_game.backend.admin.service.website.BlogService;
 import org.springframework.web.bind.annotation.RestController;

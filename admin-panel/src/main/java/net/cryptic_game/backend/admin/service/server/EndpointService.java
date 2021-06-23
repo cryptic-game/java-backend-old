@@ -1,6 +1,6 @@
 package net.cryptic_game.backend.admin.service.server;
 
-import net.cryptic_game.backend.admin.dto.server.ServerEndpoint;
+import net.cryptic_game.backend.dto.server.ServerEndpoint;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
