@@ -5,6 +5,9 @@ import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.codec.http.cookie.Cookie;
+
+import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.netty.ByteBufFlux;
@@ -133,5 +136,10 @@ final class CustomPathHttpServerRequest implements HttpServerRequest {
     @Override
     public HttpVersion version() {
         return this.request.version();
+    }
+
+    @Override
+    public Map<CharSequence, List<Cookie>> allCookies() {
+        return this.request.allCookies();
     }
 }
