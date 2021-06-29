@@ -2,7 +2,7 @@ package net.cryptic_game.backend.admin.service.server;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import net.cryptic_game.backend.admin.dto.server.ServerEndpoint;
+import net.cryptic_game.backend.dto.server.ServerEndpoint;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;

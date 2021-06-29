@@ -1,7 +1,7 @@
 package net.cryptic_game.backend.admin.controller.server;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import net.cryptic_game.backend.admin.dto.server.ServerEndpoint;
+import net.cryptic_game.backend.dto.server.ServerEndpoint;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,9 +1,9 @@
-package net.cryptic_game.backend.admin.dto.website;
+package net.cryptic_game.backend.dto.website;
 
 import java.time.OffsetDateTime;
 
 import lombok.Data;
-import net.cryptic_game.backend.admin.dto.website.BlogPost.Id;
+import net.cryptic_game.backend.dto.website.BlogPost.Id;
 
 @Data
 public class BlogPostSmall {

@@ -1,7 +1,7 @@
 package net.cryptic_game.backend.admin.service.website;
 
-import net.cryptic_game.backend.admin.dto.website.TeamDepartment;
-import net.cryptic_game.backend.admin.dto.website.TeamMember;
+import net.cryptic_game.backend.dto.website.TeamDepartment;
+import net.cryptic_game.backend.dto.website.TeamMember;
 
 import java.util.Optional;
 import java.util.Set;
