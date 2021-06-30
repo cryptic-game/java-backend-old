@@ -9,6 +9,7 @@ import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document.OutputSettings;
 import org.jsoup.safety.Whitelist;
 
 @Data
@@ -22,6 +23,9 @@ public class BlogPost {
     private static final Whitelist WHITELIST = Whitelist.relaxed()
             .addEnforcedAttribute("a", "target", "_blank")
             .addEnforcedAttribute("a", "rel", "nofollow noopener noreferrer");
+
+    private static final OutputSettings OUTPUT_SETTINGS = new OutputSettings()
+            .prettyPrint(false);
 
     private final Id id;
     private final String title;
@@ -51,7 +55,7 @@ public class BlogPost {
         this.updated = updated;
         this.published = published;
         this.description = description;
-        this.content = Jsoup.clean(content, WHITELIST);
+        this.content = Jsoup.clean(content, "", WHITELIST, OUTPUT_SETTINGS);
         this.languages = null;
     }
 
