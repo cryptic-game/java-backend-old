@@ -13,7 +13,7 @@ public class BlogPostSmall {
     private final String image;
     private final OffsetDateTime created;
     private final OffsetDateTime updated;
-    private final boolean published;
+    private final Boolean published;
     private final String description;
 
     public BlogPostSmall(
@@ -22,7 +22,7 @@ public class BlogPostSmall {
             /* @JsonProperty("image") */ final String image,
             /* @JsonProperty("created") */ final OffsetDateTime created,
             /* @JsonProperty("updated") */ final OffsetDateTime updated,
-            /* @JsonProperty("published") */ final boolean published,
+            /* @JsonProperty("published") */ final Boolean published,
             /* @JsonProperty("description") */ final String description
     ) {
         this.id = id;

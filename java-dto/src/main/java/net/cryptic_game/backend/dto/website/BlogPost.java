@@ -4,17 +4,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.OffsetDateTime;
 import java.util.Set;
-import javax.validation.constraints.Pattern;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import net.getnova.framework.core.Validatable;
+import net.getnova.framework.core.exception.ValidationException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document.OutputSettings;
 import org.jsoup.safety.Whitelist;
 
 @Data
 @AllArgsConstructor
-public class BlogPost {
+public class BlogPost implements Validatable {
 
     private static final String LANGUAGE_REGEX = "[a-z]{2}";
     private static final String POST_ID_REGEX = "[a-z-]+";
@@ -29,11 +30,10 @@ public class BlogPost {
 
     private final Id id;
     private final String title;
-    @Pattern(regexp = IMAGE_REGEX)
     private final String image;
     private final OffsetDateTime created;
     private final OffsetDateTime updated;
-    private final boolean published;
+    private final Boolean published;
     private final String description;
     private final String content;
     private final Set<String> languages;
@@ -44,7 +44,7 @@ public class BlogPost {
             @JsonProperty("image") final String image,
             @JsonProperty("created") final OffsetDateTime created,
             @JsonProperty("updated") final OffsetDateTime updated,
-            @JsonProperty("published") final boolean published,
+            @JsonProperty("published") final Boolean published,
             @JsonProperty("description") final String description,
             @JsonProperty("content") final String content
     ) {
@@ -59,12 +59,39 @@ public class BlogPost {
         this.languages = null;
     }
 
-    @Data
-    public static final class Id {
+    @Override
+    public void validate() throws ValidationException {
+        if (this.id == null) {
+            throw new ValidationException("id", "NOT_NULL");
+        }
 
-        @Pattern(regexp = LANGUAGE_REGEX)
+        this.id.validate();
+
+        if (this.title == null || this.title.isBlank()) {
+            throw new ValidationException("title", "NOT_BLANK");
+        }
+
+        if (this.image == null) {
+            throw new ValidationException("image", "NOT_NULL");
+        }
+
+        if (IMAGE_REGEX.matches(this.image)) {
+            throw new ValidationException("image", "MATCH_REGEX");
+        }
+
+        if (this.published == null) {
+            throw new ValidationException("published", "NOT_NULL");
+        }
+
+        if (this.description == null || this.description.isBlank()) {
+            throw new ValidationException("description", "NOT_BLANK");
+        }
+    }
+
+    @Data
+    public static final class Id implements Validatable {
+
         private final String language; // TODO java.util.Locale;
-        @Pattern(regexp = POST_ID_REGEX)
         private final String postId;
 
         public Id(
@@ -73,6 +100,25 @@ public class BlogPost {
         ) {
             this.language = language;
             this.postId = postId;
+        }
+
+        @Override
+        public void validate() throws ValidationException {
+            if (this.language == null) {
+                throw new ValidationException("language", "NOT_NULL");
+            }
+
+            if (LANGUAGE_REGEX.matches(this.language)) {
+                throw new ValidationException("language", "MATCH_REGEX");
+            }
+
+            if (this.postId == null) {
+                throw new ValidationException("postId", "NOT_NULL");
+            }
+
+            if (POST_ID_REGEX.matches(this.postId)) {
+                throw new ValidationException("postId", "MATCH_REGEX");
+            }
         }
     }
 }

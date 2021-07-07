@@ -1,9 +1,11 @@
 package net.cryptic_game.backend.admin.service.server;
 
-import lombok.Data;
+import java.util.Map;
+
 import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.dto.server.ServerEndpoint;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -29,29 +31,22 @@ public class EndpointServiceImpl implements EndpointService {
     public Mono<ServerEndpoint> disableEndpoint(final String id) {
         return this.client.post()
                 .uri("/admin_panel/disable")
-                .bodyValue(new ServerEndpointRequest(id))
-                .exchangeToMono((response) ->
-                        response.statusCode().is2xxSuccessful()
-                                ? response.bodyToMono(ServerEndpoint.class)
-                                : response.createException().flatMap(Mono::error)
-                );
+                .bodyValue(Map.of("id", id))
+                .exchangeToMono(this::handleResponse);
+
     }
 
     @Override
     public Mono<ServerEndpoint> enableEndpoint(final String id) {
         return this.client.post()
                 .uri("/admin_panel/enable")
-                .bodyValue(new ServerEndpointRequest(id))
-                .exchangeToMono((response) ->
-                        response.statusCode().is2xxSuccessful()
-                                ? response.bodyToMono(ServerEndpoint.class)
-                                : response.createException().flatMap(Mono::error)
-                );
+                .bodyValue(Map.of("id", id))
+                .exchangeToMono(this::handleResponse);
     }
 
-    @Data
-    private static final class ServerEndpointRequest {
-
-        private final String id;
+    private Mono<ServerEndpoint> handleResponse(final ClientResponse response) {
+        return response.statusCode().is2xxSuccessful()
+                ? response.bodyToMono(ServerEndpoint.class)
+                : response.createException().flatMap(Mono::error);
     }
 }

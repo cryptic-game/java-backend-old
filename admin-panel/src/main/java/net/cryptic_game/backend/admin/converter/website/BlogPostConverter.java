@@ -23,7 +23,7 @@ public class BlogPostConverter implements Converter<BlogPostModel, BlogPost> {
                 dto.getImage(),
                 dto.getCreated(),
                 dto.getUpdated(),
-                dto.isPublished(),
+                dto.getPublished(),
                 dto.getDescription(),
                 dto.getContent()
         );
@@ -53,7 +53,7 @@ public class BlogPostConverter implements Converter<BlogPostModel, BlogPost> {
         model.setTitle(dto.getTitle());
         model.setImage(dto.getImage());
         model.setContent(dto.getContent());
-        model.setPublished(dto.isPublished());
+        model.setPublished(dto.getPublished());
         model.setDescription(dto.getDescription());
         model.setContent(dto.getContent());
     }

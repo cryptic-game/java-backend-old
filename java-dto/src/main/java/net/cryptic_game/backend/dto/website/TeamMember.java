@@ -1,15 +1,18 @@
 package net.cryptic_game.backend.dto.website;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import net.getnova.framework.core.Validatable;
+import net.getnova.framework.core.exception.ValidationException;
+
 @Data
 @AllArgsConstructor
-public class TeamMember {
+public class TeamMember implements Validatable {
 
     private final UUID id;
     private final String name;
@@ -28,5 +31,24 @@ public class TeamMember {
         this.githubId = githubId;
         this.departmentId = departmentId;
         this.joined = joined;
+    }
+
+    @Override
+    public void validate() throws ValidationException {
+        if (this.name == null || this.name.isBlank()) {
+            throw new ValidationException("name", "NOT_BLANK");
+        }
+
+        if (this.githubId == null) {
+            throw new ValidationException("githubId", "NOT_NULL");
+        }
+
+        if (this.departmentId == null) {
+            throw new ValidationException("departmentId", "NOT_NULL");
+        }
+
+        if (this.joined == null) {
+            throw new ValidationException("joined", "NOT_NULL");
+        }
     }
 }

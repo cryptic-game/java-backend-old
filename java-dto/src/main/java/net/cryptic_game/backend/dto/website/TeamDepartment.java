@@ -6,9 +6,12 @@ import lombok.Data;
 
 import java.util.UUID;
 
+import net.getnova.framework.core.Validatable;
+import net.getnova.framework.core.exception.ValidationException;
+
 @Data
 @AllArgsConstructor
-public class TeamDepartment {
+public class TeamDepartment implements Validatable {
 
     private final UUID id;
     private final String name;
@@ -21,5 +24,12 @@ public class TeamDepartment {
         this.id = null;
         this.name = name;
         this.description = description;
+    }
+
+    @Override
+    public void validate() throws ValidationException {
+        if (this.name == null || this.name.isBlank()) {
+            throw new ValidationException("name", "NOT_BLANK");
+        }
     }
 }

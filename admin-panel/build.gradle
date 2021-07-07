@@ -17,7 +17,6 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'io.netty:netty-tcnative-boringssl-static'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation "org.springdoc:springdoc-openapi-webflux-ui:${springDocVersion}"
     implementation "org.springdoc:springdoc-openapi-security:${springDocVersion}"
 
