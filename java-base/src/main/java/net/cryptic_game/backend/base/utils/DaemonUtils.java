@@ -39,12 +39,7 @@ public final class DaemonUtils {
                     DaemonEndpointData.class
             )
                     .stream()
-                    .peek(endpoint -> {
-                        endpoint.setDaemon(daemon);
-                        for (ApiParameterData parameter : endpoint.getParameters()) {
-                            parameter.setType(ApiParameterType.DAEMON_PARAMETER);
-                        }
-                    })
+                    .peek(endpoint -> endpoint.setDaemon(daemon))
                     .collect(Collectors.toUnmodifiableMap(ApiEndpointData::getId, endpoint -> endpoint));
 
             final DaemonEndpointCollectionData collection = new DaemonEndpointCollectionData(id, description, disabled, apiType, endpoints);

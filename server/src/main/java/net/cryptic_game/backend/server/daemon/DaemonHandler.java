@@ -34,10 +34,7 @@ import java.lang.reflect.Parameter;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.AbstractMap;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -60,7 +57,7 @@ public final class DaemonHandler {
     private Map<String, ApiEndpointData> endpoints;
     private Object daemonSendObject;
     private Method daemonSendMethod;
-    private List<ApiParameterData> daemonSendMethodParameters;
+    private ApiParameterData[] daemonSendMethodParameters;
 
     public void registerDaemon(final String name, final String url) {
         final Daemon daemon = new Daemon(
@@ -140,9 +137,7 @@ public final class DaemonHandler {
                             endpoint.setMethod(this.daemonSendMethod);
                             endpoint.setInstance(this.daemonSendObject);
                             endpoint.setAuthenticator(this.authenticator);
-                            final List<ApiParameterData> parameters = new ArrayList<>(this.daemonSendMethodParameters);
-                            Collections.addAll(parameters, endpoint.getParameters());
-                            endpoint.setParameters(parameters.toArray(ApiParameterData[]::new));
+                            endpoint.setParameters(this.daemonSendMethodParameters);
                         }))
                         .collect(Collectors.toSet())
         ).entrySet().parallelStream()
@@ -159,11 +154,11 @@ public final class DaemonHandler {
         this.daemonSendMethodParameters = parseParameters(this.daemonSendMethod.getParameters());
     }
 
-    public List<ApiParameterData> parseParameters(final Parameter[] parameters) {
+    public ApiParameterData[] parseParameters(final Parameter[] parameters) {
         return Arrays.stream(parameters)
                 .map(this::parseParameter)
                 .filter(Objects::nonNull)
-                .collect(Collectors.toList());
+                .toArray(ApiParameterData[]::new);
     }
 
     private ApiParameterData parseParameter(final Parameter parameter) {
