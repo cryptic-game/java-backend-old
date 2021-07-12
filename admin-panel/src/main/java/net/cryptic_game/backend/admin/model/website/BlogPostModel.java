@@ -26,25 +26,25 @@ public class BlogPostModel extends TableModel {
     @EmbeddedId
     private IdModel id;
 
-    @Column(name = "title", updatable = true, nullable = false)
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "image", updatable = true, nullable = false)
+    @Column(name = "image", nullable = false)
     private String image;
 
     @Column(name = "created", updatable = false, nullable = false)
     private OffsetDateTime created;
 
-    @Column(name = "updated", updatable = true, nullable = true)
+    @Column(name = "updated")
     private OffsetDateTime updated;
 
-    @Column(name = "published", updatable = true, nullable = false)
+    @Column(name = "published", nullable = false)
     private boolean published;
 
-    @Column(name = "description", updatable = true, nullable = false, length = 1025)
+    @Column(name = "description", nullable = false, length = 1025)
     private String description;
 
-    @Column(name = "content", updatable = true, nullable = false, columnDefinition = "TEXT")
+    @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content;
 
     @Data

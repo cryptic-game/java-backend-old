@@ -6,7 +6,4 @@ public class ApiParameterException extends ApiException {
         super(message);
     }
 
-    public ApiParameterException(final String message, final Throwable cause) {
-        super(message, cause);
-    }
 }

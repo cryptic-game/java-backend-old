@@ -29,13 +29,13 @@ import java.time.OffsetDateTime;
 @Cacheable
 public final class User extends TableModelAutoId {
 
-    @Column(name = "username", updatable = true, nullable = true, unique = true, length = Constants.USERNAME_LENGTH)
+    @Column(name = "username", unique = true, length = Constants.USERNAME_LENGTH)
     private String username;
 
     @Column(name = "created", updatable = false, nullable = false)
     private OffsetDateTime created;
 
-    @Column(name = "last", updatable = true, nullable = false)
+    @Column(name = "last", nullable = false)
     private OffsetDateTime last;
 
     public JsonObject serializePublic() {

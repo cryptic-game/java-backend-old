@@ -4,13 +4,12 @@ import com.google.gson.JsonElement;
 import lombok.Data;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
-import org.jetbrains.annotations.NotNull;
 
+import java.util.HashSet;
 import java.util.Map;
-import java.util.TreeSet;
 
 @Data
-public class ApiEndpointCollectionData implements JsonSerializable, Comparable<ApiEndpointCollectionData> {
+public class ApiEndpointCollectionData implements JsonSerializable {
 
     private final String id;
     private final String description;
@@ -23,14 +22,8 @@ public class ApiEndpointCollectionData implements JsonSerializable, Comparable<A
     public final JsonElement serialize() {
         return JsonBuilder.create("id", this.id)
                 .add("description", this.description)
-                .add("endpoints", new TreeSet<>(this.endpoints.values()))
-                .add("internal", this.internal)
+                .add("endpoints", new HashSet<>(this.endpoints.values()))
                 .add("disabled", this.disabled)
                 .build();
-    }
-
-    @Override
-    public final int compareTo(@NotNull final ApiEndpointCollectionData other) {
-        return this.id.compareTo(other.id);
     }
 }

@@ -35,6 +35,8 @@ import java.util.stream.Collectors;
 @EnableConfigurationProperties(Config.class)
 public class Bootstrap {
 
+    private static final String JAVASCRIPT_CLOSE = "<script>close()</script>";
+
     public static void main(final String[] args) {
         new SpringApplicationBuilder(Bootstrap.class)
                 .banner(new NovaBanner())
@@ -48,7 +50,7 @@ public class Bootstrap {
 
     @GetMapping(value = "/auth/success", produces = MediaType.TEXT_HTML_VALUE)
     public String auth(@AuthenticationPrincipal final Authentication authentication, final WebSession session) {
-        return "<script>close()</script>";
+        return JAVASCRIPT_CLOSE;
     }
 
     @Bean("server")
@@ -79,6 +81,7 @@ public class Bootstrap {
     @Order(-2)
     public ErrorWebExceptionHandler errorWebExceptionHandler(
             final ErrorAttributes errorAttributes,
+            //TODO
             final ResourceProperties resourceProperties,
             final WebProperties webProperties,
             final ApplicationContext applicationContext,

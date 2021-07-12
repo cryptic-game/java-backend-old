@@ -83,7 +83,7 @@ public final class DaemonHandler {
                     if (response.status().equals(HttpResponseStatus.UNAUTHORIZED))
                         return Mono.error(new DaemonException("Invalid api token"));
                     if (!response.status().equals(HttpResponseStatus.OK))
-                        return Mono.error(new DaemonException(String.format("Unexpected staus from daemon: %s", response.status())));
+                        return Mono.error(new DaemonException(String.format("Unexpected status from daemon: %s", response.status())));
                     return byteBufMono.asString();
                 })
                 .retry(2)
@@ -109,7 +109,7 @@ public final class DaemonHandler {
                         },
                         cause -> {
                             if (cause instanceof DaemonException) {
-                                log.error("Unable to regierter daemon {}: {}", daemon.getName(), cause.getMessage());
+                                log.error("Unable to register daemon {}: {}", daemon.getName(), cause.getMessage());
                             } else if (cause.getMessage().contains("refused") || cause.getMessage().contains("cert")) {
                                 log.error("Unable to connect to daemon {}: {}", daemon.getName(), cause.getMessage());
                             } else if (cause instanceof SSLHandshakeException) {
@@ -117,7 +117,7 @@ public final class DaemonHandler {
                                 Throwable currentCause = cause;
 
                                 while (currentCause != null) {
-                                    message.append(currentCause.toString()).append(" ");
+                                    message.append(currentCause).append(" ");
                                     currentCause = currentCause.getCause();
                                 }
 

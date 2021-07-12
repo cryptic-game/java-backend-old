@@ -6,13 +6,12 @@ import lombok.Data;
 import net.cryptic_game.backend.base.api.ApiAuthenticator;
 import net.cryptic_game.backend.base.json.JsonBuilder;
 import net.cryptic_game.backend.base.json.JsonSerializable;
-import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Method;
 
 @Data
 @AllArgsConstructor
-public class ApiEndpointData implements JsonSerializable, Comparable<ApiEndpointData> {
+public class ApiEndpointData implements JsonSerializable {
 
     private final String description;
     private final int authentication;
@@ -30,10 +29,5 @@ public class ApiEndpointData implements JsonSerializable, Comparable<ApiEndpoint
                 .add("description", this.description)
                 .add("disabled", this.disabled)
                 .build();
-    }
-
-    @Override
-    public final int compareTo(@NotNull final ApiEndpointData other) {
-        return this.id.compareTo(other.id);
     }
 }

@@ -30,9 +30,9 @@ public final class CurrencyWallet extends TableModelAutoId {
     private OffsetDateTime created;
 
     @JsonTransient
-    @Column(name = "password", updatable = true, nullable = false)
+    @Column(name = "password", nullable = false)
     private String passwordHash;
 
-    @Column(name = "balance", updatable = true, nullable = false)
+    @Column(name = "balance", nullable = false)
     private BigDecimal balance;
 }

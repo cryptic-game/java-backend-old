@@ -4,8 +4,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.cryptic_game.backend.base.api.data.ApiEndpointCollectionData;
 import net.cryptic_game.backend.base.api.data.ApiEndpointData;
-import net.cryptic_game.backend.base.api.data.ApiParameterData;
-import net.cryptic_game.backend.base.api.data.ApiParameterType;
 import net.cryptic_game.backend.base.api.data.ApiType;
 import net.cryptic_game.backend.base.daemon.Daemon;
 import net.cryptic_game.backend.base.daemon.DaemonEndpointCollectionData;
@@ -31,7 +29,6 @@ public final class DaemonUtils {
 
             final String id = JsonUtils.fromJson(jsonObject.get("id"), String.class);
             final String description = JsonUtils.fromJson(jsonObject.get("description"), String.class);
-            final boolean internal = JsonUtils.fromJson(jsonObject.get("internal"), boolean.class);
             final boolean disabled = JsonUtils.fromJson(jsonObject.get("disabled"), boolean.class);
 
             final Map<String, ApiEndpointData> endpoints = JsonUtils.fromArray(
@@ -43,7 +40,7 @@ public final class DaemonUtils {
                     .peek(endpoint -> endpoint.setDaemon(daemon))
                     .collect(Collectors.toUnmodifiableMap(ApiEndpointData::getId, endpoint -> endpoint));
 
-            final DaemonEndpointCollectionData collection = new DaemonEndpointCollectionData(id, description, internal, disabled, apiType, endpoints);
+            final DaemonEndpointCollectionData collection = new DaemonEndpointCollectionData(id, description, false, disabled, apiType, endpoints);
             collection.setDaemon(daemon);
             return collection;
         });

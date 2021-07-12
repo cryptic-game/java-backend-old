@@ -105,7 +105,7 @@ public final class JsonBuilder implements JsonSerializable {
      * Creates a {@link JsonBuilder} with one Key, Value pair.
      *
      * @param key       the key of the pair
-     * @param condition witch value shuld be added
+     * @param condition witch value should be added
      * @param valueCall the value of the pair
      * @return the JsonBuilder
      */

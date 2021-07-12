@@ -36,7 +36,7 @@ public final class NetworkInvitation extends TableModel implements JsonSerializa
     private InvitationKey key;
 
     @ManyToOne
-    @JoinColumn(name = "inviter_id", nullable = true, updatable = false)
+    @JoinColumn(name = "inviter_id", updatable = false)
     private Device inviter;
 
     /**
@@ -119,7 +119,6 @@ public final class NetworkInvitation extends TableModel implements JsonSerializa
     /**
      * Key of the {@link NetworkInvitation} entity.
      */
-    @SuppressWarnings("JpaDataSourceORMInspection")
     @Embeddable
     @Getter
     @Setter

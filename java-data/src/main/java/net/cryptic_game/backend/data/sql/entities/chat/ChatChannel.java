@@ -25,6 +25,6 @@ public final class ChatChannel extends TableModelAutoId {
 
     public static final int MAX_NAME_LENGTH = 32;
 
-    @Column(name = "name", updatable = true, nullable = false, length = MAX_NAME_LENGTH)
+    @Column(name = "name", nullable = false, length = MAX_NAME_LENGTH)
     private String name;
 }
