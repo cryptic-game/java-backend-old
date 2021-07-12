@@ -1,6 +1,5 @@
 package net.cryptic_game.backend.admin.service.website.impl;
 
-import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.admin.converter.website.TeamMemberConverter;
 import net.cryptic_game.backend.admin.model.website.TeamMemberModel;
 import net.cryptic_game.backend.admin.repository.website.TeamMemberRepository;

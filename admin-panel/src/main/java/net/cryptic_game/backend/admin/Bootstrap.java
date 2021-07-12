@@ -1,8 +1,5 @@
 package net.cryptic_game.backend.admin;
 
-import java.security.Principal;
-import java.util.stream.Collectors;
-
 import net.getnova.framework.core.GlobalErrorWebExceptionHandler;
 import net.getnova.framework.core.NovaBanner;
 import org.springdoc.core.GroupedOpenApi;
@@ -29,6 +26,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.result.view.ViewResolver;
 import org.springframework.web.server.WebSession;
+
+import java.security.Principal;
+import java.util.stream.Collectors;
 
 @SpringBootApplication
 @RestController

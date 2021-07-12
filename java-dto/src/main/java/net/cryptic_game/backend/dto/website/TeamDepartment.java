@@ -3,11 +3,10 @@ package net.cryptic_game.backend.dto.website;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.util.UUID;
-
 import net.getnova.framework.core.Validatable;
 import net.getnova.framework.core.exception.ValidationException;
+
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor

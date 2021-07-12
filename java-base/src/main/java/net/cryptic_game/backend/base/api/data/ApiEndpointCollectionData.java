@@ -15,6 +15,7 @@ public class ApiEndpointCollectionData implements JsonSerializable, Comparable<A
     private final String id;
     private final String description;
     private final ApiType type;
+    private final boolean internal;
     private final boolean disabled;
     private final Map<String, ApiEndpointData> endpoints;
 
@@ -23,6 +24,7 @@ public class ApiEndpointCollectionData implements JsonSerializable, Comparable<A
         return JsonBuilder.create("id", this.id)
                 .add("description", this.description)
                 .add("endpoints", new TreeSet<>(this.endpoints.values()))
+                .add("internal", this.internal)
                 .add("disabled", this.disabled)
                 .build();
     }

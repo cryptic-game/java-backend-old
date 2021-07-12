@@ -19,9 +19,10 @@ public class DaemonEndpointCollectionData extends ApiEndpointCollectionData {
 
     public DaemonEndpointCollectionData(@NotNull final String id,
                                         @NotNull final String description,
+                                        final boolean internal,
                                         final boolean disabled,
                                         @NotNull final ApiType apiType,
                                         @NotNull final Map<String, ApiEndpointData> endpoints) {
-        super(id, description, apiType, disabled, endpoints);
+        super(id, description, apiType, internal, disabled, endpoints);
     }
 }

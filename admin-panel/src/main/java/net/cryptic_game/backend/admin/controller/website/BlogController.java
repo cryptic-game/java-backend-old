@@ -1,9 +1,6 @@
 package net.cryptic_game.backend.admin.controller.website;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-
-import java.util.List;
-
 import net.cryptic_game.backend.dto.website.BlogPost;
 import net.cryptic_game.backend.dto.website.BlogPostSmall;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Tag(name = "Blog")
 @RequestMapping("website/blog")
