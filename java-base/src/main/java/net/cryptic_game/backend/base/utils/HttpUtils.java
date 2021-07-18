@@ -33,7 +33,7 @@ public final class HttpUtils {
     public static Publisher<Void> sendStatus(final HttpServerResponse response, final HttpResponseStatus status, final String message) {
         return response.status(status)
                 .header(HttpHeaderNames.CONTENT_TYPE, HttpHeaderValues.TEXT_PLAIN)
-                .sendString(Mono.just(status.toString() + ": " + message));
+                .sendString(Mono.just(status + ": " + message));
     }
 
     public static Optional<Publisher<Void>> checkMethod(final HttpServerRequest request, final HttpServerResponse response, final HttpMethod... methods) {

@@ -18,9 +18,9 @@ import javax.persistence.Table;
 @Table(name = "admin_team_department")
 public class TeamDepartmentModel extends TableModelAutoId {
 
-    @Column(name = "name", updatable = true, nullable = false, unique = true)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @Column(name = "description", updatable = true, nullable = false, length = 2048)
+    @Column(name = "description", nullable = false, length = 2048)
     private String description;
 }

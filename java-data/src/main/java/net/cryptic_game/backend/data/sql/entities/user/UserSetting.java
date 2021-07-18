@@ -35,7 +35,7 @@ public final class UserSetting extends TableModel implements JsonSerializable {
     @EmbeddedId
     private UserSettingKey key;
 
-    @Column(name = "value", updatable = true, nullable = true, length = 2048)
+    @Column(name = "value", length = 2048)
     private String value;
 
     /**

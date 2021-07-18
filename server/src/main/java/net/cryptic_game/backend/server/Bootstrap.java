@@ -22,12 +22,6 @@ import java.util.Map;
 @SpringBootApplication(scanBasePackages = "net.cryptic_game.backend")
 public class Bootstrap {
 
-//    public Bootstrap() {
-//        if (bootstrap.isDebug())
-//            httpServerCodec.addLocationProvider("playground", new PlaygroundLocationProvider(config.getWebsocketAddress(),
-//                    webSocketEndpointHandler.getApiList().getCollections().values()));
-//    }
-
     public static void main(final String[] args) {
         new SpringApplicationBuilder(Bootstrap.class)
                 .banner(new NovaBanner())

@@ -32,17 +32,17 @@ public final class DeviceFile extends TableModelAutoId implements JsonSerializab
     @JoinColumn(name = "device_id", nullable = false, updatable = false)
     private Device device;
 
-    @Column(name = "name", nullable = false, updatable = true)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "content", nullable = false, updatable = true, length = 2048)
+    @Column(name = "content", nullable = false, length = 2048)
     private String content;
 
     @Column(name = "directory", nullable = false, updatable = false)
     private boolean directory;
 
     @ManyToOne
-    @JoinColumn(name = "parent_directory_id", nullable = true, updatable = true)
+    @JoinColumn(name = "parent_directory_id")
     private DeviceFile parentDirectory;
 
     /**

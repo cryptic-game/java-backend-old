@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-@ApiEndpointCollection(id = "daemon", description = "Informational endpoints about the daemon.", type = ApiType.REST)
+@ApiEndpointCollection(id = "daemon", description = "Informational endpoints about the daemon.", internal = true, type = ApiType.REST)
 public final class DaemonInfoEndpoints {
 
     private final ApplicationContext context;
@@ -25,7 +25,7 @@ public final class DaemonInfoEndpoints {
         if (this.endpointsResponse == null)
             this.endpointsResponse = new ApiResponse(HttpResponseStatus.OK, this.context.getBean(RestApiInitializer.class).getCollections()
                     .stream()
-                    .filter(apiEndpointCollectionData -> !apiEndpointCollectionData.getId().equals("daemon"))
+                    .filter(apiEndpointCollectionData -> !apiEndpointCollectionData.isInternal())
                     .collect(Collectors.toSet()));
         return this.endpointsResponse;
     }

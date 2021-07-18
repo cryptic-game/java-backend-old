@@ -1,8 +1,8 @@
 package net.cryptic_game.backend.admin.converter.website;
 
 import lombok.RequiredArgsConstructor;
-import net.cryptic_game.backend.admin.dto.website.BlogPostSmall;
 import net.cryptic_game.backend.admin.model.website.BlogPostSmallModel;
+import net.cryptic_game.backend.dto.website.BlogPostSmall;
 import net.getnova.framework.core.Converter;
 import org.springframework.stereotype.Component;
 

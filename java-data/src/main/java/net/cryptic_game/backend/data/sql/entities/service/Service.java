@@ -34,13 +34,13 @@ public final class Service extends TableModelAutoId implements JsonSerializable 
     @JoinColumn(name = "device_id", updatable = false, nullable = false)
     private Device device;
 
-    @Column(name = "name", updatable = true, nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "running", updatable = true, nullable = false)
+    @Column(name = "running", nullable = false)
     private boolean running;
 
-    @Column(name = "running_port", updatable = true, nullable = false)
+    @Column(name = "running_port", nullable = false)
     private int runningPort;
 
     @ManyToOne

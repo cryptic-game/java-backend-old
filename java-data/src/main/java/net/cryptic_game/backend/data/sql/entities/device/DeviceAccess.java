@@ -44,7 +44,7 @@ public final class DeviceAccess extends TableModelAutoId implements JsonSerializ
     @Column(name = "expire", nullable = false, updatable = false)
     private OffsetDateTime expire;
 
-    @Column(name = "valid", nullable = false, updatable = true)
+    @Column(name = "valid", nullable = false)
     private boolean valid;
 
     /**

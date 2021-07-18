@@ -23,7 +23,7 @@ import javax.persistence.Table;
 @Data
 public final class Inventory extends TableModelAutoId implements JsonSerializable {
 
-    @Column(name = "size", updatable = true, nullable = false)
+    @Column(name = "size", nullable = false)
     private int size;
 
     @ManyToOne

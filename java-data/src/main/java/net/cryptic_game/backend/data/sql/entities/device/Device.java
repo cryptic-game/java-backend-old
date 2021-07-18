@@ -29,14 +29,14 @@ import javax.persistence.Table;
 @Table(name = "device_device")
 public final class Device extends TableModelAutoId implements JsonSerializable {
 
-    @Column(name = "name", updatable = true, nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "owner", updatable = true, nullable = false)
+    @JoinColumn(name = "owner", nullable = false)
     private User owner;
 
-    @Column(name = "powered_on", updatable = true, nullable = false)
+    @Column(name = "powered_on", nullable = false)
     private boolean poweredOn;
 
     /**

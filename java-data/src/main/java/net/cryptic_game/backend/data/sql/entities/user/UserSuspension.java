@@ -44,10 +44,10 @@ public final class UserSuspension extends TableModelAutoId implements JsonSerial
     @Column(name = "timestamp", updatable = false, nullable = false)
     private OffsetDateTime timestamp;
 
-    @Column(name = "expires", updatable = true, nullable = false)
+    @Column(name = "expires", nullable = false)
     private OffsetDateTime expires;
 
-    @Column(name = "reason", updatable = true, nullable = true)
+    @Column(name = "reason")
     private String reason;
 
     @Override

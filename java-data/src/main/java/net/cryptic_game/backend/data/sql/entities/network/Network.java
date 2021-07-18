@@ -31,14 +31,14 @@ import java.time.OffsetDateTime;
 @Table(name = "network_network")
 public final class Network extends TableModelAutoId implements JsonSerializable {
 
-    @Column(name = "name", updatable = true, nullable = false, unique = true)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "device_id", updatable = true, nullable = false)
+    @JoinColumn(name = "device_id", nullable = false)
     private Device owner;
 
-    @Column(name = "public", updatable = true, nullable = false)
+    @Column(name = "public", nullable = false)
     private boolean isPublic;
 
     @Column(name = "created", updatable = false, nullable = false)
