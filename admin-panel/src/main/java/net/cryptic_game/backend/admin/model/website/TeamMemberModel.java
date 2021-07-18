@@ -22,17 +22,17 @@ import java.time.OffsetDateTime;
 @Table(name = "admin_team_member")
 public final class TeamMemberModel extends TableModelAutoId {
 
-    @Column(name = "name", updatable = true, nullable = false, unique = true)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @Column(name = "github_id", updatable = true, nullable = false, unique = true)
+    @Column(name = "github_id", nullable = false, unique = true)
     private long githubId;
 
     @ManyToOne
     @Type(type = "uuid-char")
-    @JoinColumn(name = "department", updatable = true, nullable = false)
+    @JoinColumn(name = "department", nullable = false)
     private TeamDepartmentModel department;
 
-    @Column(name = "joined", updatable = true, nullable = false)
+    @Column(name = "joined", nullable = false)
     private OffsetDateTime joined;
 }

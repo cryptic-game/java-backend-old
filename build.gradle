@@ -38,13 +38,3 @@ subprojects {
     apply from: "${rootDir}/gradle/pmd.gradle"
     apply from: "${rootDir}/gradle/javadoc.gradle"
 }
-
-task copyJavaDocStyles(type: Copy) {
-    from "$rootDir/gradle/javadoc.css"
-    rename 'javadoc.css', 'stylesheet.css'
-    into "$buildDir/docs/aggregateJavadoc/"
-}
-
-aggregateJavadoc {
-    finalizedBy copyJavaDocStyles
-}

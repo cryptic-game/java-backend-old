@@ -1,7 +1,5 @@
 package net.cryptic_game.backend.admin.service.server;
 
-import java.util.Map;
-
 import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.dto.server.ServerEndpoint;
 import org.springframework.stereotype.Service;
@@ -9,6 +7,8 @@ import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor

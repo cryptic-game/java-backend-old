@@ -21,6 +21,8 @@ public @interface ApiEndpointCollection {
 
     ApiType type();
 
+    boolean internal() default false;
+
     boolean disabled() default false;
 
     Class<? extends ApiAuthenticator> authenticator() default DefaultApiAuthenticator.class;

@@ -44,7 +44,7 @@ public final class CurrencyTransaction extends TableModelAutoId implements JsonS
     @Column(name = "amount", updatable = false, nullable = false)
     private int amount;
 
-    @Column(name = "purpose", updatable = false, nullable = true)
+    @Column(name = "purpose", updatable = false)
     private String purpose;
 
     /**

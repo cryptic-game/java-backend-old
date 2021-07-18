@@ -1,7 +1,7 @@
 package net.cryptic_game.backend.admin.converter.website;
 
-import net.cryptic_game.backend.dto.website.BlogPost.Id;
 import net.cryptic_game.backend.admin.model.website.BlogPostModel.IdModel;
+import net.cryptic_game.backend.dto.website.BlogPost.Id;
 import net.getnova.framework.core.Converter;
 import org.springframework.stereotype.Component;
 

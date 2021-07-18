@@ -30,13 +30,13 @@ import javax.persistence.Table;
 public final class ServiceMiner extends TableModelAutoId implements JsonSerializable {
 
     @ManyToOne
-    @JoinColumn(name = "wallet_id", nullable = false, updatable = true)
+    @JoinColumn(name = "wallet_id", nullable = false)
     private CurrencyWallet wallet;
 
-    @Column(name = "started", updatable = true, nullable = false)
+    @Column(name = "started", nullable = false)
     private int started;
 
-    @Column(name = "power", updatable = true, nullable = false)
+    @Column(name = "power", nullable = false)
     private float power;
 
     /**

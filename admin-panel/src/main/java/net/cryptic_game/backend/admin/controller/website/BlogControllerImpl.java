@@ -1,7 +1,5 @@
 package net.cryptic_game.backend.admin.controller.website;
 
-import java.util.List;
-
 import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.admin.service.website.BlogService;
 import net.cryptic_game.backend.dto.website.BlogPost;
@@ -9,6 +7,8 @@ import net.cryptic_game.backend.dto.website.BlogPost.Id;
 import net.cryptic_game.backend.dto.website.BlogPostSmall;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

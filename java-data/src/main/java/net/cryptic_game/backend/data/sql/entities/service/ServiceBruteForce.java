@@ -36,7 +36,7 @@ public final class ServiceBruteForce extends TableModelAutoId implements JsonSer
     @JoinColumn(name = "target_service_id", updatable = false, nullable = false)
     private Service targetService;
 
-    @Column(name = "progress", updatable = true, nullable = false)
+    @Column(name = "progress", nullable = false)
     private float progress;
 
     /**

@@ -25,7 +25,7 @@ dependencies {
 
     /* Spring Security */
     api 'org.springframework.security:spring-security-core'
-    api 'org.bouncycastle:bcpkix-jdk15on:1.68'
+    api 'org.bouncycastle:bcpkix-jdk15on:1.69'
 
     /* JWT */
     api 'io.jsonwebtoken:jjwt-api:0.11.2'
