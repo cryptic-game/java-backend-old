@@ -1,21 +1,13 @@
 package net.cryptic_game.backend.admin.service.website;
 
-import net.cryptic_game.backend.admin.dto.website.BlogPost;
-import net.cryptic_game.backend.admin.dto.website.BlogPost.Id;
-import net.cryptic_game.backend.admin.dto.website.BlogPostSmall;
+import net.cryptic_game.backend.dto.website.BlogPost;
+import net.cryptic_game.backend.dto.website.BlogPost.Id;
+import net.cryptic_game.backend.dto.website.BlogPostSmall;
+import net.getnova.framework.core.service.SmallCrudService;
 
-import java.util.Optional;
-import java.util.Set;
+import java.util.List;
 
-public interface BlogService {
+public interface BlogService extends SmallCrudService<BlogPost, BlogPostSmall, Id> {
 
-    Set<BlogPostSmall> findPosts(String language);
-
-    Optional<BlogPost> findPost(Id id);
-
-    BlogPost savePost(Id id, BlogPost post);
-
-    BlogPost savePost(BlogPost post);
-
-    void deletePost(Id id);
+    List<BlogPostSmall> findPosts(String language);
 }

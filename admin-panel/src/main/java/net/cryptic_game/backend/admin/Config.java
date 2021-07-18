@@ -9,5 +9,4 @@ public class Config {
 
     private String apiToken;
     private String serverUrl;
-    private String cookieDomain;
 }

@@ -1,19 +1,18 @@
 package net.cryptic_game.backend.admin;
 
 import net.getnova.framework.core.NovaBanner;
-import org.apache.commons.lang3.NotImplementedException;
 import org.springdoc.core.GroupedOpenApi;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.WebSession;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.security.Principal;
 
@@ -22,15 +21,12 @@ import java.security.Principal;
 @EnableConfigurationProperties(Config.class)
 public class Bootstrap {
 
+    private static final String JAVASCRIPT_CLOSE = "<script>close()</script>";
+
     public static void main(final String[] args) {
         new SpringApplicationBuilder(Bootstrap.class)
                 .banner(new NovaBanner())
                 .run(args);
-    }
-
-    @Bean
-    public LettuceConnectionFactory connectionFactory() {
-        return new LettuceConnectionFactory();
     }
 
     @GetMapping("/user")
@@ -38,9 +34,17 @@ public class Bootstrap {
         return principal;
     }
 
-    @GetMapping(value = "/auth", produces = MediaType.TEXT_HTML_VALUE)
-    public String auth(@AuthenticationPrincipal final Authentication authentication, final WebSession session) {
-        throw new NotImplementedException();
+    @GetMapping(value = "/auth/success", produces = MediaType.TEXT_HTML_VALUE)
+    public String auth(@AuthenticationPrincipal final Authentication authentication) {
+        return JAVASCRIPT_CLOSE;
+    }
+
+    @Bean("server")
+    WebClient client(final Config config) {
+        return WebClient.builder()
+                .baseUrl(config.getServerUrl())
+                .defaultHeader(HttpHeaders.AUTHORIZATION, config.getApiToken())
+                .build();
     }
 
     @Bean

@@ -28,7 +28,7 @@ import javax.persistence.Table;
 @Table(name = "device_hardware_element")
 public final class DeviceHardwareElement extends TableModelAutoId implements JsonSerializable {
 
-    @Column(name = "name", updatable = true, nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @ManyToOne

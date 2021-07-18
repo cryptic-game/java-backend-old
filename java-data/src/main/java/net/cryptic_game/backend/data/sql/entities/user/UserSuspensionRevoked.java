@@ -35,6 +35,7 @@ public class UserSuspensionRevoked extends TableModelAutoId implements JsonSeria
     @Type(type = "uuid-char")
     private UserSuspension userSuspension;
 
+    //TODO
 //    @ManyToOne
 //    @JoinColumn(name = "admin_user_id", updatable = false, nullable = false)
 //    @Type(type = "uuid-char")
@@ -43,7 +44,7 @@ public class UserSuspensionRevoked extends TableModelAutoId implements JsonSeria
     @Column(name = "timestamp", updatable = false, nullable = false)
     private OffsetDateTime timestamp;
 
-    @Column(name = "reason", updatable = true, nullable = true)
+    @Column(name = "reason")
     private String reason;
 
     @Override

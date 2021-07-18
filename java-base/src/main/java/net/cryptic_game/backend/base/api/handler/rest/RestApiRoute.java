@@ -33,7 +33,7 @@ import java.util.stream.Stream;
 final class RestApiRoute implements HttpRoute {
 
     private static final Charset CHARSET = StandardCharsets.UTF_8;
-    private static final AsciiString CONTENT_TYPE = AsciiString.of(HttpHeaderValues.APPLICATION_JSON + "; " + HttpHeaderValues.CHARSET + "=" + CHARSET.toString());
+    private static final AsciiString CONTENT_TYPE = AsciiString.of(HttpHeaderValues.APPLICATION_JSON + "; " + HttpHeaderValues.CHARSET + "=" + CHARSET);
     private static final String EMPTY_REQUEST = "";
     private static final String EMPTY_RESPONSE = "{}";
     private final Map<String, ApiEndpointData> endpoints;

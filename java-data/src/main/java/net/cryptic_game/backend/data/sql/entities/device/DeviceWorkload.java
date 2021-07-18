@@ -37,34 +37,34 @@ public final class DeviceWorkload extends TableModel implements JsonSerializable
     @JoinColumn(name = "device_id", updatable = false, nullable = false)
     private Device device;
 
-    @Column(name = "performance_cpu", updatable = true, nullable = false)
+    @Column(name = "performance_cpu", nullable = false)
     private float performanceCPU;
 
-    @Column(name = "performance_gpu", updatable = true, nullable = false)
+    @Column(name = "performance_gpu", nullable = false)
     private float performanceGPU;
 
-    @Column(name = "performance_ram", updatable = true, nullable = false)
+    @Column(name = "performance_ram", nullable = false)
     private float performanceRAM;
 
-    @Column(name = "performance_disk", updatable = true, nullable = false)
+    @Column(name = "performance_disk", nullable = false)
     private float performanceDisk;
 
-    @Column(name = "performance_network", updatable = true, nullable = false)
+    @Column(name = "performance_network", nullable = false)
     private float performanceNetwork;
 
-    @Column(name = "usage_cpu", updatable = true, nullable = false)
+    @Column(name = "usage_cpu", nullable = false)
     private float usageCPU;
 
-    @Column(name = "usage_gpu", updatable = true, nullable = false)
+    @Column(name = "usage_gpu", nullable = false)
     private float usageGPU;
 
-    @Column(name = "usage_ram", updatable = true, nullable = false)
+    @Column(name = "usage_ram", nullable = false)
     private float usageRAM;
 
-    @Column(name = "usage_disk", updatable = true, nullable = false)
+    @Column(name = "usage_disk", nullable = false)
     private float usageDisk;
 
-    @Column(name = "usage_network", updatable = true, nullable = false)
+    @Column(name = "usage_network", nullable = false)
     private float usageNetwork;
 
     /**

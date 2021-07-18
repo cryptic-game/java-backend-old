@@ -104,7 +104,6 @@ public final class NetworkMember extends TableModel implements JsonSerializable 
     /**
      * Key of the {@link NetworkMember} entity.
      */
-    @SuppressWarnings("JpaDataSourceORMInspection")
     @Embeddable
     @Data
     public static class MemberKey implements Serializable {

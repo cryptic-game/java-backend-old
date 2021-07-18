@@ -30,26 +30,26 @@ import javax.persistence.Table;
 public final class DeviceServiceReq extends TableModelAutoId implements JsonSerializable {
 
     @ManyToOne
-    @JoinColumn(name = "service_id", updatable = true, nullable = true)
+    @JoinColumn(name = "service_id")
     private Service service;
 
     @ManyToOne
-    @JoinColumn(name = "device_id", updatable = true, nullable = true) // updatable?
+    @JoinColumn(name = "device_id") // updatable?
     private Device device;
 
-    @Column(name = "allocated_cpu", updatable = true, nullable = true)
+    @Column(name = "allocated_cpu")
     private float allocatedCPU;
 
-    @Column(name = "allocated_ram", updatable = true, nullable = true)
+    @Column(name = "allocated_ram")
     private float allocatedRAM;
 
-    @Column(name = "allocated_gpu", updatable = true, nullable = true)
+    @Column(name = "allocated_gpu")
     private float allocatedGPU;
 
-    @Column(name = "allocated_disk", updatable = true, nullable = true)
+    @Column(name = "allocated_disk")
     private float allocatedDisk;
 
-    @Column(name = "allocated_network", updatable = true, nullable = true)
+    @Column(name = "allocated_network")
     private float allocatedNetwork;
 
     /**

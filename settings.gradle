@@ -21,4 +21,5 @@ include 'java-data'
 include 'java-daemon-endpoints'
 include 'admin-panel'
 include 'config-processor'
+include 'java-dto'
 

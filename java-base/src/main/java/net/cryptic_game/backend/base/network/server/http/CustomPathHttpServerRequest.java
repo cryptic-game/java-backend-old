@@ -12,6 +12,7 @@ import reactor.netty.Connection;
 import reactor.netty.http.server.HttpServerRequest;
 
 import java.net.InetSocketAddress;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -133,5 +134,10 @@ final class CustomPathHttpServerRequest implements HttpServerRequest {
     @Override
     public HttpVersion version() {
         return this.request.version();
+    }
+
+    @Override
+    public Map<CharSequence, List<Cookie>> allCookies() {
+        return this.request.allCookies();
     }
 }

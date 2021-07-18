@@ -50,11 +50,11 @@ public final class ChatMessage extends TableModelAutoId implements JsonSerializa
 
     /* User ID of the target, if it is not a whisper it is null and consequently targets everyone in the channel. */
     @OneToOne
-    @JoinColumn(name = "target", updatable = false, nullable = true)
+    @JoinColumn(name = "target", updatable = false)
     private User target;
 
     /**
-     * Creates a new {@link ChatMessage} without a target (no whipser).
+     * Creates a new {@link ChatMessage} without a target (no whisper).
      *
      * @param session the sql {@link Session} with transaction
      * @param channel the {@link ChatChannel} where the {@link ChatMessage} will be sent

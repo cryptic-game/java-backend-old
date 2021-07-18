@@ -29,7 +29,7 @@ java {
 tasks.withType(Jar) {
     from "${rootDir}/LICENSE"
     manifest.attributes([
-            "Implementation-Title"    : 'Cryptic ' + project.name.split('-').collect{it.capitalize()}.join(' '),
+            "Implementation-Title"    : 'Cryptic ' + project.name.split('-').collect { it.capitalize() }.join(' '),
             "Implementation-Version"  : project.version,
             "Implementation-Vendor"   : "Cryptic Game (https://cryptic-game.net)",
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")

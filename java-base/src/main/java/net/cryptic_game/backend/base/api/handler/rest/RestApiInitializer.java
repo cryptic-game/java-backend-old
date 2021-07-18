@@ -27,7 +27,7 @@ public class RestApiInitializer implements CommandLineRunner {
     }
 
     @Override
-    public void run(final String... args) throws Exception {
+    public void run(final String... args) {
         final Map<String, ApiEndpointData> endpoints = ApiEndpointCollectionParser.getEndpoints(ApiConfiguration.filter(this.collections, ApiType.REST));
 
         if (endpoints.isEmpty()) {
