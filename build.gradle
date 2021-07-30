@@ -3,7 +3,7 @@ buildscript {
         novaVersion = 'edge'
         freefairVersion = '5.3.3.3'
         springBootVersion = '2.5.3'
-        springDocVersion = '1.5.9'
+        springDocVersion = '1.5.10'
     }
 }
 
