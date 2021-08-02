@@ -4,12 +4,14 @@ import lombok.extern.slf4j.Slf4j;
 import net.cryptic_game.backend.base.BaseConfig;
 import net.cryptic_game.backend.base.api.DefaultApiAuthenticator;
 import net.cryptic_game.backend.base.api.data.ApiEndpointData;
+import net.cryptic_game.backend.base.api.handler.rest.RestApiInitializer;
 import net.cryptic_game.backend.base.api.handler.websocket.WebsocketApiInitializer;
 import net.cryptic_game.backend.base.api.handler.websocket.WebsocketApiRequest;
 import net.cryptic_game.backend.data.sql.repositories.server_management.DisabledEndpointRepository;
 import net.cryptic_game.backend.server.daemon.DaemonHandler;
 import net.cryptic_game.backend.server.server.websocket.WebSocketDaemonEndpoints;
 import net.getnova.framework.core.NovaBanner;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -41,20 +43,28 @@ public class Bootstrap {
     @Bean
     CommandLineRunner runner(
             final WebsocketApiInitializer wsInitializer,
+            final RestApiInitializer restInitializer,
             final DisabledEndpointRepository disabledEndpointRepository,
-            final DaemonHandler daemonHandler
+            final DaemonHandler daemonHandler,
+            @Value("${LOGIN:false}") boolean login
     ) {
         return args -> {
             final Map<String, ApiEndpointData> endpoints = wsInitializer.getEndpoints();
             daemonHandler.setEndpoints(endpoints);
 
             // disabling endpoints that are disabled in database
-            endpoints
-                    .forEach((name, endpoint) -> {
-                        if (disabledEndpointRepository.existsById(name)) {
-                            endpoint.setDisabled(true);
-                        }
-                    });
+            endpoints.entrySet()
+                    .stream()
+                    .filter(entry -> disabledEndpointRepository.existsById(entry.getKey()))
+                    .forEach(entry -> entry.getValue().setDisabled(false));
+
+            if (!login) {
+                restInitializer.getEndpoints()
+                        .entrySet()
+                        .stream()
+                        .filter(entry -> entry.getKey().startsWith("debug"))
+                        .forEach(entry -> entry.getValue().setDisabled(false));
+            }
 
             try {
                 daemonHandler.setSend(new WebSocketDaemonEndpoints(),

@@ -21,6 +21,9 @@ public class RestApiInitializer implements CommandLineRunner {
     @Getter
     private final Set<ApiEndpointCollectionData> collections;
 
+    @Getter
+    private Map<String, ApiEndpointData> endpoints;
+
     public RestApiInitializer(final HttpServerService serverService, @Lazy final Set<ApiEndpointCollectionData> collections) {
         this.serverService = serverService;
         this.collections = collections;
@@ -28,8 +31,7 @@ public class RestApiInitializer implements CommandLineRunner {
 
     @Override
     public void run(final String... args) {
-        final Map<String, ApiEndpointData> endpoints = ApiEndpointCollectionParser.getEndpoints(ApiConfiguration.filter(this.collections, ApiType.REST));
-
+        this.endpoints = ApiEndpointCollectionParser.getEndpoints(ApiConfiguration.filter(this.collections, ApiType.REST));
         if (endpoints.isEmpty()) {
             return;
         }
