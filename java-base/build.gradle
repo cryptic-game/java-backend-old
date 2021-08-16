@@ -33,7 +33,7 @@ dependencies {
     runtimeOnly 'io.jsonwebtoken:jjwt-gson:0.11.2'
 
     /* Annotations */
-    compileOnlyApi 'org.jetbrains:annotations:21.0.1'
+    compileOnlyApi 'org.jetbrains:annotations:22.0.0'
 
     /* Metrics */
     // api('io.micrometer:micrometer-core:1.5.5')
