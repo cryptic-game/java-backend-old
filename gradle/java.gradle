@@ -8,7 +8,7 @@ repositories {
         }
     }
     maven {
-        url 'https://raw.githubusercontent.com/getnova/maven/main'
+        url 'https://mvn.m4rc3l.de'
         content {
             includeGroup('net.getnova.framework')
         }
