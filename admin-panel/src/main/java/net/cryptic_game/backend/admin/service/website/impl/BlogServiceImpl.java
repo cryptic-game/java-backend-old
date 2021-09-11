@@ -12,10 +12,13 @@ import net.cryptic_game.backend.admin.service.website.BlogService;
 import net.cryptic_game.backend.dto.website.BlogPost;
 import net.cryptic_game.backend.dto.website.BlogPost.Id;
 import net.cryptic_game.backend.dto.website.BlogPostSmall;
+import net.getnova.framework.core.exception.NotFoundException;
 import net.getnova.framework.core.service.AbstractSmallIdCrudService;
+import net.getnova.framework.core.utils.ValidationUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,5 +44,40 @@ public class BlogServiceImpl
                 .stream()
                 .map(this.smallConverter::toDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public BlogPost save(final Id id, final BlogPost dto) {
+        ValidationUtils.validate(dto);
+
+        final IdModel idModel = this.idConverter.toModel(id);
+
+        final BlogPostModel model = this.repository.findById(idModel)
+                .orElseThrow(() -> new NotFoundException(this.name));
+
+        final boolean published = model.isPublished();
+
+        this.converter.override(model, dto);
+
+        if (published) {
+            model.setUpdated(OffsetDateTime.now());
+        }
+
+        return this.converter.toDto(model);
+    }
+
+    @Override
+    public BlogPost save(final BlogPost dto) {
+        return super.save(new BlogPost(
+                dto.getId(),
+                dto.getTitle(),
+                dto.getImage(),
+                OffsetDateTime.now(),
+                null,
+                false,
+                dto.getDescription(),
+                dto.getContent(),
+                dto.getLanguages()
+        ));
     }
 }
