@@ -78,6 +78,10 @@ public class BlogPost implements Validatable {
             throw new ValidationException("image", "MATCH_REGEX");
         }
 
+        if (this.created == null) {
+            throw new ValidationException("created", "NOT_NULL");
+        }
+
         if (this.published == null) {
             throw new ValidationException("published", "NOT_NULL");
         }
