@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface BlogPostSmallRepository extends JpaRepository<BlogPostSmallModel, IdModel> {
 
-    @Query("select object(bp) from BlogPostSmallModel bp where bp.id.language = ?1 order by bp.created")
+    @Query("select object(bp) from BlogPostSmallModel bp where bp.id.language = ?1 order by bp.created desc")
     List<BlogPostSmallModel> findAll(String language);
 }
