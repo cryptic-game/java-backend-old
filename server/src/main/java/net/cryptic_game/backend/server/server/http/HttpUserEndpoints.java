@@ -1,7 +1,7 @@
 package net.cryptic_game.backend.server.server.http;
 
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.SignatureException;
@@ -37,7 +37,7 @@ public final class HttpUserEndpoints {
     @ApiEndpoint(id = "login")
     public ApiResponse login(@ApiParameter(id = "access_token") final String accessTokenJwt) {
 
-        final JsonObject accessToken;
+        final Claims accessToken;
         try {
             accessToken = SecurityUtils.parseJwt(key, accessTokenJwt);
         } catch (JsonParseException | SignatureException | MalformedJwtException e) {
@@ -48,7 +48,7 @@ public final class HttpUserEndpoints {
 
         final UUID userId;
         try {
-            userId = UUID.fromString(accessToken.get("user_id").getAsString());
+            userId = UUID.fromString(accessToken.getSubject());
         } catch (Exception e) {
             return new ApiResponse(HttpResponseStatus.UNAUTHORIZED, "INVALID_TOKEN");
         }
@@ -77,7 +77,7 @@ public final class HttpUserEndpoints {
     public ApiResponse register(@ApiParameter(id = "access_token") final String accessTokenJwt,
                                 @ApiParameter(id = "username") final String username) {
 
-        final JsonObject accessToken;
+        final Claims accessToken;
         try {
             accessToken = SecurityUtils.parseJwt(key, accessTokenJwt);
         } catch (JsonParseException | SignatureException | MalformedJwtException e) {
@@ -88,7 +88,7 @@ public final class HttpUserEndpoints {
 
         final UUID userId;
         try {
-            userId = UUID.fromString(accessToken.get("user_id").getAsString());
+            userId = UUID.fromString(accessToken.getSubject());
         } catch (Exception e) {
             return new ApiResponse(HttpResponseStatus.UNAUTHORIZED, "INVALID_TOKEN");
         }

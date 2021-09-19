@@ -1,5 +1,7 @@
 package net.cryptic_game.backend.server.server.http;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.impl.DefaultClaims;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpoint;
 import net.cryptic_game.backend.base.api.annotations.ApiEndpointCollection;
@@ -20,6 +22,7 @@ import reactor.core.publisher.Mono;
 
 import java.security.Key;
 import java.time.OffsetDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -92,13 +95,15 @@ public final class HttpOauth2Endpoints {
                 this.userOAuthProviderIdRepository.save(oauth2ProviderUserId);
             }
 
+            final OffsetDateTime expire = now.plusSeconds(Constants.ACCESS_TOKEN_EXPIRE);
+
+            final Claims claims = new DefaultClaims();
+            claims.setSubject(user.getId().toString());
+            claims.setNotBefore(Date.from(now.toInstant()));
+            claims.setExpiration(Date.from(expire.toInstant()));
+
             return Mono.just(new ApiResponse(HttpResponseStatus.OK, JsonBuilder
-                    .create("access_token", SecurityUtils.jwt(
-                            this.key,
-                            JsonBuilder.create("user_id", user.getId())
-                                    .add("exp", now.plusSeconds(Constants.ACCESS_TOKEN_EXPIRE))
-                                    .build()
-                    ))
+                    .create("access_token", SecurityUtils.jwt(this.key, claims))
                     .add("new_user", user.isNewUser(), () -> true)
             ));
         }).onErrorReturn(AuthenticationErrorException.class, new ApiResponse(HttpResponseStatus.UNAUTHORIZED, "BAD_OAUTH2_RESPONSE"));
