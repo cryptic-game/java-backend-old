@@ -13,7 +13,7 @@ plugins {
     id 'io.freefair.aggregate-javadoc' version "${freefairVersion}"
     id 'io.freefair.javadoc-utf-8' version "${freefairVersion}"
     id 'io.freefair.lombok' version "${freefairVersion}" apply(false)
-    id 'com.github.spotbugs' version '4.7.5' apply(false)
+    id 'com.github.spotbugs' version '4.7.10' apply(false)
     id 'org.springframework.boot' version "${springBootVersion}" apply false
     id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
 }
