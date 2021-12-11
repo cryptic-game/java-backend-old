@@ -12,9 +12,9 @@ import net.cryptic_game.backend.admin.service.website.BlogService;
 import net.cryptic_game.backend.dto.website.BlogPost;
 import net.cryptic_game.backend.dto.website.BlogPost.Id;
 import net.cryptic_game.backend.dto.website.BlogPostSmall;
-import net.getnova.framework.core.exception.NotFoundException;
-import net.getnova.framework.core.service.AbstractSmallIdCrudService;
-import net.getnova.framework.core.utils.ValidationUtils;
+import de.m4rc3l.nova.core.exception.NotFoundException;
+import de.m4rc3l.nova.core.service.AbstractSmallIdCrudService;
+import de.m4rc3l.nova.core.utils.ValidationUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

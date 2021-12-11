@@ -12,7 +12,7 @@ dependencyManagement {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-json'
 
-    implementation("net.getnova.framework:nova-core:${novaVersion}") { changing true }
+    implementation("de.m4rc3l.nova:nova-core:${novaVersion}") { changing true }
 
     // TODO: remove this
     implementation 'org.jsoup:jsoup:1.14.2'

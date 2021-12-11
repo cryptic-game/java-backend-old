@@ -1,6 +1,6 @@
 package net.cryptic_game.backend.daemon;
 
-import net.getnova.framework.core.NovaBanner;
+import de.m4rc3l.nova.core.NovaBanner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 

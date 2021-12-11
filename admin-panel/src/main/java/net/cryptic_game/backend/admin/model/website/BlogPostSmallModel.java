@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.cryptic_game.backend.admin.model.website.BlogPostModel.IdModel;
-import net.getnova.framework.jpa.model.TableModel;
+import de.m4rc3l.nova.jpa.model.TableModel;
 import org.hibernate.annotations.Immutable;
 
 import javax.persistence.Column;

@@ -7,7 +7,7 @@ dependencies {
     implementation project(':java-base')
     implementation project(':java-data')
 
-    implementation("net.getnova.framework:nova-core:${novaVersion}") { changing true }
+    implementation("de.m4rc3l.nova:nova-core:${novaVersion}") { changing true }
     runtimeOnly 'org.springframework.boot:spring-boot-starter-actuator'
     runtimeOnly 'io.netty:netty-tcnative-boringssl-static'
 

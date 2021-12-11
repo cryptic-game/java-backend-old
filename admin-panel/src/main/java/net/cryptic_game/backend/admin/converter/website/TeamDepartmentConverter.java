@@ -3,7 +3,7 @@ package net.cryptic_game.backend.admin.converter.website;
 import lombok.RequiredArgsConstructor;
 import net.cryptic_game.backend.admin.model.website.TeamDepartmentModel;
 import net.cryptic_game.backend.dto.website.TeamDepartment;
-import net.getnova.framework.core.Converter;
+import de.m4rc3l.nova.core.Converter;
 import org.springframework.stereotype.Component;
 
 @Component

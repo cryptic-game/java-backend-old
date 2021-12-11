@@ -14,7 +14,7 @@ dependencies {
 
     /* Database */
     api 'org.springframework.boot:spring-boot-starter-data-jpa'
-    api("net.getnova.framework:nova-data-jpa:${novaVersion}") { changing true }
+    api("de.m4rc3l.nova:nova-data-jpa:${novaVersion}") { changing true }
     api 'org.postgresql:postgresql'
 
     /* Network */

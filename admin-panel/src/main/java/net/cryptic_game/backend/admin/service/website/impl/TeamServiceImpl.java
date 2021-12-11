@@ -5,7 +5,7 @@ import net.cryptic_game.backend.admin.model.website.TeamMemberModel;
 import net.cryptic_game.backend.admin.repository.website.TeamMemberRepository;
 import net.cryptic_game.backend.admin.service.website.TeamMemberService;
 import net.cryptic_game.backend.dto.website.TeamMember;
-import net.getnova.framework.core.service.AbstractCommonIdCrudService;
+import de.m4rc3l.nova.core.service.AbstractCommonIdCrudService;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;

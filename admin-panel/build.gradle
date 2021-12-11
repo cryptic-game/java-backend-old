@@ -5,12 +5,12 @@ plugins {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
-    implementation("net.getnova.framework:nova-core:${novaVersion}") { changing true }
+    implementation("de.m4rc3l.nova:nova-core:${novaVersion}") { changing true }
 
     implementation project(':java-dto')
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation("net.getnova.framework:nova-data-jpa:${novaVersion}") { changing true }
+    implementation("de.m4rc3l.nova:nova-data-jpa:${novaVersion}") { changing true }
     implementation 'org.postgresql:postgresql'
 
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'

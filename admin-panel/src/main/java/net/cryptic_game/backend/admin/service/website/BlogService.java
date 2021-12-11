@@ -3,7 +3,7 @@ package net.cryptic_game.backend.admin.service.website;
 import net.cryptic_game.backend.dto.website.BlogPost;
 import net.cryptic_game.backend.dto.website.BlogPost.Id;
 import net.cryptic_game.backend.dto.website.BlogPostSmall;
-import net.getnova.framework.core.service.SmallCrudService;
+import de.m4rc3l.nova.core.service.SmallCrudService;
 
 import java.util.List;
 

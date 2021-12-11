@@ -6,7 +6,7 @@ import net.cryptic_game.backend.admin.model.website.TeamDepartmentModel;
 import net.cryptic_game.backend.admin.model.website.TeamMemberModel;
 import net.cryptic_game.backend.admin.repository.website.TeamDepartmentRepository;
 import net.cryptic_game.backend.dto.website.TeamMember;
-import net.getnova.framework.core.Converter;
+import de.m4rc3l.nova.core.Converter;
 import org.springframework.stereotype.Component;
 
 @Component

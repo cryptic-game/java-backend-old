@@ -10,7 +10,7 @@ import net.cryptic_game.backend.base.api.handler.websocket.WebsocketApiRequest;
 import net.cryptic_game.backend.data.sql.repositories.server_management.DisabledEndpointRepository;
 import net.cryptic_game.backend.server.daemon.DaemonHandler;
 import net.cryptic_game.backend.server.server.websocket.WebSocketDaemonEndpoints;
-import net.getnova.framework.core.NovaBanner;
+import de.m4rc3l.nova.core.NovaBanner;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

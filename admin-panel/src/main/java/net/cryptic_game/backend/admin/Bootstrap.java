@@ -1,6 +1,6 @@
 package net.cryptic_game.backend.admin;
 
-import net.getnova.framework.core.NovaBanner;
+import de.m4rc3l.nova.core.NovaBanner;
 import org.springdoc.core.GroupedOpenApi;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
