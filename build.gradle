@@ -2,7 +2,7 @@ buildscript {
     ext {
         novaVersion = 'edge'
         freefairVersion = '6.2.0'
-        springBootVersion = '2.5.4'
+        springBootVersion = '2.6.1'
         springDocVersion = '1.5.10'
     }
 }

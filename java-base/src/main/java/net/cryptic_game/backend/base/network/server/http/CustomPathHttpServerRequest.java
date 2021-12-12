@@ -5,10 +5,12 @@ import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.codec.http.cookie.Cookie;
+import io.netty.handler.codec.http.multipart.HttpData;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.netty.ByteBufFlux;
 import reactor.netty.Connection;
+import reactor.netty.http.server.HttpServerFormDecoderProvider;
 import reactor.netty.http.server.HttpServerRequest;
 
 import java.net.InetSocketAddress;
@@ -57,6 +59,26 @@ final class CustomPathHttpServerRequest implements HttpServerRequest {
     @Override
     public Flux<HttpContent> receiveContent() {
         return this.request.receiveContent();
+    }
+
+    @Override
+    public boolean isFormUrlencoded() {
+        return this.request.isFormUrlencoded();
+    }
+
+    @Override
+    public boolean isMultipart() {
+        return this.request.isMultipart();
+    }
+
+    @Override
+    public Flux<HttpData> receiveForm() {
+        return this.request.receiveForm();
+    }
+
+    @Override
+    public Flux<HttpData> receiveForm(final Consumer<HttpServerFormDecoderProvider.Builder> formDecoderBuilder) {
+        return this.request.receiveForm(formDecoderBuilder);
     }
 
     @Override
