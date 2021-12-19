@@ -96,6 +96,7 @@ public class BlogPost implements Validatable {
 
         private final String language; // TODO java.util.Locale;
         private final String postId;
+        private static final String POST_ID_REGEX = "[a-z-]+";
 
         public Id(
                 @JsonProperty("language") final String language,
