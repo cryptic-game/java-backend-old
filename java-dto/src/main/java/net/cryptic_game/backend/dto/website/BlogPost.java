@@ -17,7 +17,6 @@ import java.util.Set;
 public class BlogPost implements Validatable {
 
     private static final String LANGUAGE_REGEX = "[a-z]{2}";
-    private static final String POST_ID_REGEX = "[a-z-]+";
     private static final String IMAGE_REGEX = "https://cdn\\.cryptic-game\\.net/images/blog/(.+)\\.jpe?g";
 
     private static final Whitelist WHITELIST = Whitelist.relaxed()
