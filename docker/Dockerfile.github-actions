@@ -7,6 +7,10 @@ ARG SERVICE_NAME
 
 WORKDIR /src
 
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends binutils \
+ && rm -rf /var/lib/apt/lists/*
+
 COPY ./${SERVICE_NAME}-*-all.jar ${SERVICE_NAME}.jar
 
 RUN set -o errexit -o nounset \
