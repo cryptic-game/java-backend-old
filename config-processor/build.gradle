@@ -3,6 +3,6 @@ plugins {
 
 dependencies {
     implementation 'org.yaml:snakeyaml:1.29'
-    compileOnly 'com.google.auto.service:auto-service:1.0'
+    compileOnly 'com.google.auto.service:auto-service:1.0.1'
     annotationProcessor 'com.google.auto.service:auto-service:1.0-rc7'
 }

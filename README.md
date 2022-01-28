@@ -33,7 +33,7 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them
 
 * A Java IDE ([IntelliJ IDEA](https://www.jetbrains.com/idea/))
-* [JDK 11](https://adoptopenjdk.net/index.html)
+* [JDK 17](https://adoptium.net/)
 * [Git](https://git-scm.com/)
 
 ### Installing
